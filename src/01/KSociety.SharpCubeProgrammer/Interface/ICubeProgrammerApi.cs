@@ -25,10 +25,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         public void GetStLinkPorts();
 
-        //void Register();
-
-        //public event EventHandler<NewMessageEventArgs> NewMessage;
-
         #region [STLINK]
 
         //STLINK module groups debug ports JTAG/SWD functions together.
@@ -107,20 +103,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
         #region [General purposes]
 
         // General module groups general purposes functions used by any interface.
-
-        /// <summary>
-        /// This routine allows to choose your custom display.
-        /// </summary>
-        /// <param name="initProgressBar"></param>
-        /// <param name="messageReceived"></param>
-        /// <param name="progressBarUpdate"></param>
-        //void SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate);
-
-        /// <summary>
-        /// This routine allows to choose the verbosity level for display.
-        /// </summary>
-        /// <param name="level"></param>
-        //void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
 
         /// <summary>
         /// This routine allows to check connection status [maintained or lost].
@@ -250,7 +232,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         PeripheralC? InitOptionBytesInterface();
 
         /// <summary>
-        /// This routine allows to diplay the Option bytes.
+        /// This routine allows to display the Option bytes.
         /// </summary>
         CubeProgrammerError ObDisplay();
 
@@ -259,12 +241,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
         #region [Loaders]
 
         //Loaders module groups loaders functions.
-
-        /// <summary>
-        /// This routine allows to specify the location of Flash Loader.
-        /// </summary>
-        /// <param name="path"></param>
-        //void SetLoadersPath(string path);
 
         /// <summary>
         /// This routine allows to specify the path of the external Loaders to be loaded.

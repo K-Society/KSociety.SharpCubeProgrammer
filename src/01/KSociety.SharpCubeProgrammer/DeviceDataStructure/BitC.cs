@@ -22,7 +22,6 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
 
         public uint ValuesNbr;
 
-        //public BitValueC Values;
         public IntPtr Values;
         public BitCoefficientC Equation;
         public string Reference;
