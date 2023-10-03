@@ -232,7 +232,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         PeripheralC? InitOptionBytesInterface();
 
         /// <summary>
-        /// This routine allows to diplay the Option bytes.
+        /// This routine allows to display the Option bytes.
         /// </summary>
         CubeProgrammerError ObDisplay();
 
