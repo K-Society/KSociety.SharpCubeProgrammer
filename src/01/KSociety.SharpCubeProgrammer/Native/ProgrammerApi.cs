@@ -1,3 +1,5 @@
+// Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
+
 namespace KSociety.SharpCubeProgrammer.Native
 {
     using System;
@@ -144,9 +146,7 @@ namespace KSociety.SharpCubeProgrammer.Native
             uint skipErase, uint verify, int isMassErase, string obCommand, int run);
 
         [DllImport(ProgrammerDll, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //internal static extern int GetStorageStructure([MarshalAs(UnmanagedType.U4)] StorageStructure deviceStorageStruct);
         internal static extern int GetStorageStructure(IntPtr deviceStorageStruct);
-        //internal static extern int GetStorageStructure(ref StorageStructure deviceStorageStruct);
 
         #endregion
 

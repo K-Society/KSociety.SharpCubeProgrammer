@@ -1,3 +1,5 @@
+// Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
+
 namespace KSociety.SharpCubeProgrammer
 {
     using System;
@@ -296,32 +298,24 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void ConnectDfuBootloader2()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void ConnectSpiBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void ConnectCanBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void ConnectI2cBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
@@ -330,28 +324,6 @@ namespace KSociety.SharpCubeProgrammer
         #region [General purposes]
 
         // General module groups general purposes functions used by any interface.
-
-        /// <inheritdoc />
-        //private static DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
-        //{
-        //    var callbacksHandle = new DisplayCallBacks
-        //    {
-        //        InitProgressBar = Marshal.GetFunctionPointerForDelegate(initProgressBar),
-        //        LogMessage = Marshal.GetFunctionPointerForDelegate(messageReceived),
-        //        LoadBar = Marshal.GetFunctionPointerForDelegate(progressBarUpdate)
-        //    };
-
-        //    Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
-
-        //    return callbacksHandle;
-        //}
-
-        //private static void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
-        //{
-        //    //var verbosityLevel = (byte) 0;
-        //    Native.ProgrammerApi.SetVerbosityLevel((int)level);
-        //    //Native.ProgrammerApi.SetVerbosityLevel(verbosityLevel);
-        //}
 
         /// <inheritdoc />
         public bool CheckDeviceConnection()
@@ -387,7 +359,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize)
         {
-            //Register();
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
@@ -848,13 +819,6 @@ namespace KSociety.SharpCubeProgrammer
         #region [Loaders]
 
         //Loaders module groups loaders functions.
-
-        /// <inheritdoc />
-        private void SetLoadersPath(string path)
-        {
-            this._logger?.LogTrace("SetLoadersPath: {0}", path);
-            Native.ProgrammerApi.SetLoadersPath(path.Replace(@"\", "/"));
-        }
 
         /// <inheritdoc />
         public void SetExternalLoadersPath(string path)
