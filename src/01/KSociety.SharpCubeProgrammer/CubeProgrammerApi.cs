@@ -359,7 +359,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize)
         {
-            //Register();
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
