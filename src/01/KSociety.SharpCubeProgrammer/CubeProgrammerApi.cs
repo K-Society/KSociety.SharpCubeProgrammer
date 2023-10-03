@@ -316,8 +316,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void ConnectI2cBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
