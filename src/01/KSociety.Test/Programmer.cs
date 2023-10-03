@@ -79,9 +79,6 @@ namespace KSociety.Test
 
                 if (!stLinkList.Any())
                 {
-                    //_logger.LogWarning("ProgrammingConnect abort: {0}", "stLink not found!");
-                    //return false;
-
                     return false;
                 }
 
@@ -92,14 +89,8 @@ namespace KSociety.Test
 
                 if (!connectionResult.Equals(KSociety.SharpCubeProgrammer.Enum.CubeProgrammerError.CubeprogrammerNoError))
                 {
-                    //_logger.LogWarning("ProgrammingConnect abort on ConnectStLink: {0}", connectionResult);
-                    //return false;
-
                     return false;
                 }
-
-                //_cubeProgrammerApi.Disconnect(); //Do not disconnect after execute, with udf.
-                //_cubeProgrammerApi.DeleteInterfaceList();
 
                 return true;
             }
@@ -117,12 +108,7 @@ namespace KSociety.Test
             var optionBytesInterface = this._cubeProgrammerApi.InitOptionBytesInterface();
             if (optionBytesInterface != null)
             {
-                //_logger.LogTrace("PeripheralC Name: {0} Description: {1}", optionBytesInterface.Name, optionBytesInterface.Description);
                 output = true;
-            }
-            else
-            {
-                //_logger.LogWarning("PeripheralC is null!");
             }
 
             return output;
