@@ -310,8 +310,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void ConnectCanBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
