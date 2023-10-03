@@ -105,20 +105,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
         // General module groups general purposes functions used by any interface.
 
         /// <summary>
-        /// This routine allows to choose your custom display.
-        /// </summary>
-        /// <param name="initProgressBar"></param>
-        /// <param name="messageReceived"></param>
-        /// <param name="progressBarUpdate"></param>
-        //void SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate);
-
-        /// <summary>
-        /// This routine allows to choose the verbosity level for display.
-        /// </summary>
-        /// <param name="level"></param>
-        //void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
-
-        /// <summary>
         /// This routine allows to check connection status [maintained or lost].
         /// </summary>
         /// <returns></returns>
