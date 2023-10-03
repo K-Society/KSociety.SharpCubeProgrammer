@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NuspecFile>$(MSBuildThisFileName).nuspec</NuspecFile>
+    <NuspecBasePath>$(PublishDir)</NuspecBasePath>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="KSociety.Wmi" Version="0.0.6" />
+  </ItemGroup>
+
+  <Target Name="PrePack" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion">
+    <PropertyGroup>
+      <NuspecProperties>version=$(BuildVersion3Components)</NuspecProperties>
+    </PropertyGroup>
+  </Target>
+
+</Project>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<TargetFrameworks>netstandard2.1</TargetFrameworks>
+	
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+
+    <ProjectName Condition=" '$(ProjectName)' == '' ">$(MSBuildProjectName)</ProjectName>
+    <BaseOutputPath>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\build\$(ProjectName)\))</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(BaseOutputPath)obj\</BaseIntermediateOutputPath>
+    <OutputPath>$(BaseOutputPath)bin\$(Configuration)\</OutputPath>
+	
+	<AssemblyOriginatorKeyFile>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)ksociety.snk))</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+	
+	<Title>$(AssemblyName)</Title>
+	
+    <Authors>K-Society Team</Authors>
+    <Company>K-Society</Company>
+    <Copyright>Copyright © K-Society and contributors 2023. All rights reserved.</Copyright>
+	<PackageLicenseExpression>MS-RL</PackageLicenseExpression>
+	<Description>K-Society SharpCubeProgrammer is an STM CubeProgrammer_API wrapper.</Description>
+    <Product>K-Society SharpCubeProgrammer</Product>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://k-society.github.io/KSociety.SharpCubeProgrammer</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/K-Society/KSociety.SharpCubeProgrammer</RepositoryUrl>	
+	<PackageReleaseNotes>https:%2F%2Fk-society.github.io%2FKSociety.SharpCubeProgrammer%2F$(ProjectName)%2Fchange-log</PackageReleaseNotes>
+	<RepositoryType>git</RepositoryType>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<PackageTags>ksociety;k-society;wrapper;cubeprogrammer_api</PackageTags>
+	<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
+      <PrivateAssets>all</PrivateAssets>
+      <Version>3.6.133</Version>
+    </PackageReference>
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+  <!--Target Name="PostBuild" BeforeTargets="PostBuildEvent">
+    <Exec Command="echo OutputPath: $(OutputPath)&#xD;&#xA;echo BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)&#xD;&#xA;" />
+  </Target-->
+
+  <Import Project="Icon.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('Icon.Build.props') " />
+  <Import Project="CSharp.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('CSharp.Build.props') " />
+  <Import Project="Readme.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('Readme.Build.props') " />
+  <Import Project="Custom.Build.props" Condition=" Exists('Custom.Build.props') " />
+</Project>
