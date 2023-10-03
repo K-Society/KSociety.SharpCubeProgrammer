@@ -89,9 +89,6 @@ namespace KSociety.Test
 
                 if (!connectionResult.Equals(KSociety.SharpCubeProgrammer.Enum.CubeProgrammerError.CubeprogrammerNoError))
                 {
-                    //_logger.LogWarning("ProgrammingConnect abort on ConnectStLink: {0}", connectionResult);
-                    //return false;
-
                     return false;
                 }
 
