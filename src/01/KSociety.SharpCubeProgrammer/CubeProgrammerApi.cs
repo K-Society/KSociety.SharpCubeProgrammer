@@ -821,13 +821,6 @@ namespace KSociety.SharpCubeProgrammer
         //Loaders module groups loaders functions.
 
         /// <inheritdoc />
-        private void SetLoadersPath(string path)
-        {
-            this._logger?.LogTrace("SetLoadersPath: {0}", path);
-            Native.ProgrammerApi.SetLoadersPath(path.Replace(@"\", "/"));
-        }
-
-        /// <inheritdoc />
         public void SetExternalLoadersPath(string path)
         {
             throw new NotImplementedException();
