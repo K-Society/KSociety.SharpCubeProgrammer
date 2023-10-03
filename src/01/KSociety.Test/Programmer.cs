@@ -92,9 +92,6 @@ namespace KSociety.Test
                     return false;
                 }
 
-                //_cubeProgrammerApi.Disconnect(); //Do not disconnect after execute, with udf.
-                //_cubeProgrammerApi.DeleteInterfaceList();
-
                 return true;
             }
             catch (Exception)
