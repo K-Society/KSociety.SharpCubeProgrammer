@@ -146,7 +146,6 @@ namespace KSociety.SharpCubeProgrammer.Native
             uint skipErase, uint verify, int isMassErase, string obCommand, int run);
 
         [DllImport(ProgrammerDll, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //internal static extern int GetStorageStructure([MarshalAs(UnmanagedType.U4)] StorageStructure deviceStorageStruct);
         internal static extern int GetStorageStructure(IntPtr deviceStorageStruct);
         //internal static extern int GetStorageStructure(ref StorageStructure deviceStorageStruct);
 
