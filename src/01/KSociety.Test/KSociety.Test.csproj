@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Log.Serilog.Sinks.XUnit" Version="1.2.44" />
+    <PackageReference Include="KSociety.Log.Serilog.Sinks.XUnit" Version="1.2.48" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
