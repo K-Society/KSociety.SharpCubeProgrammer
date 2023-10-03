@@ -25,8 +25,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         public void GetStLinkPorts();
 
-        //public event EventHandler<NewMessageEventArgs> NewMessage;
-
         #region [STLINK]
 
         //STLINK module groups debug ports JTAG/SWD functions together.
