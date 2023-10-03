@@ -298,8 +298,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void ConnectDfuBootloader2()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
