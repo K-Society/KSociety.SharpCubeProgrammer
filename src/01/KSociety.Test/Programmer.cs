@@ -79,9 +79,6 @@ namespace KSociety.Test
 
                 if (!stLinkList.Any())
                 {
-                    //_logger.LogWarning("ProgrammingConnect abort: {0}", "stLink not found!");
-                    //return false;
-
                     return false;
                 }
 
