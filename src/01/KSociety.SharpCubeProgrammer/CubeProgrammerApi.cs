@@ -326,28 +326,6 @@ namespace KSociety.SharpCubeProgrammer
         // General module groups general purposes functions used by any interface.
 
         /// <inheritdoc />
-        //private static DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
-        //{
-        //    var callbacksHandle = new DisplayCallBacks
-        //    {
-        //        InitProgressBar = Marshal.GetFunctionPointerForDelegate(initProgressBar),
-        //        LogMessage = Marshal.GetFunctionPointerForDelegate(messageReceived),
-        //        LoadBar = Marshal.GetFunctionPointerForDelegate(progressBarUpdate)
-        //    };
-
-        //    Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
-
-        //    return callbacksHandle;
-        //}
-
-        //private static void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
-        //{
-        //    //var verbosityLevel = (byte) 0;
-        //    Native.ProgrammerApi.SetVerbosityLevel((int)level);
-        //    //Native.ProgrammerApi.SetVerbosityLevel(verbosityLevel);
-        //}
-
-        /// <inheritdoc />
         public bool CheckDeviceConnection()
         {
             //Register();
