@@ -25,8 +25,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         public void GetStLinkPorts();
 
-        //void Register();
-
         //public event EventHandler<NewMessageEventArgs> NewMessage;
 
         #region [STLINK]
