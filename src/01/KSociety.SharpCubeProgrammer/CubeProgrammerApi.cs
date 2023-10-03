@@ -304,8 +304,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void ConnectSpiBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
