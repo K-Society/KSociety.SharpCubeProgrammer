@@ -108,7 +108,6 @@ namespace KSociety.Test
             var optionBytesInterface = this._cubeProgrammerApi.InitOptionBytesInterface();
             if (optionBytesInterface != null)
             {
-                //_logger.LogTrace("PeripheralC Name: {0} Description: {1}", optionBytesInterface.Name, optionBytesInterface.Description);
                 output = true;
             }
 
