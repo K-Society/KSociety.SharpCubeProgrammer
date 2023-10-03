@@ -147,7 +147,6 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         [DllImport(ProgrammerDll, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         internal static extern int GetStorageStructure(IntPtr deviceStorageStruct);
-        //internal static extern int GetStorageStructure(ref StorageStructure deviceStorageStruct);
 
         #endregion
 
