@@ -111,10 +111,6 @@ namespace KSociety.Test
                 //_logger.LogTrace("PeripheralC Name: {0} Description: {1}", optionBytesInterface.Name, optionBytesInterface.Description);
                 output = true;
             }
-            else
-            {
-                //_logger.LogWarning("PeripheralC is null!");
-            }
 
             return output;
         }
