@@ -1,6 +1,6 @@
-[![Logo](https://raw.githubusercontent.com/k-society/KSociety.Base/master/docs/K-Society__Logo_vs-negative.png)](https://github.com/K-Society)
+[![Logo](https://github.com/K-Society/KSociety.SharpCubeProgrammer/blob/master/docs/K-Society__Logo_vs-negative.png)](https://github.com/K-Society)
 
-[![build status](https://img.shields.io/github/actions/workflow/status/K-Society/KSociety.SharpCubeProgrammer/build.yml?branch=develop)](https://github.com/K-Society/KSociety.SharpCubeProgrammer/actions/workflows/build.yml?query=branch%3Adevelop) [![NuGet](https://img.shields.io/nuget/v/KSociety.SharpCubeProgrammer)](https://www.nuget.org/profiles/K-Society)
+[![build status](https://img.shields.io/github/actions/workflow/status/K-Society/KSociety.SharpCubeProgrammer/build.yml?branch=develop)](https://github.com/K-Society/KSociety.SharpCubeProgrammer/actions/workflows/build.yml?query=branch%3Adevelop) [![NuGet](https://img.shields.io/nuget/v/KSociety.SharpCubeProgrammer)](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer)
 
 [KSociety.SharpCubeProgrammer Home](https://github.com/K-Society/KSociety.SharpCubeProgrammer)
 
@@ -35,7 +35,7 @@ builder.RegisterModule(new KSociety.SharpCubeProgrammer.Bindings.ProgrammerApi()
 
 ```csharp
 var stLinkList = _cubeProgrammerApi.GetStLinkList();
-var stLink = (Programmer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
 var connectionResult = _cubeProgrammerApi.ConnectStLink(stLink);
 ```
 

@@ -32,7 +32,7 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<IncludeSymbols>true</IncludeSymbols>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<PackageTags>ksociety;k-society;wrapper;cubeprogrammer_api</PackageTags>
+	<PackageTags>cubeprogrammer_api;cubeprogrammerapi;wrapper;cubeprogrammer;stm32;st-link;ksociety;k-society</PackageTags>
 	<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
   
