@@ -35,22 +35,18 @@ namespace Programming
             CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
             CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
-            Console.WriteLine("Press Enter.");
-            //Console.ReadLine();
 
-            //if (CubeProgrammerApi.StLinkReady)
-            //{
-                var stLinkList = CubeProgrammerApi.GetStLinkList();
-                if (stLinkList.Any())
-                {
-                    var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
-                    var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
-                }
-                else
-                {
-                    Logger.LogWarning("No ST-Link found!");
-                }
-            //}
+            var stLinkList = CubeProgrammerApi.GetStLinkList();
+            if (stLinkList.Any())
+            {
+                var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+                var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
+            }
+            else
+            {
+                Logger.LogWarning("No ST-Link found!");
+            }
+            
 
 
             Console.ReadLine();
