@@ -6,6 +6,7 @@
     <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
     </Content>
   </ItemGroup>
   <ItemGroup>
