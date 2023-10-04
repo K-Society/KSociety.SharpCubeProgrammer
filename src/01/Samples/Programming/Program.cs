@@ -55,9 +55,6 @@ namespace Programming
         private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
         {
             Logger?.LogInformation("StLinksFound...");
-
-            
-
         }
 
         private static void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)
