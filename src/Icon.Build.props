@@ -10,7 +10,7 @@
 	<None Include="$(MSBuildThisFileDirectory)..\assets\icon\icon.png">
 	  <Pack>true</Pack>
 	  <PackagePath>images</PackagePath>
-	  <Visible>true</Visible>
+	  <Visible>false</Visible>
 	</None>
   </ItemGroup>
   
