@@ -5,8 +5,6 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <NuspecFile>$(MSBuildThisFileName).nuspec</NuspecFile>
-    <NuspecBasePath>$(PublishDir)</NuspecBasePath>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -14,10 +12,15 @@
     <PackageReference Include="KSociety.Wmi" Version="0.0.8" />
   </ItemGroup>
 
-  <Target Name="PrePack" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion">
-    <PropertyGroup>
-      <NuspecProperties>version=$(BuildVersion3Components)</NuspecProperties>
-    </PropertyGroup>
-  </Target>
+  <ItemGroup>
+    <Content Include="Build\KSociety.SharpCubeProgrammer.targets" Pack="true" PackagePath="build" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
+    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
+    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false"/>
+    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false"/>
+  </ItemGroup>
 
 </Project>

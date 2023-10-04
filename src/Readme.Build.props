@@ -4,13 +4,13 @@
 <Project>
   <PropertyGroup>
 	<BaseReadmePath>$(MSBuildThisFileDirectory)..\docs\$(ProjectName)\</BaseReadmePath>
-	<PackageReadmeFile Condition=" Exists('$(BaseReadmePath)README.md') ">README.md</PackageReadmeFile>
+	<PackageReadmeFile Condition=" Exists('$(BaseReadmePath)README.md') ">docs\README.md</PackageReadmeFile>
   </PropertyGroup>
   
   <ItemGroup Condition=" Exists('$(BaseReadmePath)README.md') ">
 	<None Include="$(BaseReadmePath)README.md">
-	  <Pack>True</Pack>
-	  <PackagePath>\</PackagePath>
+	  <Pack>true</Pack>
+	  <PackagePath>docs</PackagePath>
 	</None>
   </ItemGroup>
 
