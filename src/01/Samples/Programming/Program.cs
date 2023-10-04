@@ -5,6 +5,7 @@ namespace Programming
     using System;
     using System.Linq;
     using Autofac;
+    using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
     using Microsoft.Extensions.Configuration;
@@ -32,22 +33,37 @@ namespace Programming
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
 
-            CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
-            CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
-            CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
+            //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
+            //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
+            //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
+
+                if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                {
+                    var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
+                    if (generalInfo != null)
+                    {
+                        Logger.LogInformation("INFO: {0} \n {1} \n {2} \n {3}", generalInfo.Board, generalInfo.BootloaderVersion, generalInfo.Cpu, generalInfo.Description);
+                    }
+                }
+                else
+                {
+                    Logger.LogWarning(connectionResult.ToString());
+                }
             }
             else
             {
                 Logger.LogWarning("No ST-Link found!");
             }
-            
 
+            CubeProgrammerApi.Disconnect();
+            CubeProgrammerApi.DeleteInterfaceList();
 
             Console.ReadLine();
         }
