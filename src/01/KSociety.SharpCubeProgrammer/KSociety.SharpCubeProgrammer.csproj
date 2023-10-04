@@ -5,8 +5,6 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <!--<NuspecFile>$(MSBuildThisFileName).nuspec</NuspecFile>
-    <NuspecBasePath>$(PublishDir)</NuspecBasePath>-->
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -19,37 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false"/>
-    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false"/>
+    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
+    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
     <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false"/>
     <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false"/>
   </ItemGroup>
-
-  <!--<ItemGroup>-->
-    <!--<NativeX64 Include="..\..\..\Programmer\*.dll"/>-->
-    <!--<ProgrammerX64 Include="..\..\..\x64\Release\*.dll"/>
-    <DataBase Include="..\..\..\Data_Base\*.*"/>
-    <FlashLoader Include="..\..\..\Programmer\FlashLoader\*.*"/>-->
-
-    <!--<None Include="@(NativeX64)" />-->
-    <!--<None Remove="@(ProgrammerX64)" />
-    <None Remove="@(DataBase)" />
-    <None Remove="@(FlashLoader)" />-->
-
-    <!--<Content Include="@(NativeX64)" Pack="true" PackagePath="runtimes\win-x64\native"/>-->
-    <!--<None Include="@(ProgrammerX64)" Pack="true" PackagePath="runtimes\win-x64\native"/>
-    <None Include="@(DataBase)" Pack="true" PackagePath="contentFiles\Data_Base"/>
-    <None Include="@(FlashLoader)" Pack="true" PackagePath="contentFiles\FlashLoader"/>-->
-    <!--<None Remove="@(NativeX64)" />-->
-    
-  <!--</ItemGroup>-->
-
-  
-
-  <!--<Target Name="PrePack" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion">
-    <PropertyGroup>
-      <NuspecProperties>version=$(BuildVersion3Components)</NuspecProperties>
-    </PropertyGroup>
-  </Target>-->
 
 </Project>
