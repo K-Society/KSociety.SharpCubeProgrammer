@@ -6,7 +6,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Get supported frequencies for JTAG and SWD ineterfaces.
+    /// Get supported frequencies for JTAG and SWD interfaces.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public class Frequencies

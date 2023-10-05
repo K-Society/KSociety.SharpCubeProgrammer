@@ -13,7 +13,7 @@ KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0 (x64).
 This is a C# wrapper for STM32 CubeProgrammer_API v2.14.0 (x64 only).
 The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
 for the purpose of flash downloads or general memory access. 
-The ST-Link drivers is required, and can be downloaded from st.com and installed (STSW-LINK009).
+The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
 This has been tested on Windows 10, you don't need to install cubeprogrammer.
 
 ### KSociety.SharpCubeProgrammer
@@ -22,6 +22,31 @@ CubeProgrammer_API C# wrapper.
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).
+
+## Currently supported features
+- GetStLinkList
+- ConnectStLink
+- Reset
+- GetDfuDeviceList
+- ConnectDfuBootloader
+- CheckDeviceConnection
+- GetDeviceGeneralInf
+- ReadMemory
+- WriteMemory
+- DownloadFile
+- Execute
+- MassErase
+- SectorErase
+- FileOpen
+- Verify
+- VerifyMemory
+- SaveMemoryToFile
+- Disconnect
+- DeleteInterfaceList
+- GetStorageStructure
+- SendOptionBytesCmd
+- InitOptionBytesInterface
+- ObDisplay
 
 ## Get Started
 

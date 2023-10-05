@@ -49,7 +49,27 @@ namespace Programming
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
                     if (generalInfo != null)
                     {
-                        Logger.LogInformation("INFO: {0} \n {1} \n {2} \n {3}", generalInfo.Board, generalInfo.BootloaderVersion, generalInfo.Cpu, generalInfo.Description);
+                        Logger.LogInformation("INFO: \n" +
+                                              "Board: {0} \n" +
+                                              "Bootloader Version: {1} \n" +
+                                              "Cpu: {2} \n" +
+                                              "Description: {3} \n" +
+                                              "DeviceId: {4} \n" +
+                                              "FlashSize: {5} \n" +
+                                              "RevisionId: {6} \n" +
+                                              "Name: {7} \n" +
+                                              "Series: {8} \n" +
+                                              "Type: {9}",
+                            generalInfo.Board,
+                            generalInfo.BootloaderVersion,
+                            generalInfo.Cpu,
+                            generalInfo.Description,
+                            generalInfo.DeviceId,
+                            generalInfo.FlashSize,
+                            generalInfo.RevisionId,
+                            generalInfo.Name,
+                            generalInfo.Series,
+                            generalInfo.Type);
                     }
                 }
                 else
