@@ -30,7 +30,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <summary>
-        /// This routine allows to get ST-LINK conneted probe(s).
+        /// This routine allows to get ST-LINK connected probe(s).
         /// </summary>
         /// <param name="shared"></param>
         /// <returns></returns>
@@ -111,17 +111,17 @@ namespace KSociety.SharpCubeProgrammer.Interface
         bool CheckDeviceConnection();
 
         /// <summary>
-        /// This routine allows to get general device informations.
+        /// This routine allows to get general device information.
         /// </summary>
         GeneralInf? GetDeviceGeneralInf();
 
         /// <summary>
-        /// This routine allows to receive memory data on the used interface with the configration already initialized.
+        /// This routine allows to receive memory data on the used interface with the configuration already initialized.
         /// </summary>
         (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize);
 
         /// <summary>
-        /// This routine allows to write memory data on the user interface with the configration already initialized.
+        /// This routine allows to write memory data on the user interface with the configuration already initialized.
         /// </summary>
         CubeProgrammerError WriteMemory(string address, byte[] data);
 
@@ -174,12 +174,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         void FreeFileData();
 
         /// <summary>
-        /// This routine allows to verfiy if the indicated file data is identical to Flash memory content.
+        /// This routine allows to verify if the indicated file data is identical to Flash memory content.
         /// </summary>
         CubeProgrammerError Verify(byte[] data, string address);
 
         /// <summary>
-        /// This routine allows to verfiy if the indicated data[] is identical to Flash memory content.
+        /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
         /// </summary>
         CubeProgrammerError VerifyMemory(string address, byte[] data);
 
@@ -224,7 +224,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// The option bytes are configured by the end user depending on the application requirements.
         /// </summary>
         CubeProgrammerError SendOptionBytesCmd(string command);
-        //CubeProgrammerError SendOptionBytesCmd2(string command);
 
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.

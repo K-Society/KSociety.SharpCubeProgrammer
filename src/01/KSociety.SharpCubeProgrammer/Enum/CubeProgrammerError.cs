@@ -3,7 +3,7 @@
 namespace KSociety.SharpCubeProgrammer.Enum
 {
     /// <summary>
-    /// List of errors that can be occured.
+    /// List of errors that can be occurred.
     /// </summary>
     public enum CubeProgrammerError
     {
@@ -33,7 +33,7 @@ namespace KSociety.SharpCubeProgrammer.Enum
         /** Operation not supported or unimplemented on this interface */
         CubeprogrammerErrorNotSupported = -5,
 
-        /** Interface not supported or unimplemented on this plateform */
+        /** Interface not supported or unimplemented on this platform */
         CubeprogrammerErrorInterfaceNotSupported = -6,
 
         /** Insufficient memory */

@@ -5,6 +5,7 @@ namespace Programming
     using System;
     using System.Linq;
     using Autofac;
+    using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
     using Microsoft.Extensions.Configuration;
@@ -32,22 +33,57 @@ namespace Programming
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
 
-            CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
-            CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
-            CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
+            //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
+            //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
+            //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
+
+                if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                {
+                    var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
+                    if (generalInfo != null)
+                    {
+                        Logger.LogInformation("INFO: \n" +
+                                              "Board: {0} \n" +
+                                              "Bootloader Version: {1} \n" +
+                                              "Cpu: {2} \n" +
+                                              "Description: {3} \n" +
+                                              "DeviceId: {4} \n" +
+                                              "FlashSize: {5} \n" +
+                                              "RevisionId: {6} \n" +
+                                              "Name: {7} \n" +
+                                              "Series: {8} \n" +
+                                              "Type: {9}",
+                            generalInfo.Board,
+                            generalInfo.BootloaderVersion,
+                            generalInfo.Cpu,
+                            generalInfo.Description,
+                            generalInfo.DeviceId,
+                            generalInfo.FlashSize,
+                            generalInfo.RevisionId,
+                            generalInfo.Name,
+                            generalInfo.Series,
+                            generalInfo.Type);
+                    }
+                }
+                else
+                {
+                    Logger.LogWarning(connectionResult.ToString());
+                }
             }
             else
             {
                 Logger.LogWarning("No ST-Link found!");
             }
-            
 
+            CubeProgrammerApi.Disconnect();
+            CubeProgrammerApi.DeleteInterfaceList();
 
             Console.ReadLine();
         }
@@ -55,9 +91,6 @@ namespace Programming
         private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
         {
             Logger?.LogInformation("StLinksFound...");
-
-            
-
         }
 
         private static void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)

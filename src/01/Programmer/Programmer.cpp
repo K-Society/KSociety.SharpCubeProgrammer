@@ -319,7 +319,6 @@ int SaveMemoryToFile(int address, int size, const wchar_t* sFileName)
 
 int Disconnect() 
 {
-	//__try 
 	try
 	{
 		disconnect();
@@ -331,7 +330,6 @@ int Disconnect()
 		return -99;
 	}
 	catch (...) 
-	//__except (EXCEPTION_EXECUTE_HANDLER)
 	{
 		return -99;
 	}
