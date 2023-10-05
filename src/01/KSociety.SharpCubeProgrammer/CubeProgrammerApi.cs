@@ -961,83 +961,83 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
-        {
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        //{
 
-            message = Regex.Replace(message, "(?<!\r)\n", "");
-            if (String.IsNullOrEmpty(message))
-            {
-                return;
-            }
+        //    message = Regex.Replace(message, "(?<!\r)\n", "");
+        //    if (String.IsNullOrEmpty(message))
+        //    {
+        //        return;
+        //    }
 
-            switch ((MessageType) messageType)
-            {
-                case MessageType.Normal:
-                    this._logger?.LogTrace(@"{0}", message);
-                    break;
+        //    switch ((MessageType) messageType)
+        //    {
+        //        case MessageType.Normal:
+        //            this._logger?.LogTrace(@"{0}", message);
+        //            break;
 
-                case MessageType.Info:
-                    this._logger?.LogDebug(@"{0}", message);
-                    break;
+        //        case MessageType.Info:
+        //            this._logger?.LogDebug(@"{0}", message);
+        //            break;
 
-                case MessageType.GreenInfo:
-                    this._logger?.LogInformation(@"{0}", message);
-                    break;
+        //        case MessageType.GreenInfo:
+        //            this._logger?.LogInformation(@"{0}", message);
+        //            break;
 
-                case MessageType.Title:
-                    this._logger?.LogInformation(@"{0}", message);
-                    break;
+        //        case MessageType.Title:
+        //            this._logger?.LogInformation(@"{0}", message);
+        //            break;
 
-                case MessageType.Warning:
-                    this._logger?.LogWarning(@"{0}", message);
-                    break;
+        //        case MessageType.Warning:
+        //            this._logger?.LogWarning(@"{0}", message);
+        //            break;
 
-                case MessageType.Error:
-                    this._logger?.LogError(@"{0}", message);
-                    break;
+        //        case MessageType.Error:
+        //            this._logger?.LogError(@"{0}", message);
+        //            break;
 
-                case MessageType.Verbosity1:
-                case MessageType.Verbosity2:
-                case MessageType.Verbosity3:
-                    //_logger.LogTrace(@"{0}", message);
-                    break;
+        //        case MessageType.Verbosity1:
+        //        case MessageType.Verbosity2:
+        //        case MessageType.Verbosity3:
+        //            //_logger.LogTrace(@"{0}", message);
+        //            break;
 
-                case MessageType.GreenInfoNoPopup:
-                case MessageType.WarningNoPopup:
-                case MessageType.ErrorNoPopup:
-                    break;
+        //        case MessageType.GreenInfoNoPopup:
+        //        case MessageType.WarningNoPopup:
+        //        case MessageType.ErrorNoPopup:
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void InitProgressBar()
-        {
-            //System.Console.WriteLine("InitProgressBar: ");
-            //_logger.LogDebug("Application InitProgressBar.");
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void InitProgressBar()
+        //{
+        //    //System.Console.WriteLine("InitProgressBar: ");
+        //    //_logger.LogDebug("Application InitProgressBar.");
 
-            //lock (_logger)
-            //{
-            //    //System.Console.WriteLine("Application InitProgressBar.");
-            //    _logger.LogDebug("Application InitProgressBar.");
-            //}
-        }
+        //    //lock (_logger)
+        //    //{
+        //    //    //System.Console.WriteLine("Application InitProgressBar.");
+        //    //    _logger.LogDebug("Application InitProgressBar.");
+        //    //}
+        //}
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ProgressBarUpdate(int currentProgress, int total)
-        {
-            //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
-            //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void ProgressBarUpdate(int currentProgress, int total)
+        //{
+        //    //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
+        //    //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
 
-            //lock (_logger)
-            //{
-            //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-            //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-            //}
-        }
+        //    //lock (_logger)
+        //    //{
+        //    //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //    //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //    //}
+        //}
 
         private CubeProgrammerError CheckResult(int result)
         {
