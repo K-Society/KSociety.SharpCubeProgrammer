@@ -7,7 +7,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\assets\icon\icon.png" Pack="true" PackagePath="images" Visible="false"/>
+	<None Include="$(MSBuildThisFileDirectory)..\assets\icon\icon.png">
+	  <Pack>true</Pack>
+	  <PackagePath>images</PackagePath>
+	  <Visible>false</Visible>
+	</None>
   </ItemGroup>
   
 </Project>

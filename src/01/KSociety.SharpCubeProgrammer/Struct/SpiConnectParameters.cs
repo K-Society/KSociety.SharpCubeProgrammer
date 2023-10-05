@@ -13,7 +13,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
         public uint baudrate;
 
         /// <summary>
-        /// Crc polynom value.
+        /// Crc polynomial value.
         /// </summary>
         public ushort crcPol;
 

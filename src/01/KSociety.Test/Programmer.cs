@@ -45,7 +45,7 @@ namespace KSociety.Test
 
             IWmiManager wmiManager = new WmiManager(this._loggerWmiManager);
 
-            this._cubeProgrammerApi = new CubeProgrammerApi(this._loggerCubeProgrammerApi, wmiManager);
+            this._cubeProgrammerApi = new CubeProgrammerApi(wmiManager, this._loggerCubeProgrammerApi);
 
             this._cubeProgrammerApi.StLinkAdded += this.CubeProgrammerApiOnStLinkAdded;
             this._cubeProgrammerApi.StLinkRemoved += this.CubeProgrammerApiOnStLinkRemoved;
@@ -58,7 +58,7 @@ namespace KSociety.Test
 
         private void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
         {
-            this._logger?.LogTrace("CubeProgrammerApiOnStLinksFoundStatus: {0}", "Buuu");
+            this._logger?.LogTrace("CubeProgrammerApiOnStLinksFoundStatus: {0}", "OK");
         }
 
         private void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)

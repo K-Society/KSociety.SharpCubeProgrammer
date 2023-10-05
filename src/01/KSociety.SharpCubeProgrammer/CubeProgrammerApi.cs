@@ -15,6 +15,7 @@ namespace KSociety.SharpCubeProgrammer
     using Events;
     using Interface;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
     using Wmi;
 
@@ -38,14 +39,12 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager)
+        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
         {
             this.WmiManager = wmiManager;
-        }
 
-        public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger, IWmiManager wmiManager) 
-            : this(wmiManager)
-        {
+            logger ??= new NullLogger<CubeProgrammerApi>();
+
             this._logger = logger;
 
             this._logger?.LogTrace("CubeProgrammerApi IntPtr size: {0}", IntPtr.Size);

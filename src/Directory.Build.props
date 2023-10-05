@@ -21,7 +21,7 @@
     <Company>K-Society</Company>
     <Copyright>Copyright © K-Society and contributors 2023. All rights reserved.</Copyright>
 	<PackageLicenseExpression>MS-RL</PackageLicenseExpression>
-	<Description>K-Society SharpCubeProgrammer is an STM CubeProgrammer_API wrapper.</Description>
+	<Description>K-Society SharpCubeProgrammer is an STM32 CubeProgrammer_API wrapper.</Description>
     <Product>K-Society SharpCubeProgrammer</Product>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
