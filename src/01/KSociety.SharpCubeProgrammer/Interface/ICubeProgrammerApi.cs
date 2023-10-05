@@ -11,19 +11,19 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
     public interface ICubeProgrammerApi
     {
-        public event EventHandler<StLinkFoundEventArgs> StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs> StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs> StLinkRemoved;
+        event EventHandler<StLinkFoundEventArgs> StLinksFoundStatus;
+        event EventHandler<StLinkAddedEventArgs> StLinkAdded;
+        event EventHandler<StLinkRemovedEventArgs> StLinkRemoved;
 
-        public event EventHandler<Stm32BootLoaderFoundEventArgs> Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs> Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs> Stm32BootLoaderRemoved;
+        event EventHandler<Stm32BootLoaderFoundEventArgs> Stm32BootLoaderFoundStatus;
+        event EventHandler<Stm32BootLoaderAddedEventArgs> Stm32BootLoaderAdded;
+        event EventHandler<Stm32BootLoaderRemovedEventArgs> Stm32BootLoaderRemoved;
 
-        public bool StLinkReady { get; }
+        bool StLinkReady { get; }
 
-        public bool Stm32BootLoaderReady { get; }
+        bool Stm32BootLoaderReady { get; }
 
-        public void GetStLinkPorts();
+        void GetStLinkPorts();
 
         #region [STLINK]
 
@@ -113,7 +113,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get general device information.
         /// </summary>
-        GeneralInf? GetDeviceGeneralInf();
+        GeneralInf GetDeviceGeneralInf();
 
         /// <summary>
         /// This routine allows to receive memory data on the used interface with the configuration already initialized.
@@ -166,7 +166,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to open and get data from any supported file extension.
         /// </summary>
-        FileDataC? FileOpen(string filePath);
+        FileDataC FileOpen(string filePath);
 
         /// <summary>
         /// This routine allows to clean up the handled file data.
@@ -228,7 +228,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        PeripheralC? InitOptionBytesInterface();
+        PeripheralC InitOptionBytesInterface();
 
         /// <summary>
         /// This routine allows to display the Option bytes.
