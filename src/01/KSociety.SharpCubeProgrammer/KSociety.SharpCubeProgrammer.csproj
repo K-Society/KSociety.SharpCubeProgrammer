@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Wmi" Version="0.0.8" />
+    <PackageReference Include="KSociety.Wmi" Version="0.0.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
-    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest"/>
-    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false"/>
-    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false"/>
+    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false" />
+    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false" />
   </ItemGroup>
 
 </Project>

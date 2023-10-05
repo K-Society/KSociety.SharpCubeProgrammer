@@ -21,15 +21,15 @@ namespace KSociety.SharpCubeProgrammer
 
     public class CubeProgrammerApi : ICubeProgrammerApi
     {
-        public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
+        public event EventHandler<StLinkFoundEventArgs> StLinksFoundStatus;
+        public event EventHandler<StLinkAddedEventArgs> StLinkAdded;
+        public event EventHandler<StLinkRemovedEventArgs> StLinkRemoved;
 
-        public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
+        public event EventHandler<Stm32BootLoaderFoundEventArgs> Stm32BootLoaderFoundStatus;
+        public event EventHandler<Stm32BootLoaderAddedEventArgs> Stm32BootLoaderAdded;
+        public event EventHandler<Stm32BootLoaderRemovedEventArgs> Stm32BootLoaderRemoved;
 
-        private readonly ILogger<CubeProgrammerApi>? _logger;
+        private readonly ILogger<CubeProgrammerApi> _logger;
 
         protected readonly IWmiManager WmiManager;
 
@@ -39,11 +39,14 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
+        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi> logger = default) 
         {
             this.WmiManager = wmiManager;
 
-            logger ??= new NullLogger<CubeProgrammerApi>();
+            if (logger == null)
+            {
+                logger = new NullLogger<CubeProgrammerApi>();
+            }
 
             this._logger = logger;
 
@@ -82,7 +85,7 @@ namespace KSociety.SharpCubeProgrammer
             this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
         }
 
-        private void WmiManagerOnStLinkPortChangeStatus(object? sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
+        private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
         {
             this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
@@ -97,7 +100,7 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        private void WmiManagerOnStLinkPortScanned(object? sender, Wmi.StLink.StLinkPortScannedEventArgs e)
+        private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
         {
             this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortScanned: {0}", e.PortsList.Count);
 
@@ -108,7 +111,7 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        private void WmiManagerOnStm32BootLoaderPortChangeStatus(object? sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
+        private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
         {
             this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
@@ -123,7 +126,7 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        private void WmiManagerOnStm32BootLoaderPortScanned(object? sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
+        private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
         {
             this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortScanned: {0}", e.PortsList.Count);
 
@@ -336,9 +339,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public GeneralInf? GetDeviceGeneralInf()
+        public GeneralInf GetDeviceGeneralInf()
         {
-            GeneralInf? generalInf = null;
+            GeneralInf generalInf = null;
             var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
 
             try
@@ -420,7 +423,7 @@ namespace KSociety.SharpCubeProgrammer
             var binPath = @"";
 
 
-            string? filePath;
+            string filePath;
             switch (extension)
             {
                 case ".hex":
@@ -526,9 +529,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public FileDataC? FileOpen(string filePath)
+        public FileDataC FileOpen(string filePath)
         {
-            FileDataC? fileData = null;
+            FileDataC fileData = null;
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
@@ -769,10 +772,10 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public PeripheralC? InitOptionBytesInterface()
+        public PeripheralC InitOptionBytesInterface()
         {
             this._logger?.LogTrace("InitOptionBytesInterface.");
-            PeripheralC? generalInf = null;
+            PeripheralC generalInf = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
@@ -958,83 +961,83 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
-        {
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        //{
 
-            message = Regex.Replace(message, "(?<!\r)\n", "");
-            if (String.IsNullOrEmpty(message))
-            {
-                return;
-            }
+        //    message = Regex.Replace(message, "(?<!\r)\n", "");
+        //    if (String.IsNullOrEmpty(message))
+        //    {
+        //        return;
+        //    }
 
-            switch ((MessageType) messageType)
-            {
-                case MessageType.Normal:
-                    this._logger?.LogTrace(@"{0}", message);
-                    break;
+        //    switch ((MessageType) messageType)
+        //    {
+        //        case MessageType.Normal:
+        //            this._logger?.LogTrace(@"{0}", message);
+        //            break;
 
-                case MessageType.Info:
-                    this._logger?.LogDebug(@"{0}", message);
-                    break;
+        //        case MessageType.Info:
+        //            this._logger?.LogDebug(@"{0}", message);
+        //            break;
 
-                case MessageType.GreenInfo:
-                    this._logger?.LogInformation(@"{0}", message);
-                    break;
+        //        case MessageType.GreenInfo:
+        //            this._logger?.LogInformation(@"{0}", message);
+        //            break;
 
-                case MessageType.Title:
-                    this._logger?.LogInformation(@"{0}", message);
-                    break;
+        //        case MessageType.Title:
+        //            this._logger?.LogInformation(@"{0}", message);
+        //            break;
 
-                case MessageType.Warning:
-                    this._logger?.LogWarning(@"{0}", message);
-                    break;
+        //        case MessageType.Warning:
+        //            this._logger?.LogWarning(@"{0}", message);
+        //            break;
 
-                case MessageType.Error:
-                    this._logger?.LogError(@"{0}", message);
-                    break;
+        //        case MessageType.Error:
+        //            this._logger?.LogError(@"{0}", message);
+        //            break;
 
-                case MessageType.Verbosity1:
-                case MessageType.Verbosity2:
-                case MessageType.Verbosity3:
-                    //_logger.LogTrace(@"{0}", message);
-                    break;
+        //        case MessageType.Verbosity1:
+        //        case MessageType.Verbosity2:
+        //        case MessageType.Verbosity3:
+        //            //_logger.LogTrace(@"{0}", message);
+        //            break;
 
-                case MessageType.GreenInfoNoPopup:
-                case MessageType.WarningNoPopup:
-                case MessageType.ErrorNoPopup:
-                    break;
+        //        case MessageType.GreenInfoNoPopup:
+        //        case MessageType.WarningNoPopup:
+        //        case MessageType.ErrorNoPopup:
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void InitProgressBar()
-        {
-            //System.Console.WriteLine("InitProgressBar: ");
-            //_logger.LogDebug("Application InitProgressBar.");
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void InitProgressBar()
+        //{
+        //    //System.Console.WriteLine("InitProgressBar: ");
+        //    //_logger.LogDebug("Application InitProgressBar.");
 
-            //lock (_logger)
-            //{
-            //    //System.Console.WriteLine("Application InitProgressBar.");
-            //    _logger.LogDebug("Application InitProgressBar.");
-            //}
-        }
+        //    //lock (_logger)
+        //    //{
+        //    //    //System.Console.WriteLine("Application InitProgressBar.");
+        //    //    _logger.LogDebug("Application InitProgressBar.");
+        //    //}
+        //}
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private void ProgressBarUpdate(int currentProgress, int total)
-        {
-            //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
-            //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //[MethodImpl(MethodImplOptions.NoInlining)]
+        //private void ProgressBarUpdate(int currentProgress, int total)
+        //{
+        //    //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
+        //    //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
 
-            //lock (_logger)
-            //{
-            //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-            //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-            //}
-        }
+        //    //lock (_logger)
+        //    //{
+        //    //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //    //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
+        //    //}
+        //}
 
         private CubeProgrammerError CheckResult(int result)
         {
