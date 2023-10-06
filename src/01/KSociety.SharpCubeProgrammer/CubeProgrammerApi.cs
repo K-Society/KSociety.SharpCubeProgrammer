@@ -923,12 +923,7 @@ namespace KSociety.SharpCubeProgrammer
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
             var parseResult = UInt32.TryParse(StringFilter(hex), NumberStyles.HexNumber, formatProvider, out var result);
 
-            if (parseResult)
-            {
-                return result;
-            }
-
-            return 0;
+            return parseResult ? result : 0;
         }
 
         public int HexConverterToInt(string hex)
@@ -936,12 +931,19 @@ namespace KSociety.SharpCubeProgrammer
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
             var parseResult = Int32.TryParse(StringFilter(hex), NumberStyles.HexNumber, formatProvider, out var result);
 
-            if (parseResult)
-            {
-                return result;
-            }
+            return parseResult ? result : 0;
+        }
 
-            return 0;
+        public string HexConverterToString(uint hex)
+        {
+            var output = "0x" + hex.ToString("X");
+            return output;
+        }
+
+        public string HexConverterToString(int hex)
+        {
+            var output = "0x" + hex.ToString("X");
+            return output;
         }
 
         private static string StringFilter(string hex)

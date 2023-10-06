@@ -329,6 +329,10 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         int HexConverterToInt(string hex);
 
+        string HexConverterToString(uint hex);
+
+        string HexConverterToString(int hex);
+
         #endregion
 
     }
