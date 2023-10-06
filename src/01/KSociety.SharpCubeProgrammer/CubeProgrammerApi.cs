@@ -918,6 +918,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Util]
 
+        /// <inheritdoc />
         public uint HexConverterToUint(string hex)
         {
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
@@ -926,6 +927,7 @@ namespace KSociety.SharpCubeProgrammer
             return parseResult ? result : 0;
         }
 
+        /// <inheritdoc />
         public int HexConverterToInt(string hex)
         {
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
@@ -934,12 +936,14 @@ namespace KSociety.SharpCubeProgrammer
             return parseResult ? result : 0;
         }
 
+        /// <inheritdoc />
         public string HexConverterToString(uint hex)
         {
             var output = "0x" + hex.ToString("X");
             return output;
         }
 
+        /// <inheritdoc />
         public string HexConverterToString(int hex)
         {
             var output = "0x" + hex.ToString("X");

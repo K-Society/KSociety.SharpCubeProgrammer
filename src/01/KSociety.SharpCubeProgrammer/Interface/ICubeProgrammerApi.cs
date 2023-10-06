@@ -325,12 +325,32 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         #region [Util]
 
+        /// <summary>
+        /// HexConverterToUint
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         uint HexConverterToUint(string hex);
 
+        /// <summary>
+        /// HexConverterToInt
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         int HexConverterToInt(string hex);
 
+        /// <summary>
+        /// HexConverterToString
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         string HexConverterToString(uint hex);
 
+        /// <summary>
+        /// HexConverterToString
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         string HexConverterToString(int hex);
 
         #endregion
