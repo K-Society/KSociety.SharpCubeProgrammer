@@ -14,9 +14,9 @@ namespace Programming
 
     internal class Program
     {
-        private static IConfigurationRoot? Configuration;
-        private static ILogger<Program>? Logger;
-        private static ICubeProgrammerApi? CubeProgrammerApi;
+        private static IConfigurationRoot Configuration;
+        private static ILogger<Program> Logger;
+        private static ICubeProgrammerApi CubeProgrammerApi;
 
         private static void Main(string[] args)
         {

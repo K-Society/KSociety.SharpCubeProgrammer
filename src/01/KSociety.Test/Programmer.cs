@@ -20,9 +20,9 @@ namespace KSociety.Test
         private readonly Serilog.ILogger _output;
         private readonly ICubeProgrammerApi _cubeProgrammerApi;
         private readonly bool _isConnected;
-        private readonly ILogger<Programmer>? _logger;
-        private readonly ILogger<WmiManager>? _loggerWmiManager;
-        private readonly ILogger<CubeProgrammerApi>? _loggerCubeProgrammerApi;
+        private readonly ILogger<Programmer> _logger;
+        private readonly ILogger<WmiManager> _loggerWmiManager;
+        private readonly ILogger<CubeProgrammerApi> _loggerCubeProgrammerApi;
 
         public Programmer(ITestOutputHelper output)
         {
