@@ -7,9 +7,20 @@
 
 msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
+msbuild KSociety.SharpCubeProgrammer.sln -t:clean
+@set _D=x86
+
+msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+
+@set _D=AnyCPU
+
 msbuild src\01\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
 msbuild src\01\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+
+REM msbuild src\01\Programmer\Programmer.vcxproj -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+
+REM msbuild src\01\Programmer\Programmer.vcxproj -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
 goto LExit
 

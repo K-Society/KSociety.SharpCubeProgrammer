@@ -3,7 +3,7 @@
 
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT'">
-    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\Programmer\*.dll">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-$(Platform)\native\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
