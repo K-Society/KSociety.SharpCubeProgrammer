@@ -5,11 +5,11 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Wmi" Version="0.0.13" />
+    <PackageReference Include="KSociety.Wmi" Version="0.0.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Programmer\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\..\Win32\Release\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false" />
     <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false" />
   </ItemGroup>
