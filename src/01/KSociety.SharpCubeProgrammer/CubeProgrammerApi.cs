@@ -7,9 +7,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
-    using System.Text.RegularExpressions;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -21,15 +19,15 @@ namespace KSociety.SharpCubeProgrammer
 
     public class CubeProgrammerApi : ICubeProgrammerApi
     {
-        public event EventHandler<StLinkFoundEventArgs> StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs> StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs> StLinkRemoved;
+        public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
+        public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
+        public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
 
-        public event EventHandler<Stm32BootLoaderFoundEventArgs> Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs> Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs> Stm32BootLoaderRemoved;
+        public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
+        public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
+        public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
 
-        private readonly ILogger<CubeProgrammerApi> _logger;
+        private readonly ILogger<CubeProgrammerApi>? _logger;
 
         protected readonly IWmiManager WmiManager;
 
@@ -39,7 +37,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi> logger = default) 
+        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
         {
             this.WmiManager = wmiManager;
 
@@ -339,9 +337,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public GeneralInf GetDeviceGeneralInf()
+        public GeneralInf? GetDeviceGeneralInf()
         {
-            GeneralInf generalInf = null;
+            GeneralInf? generalInf = null;
             var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
 
             try
@@ -529,9 +527,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public FileDataC FileOpen(string filePath)
+        public FileDataC? FileOpen(string filePath)
         {
-            FileDataC fileData = null;
+            FileDataC? fileData = null;
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
@@ -772,10 +770,10 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public PeripheralC InitOptionBytesInterface()
+        public PeripheralC? InitOptionBytesInterface()
         {
             this._logger?.LogTrace("InitOptionBytesInterface.");
-            PeripheralC generalInf = null;
+            PeripheralC? generalInf = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
