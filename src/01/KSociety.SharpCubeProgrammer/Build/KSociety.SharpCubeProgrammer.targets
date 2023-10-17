@@ -2,8 +2,15 @@
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT'">
-    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-$(Platform)\native\Programmer\*.dll">
+  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' And '$(Platform)' == 'x86' ">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\Programmer\*.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' And '$(Platform)' == 'x64' ">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
