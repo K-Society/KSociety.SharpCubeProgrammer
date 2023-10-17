@@ -3,7 +3,7 @@
 //#define BUFSIZE MAX_PATH
 
 extern unsigned int verbosityLevel;
-const char* loaderPath = "./st/Programmer";
+const char* loaderPath = "../../st/Programmer";
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
