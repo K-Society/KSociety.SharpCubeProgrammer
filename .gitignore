@@ -365,3 +365,4 @@ FodyWeavers.xsd
 #Custom
 !/Programmer/*
 !/Programmer/x64/*
+!/Programmer/x86/*
