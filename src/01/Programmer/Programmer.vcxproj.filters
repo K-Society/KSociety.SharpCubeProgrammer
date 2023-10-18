@@ -50,6 +50,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.MD" />
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
