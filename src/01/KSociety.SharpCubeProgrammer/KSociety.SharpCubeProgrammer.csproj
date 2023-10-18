@@ -6,10 +6,12 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <developmentDependency>true</developmentDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="KSociety.Wmi" Version="0.0.14" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
