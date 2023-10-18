@@ -5,7 +5,7 @@
 
 @if "%VCToolsVersion%"=="" call :StartDeveloperCommandPrompt || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
 msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
@@ -13,7 +13,7 @@ msbuild KSociety.SharpCubeProgrammer.sln -t:clean
 
 @set _D=x86
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
 msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
