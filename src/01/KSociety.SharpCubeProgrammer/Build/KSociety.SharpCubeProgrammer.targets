@@ -8,11 +8,21 @@
       <Link>dll\x86\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\Programmer\STLinkUSBDriver.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' ">
     <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>dll\x64\%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\Programmer\STLinkUSBDriver.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
