@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" Exclude="STLinkUSBDriver.dll" />
+    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" />
     <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="runtimes\win-x64\native" Visible="false" />
     <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" />
-    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" Exclude="STLinkUSBDriver.dll" />
+    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" />
     <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="runtimes\win-x86\native" Visible="false" />
     <None Include="..\..\..\Win32\Release\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" />
     <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false" />
