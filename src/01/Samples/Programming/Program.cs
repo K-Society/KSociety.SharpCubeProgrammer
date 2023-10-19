@@ -85,7 +85,7 @@ namespace Programming
             }
 
             CubeProgrammerApi.Disconnect();
-            CubeProgrammerApi.DeleteInterfaceList();
+            //CubeProgrammerApi.DeleteInterfaceList();
 
             Console.ReadLine();
         }

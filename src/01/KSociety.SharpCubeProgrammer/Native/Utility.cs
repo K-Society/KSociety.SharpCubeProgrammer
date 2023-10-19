@@ -9,17 +9,17 @@ namespace KSociety.SharpCubeProgrammer.Native
     {
         private static IntPtr DllHandle = IntPtr.Zero;
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "LoadLibrary", SetLastError = true)]
-        private static extern IntPtr LoadLibrary(string lpFileName);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "LoadLibraryExW", SetLastError = true)]
+        private static extern IntPtr LoadLibraryExW(string lpFileName, IntPtr hFile, uint dwFlags);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "FreeLibrary", SetLastError = true)]
         private static extern bool FreeLibrary(IntPtr hModule);
 
-        internal static bool LoadNativeLibrary(string lpFileName)
+        internal static bool LoadNativeLibrary(string lpFileName, IntPtr hFile, uint dwFlags)
         {
             try
             {
-                DllHandle = LoadLibrary(lpFileName);
+                DllHandle = LoadLibraryExW(lpFileName, hFile, dwFlags);
 
                 if (DllHandle != IntPtr.Zero)
                 {
