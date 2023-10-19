@@ -47,8 +47,7 @@ namespace KSociety.SharpCubeProgrammer
             }
 
             this._logger = logger;
-
-            this._logger?.LogTrace("CubeProgrammerApi IntPtr size: {0}", IntPtr.Size);
+            this.Init();
         }
 
         #endregion
@@ -62,7 +61,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
-        public void Start()
+        private void Init()
         {
             try
             {
