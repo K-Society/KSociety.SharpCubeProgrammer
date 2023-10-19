@@ -67,7 +67,7 @@ namespace KSociety.SharpCubeProgrammer
             {
                 var libraryLoaded = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess
                     ? @".\dll\x64\STLinkUSBDriver.dll"
-                    : @".\dll\x86\STLinkUSBDriver.dll");
+                    : @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
 
                 if (libraryLoaded)
                 {
