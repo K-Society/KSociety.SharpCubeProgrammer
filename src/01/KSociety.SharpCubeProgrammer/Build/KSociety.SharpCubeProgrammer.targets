@@ -8,6 +8,11 @@
       <Link>dll\x86\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
+    <Content Include="$(MSBuildThisFileDirectory)native\Programmer\version">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>dll\x86\version</Link>
+      <Visible>false</Visible>
+    </Content>
     <Content Include="$(MSBuildThisFileDirectory)native\x86\STLinkUSBDriver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>dll\x86\%(FileName)%(Extension)</Link>
@@ -18,6 +23,11 @@
     <Content Include="$(MSBuildThisFileDirectory)native\x64\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>dll\x64\%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)native\Programmer\version">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>dll\x64\version</Link>
       <Visible>false</Visible>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)native\x64\STLinkUSBDriver.dll">
