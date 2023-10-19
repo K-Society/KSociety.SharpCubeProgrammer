@@ -7,6 +7,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using DeviceDataStructure;
     using Enum;
@@ -49,6 +50,25 @@ namespace KSociety.SharpCubeProgrammer
             this._logger = logger;
 
             this._logger?.LogTrace("CubeProgrammerApi IntPtr size: {0}", IntPtr.Size);
+
+            try
+            {
+
+
+                if (Environment.Is64BitProcess)
+                {
+                    Assembly.LoadFrom(@".\dll\x64\STLinkUSBDriver.dll");
+                }
+                else
+                {
+                    Assembly.LoadFrom(@".\dll\x86\STLinkUSBDriver.dll");
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "CubeProgrammerApi: ");
+            }
+
         }
 
         #endregion
