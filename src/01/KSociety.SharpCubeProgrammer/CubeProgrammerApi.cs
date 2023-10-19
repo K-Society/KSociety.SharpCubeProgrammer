@@ -57,11 +57,13 @@ namespace KSociety.SharpCubeProgrammer
 
                 if (Environment.Is64BitProcess)
                 {
-                    Assembly.LoadFrom(@".\dll\x64\STLinkUSBDriver.dll");
+                    //Assembly.Load(@".\dll\x64\STLinkUSBDriver.dll");
+                    Native.ProgrammerApi.LoadLibraryEx(@".\dll\x64\STLinkUSBDriver.dll", IntPtr.Zero, 0);
                 }
                 else
                 {
-                    Assembly.LoadFrom(@".\dll\x86\STLinkUSBDriver.dll");
+                    Native.ProgrammerApi.LoadLibraryEx(@".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                    //Assembly.LoadFrom(@".\dll\x86\STLinkUSBDriver.dll");
                 }
             }
             catch (Exception ex)
