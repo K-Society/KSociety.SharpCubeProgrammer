@@ -12,9 +12,6 @@ namespace KSociety.SharpCubeProgrammer.Native
         private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
         private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, EntryPoint = "LoadLibraryEx")]
-        internal static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hFile, uint dwFlags);
-
         #region [STLINK]
 
         #region [GetStLinkList]

@@ -4,12 +4,13 @@ namespace KSociety.SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
+    using Autofac;
     using DeviceDataStructure;
     using Enum;
     using Events;
     using Struct;
 
-    public interface ICubeProgrammerApi
+    public interface ICubeProgrammerApi : IStartable
     {
         event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
         event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
