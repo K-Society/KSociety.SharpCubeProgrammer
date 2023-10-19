@@ -39,6 +39,8 @@ namespace KSociety.SharpCubeProgrammer
 
         public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
         {
+            NativeLibrary.Load
+
             this.WmiManager = wmiManager;
 
             if (logger == null)

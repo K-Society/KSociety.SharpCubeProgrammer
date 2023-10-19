@@ -32,11 +32,11 @@
       <Link>dll\x86\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\x86\STLinkUSBDriver.dll">
+    <!--<Content Include="$(MSBuildThisFileDirectory)native\x86\STLinkUSBDriver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>%(FileName)%(Extension)</Link>
+      <Link>dll\x86\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
-    </Content>
+    </Content>-->
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' ">
     <Content Include="$(MSBuildThisFileDirectory)native\x64\Programmer\*.dll">
@@ -44,11 +44,11 @@
       <Link>dll\x64\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\x64\STLinkUSBDriver.dll">
+    <!--<Content Include="$(MSBuildThisFileDirectory)native\x64\STLinkUSBDriver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>%(FileName)%(Extension)</Link>
+      <Link>dll\x64\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
-    </Content>
+    </Content>-->
   </ItemGroup>
   <ItemGroup>
     <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/FlashLoader/*.*" />
