@@ -7,7 +7,6 @@ namespace KSociety.SharpCubeProgrammer
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Runtime.InteropServices;
     using DeviceDataStructure;
     using Enum;
@@ -50,30 +49,41 @@ namespace KSociety.SharpCubeProgrammer
             this._logger = logger;
 
             this._logger?.LogTrace("CubeProgrammerApi IntPtr size: {0}", IntPtr.Size);
+        }
 
+        #endregion
+
+        #region [Destructor]
+
+        ~CubeProgrammerApi()
+        {
+            Native.Utility.FreeNativeLibrary();
+        }
+
+        #endregion
+
+        public void Start()
+        {
             try
             {
+                var libraryLoaded = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess
+                    ? @".\dll\x64\STLinkUSBDriver.dll"
+                    : @".\dll\x86\STLinkUSBDriver.dll");
 
-
-                if (Environment.Is64BitProcess)
+                if (libraryLoaded)
                 {
-                    //Assembly.Load(@".\dll\x64\STLinkUSBDriver.dll");
-                    Native.ProgrammerApi.LoadLibraryEx(@".\dll\x64\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                    this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
                 }
                 else
                 {
-                    Native.ProgrammerApi.LoadLibraryEx(@".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
-                    //Assembly.LoadFrom(@".\dll\x86\STLinkUSBDriver.dll");
+                    this._logger?.LogError("Loading {0} - {1} library error!", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "CubeProgrammerApi: ");
             }
-
         }
-
-        #endregion
 
         public void GetStLinkPorts()
         {

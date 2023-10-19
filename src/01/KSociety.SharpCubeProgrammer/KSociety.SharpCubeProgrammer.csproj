@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Wmi" Version="0.0.14" />
+    <PackageReference Include="KSociety.Wmi" Version="0.0.15" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,12 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
-    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="runtimes\win-x64\native" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
-    <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="runtimes\win-x64\native\Programmer" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
-    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
-    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="runtimes\win-x86\native" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
-    <None Include="..\..\..\Win32\Release\*.dll" Pack="true" PackagePath="runtimes\win-x86\native\Programmer" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />-->
     <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
     <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
     <None Include="..\..\..\x64\Release\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
