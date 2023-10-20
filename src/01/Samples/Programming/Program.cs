@@ -37,8 +37,6 @@ namespace Programming
             //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
-            //var version = CubeProgrammerApi.Get
-
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
@@ -85,8 +83,7 @@ namespace Programming
             }
 
             CubeProgrammerApi.Disconnect();
-            //CubeProgrammerApi.DeleteInterfaceList();
-            container.Dispose();
+            //CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
             

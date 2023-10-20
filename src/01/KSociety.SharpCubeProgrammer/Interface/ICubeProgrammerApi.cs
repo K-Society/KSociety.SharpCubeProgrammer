@@ -9,7 +9,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
     using Events;
     using Struct;
 
-    public interface ICubeProgrammerApi
+    public interface ICubeProgrammerApi : IDisposable
     {
         event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
         event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
