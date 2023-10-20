@@ -83,7 +83,7 @@ namespace Programming
             }
 
             CubeProgrammerApi.Disconnect();
-            //CubeProgrammerApi.Dispose();
+            CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
             
