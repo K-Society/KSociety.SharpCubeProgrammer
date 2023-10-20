@@ -86,8 +86,10 @@ namespace Programming
 
             CubeProgrammerApi.Disconnect();
             //CubeProgrammerApi.DeleteInterfaceList();
+            container.Dispose();
 
             Console.ReadLine();
+            
         }
 
         private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)

@@ -15,7 +15,7 @@
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)native\x86\STLinkUSBDriver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x86\%(FileName)%(Extension)</Link>
+      <Link>dll\x86\STLinkUSBDriver.dll</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
@@ -32,7 +32,7 @@
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)native\x64\STLinkUSBDriver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x64\%(FileName)%(Extension)</Link>
+      <Link>dll\x64\STLinkUSBDriver.dll</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>

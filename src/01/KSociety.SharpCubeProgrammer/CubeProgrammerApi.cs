@@ -8,6 +8,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -17,8 +18,15 @@ namespace KSociety.SharpCubeProgrammer
     using Struct;
     using Wmi;
 
-    public class CubeProgrammerApi : ICubeProgrammerApi
+    public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
     {
+        /// <summary>
+        /// Synchronization object to protect loading the native library and its functions. This field is read-only.
+        /// </summary>
+        private readonly object _syncRoot = new object();
+
+        private Native.SafeLibraryHandle? _handle;
+
         public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
         public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
         public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
@@ -52,35 +60,29 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
-        #region [Destructor]
-
-        ~CubeProgrammerApi()
-        {
-            Native.Utility.FreeNativeLibrary();
-        }
-
-        #endregion
-
         private void Init()
         {
-            try
+            if (this._handle == null)
             {
-                var libraryLoaded = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess
-                    ? @".\dll\x64\STLinkUSBDriver.dll"
-                    : @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                lock (this._syncRoot)
+                {
+                    if (this._handle == null)
+                    {
+                        this._handle = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? @".\dll\x64\STLinkUSBDriver.dll" : @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
 
-                if (libraryLoaded)
-                {
-                    this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        if (this._handle.IsInvalid)
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            this._handle = null;
+                            this._logger?.LogError("Loading {0} - {1} library error: {3} !", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                        }
+                        else
+                        {
+
+                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+                    }
                 }
-                else
-                {
-                    this._logger?.LogError("Loading {0} - {1} library error!", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "CubeProgrammerApi: ");
             }
         }
 
@@ -1175,5 +1177,9 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
+        protected override void DisposeUnmanagedResources()
+        {
+            this._handle?.Dispose();
+        }
     } // CubeProgrammerApi.
 }
