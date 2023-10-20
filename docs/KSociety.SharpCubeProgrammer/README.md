@@ -1,23 +1,23 @@
 [![Logo](https://raw.githubusercontent.com/k-society/KSociety.SharpCubeProgrammer/master/docs/K-Society__Logo_vs-negative.png)](https://github.com/K-Society)
 
 [![build status](https://img.shields.io/github/actions/workflow/status/K-Society/KSociety.SharpCubeProgrammer/build.yml?branch=develop)](https://github.com/K-Society/KSociety.SharpCubeProgrammer/actions/workflows/build.yml?query=branch%3Adevelop) [![NuGet](https://img.shields.io/nuget/v/KSociety.SharpCubeProgrammer)](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer)
-
+[![download count](https://img.shields.io/nuget/dt/KSociety.SharpCubeProgrammer)](https://www.nuget.org/stats/packages/KSociety.SharpCubeProgrammer?groupby=Version)
 [KSociety.SharpCubeProgrammer Home](https://github.com/K-Society/KSociety.SharpCubeProgrammer)
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0 (x64).
+KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0.
 
 ## Introduction
 
-This is a C# wrapper for STM32 CubeProgrammer_API v2.14.0 (x64 only).
+This is a C# wrapper for STM32 CubeProgrammer_API v2.14.0 (not fully tested).
 The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
 for the purpose of flash downloads or general memory access. 
 The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
 This has been tested on Windows 10, you don't need to install cubeprogrammer.
 
 ### KSociety.SharpCubeProgrammer
-CubeProgrammer_API C# wrapper.
+STM32CubeProgrammer_API C# wrapper.
 
 ## Get Packages
 

@@ -128,7 +128,6 @@ namespace KSociety.Test
 
 
                 this._cubeProgrammerApi.Disconnect(); //Do not disconnect after execute, with udf.
-                this._cubeProgrammerApi.DeleteInterfaceList();
 
 
             }

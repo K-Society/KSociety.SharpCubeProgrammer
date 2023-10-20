@@ -21,7 +21,7 @@
     <Company>K-Society</Company>
     <Copyright>Copyright © K-Society and contributors 2023. All rights reserved.</Copyright>
 	<PackageLicenseExpression>MS-RL</PackageLicenseExpression>
-	<Description>K-Society SharpCubeProgrammer is an STM32 CubeProgrammer_API wrapper.</Description>
+	<Description>K-Society SharpCubeProgrammer is an STM32 CubeProgrammer_API C# wrapper.</Description>
     <Product>K-Society SharpCubeProgrammer</Product>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -32,7 +32,7 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<IncludeSymbols>true</IncludeSymbols>
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<PackageTags>cubeprogrammer_api;cubeprogrammerapi;wrapper;cubeprogrammer;stm32;st-link;ksociety;k-society</PackageTags>
+	<PackageTags>cubeprogrammer_api;stm32cubeprogrammer_api;cubeprogrammerapi;wrapper;cubeprogrammer;stm32;st-link;ksociety;k-society</PackageTags>
 	<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
   

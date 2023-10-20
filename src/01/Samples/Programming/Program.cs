@@ -32,7 +32,7 @@ namespace Programming
             Logger.LogDebug("Resolve ICubeProgrammerApi...");
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
-
+            //CubeProgrammerApi.Start();
             //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
             //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
@@ -83,9 +83,10 @@ namespace Programming
             }
 
             CubeProgrammerApi.Disconnect();
-            CubeProgrammerApi.DeleteInterfaceList();
+            CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
+            
         }
 
         private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)

@@ -7,9 +7,8 @@ namespace KSociety.SharpCubeProgrammer
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
-    using System.Text.RegularExpressions;
+    using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -19,17 +18,24 @@ namespace KSociety.SharpCubeProgrammer
     using Struct;
     using Wmi;
 
-    public class CubeProgrammerApi : ICubeProgrammerApi
+    public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
     {
-        public event EventHandler<StLinkFoundEventArgs> StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs> StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs> StLinkRemoved;
+        /// <summary>
+        /// Synchronization object to protect loading the native library and its functions. This field is read-only.
+        /// </summary>
+        private readonly object _syncRoot = new object();
 
-        public event EventHandler<Stm32BootLoaderFoundEventArgs> Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs> Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs> Stm32BootLoaderRemoved;
+        private Native.SafeLibraryHandle? _handle;
 
-        private readonly ILogger<CubeProgrammerApi> _logger;
+        public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
+        public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
+        public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
+
+        public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
+        public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
+        public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
+
+        private readonly ILogger<CubeProgrammerApi>? _logger;
 
         protected readonly IWmiManager WmiManager;
 
@@ -39,7 +45,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi> logger = default) 
+        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
         {
             this.WmiManager = wmiManager;
 
@@ -49,11 +55,36 @@ namespace KSociety.SharpCubeProgrammer
             }
 
             this._logger = logger;
-
-            this._logger?.LogTrace("CubeProgrammerApi IntPtr size: {0}", IntPtr.Size);
+            this.Init();
         }
 
         #endregion
+
+        private void Init()
+        {
+            if (this._handle == null)
+            {
+                lock (this._syncRoot)
+                {
+                    if (this._handle == null)
+                    {
+                        this._handle = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? @".\dll\x64\STLinkUSBDriver.dll" : @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+
+                        if (this._handle.IsInvalid)
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            this._handle = null;
+                            this._logger?.LogError("Loading {0} - {1} library error: {3} !", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                        }
+                        else
+                        {
+
+                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+                    }
+                }
+            }
+        }
 
         public void GetStLinkPorts()
         {
@@ -339,9 +370,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public GeneralInf GetDeviceGeneralInf()
+        public GeneralInf? GetDeviceGeneralInf()
         {
-            GeneralInf generalInf = null;
+            GeneralInf? generalInf = null;
             var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
 
             try
@@ -529,9 +560,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public FileDataC FileOpen(string filePath)
+        public FileDataC? FileOpen(string filePath)
         {
-            FileDataC fileData = null;
+            FileDataC? fileData = null;
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
@@ -772,10 +803,10 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public PeripheralC InitOptionBytesInterface()
+        public PeripheralC? InitOptionBytesInterface()
         {
             this._logger?.LogTrace("InitOptionBytesInterface.");
-            PeripheralC generalInf = null;
+            PeripheralC? generalInf = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
@@ -1146,5 +1177,9 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
+        protected override void DisposeUnmanagedResources()
+        {
+            this._handle?.Dispose();
+        }
     } // CubeProgrammerApi.
 }

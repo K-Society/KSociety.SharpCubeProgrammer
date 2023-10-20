@@ -9,7 +9,8 @@ namespace KSociety.SharpCubeProgrammer.Bindings
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance().OnActivated(programmer => programmer.Instance.GetStLinkPorts());
+            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance()
+                .OnActivated(programmer => programmer.Instance.GetStLinkPorts());
         }
     }
 }
