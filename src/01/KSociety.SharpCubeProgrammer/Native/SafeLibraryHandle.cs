@@ -2,7 +2,6 @@
 
 namespace KSociety.SharpCubeProgrammer.Native
 {
-    using System;
     using System.Runtime.ConstrainedExecution;
     using Microsoft.Win32.SafeHandles;
 

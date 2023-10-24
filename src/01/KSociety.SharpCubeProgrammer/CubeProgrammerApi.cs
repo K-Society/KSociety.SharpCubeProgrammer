@@ -1180,6 +1180,11 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
+        protected override void DisposeManagedResources()
+        {
+            this.WmiManager.Dispose();
+        }
+
         protected override void DisposeUnmanagedResources()
         {
             this._handle?.Dispose();
