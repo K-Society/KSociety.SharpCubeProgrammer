@@ -8,6 +8,8 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
@@ -86,22 +88,23 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        public void GetStLinkPorts()
+        public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
         {
-            this.RegisterStLinkEvents();
-            this.RegisterStm32BootLoaderEvents();
+            await this.RegisterStLinkEvents(cancellationToken);
+            await this.RegisterStm32BootLoaderEvents(cancellationToken);
         }
 
-        private void RegisterStLinkEvents()
+        private async ValueTask RegisterStLinkEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStLink();
-            this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly);
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly, cancellationToken).ConfigureAwait(false);
         }
 
-        private void RegisterStm32BootLoaderEvents()
+        private async ValueTask RegisterStm32BootLoaderEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStm32BootLoader();
-            this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly);
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private void RegisterStLink()
