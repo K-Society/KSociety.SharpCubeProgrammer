@@ -88,7 +88,7 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
+        public async void GetStLinkPorts(CancellationToken cancellationToken = default)
         {
             await this.RegisterStLinkEvents(cancellationToken);
             await this.RegisterStm32BootLoaderEvents(cancellationToken);
