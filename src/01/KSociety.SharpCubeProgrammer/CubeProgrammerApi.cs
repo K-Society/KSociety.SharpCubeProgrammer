@@ -97,13 +97,13 @@ namespace KSociety.SharpCubeProgrammer
         private async ValueTask RegisterStLinkEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStLink();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly, this, cancellationToken).ConfigureAwait(false);
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly, this, null, cancellationToken).ConfigureAwait(false);
         }
 
         private async ValueTask RegisterStm32BootLoaderEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStm32BootLoader();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly, this, cancellationToken)
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly, this, null, cancellationToken)
                 .ConfigureAwait(false);
         }
 
