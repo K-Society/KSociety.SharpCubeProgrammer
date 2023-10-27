@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Wmi" Version="0.0.22" />
+    <PackageReference Include="KSociety.Wmi" Version="0.0.26" />
   </ItemGroup>
 
   <ItemGroup>
