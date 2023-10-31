@@ -8,6 +8,7 @@ namespace Programming
     using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
+    using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
@@ -37,11 +38,12 @@ namespace Programming
             //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
-            var stLinkList = CubeProgrammerApi.GetStLinkList();
+            var stLinkList = CubeProgrammerApi.GetStLinkList(true);
             if (stLinkList.Any())
             {
-                var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+                var stLink = (DebugConnectParameters)stLinkList.First().Clone();
                 stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))

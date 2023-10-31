@@ -2,6 +2,39 @@
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
 <Project>
+    <PropertyGroup>
+    <ReplacePackageReferences>true</ReplacePackageReferences>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(ReplacePackageReferences) AND '$(TheSolutionPath)' != '' AND '$(TheSolutionPath)' != '*undefined*' AND Exists('$(TheSolutionPath)')">
+
+      <PropertyGroup>
+        <SolutionFileContent>$([System.IO.File]::ReadAllText($(TheSolutionPath)))</SolutionFileContent>
+        <SmartSolutionDir>$([System.IO.Path]::GetDirectoryName( $(TheSolutionPath) ))</SmartSolutionDir>
+        <RegexPattern>(?&lt;="[PackageName]", ")(.*)(?=", ")</RegexPattern>
+      </PropertyGroup>
+	  
+      <ItemGroup>
+        <!-- Keep the identity of the PackageReference -->
+        <SmartPackageReference Include="@(PackageReference)">
+          <PackageName>%(Identity)</PackageName>
+          <InSolution>$(SolutionFileContent.Contains('\%(Identity)(MSBuildProjectExtension)'))</InSolution>
+        </SmartPackageReference>
+
+        <!-- Filter them by mapping them to another ItemGroup using the WithMetadataValue item function -->
+        <PackageInSolution Include="@(SmartPackageReference->WithMetadataValue('InSolution', True))">
+          <Pattern>$(RegexPattern.Replace('[PackageName]','%(PackageName)') )</Pattern>
+          <SmartPath>$([System.Text.RegularExpressions.Regex]::Match('$(SolutionFileContent)', '%(Pattern)'))</SmartPath>
+        </PackageInSolution>
+
+        <ProjectReference  Include="@(PackageInSolution->'$(SmartSolutionDir)\%(SmartPath)' )"/>
+
+        <!-- Remove the package references that are now referenced as projects -->
+        <PackageReference Remove="@(PackageInSolution->'%(PackageName)' )"/>
+      </ItemGroup>
+    </When>
+  </Choose>
   
   <Import Project="Directory$(MSBuildProjectExtension).targets" Condition=" Exists('Directory$(MSBuildProjectExtension).targets') " />
   
