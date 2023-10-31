@@ -27,50 +27,81 @@ namespace KSociety.SharpCubeProgrammer.Enum
         /// </summary>
         CubeprogrammerErrorConnection = -3,
 
-        /** No such file  */
+        /// <summary>
+        /// No such file.
+        /// </summary> 
         CubeprogrammerErrorNoFile = -4,
 
-        /** Operation not supported or unimplemented on this interface */
+        /// <summary>
+        /// Operation not supported or unimplemented on this interface.
+        /// </summary>
         CubeprogrammerErrorNotSupported = -5,
 
-        /** Interface not supported or unimplemented on this platform */
+        /// <summary>
+        /// Interface not supported or unimplemented on this platform.
+        /// </summary>
         CubeprogrammerErrorInterfaceNotSupported = -6,
 
-        /** Insufficient memory */
+        /// <summary>
+        /// Insufficient memory.
+        /// </summary>
         CubeprogrammerErrorNoMem = -7,
 
-        /** Wrong parameters */
+        /// <summary>
+        /// Wrong parameters.
+        /// </summary>
         CubeprogrammerErrorWrongParam = -8,
 
-        /** Memory read failure */
+        /// <summary>
+        /// Memory read failure.
+        /// </summary>
         CubeprogrammerErrorReadMem = -9,
 
-        /** Memory write failure */
+        /// <summary>
+        /// Memory write failure.
+        /// </summary>
         CubeprogrammerErrorWriteMem = -10,
 
-        /** Memory erase failure */
+        /// <summary>
+        /// Memory erase failure.
+        /// </summary>
         CubeprogrammerErrorEraseMem = -11,
 
-        /** File format not supported for this kind of device */
+        /// <summary>
+        /// File format not supported for this kind of device.
+        /// </summary>
         CubeprogrammerErrorUnsupportedFileFormat = -12,
 
-        /** Refresh required **/
+        /// <summary>
+        /// Refresh required.
+        /// </summary>
         CubeprogrammerErrorRefreshRequired = -13,
 
-        /** Refresh required **/
+        /// <summary>
+        /// Refresh required.
+        /// </summary>
         CubeprogrammerErrorNoSecurity = -14,
 
-        /** Changing frequency problem **/
+        /// <summary>
+        /// Changing frequency problem.
+        /// </summary>
         CubeprogrammerErrorChangeFreq = -15,
 
-        /** RDP Enabled error **/
+        /// <summary>
+        /// RDP Enabled error.
+        /// </summary>
         CubeprogrammerErrorRdpEnabled = -16,
 
         /* NB: Remember to update CUBEPROGRAMMER_ERROR_COUNT below. */
 
-        /** Other error */
+        /// <summary>
+        /// Other error.
+        /// </summary>
         CubeprogrammerErrorOther = -99,
 
+        /// <summary>
+        /// Device Not Connected.
+        /// </summary>
         CubeprogrammerErrorDeviceNotConnected = -545,
     }
 }
