@@ -39,6 +39,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Board;
 
+        [MarshalAs(UnmanagedType.SysInt)]
         public int DBG_Sleep;
 
         /// <summary>
