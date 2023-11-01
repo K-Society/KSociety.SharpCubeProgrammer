@@ -11,12 +11,12 @@ namespace KSociety.SharpCubeProgrammer.Struct
     [StructLayout(LayoutKind.Sequential)]
     public class Frequencies
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        public uint[] JtagFrequency;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.SysUInt)]
+        public uint[] JTagFrequency;
 
         public uint JTagFrequencyNumber;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.SysUInt)]
         public uint[] SwdFrequency;
 
         public uint SwdFrequencyNumber;
