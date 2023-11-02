@@ -21,11 +21,8 @@ int main()
         std::cout << "\n-------- Connected ST-LINK Probes List --------";
         for (int i = 0; i < getStlinkListNb; i++)
         {
-            //logMessage(Normal, "\nST-LINK Probe %d :\n", i);
             std::cout << "\n   ST-LINK Probe " << i << " :\n" << std::endl;
-            //logMessage(Info, "   ST-LINK SN   : %s \n", stLinkList[i].serialNumber);
             std::cout << "   ST-LINK SN   : " << stLinkList[i].serialNumber << " \n" << std::endl;
-            //logMessage(Info, "   ST-LINK FW   : %s \n", stLinkList[i].firmwareVersion);
             std::cout << "   ST-LINK FW   : " << stLinkList[i].firmwareVersion << " \n" << std::endl;
         }
 
@@ -46,23 +43,19 @@ int main()
         /* Target connect */
         int connectStlinkFlag = ConnectStLink(debugParameters);
         if (connectStlinkFlag != 0) {
-            //logMessage(Error, "Establishing connection with the device failed\n");
-
             std::cout << "Establishing connection with the device failed: " << connectStlinkFlag << " \n" << std::endl;
             Disconnect();
             continue;
         }
         else {
             std::cout << "\n--- Device Connected --- \n" ;
-            //logMessage(GreenInfo, "\n--- Device %d Connected --- \n", index);
         }
 
         /* Display device informations */
         genInfo = GetDeviceGeneralInf();
-        //logMessage(Normal, "\nDevice name : %s ", genInfo->name);
-        //logMessage(Normal, "\nDevice type : %s ", genInfo->type);
-        //logMessage(Normal, "\nDevice CPU  : %s \n", genInfo->cpu);
-        
+        std::cout << "\nDevice name: " << genInfo->name << std::endl;
+        std::cout << "\nDevice type: " << genInfo->type << std::endl;
+        std::cout << "\nDevice CPU : " << genInfo->cpu << std::endl;        
     }
 
     Disconnect();
