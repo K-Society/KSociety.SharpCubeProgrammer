@@ -38,12 +38,12 @@ namespace Programming
             //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
-            var stLinkList = CubeProgrammerApi.GetStLinkList(true);
+            var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = (DebugConnectParameters)stLinkList.First().Clone();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
-                
+                //stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.HotplugMode;
+                //stLink.Shared = 0;
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))

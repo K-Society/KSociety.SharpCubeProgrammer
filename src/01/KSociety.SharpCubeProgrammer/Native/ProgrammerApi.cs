@@ -16,10 +16,12 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetStLinkList]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.I4)]
         private static extern int GetStLinkList32(IntPtr stLinkList, int shared);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.I4)]
         private static extern int GetStLinkList64(IntPtr stLinkList, int shared);
 
         private static int GetStLinkListNative(IntPtr stLinkList, int shared)
@@ -49,10 +51,12 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectStLink]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.I4)]
         private static extern int ConnectStLink32(DebugConnectParameters debugParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.I4)]
         private static extern int ConnectStLink64(DebugConnectParameters debugParameters);
 
         private static int ConnectStLinkNative(DebugConnectParameters debugParameters)
