@@ -1,0 +1,13 @@
+{
+  "$schema": "https://aka.ms/vs/debugger-managed-favorites-schema",
+  "types": {
+    "KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters": {
+      "favorites": [
+        "Speed",
+        "Shared",
+        "SerialNumber",
+        "ResetMode"
+      ]
+    }
+  }
+}

@@ -41,7 +41,7 @@ int main()
         debugParameters = stLinkList[index];
         debugParameters.connectionMode = UNDER_RESET_MODE;
         debugParameters.shared = 0;
-        debugParameters.speed = 1;
+        //debugParameters.speed = 1;
 
         /* Target connect */
         int connectStlinkFlag = ConnectStLink(debugParameters);

@@ -180,11 +180,13 @@ namespace KSociety.SharpCubeProgrammer
         {
             this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = Marshal.AllocHGlobal(Marshal.SizeOf<IntPtr>());
+            //var listPtr = Marshal.AllocHGlobal(624);
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
+                var size = Marshal.SizeOf<DebugConnectParameters>(); //312
+                //var size = Marshal.SizeOf<DebugConnectParameters>();
                 this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkList(listPtr, shared ? 1 : 0);
                 this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
