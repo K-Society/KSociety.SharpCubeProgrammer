@@ -7,9 +7,6 @@ namespace KSociety.SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
     using Enum;
 
-    //x86 = 311 byte
-    //x64 = 8 byte
-
     /// <summary>
     /// Get device characterization and specify connection parameters through ST-LINK interface.
     /// </summary>
@@ -17,88 +14,90 @@ namespace KSociety.SharpCubeProgrammer.Struct
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class DebugConnectParameters : ICloneable
     {
-        //x86 = 4 byte
-        //x64 = 1 byte
+        /// <summary>
+        /// Select the type of debug interface #debugPort.
+        /// </summary>
         public DebugPort DebugPort;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Select one of the debug ports connected.
+        /// </summary>
         public int Index;
 
-        //x86 = 33 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// ST-LINK serial number.
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
         public string SerialNumber;
 
-        //x86 = 20 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// Firmware version.
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
         public string FirmwareVersion;
 
-        //x86 = 5 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// Operate voltage.
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 5)]
         public string TargetVoltage;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Number of available access port.
+        /// </summary>
         public int AccessPortNumber;
 
-        //x86 = 4 byte 71
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Select access port controller.
+        /// </summary>
         public int AccessPort;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// Select the debug CONNECT mode #debugConnectMode.
+        /// </summary>
         public DebugConnectionMode ConnectionMode;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// Select the debug RESET mode #debugResetMode.
+        /// </summary>
         public DebugResetMode ResetMode;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Check Old ST-LINK firmware version.
+        /// </summary>
         public int IsOldFirmware;
 
-        //x86 = 104 byte
-        //x64 = 208 byte
+        /// <summary>
+        /// Supported frequencies #frequencies.
+        /// </summary>
         public Frequencies Frequencies;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Select specific frequency.
+        /// </summary>
         public int Frequency;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Indicates if it's Bridge device or not.
+        /// </summary>
         public int IsBridge;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
+        /// <summary>
+        /// Select connection type, if it's shared, use ST-LINK Server.
+        /// </summary>
         public int Shared;
 
-        //x86 = 100 byte
-        //x64 = 8 byte
+        /// <summary>
+        /// Board name.
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Board;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
-        //[MarshalAs(UnmanagedType.SysInt)]
         public int DBG_Sleep;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
         /// <summary>
         /// Select speed flashing of Cortex M33 series.
         /// </summary>
-        //[MarshalAs(UnmanagedType.SysInt)]
         public int Speed;
 
         public object Clone()
