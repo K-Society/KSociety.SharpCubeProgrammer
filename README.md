@@ -56,6 +56,19 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - InitOptionBytesInterface
 - ObDisplay
 
+## Prerequisites
+
+- Visual Studio 2022 (17.7.6 or higher) with the following installed:
+
+| Workloads |
+| :-------- |
+| .NET desktop development |
+| Desktop development with C++ |
+
+| Individual components |
+| :-------------------- |
+| MSVC v143 - VS 2022 C++ x64/x86 |
+
 ## Get Started
 
 - Register SharpCubeProgrammer as service with Autofac IoC:

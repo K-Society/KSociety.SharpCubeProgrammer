@@ -42,8 +42,8 @@ namespace Programming
             if (stLinkList.Any())
             {
                 var stLink = (DebugConnectParameters)stLinkList.First().Clone();
-                //stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.HotplugMode;
-                //stLink.Shared = 0;
+                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.Shared = 0;
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
