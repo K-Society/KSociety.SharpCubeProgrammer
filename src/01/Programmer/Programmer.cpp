@@ -5,6 +5,46 @@
 /*                              STLINK functions                                                */
 /* -------------------------------------------------------------------------------------------- */
 
+int TryConnectStLink(int stLinkProbeIndex, int shared, debugConnectMode debugConnectMode)
+{
+    debugConnectParameters* stLinkList;
+    debugConnectParameters debugParameters;
+
+    int getStlinkListNb = getStLinkList(&stLinkList, shared);
+
+    if (getStlinkListNb == 0)
+    {
+        //logMessage(Error, "No STLINK available\n");
+        return -99;
+    }
+    else
+    {
+        //for (int index = 0; index < getStlinkListNb; index++)
+        //{
+
+        if (stLinkProbeIndex < getStlinkListNb)
+        {
+            debugParameters = stLinkList[stLinkProbeIndex];
+            debugParameters.connectionMode = debugConnectMode;
+            debugParameters.shared = shared;
+
+            int connectStlinkFlag = connectStLink(debugParameters);
+            if (connectStlinkFlag != 0) {
+                //logMessage(Error, "Establishing connection with the device failed\n");
+                disconnect();
+                return connectStlinkFlag;
+            }
+            else
+            {
+                return 0;
+                //logMessage(GreenInfo, "\n--- Device %d Connected --- \n", index);
+            }
+        }
+    }
+
+    return -99;
+}
+
 int GetStLinkList(debugConnectParameters** stLinkList, int shared) 
 {
 	try 

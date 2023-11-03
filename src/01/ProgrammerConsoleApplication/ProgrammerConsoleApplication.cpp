@@ -21,7 +21,7 @@ int main()
         std::cout << "\n-------- Connected ST-LINK Probes List --------";
         for (int i = 0; i < getStlinkListNb; i++)
         {
-            std::cout << "\n   ST-LINK Probe " << i << " :\n" << std::endl;
+            std::cout << "\n   ST-LINK Probe " << i << sizeof(int) << " :\n" << std::endl;
             std::cout << "   ST-LINK SN   : " << stLinkList[i].serialNumber << " \n" << std::endl;
             std::cout << "   ST-LINK FW   : " << stLinkList[i].firmwareVersion << " \n" << std::endl;
         }

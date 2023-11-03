@@ -14,14 +14,45 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [STLINK]
 
+        #region [TryConnectStLink]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int TryConnectStLink32(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int TryConnectStLink64(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+
+        private static int TryConnectStLinkNative(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
+        {
+            return !Environment.Is64BitProcess
+                ? TryConnectStLink32(stLinkProbeIndex, shared, debugConnectMode)
+                : TryConnectStLink64(stLinkProbeIndex, shared, debugConnectMode);
+        }
+
+        internal static int TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
+        {
+            try
+            {
+                return TryConnectStLinkNative(stLinkProbeIndex, shared, debugConnectMode);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [GetStLinkList]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.I4)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int GetStLinkList32(IntPtr stLinkList, int shared);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.I4)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int GetStLinkList64(IntPtr stLinkList, int shared);
 
         private static int GetStLinkListNative(IntPtr stLinkList, int shared)
@@ -51,13 +82,11 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectStLink]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.I4)]
-        private static extern int ConnectStLink32(DebugConnectParameters debugParameters);
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int ConnectStLink32([MarshalAs(UnmanagedType.LPStruct)] DebugConnectParameters debugParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.I4)]
-        private static extern int ConnectStLink64(DebugConnectParameters debugParameters);
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int ConnectStLink64([MarshalAs(UnmanagedType.LPStruct)] DebugConnectParameters debugParameters);
 
         private static int ConnectStLinkNative(DebugConnectParameters debugParameters)
         {

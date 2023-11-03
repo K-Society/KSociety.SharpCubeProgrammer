@@ -5,36 +5,31 @@ namespace KSociety.SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
-    //x86 = 104 byte
-    //x64 = 208 byte
+    //using System.Runtime.InteropServices;
+
     /// <summary>
-    /// Get supported frequencies for JTAG and SWD interfaces.
+    /// Get supported frequencies for JTAG and SWD interfaces 104.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    //[StructLayout(LayoutKind.Explicit, Size = 104/*, CharSet = CharSet.Ansi, Size = 312*/)]
     public class Frequencies
     {
-        //x86 = 4 byte x 12 = 48 byte
-        //x64 = 8 byte x 12 = 96 byte
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.SysUInt)]
-        //[MarshalAs(UnmanagedType.SysUInt, SizeConst = 12)]
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        public uint[] JTagFrequency;
+        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        //[FieldOffset(0)]
+        public JTagFrequency JTagFrequency;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
+        //[FieldOffset(48)]
         //[MarshalAs(UnmanagedType.SysUInt)]
+        [MarshalAs(UnmanagedType.U4)]
         public uint JTagFrequencyNumber;
 
-        //x86 = 4 byte x 12 = 48 byte
-        //x64 = 8 byte x 12 = 96 byte
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.SysUInt)]
-        //[MarshalAs(UnmanagedType.SysUInt, SizeConst = 12)]
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        public uint[] SwdFrequency;
+        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        //[FieldOffset(52)]
+        public SwdFrequency SwdFrequency;
 
-        //x86 = 4 byte
-        //x64 = 8 byte
+        //[FieldOffset(100)]
         //[MarshalAs(UnmanagedType.SysUInt)]
+        [MarshalAs(UnmanagedType.U4)]
         public uint SwdFrequencyNumber;
     }
 }

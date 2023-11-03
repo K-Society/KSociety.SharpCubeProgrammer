@@ -12,6 +12,8 @@
 /*                              STLINK functions                                                */
 /* -------------------------------------------------------------------------------------------- */
 
+extern "C" PROGRAMMER_API int TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, debugConnectMode debugConnectMode = UNDER_RESET_MODE);
+
 extern "C" PROGRAMMER_API int GetStLinkList(debugConnectParameters** stLinkList, int shared);
 
 extern "C" PROGRAMMER_API int ConnectStLink(debugConnectParameters debugParameters);

@@ -176,6 +176,27 @@ namespace KSociety.SharpCubeProgrammer
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <inheritdoc />
+        public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
+        {
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            try
+            {
+                var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
+
+                output = this.CheckResult(connectStLinkResult);
+
+                //this._logger?.LogTrace("TryConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "TryConnectStLink: ");
+            }
+
+            return output;
+        }
+
+        /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
             this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
