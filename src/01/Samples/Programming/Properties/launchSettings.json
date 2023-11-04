@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Programming": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

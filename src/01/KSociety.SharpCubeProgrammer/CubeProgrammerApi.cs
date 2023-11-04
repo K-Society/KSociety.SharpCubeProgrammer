@@ -176,37 +176,57 @@ namespace KSociety.SharpCubeProgrammer
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <inheritdoc />
+        public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
+        {
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            try
+            {
+                var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
+
+                output = this.CheckResult(connectStLinkResult);
+
+                //this._logger?.LogTrace("TryConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "TryConnectStLink: ");
+            }
+
+            return output;
+        }
+
+        /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
             this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
-            var listPtr = Marshal.AllocHGlobal(Marshal.SizeOf<IntPtr>());
-            //var listPtr = Marshal.AllocHGlobal(624);
+            var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>(); //312
-                //var size = Marshal.SizeOf<DebugConnectParameters>();
+                var size = Marshal.SizeOf<DebugConnectParameters>();
                 this._logger?.LogTrace("GetStLinkList size: {0}", size);
-                var numberOfItems = Native.ProgrammerApi.GetStLinkList(listPtr, shared ? 1 : 0);
+                var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
                 this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
-                var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
-
-                for (var i = 0; i < numberOfItems; i++)
+                if (listPtr != IntPtr.Zero)
                 {
-                    var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listDereference + (i * size));
-                    this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
-                    parametersList.Add(currentItem);
+                    for (var i = 0; i < numberOfItems; i++)
+                    {
+                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                        this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i,
+                            currentItem.SerialNumber);
+                        parametersList.Add(currentItem);
+                    }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetStLinkList IntPtr: {0}!", "Zero");
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetStLinkList: ");
-            }
-            finally
-            {
-                Native.ProgrammerApi.DeleteInterfaceList();
-                Marshal.FreeHGlobal(listPtr);
             }
 
             return parametersList;

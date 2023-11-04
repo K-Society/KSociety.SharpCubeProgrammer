@@ -30,6 +30,8 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         //STLINK module groups debug ports JTAG/SWD functions together.
 
+        CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s).
         /// </summary>

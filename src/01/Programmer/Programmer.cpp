@@ -5,6 +5,40 @@
 /*                              STLINK functions                                                */
 /* -------------------------------------------------------------------------------------------- */
 
+int TryConnectStLink(int stLinkProbeIndex, int shared, debugConnectMode debugConnectMode)
+{
+    debugConnectParameters* stLinkList;
+    debugConnectParameters debugParameters;
+
+    int getStlinkListNb = getStLinkList(&stLinkList, shared);
+
+    if (getStlinkListNb == 0)
+    {
+        return -99;
+    }
+    else
+    {
+        if (stLinkProbeIndex < getStlinkListNb)
+        {
+            debugParameters = stLinkList[stLinkProbeIndex];
+            debugParameters.connectionMode = debugConnectMode;
+            debugParameters.shared = shared;
+
+            int connectStlinkFlag = connectStLink(debugParameters);
+            if (connectStlinkFlag != 0) {
+                disconnect();
+                return connectStlinkFlag;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    return -99;
+}
+
 int GetStLinkList(debugConnectParameters** stLinkList, int shared) 
 {
 	try 

@@ -12,7 +12,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
     /// </summary>
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class DebugConnectParameters : ICloneable
+    public struct DebugConnectParameters : ICloneable
     {
         /// <summary>
         /// Select the type of debug interface #debugPort.
@@ -102,14 +102,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
 
         public object Clone()
         {
-            var clone = this.MemberwiseClone();
-
-            //clone.SerialNumber = new string(SerialNumber);
-            //clone.FirmwareVersion = new string(FirmwareVersion);
-            //clone.TargetVoltage = new string(TargetVoltage);
-
-
-            return clone;
+            return this.MemberwiseClone();
         }
     }
 }
