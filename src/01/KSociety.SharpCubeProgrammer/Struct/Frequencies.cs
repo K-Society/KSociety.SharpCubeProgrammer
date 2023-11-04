@@ -5,30 +5,21 @@ namespace KSociety.SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
-    //using System.Runtime.InteropServices;
-
     /// <summary>
     /// Get supported frequencies for JTAG and SWD interfaces 104.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    //[StructLayout(LayoutKind.Explicit, Size = 104/*, CharSet = CharSet.Ansi, Size = 312*/)]
-    public class Frequencies
+    public struct Frequencies
     {
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        //[FieldOffset(0)]
-        public JTagFrequency JTagFrequency;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        public uint[] JtagFrequency;
 
-        //[FieldOffset(48)]
-        //[MarshalAs(UnmanagedType.SysUInt)]
         [MarshalAs(UnmanagedType.U4)]
         public uint JTagFrequencyNumber;
 
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
-        //[FieldOffset(52)]
-        public SwdFrequency SwdFrequency;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        public uint[] SwdFrequency;
 
-        //[FieldOffset(100)]
-        //[MarshalAs(UnmanagedType.SysUInt)]
         [MarshalAs(UnmanagedType.U4)]
         public uint SwdFrequencyNumber;
     }

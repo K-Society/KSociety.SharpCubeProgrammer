@@ -14,14 +14,10 @@ int TryConnectStLink(int stLinkProbeIndex, int shared, debugConnectMode debugCon
 
     if (getStlinkListNb == 0)
     {
-        //logMessage(Error, "No STLINK available\n");
         return -99;
     }
     else
     {
-        //for (int index = 0; index < getStlinkListNb; index++)
-        //{
-
         if (stLinkProbeIndex < getStlinkListNb)
         {
             debugParameters = stLinkList[stLinkProbeIndex];
@@ -30,14 +26,12 @@ int TryConnectStLink(int stLinkProbeIndex, int shared, debugConnectMode debugCon
 
             int connectStlinkFlag = connectStLink(debugParameters);
             if (connectStlinkFlag != 0) {
-                //logMessage(Error, "Establishing connection with the device failed\n");
                 disconnect();
                 return connectStlinkFlag;
             }
             else
             {
                 return 0;
-                //logMessage(GreenInfo, "\n--- Device %d Connected --- \n", index);
             }
         }
     }
