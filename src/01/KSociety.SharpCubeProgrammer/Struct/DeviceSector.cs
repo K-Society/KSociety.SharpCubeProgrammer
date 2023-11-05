@@ -5,7 +5,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class DeviceSector
+    public struct DeviceSector
     {
         /// <summary>
         /// Number of Sectors.
