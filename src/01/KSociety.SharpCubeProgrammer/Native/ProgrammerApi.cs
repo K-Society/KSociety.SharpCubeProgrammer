@@ -14,26 +14,59 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [STLINK]
 
-        #region [GetStLinkList]
+        #region [TryConnectStLink]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetStLinkList32(IntPtr stLinkList, int shared);
+        [DllImport(ProgrammerDll32, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int TryConnectStLink32(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetStLinkList64(IntPtr stLinkList, int shared);
+        [DllImport(ProgrammerDll64, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int TryConnectStLink64(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
 
-        private static int GetStLinkListNative(IntPtr stLinkList, int shared)
+        private static int TryConnectStLinkNative(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
         {
             return !Environment.Is64BitProcess
-                ? GetStLinkList32(stLinkList, shared)
-                : GetStLinkList64(stLinkList, shared);
+                ? TryConnectStLink32(stLinkProbeIndex, shared, debugConnectMode)
+                : TryConnectStLink64(stLinkProbeIndex, shared, debugConnectMode);
         }
 
-        internal static int GetStLinkList(IntPtr stLinkList, int shared)
+        internal static int TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
         {
             try
             {
-                return GetStLinkListNative(stLinkList, shared);
+                return TryConnectStLinkNative(stLinkProbeIndex, shared, debugConnectMode);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetStLinkList]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetStLinkList32(ref IntPtr stLinkList, int shared);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetStLinkList64(ref IntPtr stLinkList, int shared);
+
+        private static int GetStLinkListNative(ref IntPtr stLinkList, int shared)
+        {
+            return !Environment.Is64BitProcess
+                ? GetStLinkList32(ref stLinkList, shared)
+                : GetStLinkList64(ref stLinkList, shared);
+        }
+
+        internal static int GetStLinkList(ref IntPtr stLinkList, int shared)
+        {
+            try
+            {
+                return GetStLinkListNative(ref stLinkList, shared);
             }
             catch (DllNotFoundException ex)
             {
@@ -49,10 +82,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectStLink]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectStLink32(DebugConnectParameters debugParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectStLink64(DebugConnectParameters debugParameters);
 
         private static int ConnectStLinkNative(DebugConnectParameters debugParameters)
@@ -120,23 +153,23 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [GetUsartList]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetUsartList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUsartList32(IntPtr usartList);
+        private static extern int GetUsartList32(ref IntPtr usartList);
 
         [DllImport(ProgrammerDll64, EntryPoint = "GetUsartList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUsartList64(IntPtr usartList);
+        private static extern int GetUsartList64(ref IntPtr usartList);
 
-        private static int GetUsartListNative(IntPtr usartList)
+        private static int GetUsartListNative(ref IntPtr usartList)
         {
             return !Environment.Is64BitProcess
-                ? GetUsartList32(usartList)
-                : GetUsartList64(usartList);
+                ? GetUsartList32(ref usartList)
+                : GetUsartList64(ref usartList);
         }
 
-        internal static int GetUsartList(IntPtr usartList)
+        internal static int GetUsartList(ref IntPtr usartList)
         {
             try
             {
-                return GetUsartListNative(usartList);
+                return GetUsartListNative(ref usartList);
             }
             catch (DllNotFoundException ex)
             {
@@ -153,10 +186,10 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectUsartBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectUsartBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectUsartBootloader32([MarshalAs(UnmanagedType.U4)] UsartConnectParameters usartParameters);
+        private static extern int ConnectUsartBootloader32(UsartConnectParameters usartParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectUsartBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectUsartBootloader64([MarshalAs(UnmanagedType.U4)] UsartConnectParameters usartParameters);
+        private static extern int ConnectUsartBootloader64(UsartConnectParameters usartParameters);
 
         private static int ConnectUsartBootloaderNative(UsartConnectParameters usartParameters)
         {
@@ -219,23 +252,23 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [GetDfuDeviceList]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetDfuDeviceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetDfuDeviceList32(IntPtr dfuList, int iPID, int iVID);
+        private static extern int GetDfuDeviceList32(ref IntPtr dfuList, int iPID, int iVID);
 
         [DllImport(ProgrammerDll64, EntryPoint = "GetDfuDeviceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetDfuDeviceList64(IntPtr dfuList, int iPID, int iVID);
+        private static extern int GetDfuDeviceList64(ref IntPtr dfuList, int iPID, int iVID);
 
-        private static int GetDfuDeviceListNative(IntPtr dfuList, int iPID, int iVID)
+        private static int GetDfuDeviceListNative(ref IntPtr dfuList, int iPID, int iVID)
         {
             return !Environment.Is64BitProcess
-                ? GetDfuDeviceList32(dfuList, iPID, iVID)
-                : GetDfuDeviceList64(dfuList, iPID, iVID);
+                ? GetDfuDeviceList32(ref dfuList, iPID, iVID)
+                : GetDfuDeviceList64(ref dfuList, iPID, iVID);
         }
 
-        internal static int GetDfuDeviceList(IntPtr dfuList, int iPID, int iVID)
+        internal static int GetDfuDeviceList(ref IntPtr dfuList, int iPID, int iVID)
         {
             try
             {
-                return GetDfuDeviceListNative(dfuList, iPID, iVID);
+                return GetDfuDeviceListNative(ref dfuList, iPID, iVID);
             }
             catch (DllNotFoundException ex)
             {
@@ -285,10 +318,10 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectDfuBootloader2]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader2", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectDfuBootloader232([MarshalAs(UnmanagedType.U4)] DfuConnectParameters dfuParameters);
+        private static extern int ConnectDfuBootloader232(DfuConnectParameters dfuParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader2", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectDfuBootloader264([MarshalAs(UnmanagedType.U4)] DfuConnectParameters dfuParameters);
+        private static extern int ConnectDfuBootloader264(DfuConnectParameters dfuParameters);
 
         private static int ConnectDfuBootloader2Native(DfuConnectParameters dfuParameters)
         {
@@ -318,10 +351,10 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectSpiBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectSpiBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectSpiBootloader32([MarshalAs(UnmanagedType.U4)] SpiConnectParameters spiParameters);
+        private static extern int ConnectSpiBootloader32(SpiConnectParameters spiParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectSpiBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectSpiBootloader64([MarshalAs(UnmanagedType.U4)] SpiConnectParameters spiParameters);
+        private static extern int ConnectSpiBootloader64(SpiConnectParameters spiParameters);
 
         private static int ConnectSpiBootloaderNative(SpiConnectParameters spiParameters)
         {
@@ -351,10 +384,10 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectCanBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectCanBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectCanBootloader32([MarshalAs(UnmanagedType.U4)] CanConnectParameters canParameters);
+        private static extern int ConnectCanBootloader32(CanConnectParameters canParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectCanBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectCanBootloader64([MarshalAs(UnmanagedType.U4)] CanConnectParameters canParameters);
+        private static extern int ConnectCanBootloader64(CanConnectParameters canParameters);
 
         private static int ConnectCanBootloaderNative(CanConnectParameters canParameters)
         {
@@ -384,10 +417,10 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectI2cBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectI2cBootloader32([MarshalAs(UnmanagedType.U4)] I2cConnectParameters i2cParameters);
+        private static extern int ConnectI2cBootloader32(I2cConnectParameters i2cParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectI2cBootloader64([MarshalAs(UnmanagedType.U4)] I2cConnectParameters i2cParameters);
+        private static extern int ConnectI2cBootloader64(I2cConnectParameters i2cParameters);
 
         private static int ConnectI2cBootloaderNative(I2cConnectParameters i2cParameters)
         {
@@ -1102,23 +1135,23 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [GetStorageStructure]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetStorageStructure", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetStorageStructure32(IntPtr deviceStorageStruct);
+        private static extern int GetStorageStructure32(ref IntPtr deviceStorageStruct);
 
         [DllImport(ProgrammerDll64, EntryPoint = "GetStorageStructure", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetStorageStructure64(IntPtr deviceStorageStruct);
+        private static extern int GetStorageStructure64(ref IntPtr deviceStorageStruct);
 
-        private static int GetStorageStructureNative(IntPtr deviceStorageStruct)
+        private static int GetStorageStructureNative(ref IntPtr deviceStorageStruct)
         {
             return !Environment.Is64BitProcess
-                ? GetStorageStructure32(deviceStorageStruct)
-                : GetStorageStructure64(deviceStorageStruct);
+                ? GetStorageStructure32(ref deviceStorageStruct)
+                : GetStorageStructure64(ref deviceStorageStruct);
         }
 
-        internal static int GetStorageStructure(IntPtr deviceStorageStruct)
+        internal static int GetStorageStructure(ref IntPtr deviceStorageStruct)
         {
             try
             {
-                return GetStorageStructureNative(deviceStorageStruct);
+                return GetStorageStructureNative(ref deviceStorageStruct);
             }
             catch (DllNotFoundException ex)
             {

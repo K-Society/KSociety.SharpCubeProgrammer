@@ -8,6 +8,8 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
@@ -86,22 +88,23 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        public void GetStLinkPorts()
+        public async void GetStLinkPorts(CancellationToken cancellationToken = default)
         {
-            this.RegisterStLinkEvents();
-            this.RegisterStm32BootLoaderEvents();
+            await this.RegisterStLinkEvents(cancellationToken);
+            await this.RegisterStm32BootLoaderEvents(cancellationToken);
         }
 
-        private void RegisterStLinkEvents()
+        private async ValueTask RegisterStLinkEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStLink();
-            this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly);
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly, this, null, cancellationToken).ConfigureAwait(false);
         }
 
-        private void RegisterStm32BootLoaderEvents()
+        private async ValueTask RegisterStm32BootLoaderEvents(CancellationToken cancellationToken = default)
         {
             this.RegisterStm32BootLoader();
-            this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly);
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly, this, null, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private void RegisterStLink()
@@ -173,35 +176,57 @@ namespace KSociety.SharpCubeProgrammer
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <inheritdoc />
+        public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
+        {
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            try
+            {
+                var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
+
+                output = this.CheckResult(connectStLinkResult);
+
+                //this._logger?.LogTrace("TryConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "TryConnectStLink: ");
+            }
+
+            return output;
+        }
+
+        /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
             this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
-            var listPtr = Marshal.AllocHGlobal(Marshal.SizeOf<IntPtr>());
+            var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
                 this._logger?.LogTrace("GetStLinkList size: {0}", size);
-                var numberOfItems = Native.ProgrammerApi.GetStLinkList(listPtr, shared ? 1 : 0);
+                var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
                 this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
-                var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
-
-                for (var i = 0; i < numberOfItems; i++)
+                if (listPtr != IntPtr.Zero)
                 {
-                    var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listDereference + (i * size));
-                    this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
-                    parametersList.Add(currentItem);
+                    for (var i = 0; i < numberOfItems; i++)
+                    {
+                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                        this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i,
+                            currentItem.SerialNumber);
+                        parametersList.Add(currentItem);
+                    }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetStLinkList IntPtr: {0}!", "Zero");
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetStLinkList: ");
-            }
-            finally
-            {
-                Native.ProgrammerApi.DeleteInterfaceList();
-                Marshal.FreeHGlobal(listPtr);
             }
 
             return parametersList;
@@ -271,35 +296,35 @@ namespace KSociety.SharpCubeProgrammer
         public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList)
         {
             var numberOfItems = 0;
-            var listPtr = Marshal.AllocHGlobal(Marshal.SizeOf<IntPtr>());
+            var listPtr = new IntPtr();
 
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
 
                 this._logger?.LogTrace("GetDfuDeviceList iPID: {0} iVID: {1}", 0xdf11, 0x0483);
-                numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(listPtr, 0xdf11, 0x0483);
+                numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
                 this._logger?.LogTrace("GetDfuDeviceList DFU devices found : {0}", numberOfItems);
 
-                var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
-
-                for (var i = 0; i < numberOfItems; i++)
+                //var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
+                if (listPtr != IntPtr.Zero)
                 {
-                    var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listDereference + (i * size));
-                    if (currentItem != null)
+                    for (var i = 0; i < numberOfItems; i++)
                     {
+                        var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
+
                         this._logger?.LogTrace("GetDfuDeviceList DfuDeviceInfo: {0} - {1}", i, currentItem.SerialNumber);
                         dfuDeviceList.Add(currentItem);
                     }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetDfuDeviceList IntPtr: {0}!", "Zero");
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetDfuDeviceList:");
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(listPtr);
             }
 
             return numberOfItems;
@@ -378,8 +403,9 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
-                this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Name, generalInf.Type,
-                    generalInf.Cpu);
+                this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Value.Name,
+                    generalInf.Value.Type,
+                    generalInf.Value.Cpu);
             }
             catch (Exception ex)
             {
@@ -573,10 +599,10 @@ namespace KSociety.SharpCubeProgrammer
                 if (!filePointer.Equals(IntPtr.Zero))
                 {
                     fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.segments);
+                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.Value.segments);
                     var data = new byte[segment.size];
                     Marshal.Copy(segment.data, data, 0, segment.size);
-                    Marshal.DestroyStructure<SegmentDataC>(fileData.segments);
+                    Marshal.DestroyStructure<SegmentDataC>(fileData.Value.segments);
                     Marshal.DestroyStructure<FileDataC>(filePointer);
                 }
             }
@@ -754,7 +780,7 @@ namespace KSociety.SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var result = Native.ProgrammerApi.GetStorageStructure(storageStructurePtr);
+                var result = Native.ProgrammerApi.GetStorageStructure(ref storageStructurePtr);
 
                 output = this.CheckResult(result);
 
@@ -1176,6 +1202,11 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         #endregion
+
+        protected override void DisposeManagedResources()
+        {
+            this.WmiManager.Dispose();
+        }
 
         protected override void DisposeUnmanagedResources()
         {

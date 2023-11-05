@@ -8,6 +8,7 @@ namespace Programming
     using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
+    using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
@@ -37,11 +38,50 @@ namespace Programming
             //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
 
+            //var testStLink = CubeProgrammerApi.TryConnectStLink(0, 0, DebugConnectionMode.UnderResetMode);
+
+            //if (testStLink.Equals(CubeProgrammerError.CubeprogrammerNoError))
+            //{
+            //    var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
+            //    if (generalInfo != null)
+            //    {
+            //        Logger.LogInformation("INFO: \n" +
+            //                              "Board: {0} \n" +
+            //                              "Bootloader Version: {1} \n" +
+            //                              "Cpu: {2} \n" +
+            //                              "Description: {3} \n" +
+            //                              "DeviceId: {4} \n" +
+            //                              "FlashSize: {5} \n" +
+            //                              "RevisionId: {6} \n" +
+            //                              "Name: {7} \n" +
+            //                              "Series: {8} \n" +
+            //                              "Type: {9}",
+            //            generalInfo.Board,
+            //            generalInfo.BootloaderVersion,
+            //            generalInfo.Cpu,
+            //            generalInfo.Description,
+            //            generalInfo.DeviceId,
+            //            generalInfo.FlashSize,
+            //            generalInfo.RevisionId,
+            //            generalInfo.Name,
+            //            generalInfo.Series,
+            //            generalInfo.Type);
+            //    }
+            //    CubeProgrammerApi.Disconnect();
+            //}
+            //else
+            //{
+            //    Logger.LogWarning(testStLink.ToString());
+            //}
+
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
-                var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+                var stLink = (DebugConnectParameters)stLinkList.First().Clone();
                 stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.Shared = 0;
+
+                Logger.LogInformation("Speed: {0}", stLink.Speed);
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
@@ -60,17 +100,18 @@ namespace Programming
                                               "Name: {7} \n" +
                                               "Series: {8} \n" +
                                               "Type: {9}",
-                            generalInfo.Board,
-                            generalInfo.BootloaderVersion,
-                            generalInfo.Cpu,
-                            generalInfo.Description,
-                            generalInfo.DeviceId,
-                            generalInfo.FlashSize,
-                            generalInfo.RevisionId,
-                            generalInfo.Name,
-                            generalInfo.Series,
-                            generalInfo.Type);
+                            generalInfo.Value.Board,
+                            generalInfo.Value.BootloaderVersion,
+                            generalInfo.Value.Cpu,
+                            generalInfo.Value.Description,
+                            generalInfo.Value.DeviceId,
+                            generalInfo.Value.FlashSize,
+                            generalInfo.Value.RevisionId,
+                            generalInfo.Value.Name,
+                            generalInfo.Value.Series,
+                            generalInfo.Value.Type);
                     }
+                    CubeProgrammerApi.Disconnect();
                 }
                 else
                 {
@@ -82,7 +123,6 @@ namespace Programming
                 Logger.LogWarning("No ST-Link found!");
             }
 
-            CubeProgrammerApi.Disconnect();
             CubeProgrammerApi.Dispose();
 
             Console.ReadLine();

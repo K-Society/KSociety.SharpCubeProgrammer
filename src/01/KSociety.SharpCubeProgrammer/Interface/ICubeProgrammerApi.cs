@@ -4,6 +4,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -23,11 +24,13 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         bool Stm32BootLoaderReady { get; }
 
-        void GetStLinkPorts();
+        void GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 
         //STLINK module groups debug ports JTAG/SWD functions together.
+
+        CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
 
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s).

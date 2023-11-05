@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
-<!--
-  Replace PackageReferences with ProjectReferences when the projects can be found in .sln.
-  See the original here: https://github.com/dotnet/sdk/issues/1151#issuecomment-385133284
--->
+
 <Project>
-  <PropertyGroup>
+    <PropertyGroup>
     <ReplacePackageReferences>true</ReplacePackageReferences>
   </PropertyGroup>
 
@@ -22,7 +19,7 @@
         <!-- Keep the identity of the PackageReference -->
         <SmartPackageReference Include="@(PackageReference)">
           <PackageName>%(Identity)</PackageName>
-          <InSolution>$(SolutionFileContent.Contains('\%(Identity).csproj'))</InSolution>
+          <InSolution>$(SolutionFileContent.Contains('\%(Identity)(MSBuildProjectExtension)'))</InSolution>
         </SmartPackageReference>
 
         <!-- Filter them by mapping them to another ItemGroup using the WithMetadataValue item function -->
@@ -38,5 +35,7 @@
       </ItemGroup>
     </When>
   </Choose>
+  
+  <Import Project="Directory$(MSBuildProjectExtension).targets" Condition=" Exists('Directory$(MSBuildProjectExtension).targets') " />
   
 </Project>
