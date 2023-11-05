@@ -296,35 +296,35 @@ namespace KSociety.SharpCubeProgrammer
         public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList)
         {
             var numberOfItems = 0;
-            var listPtr = Marshal.AllocHGlobal(Marshal.SizeOf<IntPtr>());
+            var listPtr = new IntPtr();
 
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
 
                 this._logger?.LogTrace("GetDfuDeviceList iPID: {0} iVID: {1}", 0xdf11, 0x0483);
-                numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(listPtr, 0xdf11, 0x0483);
+                numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
                 this._logger?.LogTrace("GetDfuDeviceList DFU devices found : {0}", numberOfItems);
 
-                var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
-
-                for (var i = 0; i < numberOfItems; i++)
+                //var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
+                if (listPtr != IntPtr.Zero)
                 {
-                    var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listDereference + (i * size));
-                    if (currentItem != null)
+                    for (var i = 0; i < numberOfItems; i++)
                     {
+                        var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
+
                         this._logger?.LogTrace("GetDfuDeviceList DfuDeviceInfo: {0} - {1}", i, currentItem.SerialNumber);
                         dfuDeviceList.Add(currentItem);
                     }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetDfuDeviceList IntPtr: {0}!", "Zero");
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetDfuDeviceList:");
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(listPtr);
             }
 
             return numberOfItems;
@@ -403,8 +403,9 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
-                this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Name, generalInf.Type,
-                    generalInf.Cpu);
+                this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Value.Name,
+                    generalInf.Value.Type,
+                    generalInf.Value.Cpu);
             }
             catch (Exception ex)
             {
@@ -598,10 +599,10 @@ namespace KSociety.SharpCubeProgrammer
                 if (!filePointer.Equals(IntPtr.Zero))
                 {
                     fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.segments);
+                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.Value.segments);
                     var data = new byte[segment.size];
                     Marshal.Copy(segment.data, data, 0, segment.size);
-                    Marshal.DestroyStructure<SegmentDataC>(fileData.segments);
+                    Marshal.DestroyStructure<SegmentDataC>(fileData.Value.segments);
                     Marshal.DestroyStructure<FileDataC>(filePointer);
                 }
             }
@@ -779,7 +780,7 @@ namespace KSociety.SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var result = Native.ProgrammerApi.GetStorageStructure(storageStructurePtr);
+                var result = Native.ProgrammerApi.GetStorageStructure(ref storageStructurePtr);
 
                 output = this.CheckResult(result);
 

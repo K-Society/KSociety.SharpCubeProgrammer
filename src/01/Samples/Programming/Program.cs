@@ -100,16 +100,16 @@ namespace Programming
                                               "Name: {7} \n" +
                                               "Series: {8} \n" +
                                               "Type: {9}",
-                            generalInfo.Board,
-                            generalInfo.BootloaderVersion,
-                            generalInfo.Cpu,
-                            generalInfo.Description,
-                            generalInfo.DeviceId,
-                            generalInfo.FlashSize,
-                            generalInfo.RevisionId,
-                            generalInfo.Name,
-                            generalInfo.Series,
-                            generalInfo.Type);
+                            generalInfo.Value.Board,
+                            generalInfo.Value.BootloaderVersion,
+                            generalInfo.Value.Cpu,
+                            generalInfo.Value.Description,
+                            generalInfo.Value.DeviceId,
+                            generalInfo.Value.FlashSize,
+                            generalInfo.Value.RevisionId,
+                            generalInfo.Value.Name,
+                            generalInfo.Value.Series,
+                            generalInfo.Value.Type);
                     }
                     CubeProgrammerApi.Disconnect();
                 }
@@ -123,7 +123,6 @@ namespace Programming
                 Logger.LogWarning("No ST-Link found!");
             }
 
-            //CubeProgrammerApi.Disconnect();
             CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
