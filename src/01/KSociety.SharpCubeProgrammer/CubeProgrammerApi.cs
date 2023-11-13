@@ -143,6 +143,8 @@ namespace KSociety.SharpCubeProgrammer
                 this.StLinkReady = true;
                 this.OnStLinksFoundStatus();
             }
+
+            this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
         }
 
         private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
@@ -169,11 +171,13 @@ namespace KSociety.SharpCubeProgrammer
                 this.Stm32BootLoaderReady = true;
                 this.OnStm32BootLoadersFoundStatus();
             }
+
+            this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
         }
 
-        #region [STLINK]
+        #region [ST-LINK]
 
-        //STLINK module groups debug ports JTAG/SWD functions together.
+        //ST-LINK module groups debug ports JTAG/SWD functions together.
 
         /// <inheritdoc />
         public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
