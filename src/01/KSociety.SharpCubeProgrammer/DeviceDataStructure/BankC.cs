@@ -6,7 +6,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential)]
-    public class BankC
+    public struct BankC
     {
         public uint Size;
         public uint Address;

@@ -7,7 +7,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class PeripheralC
+    public struct PeripheralC
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string Name;

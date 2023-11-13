@@ -421,13 +421,13 @@ namespace KSociety.SharpCubeProgrammer
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
-            var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
+            //var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
 
             try
             {
-                var bufferPtr = Marshal.AllocHGlobal(bufferSize);
+                var bufferPtr = new IntPtr(); //Marshal.AllocHGlobal(bufferSize);
                 var readMemoryResult =
-                    Native.ProgrammerApi.ReadMemory(uintAddress, out bufferPtr, Convert.ToUInt32(byteSize));
+                    Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero)
                 {
@@ -1203,6 +1203,8 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
+        #region [Dispose]
+
         protected override void DisposeManagedResources()
         {
             this.WmiManager.Dispose();
@@ -1212,5 +1214,7 @@ namespace KSociety.SharpCubeProgrammer
         {
             this._handle?.Dispose();
         }
+
+        #endregion
     } // CubeProgrammerApi.
 }

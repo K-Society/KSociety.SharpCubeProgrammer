@@ -6,7 +6,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class BitValueC
+    public struct BitValueC
     {
         public uint Value;
 

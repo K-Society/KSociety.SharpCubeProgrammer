@@ -6,7 +6,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential)]
-    public class DeviceBank
+    public struct DeviceBank
     {
         public uint SectorsNumber;
         public IntPtr Sectors;

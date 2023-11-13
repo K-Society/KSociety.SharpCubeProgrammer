@@ -7,7 +7,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class BitC
+    public struct BitC
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string Name;

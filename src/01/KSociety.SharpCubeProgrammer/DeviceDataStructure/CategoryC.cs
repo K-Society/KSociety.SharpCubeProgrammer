@@ -7,7 +7,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class CategoryC
+    public struct CategoryC
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Name;

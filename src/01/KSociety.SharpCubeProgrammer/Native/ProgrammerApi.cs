@@ -417,19 +417,19 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ConnectI2cBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectI2cBootloader32(I2cConnectParameters i2cParameters);
+        private static extern int ConnectI2cBootloader32(I2CConnectParameters i2cParameters);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectI2cBootloader64(I2cConnectParameters i2cParameters);
+        private static extern int ConnectI2cBootloader64(I2CConnectParameters i2cParameters);
 
-        private static int ConnectI2cBootloaderNative(I2cConnectParameters i2cParameters)
+        private static int ConnectI2cBootloaderNative(I2CConnectParameters i2cParameters)
         {
             return !Environment.Is64BitProcess
                 ? ConnectI2cBootloader32(i2cParameters)
                 : ConnectI2cBootloader64(i2cParameters);
         }
 
-        internal static int ConnectI2cBootloader(I2cConnectParameters i2cParameters)
+        internal static int ConnectI2cBootloader(I2CConnectParameters i2cParameters)
         {
             try
             {
@@ -526,23 +526,23 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [ReadMemory]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ReadMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ReadMemory32(uint address, out IntPtr data, uint size);
+        private static extern int ReadMemory32(uint address, ref IntPtr data, uint size);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ReadMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ReadMemory64(uint address, out IntPtr data, uint size);
+        private static extern int ReadMemory64(uint address, ref IntPtr data, uint size);
 
-        private static int ReadMemoryNative(uint address, out IntPtr data, uint size)
+        private static int ReadMemoryNative(uint address, ref IntPtr data, uint size)
         {
             return !Environment.Is64BitProcess
-                ? ReadMemory32(address, out data, size)
-                : ReadMemory64(address, out data, size);
+                ? ReadMemory32(address, ref data, size)
+                : ReadMemory64(address, ref data, size);
         }
 
-        internal static int ReadMemory(uint address, out IntPtr data, uint size)
+        internal static int ReadMemory(uint address, ref IntPtr data, uint size)
         {
             try
             {
-                return ReadMemoryNative(address, out data, size);
+                return ReadMemoryNative(address, ref data, size);
             }
             catch (DllNotFoundException ex)
             {

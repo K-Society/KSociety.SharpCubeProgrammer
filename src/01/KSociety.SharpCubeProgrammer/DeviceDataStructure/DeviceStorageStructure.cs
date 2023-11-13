@@ -2,7 +2,7 @@
 
 namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
 {
-    public class DeviceStorageStructure
+    public struct DeviceStorageStructure
     {
         public uint BanksNumber;
         public uint SectorsNumber;
