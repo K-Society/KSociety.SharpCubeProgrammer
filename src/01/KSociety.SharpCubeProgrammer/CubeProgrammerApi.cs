@@ -572,15 +572,25 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void ReadUnprotect()
+        public CubeProgrammerError ReadUnprotect()
         {
-            throw new NotImplementedException();
+            var result = Native.ProgrammerApi.ReadUnprotect();
+            var output = this.CheckResult(result);
+
+            return output;
         }
 
         /// <inheritdoc />
-        public void GetTargetInterfaceType()
+        public TargetInterfaceType? GetTargetInterfaceType()
         {
-            throw new NotImplementedException();
+            var result = Native.ProgrammerApi.GetTargetInterfaceType();
+
+            if (result == -1)
+            {
+                return null;
+            }
+
+            return (TargetInterfaceType)result;
         }
 
         /// <inheritdoc />
@@ -796,12 +806,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStorageStructure:");
             }
-            //finally
-            //{
-            //    Marshal.FreeCoTaskMem(bankSectorPtr);
-            //    Marshal.FreeCoTaskMem(deviceBankPtr);
-            //    Marshal.FreeCoTaskMem(storageStructurePtr);
-            //}
 
             return (output, deviceStorageStructure);
         }
@@ -825,14 +829,14 @@ namespace KSociety.SharpCubeProgrammer
         public PeripheralC? InitOptionBytesInterface()
         {
             this._logger?.LogTrace("InitOptionBytesInterface.");
-            PeripheralC? generalInf = null;
+            PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
             try
             {
 
-                generalInf = Marshal.PtrToStructure<PeripheralC>(pointer);
+                peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
 
             }
             catch (Exception ex)
@@ -844,7 +848,7 @@ namespace KSociety.SharpCubeProgrammer
                 Marshal.DestroyStructure<PeripheralC>(pointer);
             }
 
-            return generalInf;
+            return peripheralC;
         }
 
         /// <inheritdoc />
@@ -1016,84 +1020,6 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         #endregion
-
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
-        //{
-
-        //    message = Regex.Replace(message, "(?<!\r)\n", "");
-        //    if (String.IsNullOrEmpty(message))
-        //    {
-        //        return;
-        //    }
-
-        //    switch ((MessageType) messageType)
-        //    {
-        //        case MessageType.Normal:
-        //            this._logger?.LogTrace(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Info:
-        //            this._logger?.LogDebug(@"{0}", message);
-        //            break;
-
-        //        case MessageType.GreenInfo:
-        //            this._logger?.LogInformation(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Title:
-        //            this._logger?.LogInformation(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Warning:
-        //            this._logger?.LogWarning(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Error:
-        //            this._logger?.LogError(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Verbosity1:
-        //        case MessageType.Verbosity2:
-        //        case MessageType.Verbosity3:
-        //            //_logger.LogTrace(@"{0}", message);
-        //            break;
-
-        //        case MessageType.GreenInfoNoPopup:
-        //        case MessageType.WarningNoPopup:
-        //        case MessageType.ErrorNoPopup:
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void InitProgressBar()
-        //{
-        //    //System.Console.WriteLine("InitProgressBar: ");
-        //    //_logger.LogDebug("Application InitProgressBar.");
-
-        //    //lock (_logger)
-        //    //{
-        //    //    //System.Console.WriteLine("Application InitProgressBar.");
-        //    //    _logger.LogDebug("Application InitProgressBar.");
-        //    //}
-        //}
-
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void ProgressBarUpdate(int currentProgress, int total)
-        //{
-        //    //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
-        //    //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-
-        //    //lock (_logger)
-        //    //{
-        //    //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-        //    //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-        //    //}
-        //}
 
         private CubeProgrammerError CheckResult(int result)
         {

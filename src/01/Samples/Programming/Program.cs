@@ -129,6 +129,25 @@ namespace Programming
                             storageStructure.Item2.Size);
                     }
 
+                    var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
+
+                    if (peripheral.HasValue)
+                    {
+                        Logger.LogInformation("PeripheralC: \n" +
+                                              "Name: {0} \n" +
+                                              "Description: {1} \n" +
+                                              "Banks Nbr: {2} \n" +
+                                              "Banks: {3} \n",
+                            peripheral.Value.Name,
+                            peripheral.Value.Description,
+                            peripheral.Value.BanksNbr,
+                            peripheral.Value.Banks);
+                    }
+
+                    var targetInterfaceType = CubeProgrammerApi.GetTargetInterfaceType();
+
+                    Logger.LogInformation("TargetInterfaceType: {0}", targetInterfaceType);
+
                     CubeProgrammerApi.Disconnect();
                 }
                 else

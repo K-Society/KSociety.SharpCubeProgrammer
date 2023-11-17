@@ -70,6 +70,8 @@ extern "C" PROGRAMMER_API int ReadUnprotect();
 
 extern "C" PROGRAMMER_API int TzenRegression();
 
+extern "C" PROGRAMMER_API int GetTargetInterfaceType();
+
 extern "C" PROGRAMMER_API volatile int* GetCancelPointer();
 
 extern "C" PROGRAMMER_API void* FileOpen(const wchar_t* filePath);
