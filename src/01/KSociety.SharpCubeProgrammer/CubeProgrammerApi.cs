@@ -764,22 +764,8 @@ namespace KSociety.SharpCubeProgrammer
         public (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure()
         {
             var deviceStorageStructure = new DeviceStorageStructure();
-            var storageStructure = new StorageStructure();
-            var deviceBank = new DeviceBank();
-            var bankSector = new BankSector();
 
-            var bankSectorPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(bankSector));
-            Marshal.StructureToPtr(bankSector, bankSectorPtr, false);
-
-            deviceBank.Sectors = bankSectorPtr;
-
-            var deviceBankPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(deviceBank));
-            Marshal.StructureToPtr(deviceBank, deviceBankPtr, false);
-
-            storageStructure.Banks = deviceBankPtr;
-
-            var storageStructurePtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(storageStructure));
-            Marshal.StructureToPtr(storageStructure, storageStructurePtr, false);
+            var storageStructurePtr = new IntPtr();
 
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
@@ -790,29 +776,32 @@ namespace KSociety.SharpCubeProgrammer
 
                 if (output.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 {
-                    var deviceStorageStructureDereference = Marshal.PtrToStructure<IntPtr>(storageStructurePtr);
-                    var storageStructureResult = Marshal.PtrToStructure<StorageStructure>(deviceStorageStructureDereference);
-                    deviceStorageStructure.BanksNumber = storageStructureResult.BanksNumber;
-                    var deviceBankResult = Marshal.PtrToStructure<DeviceBank>(storageStructureResult.Banks);
-                    deviceStorageStructure.SectorsNumber = deviceBankResult.SectorsNumber;
-                    var bankSectors = Marshal.PtrToStructure<BankSector>(deviceBankResult.Sectors);
-                    deviceStorageStructure.Index = bankSectors.Index;
-                    deviceStorageStructure.Size = bankSectors.Size;
-                    deviceStorageStructure.Address = bankSectors.Address;
+                    if (storageStructurePtr != IntPtr.Zero)
+                    {
+                        var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
 
-                    //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
+                        deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
+                        var deviceBankResult = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks);
+                        deviceStorageStructure.SectorsNumber = deviceBankResult.SectorsNumber;
+                        var bankSectors = Marshal.PtrToStructure<BankSector>(deviceBankResult.Sectors);
+                        deviceStorageStructure.Index = bankSectors.Index;
+                        deviceStorageStructure.Size = bankSectors.Size;
+                        deviceStorageStructure.Address = bankSectors.Address;
+
+                        //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetStorageStructure:");
             }
-            finally
-            {
-                Marshal.FreeCoTaskMem(bankSectorPtr);
-                Marshal.FreeCoTaskMem(deviceBankPtr);
-                Marshal.FreeCoTaskMem(storageStructurePtr);
-            }
+            //finally
+            //{
+            //    Marshal.FreeCoTaskMem(bankSectorPtr);
+            //    Marshal.FreeCoTaskMem(deviceBankPtr);
+            //    Marshal.FreeCoTaskMem(storageStructurePtr);
+            //}
 
             return (output, deviceStorageStructure);
         }

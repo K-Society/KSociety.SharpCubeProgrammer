@@ -111,6 +111,24 @@ namespace Programming
                             generalInfo.Value.Series,
                             generalInfo.Value.Type);
                     }
+
+                    var storageStructure = CubeProgrammerApi.GetStorageStructure();
+
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    {
+                        Logger.LogInformation("Storage structure: \n" +
+                                              "Address: {0} \n" +
+                                              "BanksNumber: {1} \n" +
+                                              "Index: {2} \n" +
+                                              "Sectors number: {3} \n" +
+                                              "Size: {4} \n",
+                            CubeProgrammerApi.HexConverterToString(storageStructure.Item2.Address),
+                            storageStructure.Item2.BanksNumber,
+                            storageStructure.Item2.Index,
+                            storageStructure.Item2.SectorsNumber,
+                            storageStructure.Item2.Size);
+                    }
+
                     CubeProgrammerApi.Disconnect();
                 }
                 else
