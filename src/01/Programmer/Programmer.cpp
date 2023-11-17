@@ -293,6 +293,11 @@ int TzenRegression()
 	return -99;
 }
 
+int GetTargetInterfaceType()
+{
+    return getTargetInterfaceType();
+}
+
 volatile int* GetCancelPointer()
 {
 	return getCancelPointer();

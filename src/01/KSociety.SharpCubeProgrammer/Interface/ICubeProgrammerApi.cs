@@ -154,12 +154,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// If the memory is not protected, a message appears to indicate that the device is not
         /// under Readout protection and the command has no effects.
         /// </summary>
-        void ReadUnprotect();
+        CubeProgrammerError ReadUnprotect();
 
         /// <summary>
         /// This routine allows to know the interface what is in use.
         /// </summary>
-        void GetTargetInterfaceType();
+        TargetInterfaceType? GetTargetInterfaceType();
 
         /// <summary>
         /// This routine allows to drop the current read/write operation.

@@ -143,6 +143,8 @@ namespace KSociety.SharpCubeProgrammer
                 this.StLinkReady = true;
                 this.OnStLinksFoundStatus();
             }
+
+            this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
         }
 
         private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
@@ -169,11 +171,13 @@ namespace KSociety.SharpCubeProgrammer
                 this.Stm32BootLoaderReady = true;
                 this.OnStm32BootLoadersFoundStatus();
             }
+
+            this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
         }
 
-        #region [STLINK]
+        #region [ST-LINK]
 
-        //STLINK module groups debug ports JTAG/SWD functions together.
+        //ST-LINK module groups debug ports JTAG/SWD functions together.
 
         /// <inheritdoc />
         public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
@@ -421,13 +425,13 @@ namespace KSociety.SharpCubeProgrammer
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
-            var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
+            //var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
 
             try
             {
-                var bufferPtr = Marshal.AllocHGlobal(bufferSize);
+                var bufferPtr = new IntPtr(); //Marshal.AllocHGlobal(bufferSize);
                 var readMemoryResult =
-                    Native.ProgrammerApi.ReadMemory(uintAddress, out bufferPtr, Convert.ToUInt32(byteSize));
+                    Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero)
                 {
@@ -568,15 +572,25 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void ReadUnprotect()
+        public CubeProgrammerError ReadUnprotect()
         {
-            throw new NotImplementedException();
+            var result = Native.ProgrammerApi.ReadUnprotect();
+            var output = this.CheckResult(result);
+
+            return output;
         }
 
         /// <inheritdoc />
-        public void GetTargetInterfaceType()
+        public TargetInterfaceType? GetTargetInterfaceType()
         {
-            throw new NotImplementedException();
+            var result = Native.ProgrammerApi.GetTargetInterfaceType();
+
+            if (result == -1)
+            {
+                return null;
+            }
+
+            return (TargetInterfaceType)result;
         }
 
         /// <inheritdoc />
@@ -760,22 +774,8 @@ namespace KSociety.SharpCubeProgrammer
         public (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure()
         {
             var deviceStorageStructure = new DeviceStorageStructure();
-            var storageStructure = new StorageStructure();
-            var deviceBank = new DeviceBank();
-            var bankSector = new BankSector();
 
-            var bankSectorPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(bankSector));
-            Marshal.StructureToPtr(bankSector, bankSectorPtr, false);
-
-            deviceBank.Sectors = bankSectorPtr;
-
-            var deviceBankPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(deviceBank));
-            Marshal.StructureToPtr(deviceBank, deviceBankPtr, false);
-
-            storageStructure.Banks = deviceBankPtr;
-
-            var storageStructurePtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(storageStructure));
-            Marshal.StructureToPtr(storageStructure, storageStructurePtr, false);
+            var storageStructurePtr = new IntPtr();
 
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
@@ -786,28 +786,25 @@ namespace KSociety.SharpCubeProgrammer
 
                 if (output.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 {
-                    var deviceStorageStructureDereference = Marshal.PtrToStructure<IntPtr>(storageStructurePtr);
-                    var storageStructureResult = Marshal.PtrToStructure<StorageStructure>(deviceStorageStructureDereference);
-                    deviceStorageStructure.BanksNumber = storageStructureResult.BanksNumber;
-                    var deviceBankResult = Marshal.PtrToStructure<DeviceBank>(storageStructureResult.Banks);
-                    deviceStorageStructure.SectorsNumber = deviceBankResult.SectorsNumber;
-                    var bankSectors = Marshal.PtrToStructure<BankSector>(deviceBankResult.Sectors);
-                    deviceStorageStructure.Index = bankSectors.Index;
-                    deviceStorageStructure.Size = bankSectors.Size;
-                    deviceStorageStructure.Address = bankSectors.Address;
+                    if (storageStructurePtr != IntPtr.Zero)
+                    {
+                        var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
 
-                    //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
+                        deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
+                        var deviceBankResult = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks);
+                        deviceStorageStructure.SectorsNumber = deviceBankResult.SectorsNumber;
+                        var bankSectors = Marshal.PtrToStructure<BankSector>(deviceBankResult.Sectors);
+                        deviceStorageStructure.Index = bankSectors.Index;
+                        deviceStorageStructure.Size = bankSectors.Size;
+                        deviceStorageStructure.Address = bankSectors.Address;
+
+                        //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetStorageStructure:");
-            }
-            finally
-            {
-                Marshal.FreeCoTaskMem(bankSectorPtr);
-                Marshal.FreeCoTaskMem(deviceBankPtr);
-                Marshal.FreeCoTaskMem(storageStructurePtr);
             }
 
             return (output, deviceStorageStructure);
@@ -832,14 +829,14 @@ namespace KSociety.SharpCubeProgrammer
         public PeripheralC? InitOptionBytesInterface()
         {
             this._logger?.LogTrace("InitOptionBytesInterface.");
-            PeripheralC? generalInf = null;
+            PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
             try
             {
 
-                generalInf = Marshal.PtrToStructure<PeripheralC>(pointer);
+                peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
 
             }
             catch (Exception ex)
@@ -851,7 +848,7 @@ namespace KSociety.SharpCubeProgrammer
                 Marshal.DestroyStructure<PeripheralC>(pointer);
             }
 
-            return generalInf;
+            return peripheralC;
         }
 
         /// <inheritdoc />
@@ -1024,84 +1021,6 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
-        //{
-
-        //    message = Regex.Replace(message, "(?<!\r)\n", "");
-        //    if (String.IsNullOrEmpty(message))
-        //    {
-        //        return;
-        //    }
-
-        //    switch ((MessageType) messageType)
-        //    {
-        //        case MessageType.Normal:
-        //            this._logger?.LogTrace(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Info:
-        //            this._logger?.LogDebug(@"{0}", message);
-        //            break;
-
-        //        case MessageType.GreenInfo:
-        //            this._logger?.LogInformation(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Title:
-        //            this._logger?.LogInformation(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Warning:
-        //            this._logger?.LogWarning(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Error:
-        //            this._logger?.LogError(@"{0}", message);
-        //            break;
-
-        //        case MessageType.Verbosity1:
-        //        case MessageType.Verbosity2:
-        //        case MessageType.Verbosity3:
-        //            //_logger.LogTrace(@"{0}", message);
-        //            break;
-
-        //        case MessageType.GreenInfoNoPopup:
-        //        case MessageType.WarningNoPopup:
-        //        case MessageType.ErrorNoPopup:
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void InitProgressBar()
-        //{
-        //    //System.Console.WriteLine("InitProgressBar: ");
-        //    //_logger.LogDebug("Application InitProgressBar.");
-
-        //    //lock (_logger)
-        //    //{
-        //    //    //System.Console.WriteLine("Application InitProgressBar.");
-        //    //    _logger.LogDebug("Application InitProgressBar.");
-        //    //}
-        //}
-
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //private void ProgressBarUpdate(int currentProgress, int total)
-        //{
-        //    //System.Console.WriteLine("ProgressBarUpdate: " + currentProgress + " " + total);
-        //    //_logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-
-        //    //lock (_logger)
-        //    //{
-        //    //    _logger.LogDebug("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-        //    //    //System.Console.WriteLine("Application ProgressBarUpdate: {0} on {1}", currentProgress, total);
-        //    //}
-        //}
-
         private CubeProgrammerError CheckResult(int result)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1203,6 +1122,8 @@ namespace KSociety.SharpCubeProgrammer
 
         #endregion
 
+        #region [Dispose]
+
         protected override void DisposeManagedResources()
         {
             this.WmiManager.Dispose();
@@ -1212,5 +1133,7 @@ namespace KSociety.SharpCubeProgrammer
         {
             this._handle?.Dispose();
         }
+
+        #endregion
     } // CubeProgrammerApi.
 }

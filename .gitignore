@@ -366,3 +366,5 @@ FodyWeavers.xsd
 !/Programmer/*
 !/Programmer/x64/*
 !/Programmer/x86/*
+
+Visual Studio 2022/
