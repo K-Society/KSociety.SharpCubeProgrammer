@@ -245,20 +245,26 @@ namespace KSociety.SharpCubeProgrammer.Interface
         //Loaders module groups loaders functions.
 
         /// <summary>
+        /// This routine allows to specify the location of Flash Loader.
+        /// </summary>
+        /// <param name="path">Indicates the full path of the considered folder.</param>
+        void SetLoadersPath(string path);
+
+        /// <summary>
         /// This routine allows to specify the path of the external Loaders to be loaded.
         /// </summary>
         /// <param name="path"></param>
-        void SetExternalLoadersPath(string path);
+        ExternalLoader SetExternalLoaderPath(string path);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        void GetExternalLoaders();
+        ExternalStorageInfo GetExternalLoaders(string path);
 
         /// <summary>
         /// This routine allows to unload an external Loaders.
         /// </summary>
-        void RemoveExternalLoader();
+        void RemoveExternalLoader(string path);
 
         /// <summary>
         /// This routine allows to delete all target Flash Loaders.

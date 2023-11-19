@@ -1313,28 +1313,28 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [SetExternalLoaderPath]
 
         [DllImport(ProgrammerDll32, EntryPoint = "SetExternalLoaderPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SetExternalLoaderPath32(string path, IntPtr externalLoaderInfo);
+        private static extern void SetExternalLoaderPath32(string path, ref IntPtr externalLoaderInfo);
 
         [DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SetExternalLoaderPath64(string path, IntPtr externalLoaderInfo);
+        private static extern void SetExternalLoaderPath64(string path, ref IntPtr externalLoaderInfo);
 
-        private static void SetExternalLoaderPathNative(string path, IntPtr externalLoaderInfo)
+        private static void SetExternalLoaderPathNative(string path, ref IntPtr externalLoaderInfo)
         {
             if (!Environment.Is64BitProcess)
             {
-                SetExternalLoaderPath32(path, externalLoaderInfo);
+                SetExternalLoaderPath32(path, ref externalLoaderInfo);
             }
             else
             {
-                SetExternalLoaderPath64(path, externalLoaderInfo);
+                SetExternalLoaderPath64(path, ref externalLoaderInfo);
             }
         }
 
-        internal static void SetExternalLoaderPath(string path, IntPtr externalLoaderInfo)
+        internal static void SetExternalLoaderPath(string path, ref IntPtr externalLoaderInfo)
         {
             try
             {
-                SetExternalLoaderPathNative(path, externalLoaderInfo);
+                SetExternalLoaderPathNative(path, ref externalLoaderInfo);
             }
             catch (DllNotFoundException ex)
             {
@@ -1351,28 +1351,28 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [GetExternalLoaders]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetExternalLoaders", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void GetExternalLoaders32(string path, IntPtr externalStorageNfo);
+        private static extern void GetExternalLoaders32(string path, ref IntPtr externalStorageNfo);
 
         [DllImport(ProgrammerDll64, EntryPoint = "GetExternalLoaders", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void GetExternalLoaders64(string path, IntPtr externalStorageNfo);
+        private static extern void GetExternalLoaders64(string path, ref IntPtr externalStorageNfo);
 
-        private static void GetExternalLoadersNative(string path, IntPtr externalStorageNfo)
+        private static void GetExternalLoadersNative(string path, ref IntPtr externalStorageNfo)
         {
             if (!Environment.Is64BitProcess)
             {
-                GetExternalLoaders32(path, externalStorageNfo);
+                GetExternalLoaders32(path, ref externalStorageNfo);
             }
             else
             {
-                GetExternalLoaders64(path, externalStorageNfo);
+                GetExternalLoaders64(path, ref externalStorageNfo);
             }
         }
 
-        internal static void GetExternalLoaders(string path, IntPtr externalStorageNfo)
+        internal static void GetExternalLoaders(string path, ref IntPtr externalStorageNfo)
         {
             try
             {
-                GetExternalLoadersNative(path, externalStorageNfo);
+                GetExternalLoadersNative(path, ref externalStorageNfo);
             }
             catch (DllNotFoundException ex)
             {
