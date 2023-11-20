@@ -596,7 +596,7 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void GetCancelPointer()
         {
-            throw new NotImplementedException();
+            Native.ProgrammerApi.GetCancelPointer();
         }
 
         /// <inheritdoc />
@@ -877,27 +877,65 @@ namespace KSociety.SharpCubeProgrammer
         //Loaders module groups loaders functions.
 
         /// <inheritdoc />
-        public void SetExternalLoadersPath(string path)
+        public void SetLoadersPath(string path)
         {
-            throw new NotImplementedException();
+            Native.ProgrammerApi.SetLoadersPath(path);
         }
 
         /// <inheritdoc />
-        public void GetExternalLoaders()
+        public ExternalLoader SetExternalLoaderPath(string path)
         {
-            throw new NotImplementedException();
+            var externalLoaderStructure = new ExternalLoader();
+            var externalLoaderPtr = new IntPtr();
+
+            try
+            {
+                Native.ProgrammerApi.SetExternalLoaderPath(path, ref externalLoaderPtr);
+                if (externalLoaderPtr != IntPtr.Zero)
+                {
+                    externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "SetExternalLoaderPath: ");
+            }
+
+            return externalLoaderStructure;
         }
 
         /// <inheritdoc />
-        public void RemoveExternalLoader()
+        public ExternalStorageInfo GetExternalLoaders(string path)
         {
-            throw new NotImplementedException();
+            var externalStorageInfoStructure = new ExternalStorageInfo();
+            var externalStorageInfoPtr = new IntPtr();
+
+            try
+            {
+                Native.ProgrammerApi.GetExternalLoaders(path, ref externalStorageInfoPtr);
+                if (externalStorageInfoPtr != IntPtr.Zero)
+                {
+                    externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "GetExternalLoaders: ");
+            }
+
+            return externalStorageInfoStructure;
+        }
+
+        /// <inheritdoc />
+        public void RemoveExternalLoader(string path)
+        {
+            Native.ProgrammerApi.RemoveExternalLoader(path);
         }
 
         /// <inheritdoc />
         public void DeleteLoaders()
         {
-            throw new NotImplementedException();
+            Native.ProgrammerApi.DeleteLoaders();
         }
 
         #endregion
