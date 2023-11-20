@@ -259,7 +259,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        ExternalStorageInfo GetExternalLoaders(string path);
+        IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer");
 
         /// <summary>
         /// This routine allows to unload an external Loaders.

@@ -2,25 +2,58 @@
 
 namespace KSociety.SharpCubeProgrammer.Struct
 {
+    using System;
     using System.Runtime.InteropServices;
 
+    /// <summary>
+    /// Get external Loader parameters to launch the process of programming an external flash memory.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct ExternalLoader
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
+        /// <summary>
+        /// FlashLoader file path.
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 200)]
         public string filePath;
 
+        /// <summary>
+        /// Device Name and Description.
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string deviceName;
 
+        /// <summary>
+        /// Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...
+        /// </summary>
         public int deviceType;
+
+        /// <summary>
+        /// Default Device Start Address.
+        /// </summary>
         public uint deviceStartAddress;
+
+        /// <summary>
+        /// Total Size of Device.
+        /// </summary>
         public uint deviceSize;
 
+        /// <summary>
+        /// Programming Page Size.
+        /// </summary>
         public uint pageSize;
 
         //  unsigned char  	 EraseValue;            /**< Content of Erased Memory. */
+
+        /// <summary>
+        /// Type number.
+        /// </summary>
         public uint sectorsTypeNbr;
-        public DeviceSector sectors;
+
+        /// <summary>
+        /// Device sectors.
+        /// </summary>
+        //public DeviceSector sectors;
+        public IntPtr sectors;
     }
 }

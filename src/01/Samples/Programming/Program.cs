@@ -160,6 +160,13 @@ namespace Programming
                 Logger.LogWarning("No ST-Link found!");
             }
 
+            //var path = @".\st\Programmer";
+            //var pathAdapted = path.Replace(@"\", "/");
+            //var result = CubeProgrammerApi.SetExternalLoaderPath(pathAdapted); //.SetExternalLoader(pathAdapted);
+            var result2 = CubeProgrammerApi.GetExternalLoaders();
+            Logger.LogInformation("GetExternalLoaders: {0}", result2.Count());
+            
+
             CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
