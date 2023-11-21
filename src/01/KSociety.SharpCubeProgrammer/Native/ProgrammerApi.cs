@@ -1350,29 +1350,22 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetExternalLoaders]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetExternalLoaders", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void GetExternalLoaders32(string path, ref IntPtr externalStorageNfo);
+        [DllImport(ProgrammerDll32, EntryPoint = "GetExternalLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetExternalLoaders32(string path, ref IntPtr externalStorageNfo);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetExternalLoaders", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void GetExternalLoaders64(string path, ref IntPtr externalStorageNfo);
+        [DllImport(ProgrammerDll64, EntryPoint = "GetExternalLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetExternalLoaders64(string path, ref IntPtr externalStorageNfo);
 
-        private static void GetExternalLoadersNative(string path, ref IntPtr externalStorageNfo)
+        private static int GetExternalLoadersNative(string path, ref IntPtr externalStorageNfo)
         {
-            if (!Environment.Is64BitProcess)
-            {
-                GetExternalLoaders32(path, ref externalStorageNfo);
-            }
-            else
-            {
-                GetExternalLoaders64(path, ref externalStorageNfo);
-            }
+            return !Environment.Is64BitProcess ? GetExternalLoaders32(path, ref externalStorageNfo) : GetExternalLoaders64(path, ref externalStorageNfo);
         }
 
-        internal static void GetExternalLoaders(string path, ref IntPtr externalStorageNfo)
+        internal static int GetExternalLoaders(string path, ref IntPtr externalStorageNfo)
         {
             try
             {
-                GetExternalLoadersNative(path, ref externalStorageNfo);
+                return GetExternalLoadersNative(path, ref externalStorageNfo);
             }
             catch (DllNotFoundException ex)
             {

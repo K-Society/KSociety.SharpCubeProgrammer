@@ -10,6 +10,11 @@ int main()
     debugConnectParameters* stLinkList;
     debugConnectParameters debugParameters;
     generalInf* genInfo;
+
+    externalStorageInfo* externalStorageInfo;
+
+    int res = GetExternalLoaders(".", &externalStorageInfo);
+
     int getStlinkListNb = GetStLinkList(&stLinkList, 0);
 
     if (getStlinkListNb == 0)

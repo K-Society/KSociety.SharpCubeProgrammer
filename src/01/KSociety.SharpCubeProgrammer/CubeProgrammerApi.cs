@@ -203,23 +203,22 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
-            this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
+            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
-                this._logger?.LogTrace("GetStLinkList size: {0}", size);
+                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
-                this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
+                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i,
-                            currentItem.SerialNumber);
+                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
                         parametersList.Add(currentItem);
                     }
                 }
@@ -879,18 +878,20 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void SetLoadersPath(string path)
         {
-            Native.ProgrammerApi.SetLoadersPath(path);
+            var pathAdapted = path.Replace(@"\", "/");
+            Native.ProgrammerApi.SetLoadersPath(pathAdapted);
         }
 
         /// <inheritdoc />
         public ExternalLoader SetExternalLoaderPath(string path)
         {
+            var pathAdapted = path.Replace(@"\", "/");
             var externalLoaderStructure = new ExternalLoader();
             var externalLoaderPtr = new IntPtr();
 
             try
             {
-                Native.ProgrammerApi.SetExternalLoaderPath(path, ref externalLoaderPtr);
+                Native.ProgrammerApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
                 if (externalLoaderPtr != IntPtr.Zero)
                 {
                     externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
@@ -905,17 +906,25 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public ExternalStorageInfo GetExternalLoaders(string path)
+        public IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer")
         {
-            var externalStorageInfoStructure = new ExternalStorageInfo();
+            var pathAdapted = path.Replace(@"\", "/");
+            var externalLoaderList = new List<ExternalLoader>();
             var externalStorageInfoPtr = new IntPtr();
 
             try
             {
-                Native.ProgrammerApi.GetExternalLoaders(path, ref externalStorageInfoPtr);
-                if (externalStorageInfoPtr != IntPtr.Zero)
+                var result = Native.ProgrammerApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
+                if (result.Equals(0))
                 {
-                    externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+                    var size = Marshal.SizeOf<ExternalLoader>();
+                    var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+                    for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                    {
+                        var currentItem = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * size));
+                        //var deviceSectors = Marshal.PtrToStructure<DeviceSector>(currentItem.sectors);
+                        externalLoaderList.Add(currentItem);
+                    }
                 }
             }
             catch (Exception ex)
@@ -923,13 +932,14 @@ namespace KSociety.SharpCubeProgrammer
                 this._logger?.LogError(ex, "GetExternalLoaders: ");
             }
 
-            return externalStorageInfoStructure;
+            return externalLoaderList;
         }
 
         /// <inheritdoc />
         public void RemoveExternalLoader(string path)
         {
-            Native.ProgrammerApi.RemoveExternalLoader(path);
+            var pathAdapted = path.Replace(@"\", "/");
+            Native.ProgrammerApi.RemoveExternalLoader(pathAdapted);
         }
 
         /// <inheritdoc />
