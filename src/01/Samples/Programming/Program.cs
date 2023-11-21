@@ -74,11 +74,24 @@ namespace Programming
             //    Logger.LogWarning(testStLink.ToString());
             //}
 
+            var path = @".\st\Programmer";
+            var result2 = CubeProgrammerApi.GetExternalLoaders(path);
+
+            Logger?.LogInformation("GetExternalLoaders: {0}", result2.Count());
+
+            foreach (var currentItem in result2)
+            {
+                Logger?.LogTrace("GetExternalLoaders: device name: {0}, file path: {1}, device type: {2}, device size: {3}, start address: {4}, page size: {5}, sectors type: {6}",
+                    currentItem.deviceName, currentItem.filePath, currentItem.deviceType, CubeProgrammerApi.HexConverterToString(currentItem.deviceSize),
+                    CubeProgrammerApi.HexConverterToString(currentItem.deviceStartAddress), CubeProgrammerApi.HexConverterToString(currentItem.pageSize),
+                    currentItem.sectorsTypeNbr);
+            }
+
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = (DebugConnectParameters)stLinkList.First().Clone();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.HotplugMode;
                 stLink.Shared = 0;
 
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
@@ -111,16 +124,54 @@ namespace Programming
                             generalInfo.Value.Series,
                             generalInfo.Value.Type);
                     }
+
+                    var storageStructure = CubeProgrammerApi.GetStorageStructure();
+
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    {
+                        Logger.LogInformation("Storage structure: \n" +
+                                              "Address: {0} \n" +
+                                              "BanksNumber: {1} \n" +
+                                              "Index: {2} \n" +
+                                              "Sectors number: {3} \n" +
+                                              "Size: {4} \n",
+                            CubeProgrammerApi.HexConverterToString(storageStructure.Item2.Address),
+                            storageStructure.Item2.BanksNumber,
+                            storageStructure.Item2.Index,
+                            storageStructure.Item2.SectorsNumber,
+                            storageStructure.Item2.Size);
+                    }
+
+                    var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
+
+                    if (peripheral.HasValue)
+                    {
+                        Logger.LogInformation("PeripheralC: \n" +
+                                              "Name: {0} \n" +
+                                              "Description: {1} \n" +
+                                              "Banks Nbr: {2} \n" +
+                                              "Banks: {3} \n",
+                            peripheral.Value.Name,
+                            peripheral.Value.Description,
+                            peripheral.Value.BanksNbr,
+                            peripheral.Value.Banks);
+                    }
+
+                    var targetInterfaceType = CubeProgrammerApi.GetTargetInterfaceType();
+
+                    Logger.LogInformation("TargetInterfaceType: {0}", targetInterfaceType);
+
                     CubeProgrammerApi.Disconnect();
                 }
                 else
                 {
+                    CubeProgrammerApi.Disconnect();
                     Logger.LogWarning(connectionResult.ToString());
                 }
             }
             else
             {
-                Logger.LogWarning("No ST-Link found!");
+                Logger?.LogWarning("No ST-Link found!");
             }
 
             CubeProgrammerApi.Dispose();

@@ -5,7 +5,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct I2cConnectParameters
+    public struct I2CConnectParameters
     {
         /// <summary>
         /// Device address in hex format.

@@ -10,6 +10,11 @@ int main()
     debugConnectParameters* stLinkList;
     debugConnectParameters debugParameters;
     generalInf* genInfo;
+
+    externalStorageInfo* externalStorageInfo;
+
+    int res = GetExternalLoaders(".", &externalStorageInfo);
+
     int getStlinkListNb = GetStLinkList(&stLinkList, 0);
 
     if (getStlinkListNb == 0)
@@ -55,7 +60,35 @@ int main()
         genInfo = GetDeviceGeneralInf();
         std::cout << "\nDevice name: " << genInfo->name << std::endl;
         std::cout << "\nDevice type: " << genInfo->type << std::endl;
-        std::cout << "\nDevice CPU : " << genInfo->cpu << std::endl;        
+        std::cout << "\nDevice CPU : " << genInfo->cpu << std::endl;
+
+        /* Read Option bytes from target device memory */
+        peripheral_C* ob;
+        ob = InitOptionBytesInterface();
+        if (ob == 0)
+        {
+            Disconnect();
+            continue;
+        }
+
+        /* Display option bytes */
+        for (unsigned int i = 0; i < ob->banksNbr; i++)
+        {
+            std::cout << "\nOPTION BYTES BANK: " << i << std::endl;
+            for (unsigned int j = 0; j < ob->banks[i]->categoriesNbr; j++)
+            {
+                std::cout << "\t" << ob->banks[i]->categories[j] << "\n" << std::endl;
+                for (unsigned int k = 0; k < ob->banks[i]->categories[j]->bitsNbr; k++)
+                {
+                    if (ob->banks[i]->categories[j]->bits[k]->access == 0 || ob->banks[i]->categories[j]->bits[k]->access == 2) {
+                        
+                        std::cout << "\t\t" << ob->banks[i]->categories[j]->bits[k]->name << std::endl;
+                      
+                        std::cout << "0x\n" << ob->banks[i]->categories[j]->bits[k]->bitValue << std::endl;
+                    }
+                }
+            }
+        }
     }
 
     Disconnect();

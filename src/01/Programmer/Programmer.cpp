@@ -293,6 +293,11 @@ int TzenRegression()
 	return -99;
 }
 
+int GetTargetInterfaceType()
+{
+    return getTargetInterfaceType();
+}
+
 volatile int* GetCancelPointer()
 {
 	return getCancelPointer();
@@ -425,7 +430,19 @@ void SetExternalLoaderPath(const char* path, externalLoader** externalLoaderInfo
 
 int GetExternalLoaders(const char* path, externalStorageInfo** externalStorageNfo)
 {
-	return getExternalLoaders(path, externalStorageNfo);
+    try
+    {
+        return getExternalLoaders(path, externalStorageNfo);
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return 1;
+    }
+    catch (...)
+    {
+        return 1;
+    }
 }
 
 void RemoveExternalLoader(const char* path)

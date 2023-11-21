@@ -154,12 +154,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// If the memory is not protected, a message appears to indicate that the device is not
         /// under Readout protection and the command has no effects.
         /// </summary>
-        void ReadUnprotect();
+        CubeProgrammerError ReadUnprotect();
 
         /// <summary>
         /// This routine allows to know the interface what is in use.
         /// </summary>
-        void GetTargetInterfaceType();
+        TargetInterfaceType? GetTargetInterfaceType();
 
         /// <summary>
         /// This routine allows to drop the current read/write operation.
@@ -245,20 +245,26 @@ namespace KSociety.SharpCubeProgrammer.Interface
         //Loaders module groups loaders functions.
 
         /// <summary>
+        /// This routine allows to specify the location of Flash Loader.
+        /// </summary>
+        /// <param name="path">Indicates the full path of the considered folder.</param>
+        void SetLoadersPath(string path);
+
+        /// <summary>
         /// This routine allows to specify the path of the external Loaders to be loaded.
         /// </summary>
         /// <param name="path"></param>
-        void SetExternalLoadersPath(string path);
+        ExternalLoader SetExternalLoaderPath(string path);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        void GetExternalLoaders();
+        IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer");
 
         /// <summary>
         /// This routine allows to unload an external Loaders.
         /// </summary>
-        void RemoveExternalLoader();
+        void RemoveExternalLoader(string path);
 
         /// <summary>
         /// This routine allows to delete all target Flash Loaders.

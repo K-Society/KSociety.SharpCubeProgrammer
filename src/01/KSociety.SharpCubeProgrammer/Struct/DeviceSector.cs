@@ -4,7 +4,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct DeviceSector
     {
         /// <summary>
