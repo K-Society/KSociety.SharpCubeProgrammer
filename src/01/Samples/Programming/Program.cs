@@ -164,6 +164,15 @@ namespace Programming
             //var pathAdapted = path.Replace(@"\", "/");
             //var result = CubeProgrammerApi.SetExternalLoaderPath(pathAdapted); //.SetExternalLoader(pathAdapted);
             var result2 = CubeProgrammerApi.GetExternalLoaders();
+
+            foreach (var currentItem in result2)
+            {
+                Logger?.LogTrace("GetExternalLoaders: device name: {0}, file path: {1}, device type: {2}, device size: {3}, start address: {4}, page size: {5}, sectors type: {6}",
+                    currentItem.deviceName, currentItem.filePath, currentItem.deviceType, CubeProgrammerApi.HexConverterToString(currentItem.deviceSize),
+                    CubeProgrammerApi.HexConverterToString(currentItem.deviceStartAddress), CubeProgrammerApi.HexConverterToString(currentItem.pageSize),
+                    currentItem.sectorsTypeNbr);
+            }
+
             Logger.LogInformation("GetExternalLoaders: {0}", result2.Count());
             
 
