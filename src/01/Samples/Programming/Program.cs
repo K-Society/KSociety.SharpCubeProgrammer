@@ -160,10 +160,10 @@ namespace Programming
                 Logger.LogWarning("No ST-Link found!");
             }
 
-            //var path = @".\st\Programmer";
-            //var pathAdapted = path.Replace(@"\", "/");
-            //var result = CubeProgrammerApi.SetExternalLoaderPath(pathAdapted); //.SetExternalLoader(pathAdapted);
-            var result2 = CubeProgrammerApi.GetExternalLoaders();
+            var path = @".\st\Programmer";
+            var result2 = CubeProgrammerApi.GetExternalLoaders(path);
+
+            Logger?.LogInformation("GetExternalLoaders: {0}", result2.Count());
 
             foreach (var currentItem in result2)
             {
@@ -173,7 +173,7 @@ namespace Programming
                     currentItem.sectorsTypeNbr);
             }
 
-            Logger.LogInformation("GetExternalLoaders: {0}", result2.Count());
+            
             
 
             CubeProgrammerApi.Dispose();
