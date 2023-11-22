@@ -37,18 +37,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/FlashLoader/*.*" />
-    <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/ExternalLoader/*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
-    <StDataBaseFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/Data_Base/*.*" />
+    <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\FlashLoader\*.*" />
+    <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\ExternalLoader\*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
+    <StDataBaseFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\Data_Base\*.*" />
   </ItemGroup>
   <Target Name="CopyStFiles" AfterTargets="Build">
-    <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(TargetDir)/st/Programmer/FlashLoader/%(RecursiveDir)" />
-    <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(TargetDir)/st/Programmer/ExternalLoader/%(RecursiveDir)" />
-    <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(TargetDir)/st/Data_Base/%(RecursiveDir)" />
+    <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\FlashLoader" />
+    <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\ExternalLoader" />
+    <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(TargetDir)\st\Data_Base" />
   </Target>
   <Target Name="PublishStFiles" AfterTargets="Publish">
-    <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(PublishDir)/st/Programmer/FlashLoader/%(RecursiveDir)" />
-    <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(PublishDir)/st/Programmer/ExternalLoader/%(RecursiveDir)" />
-    <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(PublishDir)/st/Data_Base/%(RecursiveDir)" />
+    <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(PublishDir)\st\Programmer\FlashLoader" />
+    <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(PublishDir)\st\Programmer\ExternalLoader" />
+    <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(PublishDir)\st\Data_Base" />
   </Target>
 </Project>

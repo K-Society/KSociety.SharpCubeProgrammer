@@ -74,24 +74,24 @@ namespace Programming
             //    Logger.LogWarning(testStLink.ToString());
             //}
 
-            var path = @".\st\Programmer";
-            var result2 = CubeProgrammerApi.GetExternalLoaders(path);
+            //var path = @".\st\Programmer";
+            //var result2 = CubeProgrammerApi.GetExternalLoaders(path);
 
-            Logger?.LogInformation("GetExternalLoaders: {0}", result2.Count());
+            //Logger?.LogInformation("GetExternalLoaders: {0}", result2.Count());
 
-            foreach (var currentItem in result2)
-            {
-                Logger?.LogTrace("GetExternalLoaders: device name: {0}, file path: {1}, device type: {2}, device size: {3}, start address: {4}, page size: {5}, sectors type: {6}",
-                    currentItem.deviceName, currentItem.filePath, currentItem.deviceType, CubeProgrammerApi.HexConverterToString(currentItem.deviceSize),
-                    CubeProgrammerApi.HexConverterToString(currentItem.deviceStartAddress), CubeProgrammerApi.HexConverterToString(currentItem.pageSize),
-                    currentItem.sectorsTypeNbr);
-            }
+            //foreach (var currentItem in result2)
+            //{
+            //    Logger?.LogTrace("GetExternalLoaders: device name: {0}, file path: {1}, device type: {2}, device size: {3}, start address: {4}, page size: {5}, sectors type: {6}",
+            //        currentItem.deviceName, currentItem.filePath, currentItem.deviceType, CubeProgrammerApi.HexConverterToString(currentItem.deviceSize),
+            //        CubeProgrammerApi.HexConverterToString(currentItem.deviceStartAddress), CubeProgrammerApi.HexConverterToString(currentItem.pageSize),
+            //        currentItem.sectorsTypeNbr);
+            //}
 
             var stLinkList = CubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = (DebugConnectParameters)stLinkList.First().Clone();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.HotplugMode;
+                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
