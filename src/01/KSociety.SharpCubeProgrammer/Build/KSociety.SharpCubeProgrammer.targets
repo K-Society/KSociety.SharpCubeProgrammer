@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
-<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' ">
     <Content Include="$(MSBuildThisFileDirectory)native\x86\Programmer\*.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -36,19 +36,14 @@
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\FlashLoader\*.*" />
-    <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\ExternalLoader\*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
-    <StDataBaseFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\Data_Base\*.*" />
-  </ItemGroup>
   <Target Name="CopyStFiles" AfterTargets="Build">
     <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\FlashLoader" />
     <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\ExternalLoader" />
     <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(TargetDir)\st\Data_Base" />
   </Target>
-  <Target Name="PublishStFiles" AfterTargets="Publish">
+  <!--<Target Name="PublishStFiles" AfterTargets="Publish">
     <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(PublishDir)\st\Programmer\FlashLoader" />
     <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(PublishDir)\st\Programmer\ExternalLoader" />
     <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(PublishDir)\st\Data_Base" />
-  </Target>
+  </Target>-->
 </Project>
