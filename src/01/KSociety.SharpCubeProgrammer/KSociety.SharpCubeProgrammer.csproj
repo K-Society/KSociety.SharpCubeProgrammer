@@ -47,13 +47,13 @@
     <None Include="..\..\..\build\Programmer\bin\Win32\Release\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
        
     </None>
-    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\any\any\Data_Base" Visible="false" Link="st\Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Data_Base" Visible="false" Link="st\Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
        <PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
-    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\FlashLoader" Visible="false" Link="st\Programmer\FlashLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\FlashLoader" Visible="false" Link="st\Programmer\FlashLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
        <PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
-    <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*">
+    <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*">
        <PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
   </ItemGroup>
