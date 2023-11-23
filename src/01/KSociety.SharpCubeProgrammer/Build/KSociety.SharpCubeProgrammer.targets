@@ -36,12 +36,17 @@
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Update="@(None)">
+      <Visible Condition="'%(NuGetItemType)' == 'None' and '%(NuGetPackageId)' == 'KSociety.SharpCubeProgrammer'">False</Visible>
+    </None>
+  </ItemGroup>
   <!--<Target Name="CopyStFlashLoaderFiles" AfterTargets="Build">
     <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\FlashLoader" />
     <Copy SourceFiles="@(StExternalLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\ExternalLoader" />
     <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(TargetDir)\st\Data_Base" />
   </Target>-->
-  <Target Name="CopyStFlashLoaderFiles" AfterTargets="Build" Inputs="@(StFlashLoaderFiles)" Outputs="$(TargetDir)\st\Programmer\FlashLoader">
+  <!--<Target Name="CopyStFlashLoaderFiles" AfterTargets="Build" Inputs="@(StFlashLoaderFiles)" Outputs="$(TargetDir)\st\Programmer\FlashLoader">
     <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(TargetDir)\st\Programmer\FlashLoader" />
   </Target>
   <Target Name="CopyStExternalLoaderFiles" AfterTargets="Build" Inputs="@(StExternalLoaderFiles)" Outputs="$(TargetDir)\st\Programmer\ExternalLoader">
@@ -49,7 +54,7 @@
   </Target>
   <Target Name="CopyStDataBaseFiles" AfterTargets="Build" Inputs="@(StDataBaseFiles)" Outputs="$(TargetDir)\st\Data_Base">
     <Copy SourceFiles="@(StDataBaseFiles)" DestinationFolder="$(TargetDir)\st\Data_Base" />
-  </Target>
+  </Target>-->
 
   <!--<Target Name="PublishStFiles" AfterTargets="Publish">
     <Copy SourceFiles="@(StFlashLoaderFiles)" DestinationFolder="$(PublishDir)\st\Programmer\FlashLoader" />

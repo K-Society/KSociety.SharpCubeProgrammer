@@ -2,9 +2,9 @@
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
 <Project>
-  <ItemGroup>
+  <!--<ItemGroup>
     <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\FlashLoader\*.*" />
     <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\ExternalLoader\*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
     <StDataBaseFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\Data_Base\*.*" />
-  </ItemGroup>
+  </ItemGroup>-->
 </Project>
