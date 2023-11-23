@@ -65,10 +65,10 @@
 
   <ItemDefinitionGroup>
     <PackageReference>
-      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>contentFiles; build</ExcludeAssets>
     </PackageReference>
     <ProjectReference>
-      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>contentFiles; build</ExcludeAssets>
     </ProjectReference>
   </ItemDefinitionGroup>
 
