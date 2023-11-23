@@ -3,8 +3,8 @@
 
 <Project>
   <ItemGroup>
-    <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\FlashLoader\*.*" />
-    <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\ExternalLoader\*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
-    <StDataBaseFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\Data_Base\*.*" />
+    <StFlashLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\FlashLoader\*.*" />
+    <StExternalLoaderFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\ExternalLoader\*.*" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*"/>
+    <StDataBaseFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\Data_Base\*.*" />
   </ItemGroup>
 </Project>
