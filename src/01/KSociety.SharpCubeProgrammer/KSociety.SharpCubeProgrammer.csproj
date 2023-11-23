@@ -30,7 +30,7 @@
        
     </None>
     <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
-      <PackageCopyToOutput>true</PackageCopyToOutput>
+
     </None>
     <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
        
