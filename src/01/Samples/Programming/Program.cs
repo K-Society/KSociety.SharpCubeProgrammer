@@ -87,7 +87,7 @@ namespace Programming
             //        currentItem.sectorsTypeNbr);
             //}
 
-            var stLinkList = CubeProgrammerApi.GetStLinkList();
+            var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
             {
                 var stLink = (DebugConnectParameters)stLinkList.First().Clone();

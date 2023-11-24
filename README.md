@@ -7,7 +7,7 @@
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0.
+KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
 
 It makes use of several 3rd party tools:
 
