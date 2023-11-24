@@ -236,6 +236,41 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        public IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false)
+        {
+            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
+            var listPtr = new IntPtr();
+            var parametersList = new List<DebugConnectParameters>();
+
+            try
+            {
+                var size = Marshal.SizeOf<DebugConnectParameters>();
+                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
+                var numberOfItems = Native.ProgrammerApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
+                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
+                if (listPtr != IntPtr.Zero)
+                {
+                    for (var i = 0; i < numberOfItems; i++)
+                    {
+                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
+                        parametersList.Add(currentItem);
+                    }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetStLinkEnumerationList IntPtr: {0}!", "Zero");
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
+            }
+
+            return parametersList;
+        }
+
+        /// <inheritdoc />
         public CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -841,6 +876,32 @@ namespace KSociety.SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "InitOptionBytesInterface: ");
+            }
+            finally
+            {
+                Marshal.DestroyStructure<PeripheralC>(pointer);
+            }
+
+            return peripheralC;
+        }
+
+        /// <inheritdoc />
+        public PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
+        {
+            this._logger?.LogTrace("FastRomInitOptionBytesInterface.");
+            PeripheralC? peripheralC = null;
+
+            var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
+
+            try
+            {
+
+                peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
+
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "FastRomInitOptionBytesInterface: ");
             }
             finally
             {

@@ -123,20 +123,6 @@
 										<BitOffset>0x0</BitOffset> <!--  -->
 										<BitWidth>0xC</BitWidth>
 										<Access>R</Access>
-										<Values>
-											<Val value="0x6C9">STM32MP131A</Val>
-											<Val value="0x6C8">STM32MP131C</Val>
-											<Val value="0xEC9">STM32MP131D</Val>
-											<Val value="0xEC8">STM32MP131F</Val>
-											<Val value="0x0C1">STM32MP133A</Val>
-											<Val value="0x0C0">STM32MP133C</Val>
-											<Val value="0x8C1">STM32MP133D</Val>
-											<Val value="0x8C0">STM32MP133F</Val>
-											<Val value="0x001">STM32MP135A</Val>
-											<Val value="0x000">STM32MP135C</Val>
-											<Val value="0x801">STM32MP135D</Val>
-											<Val value="0x800">STM32MP135F</Val>
-									</Values>
 									</Bit>	
 								</AssignedBits>
 							</Field>

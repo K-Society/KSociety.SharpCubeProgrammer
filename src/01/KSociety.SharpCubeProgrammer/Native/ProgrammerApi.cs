@@ -80,6 +80,39 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [GetStLinkEnumerationList]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetStLinkEnumerationList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetStLinkEnumerationList32(ref IntPtr stLinkList, int shared);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetStLinkEnumerationList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetStLinkEnumerationList64(ref IntPtr stLinkList, int shared);
+
+        private static int GetStLinkEnumerationListNative(ref IntPtr stLinkList, int shared)
+        {
+            return !Environment.Is64BitProcess
+                ? GetStLinkEnumerationList32(ref stLinkList, shared)
+                : GetStLinkEnumerationList64(ref stLinkList, shared);
+        }
+
+        internal static int GetStLinkEnumerationList(ref IntPtr stLinkList, int shared)
+        {
+            try
+            {
+                return GetStLinkEnumerationListNative(ref stLinkList, shared);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [ConnectStLink]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
@@ -1222,6 +1255,39 @@ namespace KSociety.SharpCubeProgrammer.Native
             try
             {
                 return InitOptionBytesInterfaceNative();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [FastRomInitOptionBytesInterface]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "FastRomInitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern IntPtr FastRomInitOptionBytesInterface32(ushort deviceId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "FastRomInitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern IntPtr FastRomInitOptionBytesInterface64(ushort deviceId);
+
+        private static IntPtr FastRomInitOptionBytesInterfaceNative(ushort deviceId)
+        {
+            return !Environment.Is64BitProcess
+                ? FastRomInitOptionBytesInterface32(deviceId)
+                : FastRomInitOptionBytesInterface64(deviceId);
+        }
+
+        internal static IntPtr FastRomInitOptionBytesInterface(ushort deviceId)
+        {
+            try
+            {
+                return FastRomInitOptionBytesInterfaceNative(deviceId);
             }
             catch (DllNotFoundException ex)
             {

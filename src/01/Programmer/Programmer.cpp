@@ -56,6 +56,23 @@ int GetStLinkList(debugConnectParameters** stLinkList, int shared)
 	}
 }
 
+int GetStLinkEnumerationList(debugConnectParameters** stLinkList, int shared)
+{
+    try
+    {
+        return getStLinkEnumerationList(stLinkList, shared);
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
+}
+
 int ConnectStLink(debugConnectParameters debugParameters) 
 {
 	return connectStLink(debugParameters);
@@ -405,6 +422,11 @@ int SendOptionBytesCmd(char* command)
 peripheral_C* InitOptionBytesInterface()
 {
 	return initOptionBytesInterface();
+}
+
+peripheral_C* FastRomInitOptionBytesInterface(uint16_t deviceId)
+{
+    return fastRomInitOptionBytesInterface(deviceId);
 }
 
 int ObDisplay()

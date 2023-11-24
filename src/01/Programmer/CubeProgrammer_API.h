@@ -576,6 +576,15 @@ typedef struct externalStorageInfo
  */
 int getStLinkList(debugConnectParameters** stLinkList, int shared);
 
+/**
+ * \brief This routine allows to get ST-LINK conneted probe(s) without connecting and intruse the target.
+ * \param stLinkList  : Filled with the connected ST-LINK list and its default configurations.
+ * \param shared      : Enable shared mode allowing connection of two or more instances to the same ST-LINK probe.
+ * \return Number of the ST-LINK probes already exists.
+ * \warning The Share option is useful only with ST-LINK Server.
+ * \note  At the end of usage, #deleteInterfaceList must have been called.
+ */
+int getStLinkEnumerationList(debugConnectParameters** stlink_list, int shared);
 
 /**
  * \brief This routine allows to start connection to device through SWD or JTAG interfaces.
@@ -946,6 +955,9 @@ int sendOptionBytesCmd(char* command);
  * \return Structure #Peripheral_C in which the option bytes descriptions are stored.
  */
 peripheral_C* initOptionBytesInterface();
+
+
+peripheral_C* fastRomInitOptionBytesInterface(uint16_t deviceId);
 
 
 /**

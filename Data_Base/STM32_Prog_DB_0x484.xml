@@ -935,7 +935,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 									<Bit>
 										<Name>SECWM2_END</Name>
@@ -943,7 +943,7 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -956,7 +956,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 									<Bit>
 										<Name>SECWM2_END</Name>
@@ -964,7 +964,7 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1949,7 +1949,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 									<Bit>
 										<Name>SECWM2_END</Name>
@@ -1957,7 +1957,7 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1970,7 +1970,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 									<Bit>
 										<Name>SECWM2_END</Name>
@@ -1978,7 +1978,7 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -3078,7 +3078,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
 								<Bit>
 									<Name>SECWM2_END</Name>
@@ -3086,7 +3086,7 @@
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -3099,7 +3099,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
 								<Bit>
 									<Name>SECWM2_END</Name>
@@ -3107,7 +3107,7 @@
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>

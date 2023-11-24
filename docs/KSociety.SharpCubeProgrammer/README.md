@@ -6,7 +6,7 @@
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0.
+KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
 
 It makes use of several 3rd party tools:
 
@@ -32,6 +32,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 ## Currently supported features
 - GetStLinkList
+- GetStLinkEnumerationList
 - ConnectStLink
 - Reset
 - GetDfuDeviceList
@@ -53,6 +54,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - GetStorageStructure
 - SendOptionBytesCmd
 - InitOptionBytesInterface
+- FastRomInitOptionBytesInterface
 - ObDisplay
 
 ## Get Started
