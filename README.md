@@ -33,6 +33,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 ## Currently supported features
 - GetStLinkList
+- GetStLinkEnumerationList
 - ConnectStLink
 - Reset
 - GetDfuDeviceList
@@ -54,6 +55,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - GetStorageStructure
 - SendOptionBytesCmd
 - InitOptionBytesInterface
+- FastRomInitOptionBytesInterface
 - ObDisplay
 
 ## Prerequisites
