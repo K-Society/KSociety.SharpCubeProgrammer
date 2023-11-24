@@ -534,7 +534,7 @@
 					<Category>
 						<Name>Write Protection</Name>
 						<Field>
-							<Parameters address="0x40022020" name="FLASH_WRPR1" size="0x4"/>
+							<Parameters address="0x1FF80008" name="FLASH_WRPR1" size="0x4"/>
 							<AssignedBits>
 								<Bit config="0">
 									<Name>WRPOT0</Name>

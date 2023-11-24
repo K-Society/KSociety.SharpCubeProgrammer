@@ -104,7 +104,7 @@
 				<DBGMCU_CR address="0xE0042004" mask="0x007"/>
 				<DBGMCU_APB1_FZ address="0xE0042008" mask="0x1800"/>
 				<!-- 1MB dual Bank -->
-				<Configuration config="0,5,6">
+				<Configuration config="0">
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -133,7 +133,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08040000 " name="sector128" occurrence="0x80" size="0x800"/>
+							<Parameters address="0x08040000 " name="sector65280" occurrence="0x80" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -145,7 +145,7 @@
 					<Alignment>0x8</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x1000"/>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -719,7 +719,7 @@
 										<Val value="0x1">Dual-bank boot enable</Val>
 									</Values>
 								</Bit>
-								<Bit config="5">
+								<Bit config="5,6">
 									<Name>DualBank</Name>
 									<Description/>
 									<BitOffset>0x15</BitOffset>

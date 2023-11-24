@@ -16,7 +16,7 @@ It makes use of several 3rd party tools:
 
 ## Introduction
 
-This is a C# wrapper for STM32 CubeProgrammer_API v2.14.0 (not fully tested).
+This is a C# wrapper for STM32 CubeProgrammer_API v2.15.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
 Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
 The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
