@@ -1,12 +1,9 @@
-// Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
-
-namespace Programming
+namespace ProgrammingLegacy
 {
-    using System;
     using System.Linq;
+    using System;
     using Autofac;
     using KSociety.SharpCubeProgrammer.Enum;
-    using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
     using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
@@ -19,7 +16,7 @@ namespace Programming
         private static ILogger<Program> Logger;
         private static ICubeProgrammerApi CubeProgrammerApi;
 
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -33,59 +30,6 @@ namespace Programming
             Logger.LogDebug("Resolve ICubeProgrammerApi...");
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
-            //CubeProgrammerApi.Start();
-            //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
-            //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
-            //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
-
-            //var testStLink = CubeProgrammerApi.TryConnectStLink(0, 0, DebugConnectionMode.UnderResetMode);
-
-            //if (testStLink.Equals(CubeProgrammerError.CubeprogrammerNoError))
-            //{
-            //    var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
-            //    if (generalInfo != null)
-            //    {
-            //        Logger.LogInformation("INFO: \n" +
-            //                              "Board: {0} \n" +
-            //                              "Bootloader Version: {1} \n" +
-            //                              "Cpu: {2} \n" +
-            //                              "Description: {3} \n" +
-            //                              "DeviceId: {4} \n" +
-            //                              "FlashSize: {5} \n" +
-            //                              "RevisionId: {6} \n" +
-            //                              "Name: {7} \n" +
-            //                              "Series: {8} \n" +
-            //                              "Type: {9}",
-            //            generalInfo.Board,
-            //            generalInfo.BootloaderVersion,
-            //            generalInfo.Cpu,
-            //            generalInfo.Description,
-            //            generalInfo.DeviceId,
-            //            generalInfo.FlashSize,
-            //            generalInfo.RevisionId,
-            //            generalInfo.Name,
-            //            generalInfo.Series,
-            //            generalInfo.Type);
-            //    }
-            //    CubeProgrammerApi.Disconnect();
-            //}
-            //else
-            //{
-            //    Logger.LogWarning(testStLink.ToString());
-            //}
-
-            //var path = @".\st\Programmer";
-            //var result2 = CubeProgrammerApi.GetExternalLoaders(path);
-
-            //Logger?.LogInformation("GetExternalLoaders: {0}", result2.Count());
-
-            //foreach (var currentItem in result2)
-            //{
-            //    Logger?.LogTrace("GetExternalLoaders: device name: {0}, file path: {1}, device type: {2}, device size: {3}, start address: {4}, page size: {5}, sectors type: {6}",
-            //        currentItem.deviceName, currentItem.filePath, currentItem.deviceType, CubeProgrammerApi.HexConverterToString(currentItem.deviceSize),
-            //        CubeProgrammerApi.HexConverterToString(currentItem.deviceStartAddress), CubeProgrammerApi.HexConverterToString(currentItem.pageSize),
-            //        currentItem.sectorsTypeNbr);
-            //}
 
             var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
@@ -177,22 +121,6 @@ namespace Programming
             CubeProgrammerApi.Dispose();
 
             Console.ReadLine();
-            
-        }
-
-        private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
-        {
-            Logger?.LogInformation("StLinksFound...");
-        }
-
-        private static void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)
-        {
-            Logger?.LogInformation("StLinkRemoved...");
-        }
-
-        private static void CubeProgrammerApiOnStLinkAdded(object? sender, StLinkAddedEventArgs e)
-        {
-            Logger?.LogInformation("StLinkAdded...");
         }
 
         private static IContainer BuildContainer()

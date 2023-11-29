@@ -1137,8 +1137,8 @@
 				</Bank>
 			</Configuration>
 			<Configuration config="5,4">
-				<Bank interface="Bootloader">
-                    <Parameters address="0x40022040" name="Bank 1" size="0x30"/>
+				<Bank interface="Bootloader" name="OB">
+                    <Parameters address="0x40022040" name="Bank 1" size="0x20"/>
                     <Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -1504,6 +1504,70 @@
 										<Val value="0x1">WRP1B start and end pages unlocked</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+					</Category>
+				</Bank>
+				<Bank interface="Bootloader" name="SetOEM1">
+					<Parameters address="0x40022070" name="Bank 2" size="0x8"/>
+					<Category>
+						<Name>RDP Level 1 Password</Name>
+						<Field>
+							<Parameters address="0x40022070" name="OEM1KEYR1" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM1KEYR1</Name>
+								<Description>OEM1 least significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0" offset="0x00000000"/>
+							</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022074" name="OEM1KEYR2" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM1KEYR2</Name>
+								<Description>OEM1 most significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0" offset="0x00000000"/>
+							</Bit>
+							</AssignedBits>
+						</Field>
+					</Category>
+				</Bank>
+				<Bank interface="Bootloader" name="SetOEM2">
+					<Parameters address="0x40022078" name="Bank 3" size="0x8"/>
+					<Category>
+						<Name>RDP Level 2 Password </Name>
+						<Field>
+							<Parameters address="0x40022078" name="OEM2KEYR1" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM2KEYR1</Name>
+								<Description>OEM2 least significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0" offset="0x00000000"/>
+							</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x4002207C" name="OEM2KEYR2" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM2KEYR2</Name>
+								<Description>OEM2 most significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0" offset="0x00000000"/>
+							</Bit>
 							</AssignedBits>
 						</Field>
 					</Category>

@@ -578,7 +578,7 @@
 								<AssignedBits>
 									<Bit config="0,10">
 										<Name>WRP1B_PSTRT</Name>
-										<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+										<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x5</BitWidth>
 										<Access>RW</Access>
@@ -586,7 +586,7 @@
 									</Bit>
 									<Bit config="1,11">
 										<Name>WRP1B_PSTRT</Name>
-										<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+										<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x5</BitWidth>
 										<Access>RW</Access>
@@ -594,7 +594,7 @@
 									</Bit>
 									<Bit config="0,10">
 										<Name>WRP1B_PEND</Name>
-										<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+										<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x5</BitWidth>
 										<Access>RW</Access>
@@ -602,7 +602,7 @@
 									</Bit>
 									<Bit config="1,11">
 										<Name>WRP1B_PEND</Name>
-										<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+										<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -610,7 +610,7 @@
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_1B</Name>
-									<Description>Bank 1 WPR first area B unlock</Description>
+									<Description>Bank 1 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -680,7 +680,7 @@
 									<AssignedBits>
 										<Bit config="0,10">
 											<Name>WRP2B_PSTRT</Name>
-											<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+											<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 											<BitOffset>0x0</BitOffset>
 											<BitWidth>0x5</BitWidth>
 											<Access>RW</Access>
@@ -688,7 +688,7 @@
 										</Bit>
 										<Bit config="1,11">
 											<Name>WRP2B_PSTRT</Name>
-											<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+											<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 											<BitOffset>0x0</BitOffset>
 											<BitWidth>0x5</BitWidth>
 											<Access>RW</Access>
@@ -696,7 +696,7 @@
 										</Bit>
 										<Bit config="0,10">
 											<Name>WRP2B_PEND</Name>
-											<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+											<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -704,7 +704,7 @@
 										</Bit>
 										<Bit config="1,11">
 											<Name>WRP2B_PEND</Name>
-											<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+											<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 											<BitOffset>0x10</BitOffset>
 											<BitWidth>0x5</BitWidth>
 											<Access>RW</Access>
@@ -712,7 +712,7 @@
 										</Bit>
 									<Bit>
 									<Name>UNLOCK_2B</Name>
-									<Description>Bank 2 WPR first area B unlock</Description>
+									<Description>Bank 2 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -1163,7 +1163,7 @@
 							<AssignedBits>
 								<Bit config="2">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1171,7 +1171,7 @@
 								</Bit>
 								<Bit config="3">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1179,7 +1179,7 @@
 								</Bit>
 								<Bit config="2">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1187,7 +1187,7 @@
 								</Bit>
 								<Bit config="3">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1195,7 +1195,7 @@
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_1B</Name>
-									<Description>Bank 1 WPR first area B unlock</Description>
+									<Description>Bank 1 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -1340,7 +1340,7 @@
 							<AssignedBits>
 								<Bit config="2">
 									<Name>WRP2B_PSTRT</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1348,7 +1348,7 @@
 								</Bit>
 								<Bit config="3">
 									<Name>WRP2B_PSTRT</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1356,7 +1356,7 @@
 								</Bit>
 								<Bit config="2">
 									<Name>WRP2B_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1364,7 +1364,7 @@
 								</Bit>
 								<Bit config="3">
 									<Name>WRP2B_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1372,7 +1372,7 @@
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_2B</Name>
-									<Description>Bank 2 WPR first area B unlock</Description>
+									<Description>Bank 2 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -1845,7 +1845,7 @@
 							<AssignedBits>
 								<Bit config="4">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1853,7 +1853,7 @@
 								</Bit>
 								<Bit config="5">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1861,7 +1861,7 @@
 								</Bit>
 								<Bit config="4">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1869,7 +1869,7 @@
 								</Bit>
 								<Bit config="5">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -1877,7 +1877,7 @@
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_1B</Name>
-									<Description>Bank 1 WPR first area B unlock</Description>
+									<Description>Bank 1 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -2022,7 +2022,7 @@
 							<AssignedBits>
 								<Bit config="4">
 									<Name>WRP2B_PSTRT</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2030,7 +2030,7 @@
 								</Bit>
 								<Bit config="5">
 									<Name>WRP2B_PSTRT</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2038,7 +2038,7 @@
 								</Bit>
 								<Bit config="4">
 									<Name>WRP2B_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2046,7 +2046,7 @@
 								</Bit>
 								<Bit config="5">
 									<Name>WRP2B_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2054,7 +2054,7 @@
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_2B</Name>
-									<Description>Bank 2 WPR first area B unlock</Description>
+									<Description>Bank 2 WPR second area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -2493,7 +2493,7 @@
 							<AssignedBits>
 								<Bit config="6,8">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2501,7 +2501,7 @@
 								</Bit>
 								<Bit config="7,9">
 									<Name>WRP1B_PSTRT</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2509,7 +2509,7 @@
 								</Bit>
 								<Bit config="6,8">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2517,7 +2517,7 @@
 								</Bit>
 								<Bit config="7,9">
 									<Name>WRP1B_PEND</Name>
-									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 1 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2664,7 +2664,7 @@
 							<AssignedBits>
 								<Bit config="6,8">
 										<Name>WRP2B_PSTRT</Name>
-										<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+										<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x5</BitWidth>
 										<Access>RW</Access>
@@ -2672,7 +2672,7 @@
 								</Bit>
 								<Bit config="7,9">
 									<Name>WRP2B_PSTRT</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
@@ -2680,7 +2680,7 @@
 								</Bit>
 								<Bit config="6,8">
 										<Name>WRP2B_PEND</Name>
-										<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+										<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x5</BitWidth>
 										<Access>RW</Access>
@@ -2688,7 +2688,7 @@
 								</Bit>
 								<Bit config="7,9">
 									<Name>WRP2B_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
+									<Description>Bank 2 WPR second area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>

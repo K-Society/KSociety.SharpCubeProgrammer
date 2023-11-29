@@ -16,6 +16,8 @@ extern "C" PROGRAMMER_API int TryConnectStLink(int stLinkProbeIndex = 0, int sha
 
 extern "C" PROGRAMMER_API int GetStLinkList(debugConnectParameters** stLinkList, int shared);
 
+extern "C" PROGRAMMER_API int GetStLinkEnumerationList(debugConnectParameters** stlink_list, int shared);
+
 extern "C" PROGRAMMER_API int ConnectStLink(debugConnectParameters debugParameters);
 
 extern "C" PROGRAMMER_API int Reset(debugResetMode rstMode);
@@ -101,6 +103,8 @@ extern "C" PROGRAMMER_API int GetStorageStructure(storageStructure** deviceStora
 extern "C" PROGRAMMER_API int SendOptionBytesCmd(char* command);
 
 extern "C" PROGRAMMER_API peripheral_C* InitOptionBytesInterface();
+
+extern "C" PROGRAMMER_API peripheral_C* FastRomInitOptionBytesInterface(uint16_t deviceId);
 
 extern "C" PROGRAMMER_API int ObDisplay();
 

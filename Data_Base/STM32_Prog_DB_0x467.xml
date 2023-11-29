@@ -50,9 +50,6 @@
 				</Configuration>
 				<!-- 128 Single Bank-->
 				<Configuration number="0x4"> 
-					<DualBank>
-						<ReadRegister address="0x40022020" mask="0x200000" value="0x0"/>
-					</DualBank>
 					<FlashSize>
 						<ReadRegister address="0x1FFF75E0" mask="0x0000FFFF" value="80"/>
 					</FlashSize>
@@ -98,9 +95,6 @@
 				</Configuration>
 				<!-- 128 Single Bank-->
 				<Configuration number="0x4"> 
-					<DualBank>
-						<ReadRegister address="0x1FFF7800" mask="0x200000" value="0x200000"/>
-					</DualBank>
 					<FlashSize>
 						<ReadRegister address="0x1FFF75E0" mask="0x0000FFFF" value="80"/>
 					</FlashSize>

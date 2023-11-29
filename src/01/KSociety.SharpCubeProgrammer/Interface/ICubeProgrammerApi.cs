@@ -40,6 +40,13 @@ namespace KSociety.SharpCubeProgrammer.Interface
         IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false);
 
         /// <summary>
+        /// This routine allows to get ST-LINK connected probe(s) without connecting and intruse the target.
+        /// </summary>
+        /// <param name="shared"></param>
+        /// <returns></returns>
+        IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false);
+
+        /// <summary>
         /// This routine allows to start connection to device through SWD or JTAG interfaces.
         /// </summary>
         /// <param name="debugConnectParameters"></param>
@@ -232,6 +239,11 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
         PeripheralC? InitOptionBytesInterface();
+
+        /// <summary>
+        /// This routine allows to get option bytes values of the connected target.
+        /// </summary>
+        PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
 
         /// <summary>
         /// This routine allows to display the Option bytes.

@@ -13,20 +13,49 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="BuildMultiTargeting\KSociety.SharpCubeProgrammer.props">
+      <PackagePath>buildMultiTargeting</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="BuildMultiTargeting\KSociety.SharpCubeProgrammer.targets">
+      <PackagePath>buildMultiTargeting</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="Build\KSociety.SharpCubeProgrammer.targets" Pack="true" PackagePath="build" />
+    <Content Include="Build\KSociety.SharpCubeProgrammer.props" Pack="true" PackagePath="build" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Programmer\version" Pack="true" PackagePath="build\native\Programmer" Visible="false" Link="dll\version" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\build\Programmer\bin\x64\Release\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x86" Visible="false" Link="dll\x86\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\build\Programmer\bin\Win32\Release\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\Data_Base" Visible="false" Link="st\Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\FlashLoader" Visible="false" Link="st\Programmer\FlashLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*" />
+    <None Include="..\..\..\build\Programmer\bin\x64\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\build\Programmer\bin\Win32\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\Programmer\version" Pack="true" PackagePath="build\native\Programmer" Visible="false" Link="dll\version" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+
+    </None>
+    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x86" Visible="false" Link="dll\x86\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       
+    </None>
+    <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Data_Base" Visible="false" Link="st\Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       <PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
+    <None Include="..\..\..\Programmer\FlashLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\FlashLoader" Visible="false" Link="st\Programmer\FlashLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+       <PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
+    <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*">
+       <PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
   </ItemGroup>
 
 </Project>

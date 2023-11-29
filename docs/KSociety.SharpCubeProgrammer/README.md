@@ -6,7 +6,7 @@
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.14.0.
+KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
 
 It makes use of several 3rd party tools:
 
@@ -15,7 +15,7 @@ It makes use of several 3rd party tools:
 
 ## Introduction
 
-This is a C# wrapper for STM32 CubeProgrammer_API v2.14.0 (not fully tested).
+This is a C# wrapper for STM32 CubeProgrammer_API v2.15.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
 Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
 The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
@@ -32,6 +32,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 ## Currently supported features
 - GetStLinkList
+- GetStLinkEnumerationList
 - ConnectStLink
 - Reset
 - GetDfuDeviceList
@@ -53,7 +54,21 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - GetStorageStructure
 - SendOptionBytesCmd
 - InitOptionBytesInterface
+- FastRomInitOptionBytesInterface
 - ObDisplay
+
+## Prerequisites
+
+- Visual Studio 2022 (17.7.6 or higher) with the following installed:
+
+| Workloads |
+| :-------- |
+| .NET desktop development |
+| Desktop development with C++ |
+
+| Individual components |
+| :-------------------- |
+| MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
 
