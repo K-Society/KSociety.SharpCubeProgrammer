@@ -4,13 +4,8 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="KSociety.SharpCubeProgrammer" Version="0.1.42">
-      
-    </PackageReference>
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Class1.cs">
@@ -21,6 +16,10 @@
   <ItemGroup>
     <Content Remove="st\**" />
     <None Remove="st\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj" />
   </ItemGroup>
 
 </Project>
