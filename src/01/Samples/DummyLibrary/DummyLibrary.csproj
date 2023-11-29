@@ -8,12 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.SharpCubeProgrammer" Version="0.1.42">
-      
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Class1.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
@@ -22,6 +16,10 @@
   <ItemGroup>
     <Content Remove="st\**" />
     <None Remove="st\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj" />
   </ItemGroup>
 
 </Project>
