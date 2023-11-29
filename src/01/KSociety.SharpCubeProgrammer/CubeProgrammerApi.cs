@@ -371,7 +371,7 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
-            this._logger?.LogTrace("ConnectDfuBootloader: {0}", usbIndex);
+            //this._logger?.LogTrace("ConnectDfuBootloader: {0}", usbIndex);
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
@@ -427,8 +427,7 @@ namespace KSociety.SharpCubeProgrammer
             //Register();
 
             var checkDeviceConnectionResult = Native.ProgrammerApi.CheckDeviceConnection();
-            this._logger?.LogTrace("CheckDeviceConnection. {0} ROW: {1}", checkDeviceConnectionResult ? "OK" : "KO",
-                checkDeviceConnectionResult);
+            //this._logger?.LogTrace("CheckDeviceConnection. {0} ROW: {1}", checkDeviceConnectionResult ? "OK" : "KO", checkDeviceConnectionResult);
             return checkDeviceConnectionResult;
         }
 
