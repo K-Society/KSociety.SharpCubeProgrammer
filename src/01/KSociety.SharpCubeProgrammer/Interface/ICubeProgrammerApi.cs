@@ -294,53 +294,120 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to read the device unique identifier.
         /// </summary>
-        void GetUID64();
+        (CubeProgrammerError, byte[]) GetUID64();
 
         /// <summary>
         /// This routine allows to erase the BLE stack firmware.
         /// </summary>
-        void FirmwareDelete();
+        CubeProgrammerError FirmwareDelete();
 
         /// <summary>
         /// This routine allows to make upgrade of BLE stack firmware or FUS firmware.
         /// </summary>
-        void FirmwareUpgrade();
+        CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        void StartWirelessStack();
+        CubeProgrammerError StartWirelessStack();
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        void UpdateAuthKey();
+        CubeProgrammerError UpdateAuthKey(string filePath);
 
         /// <summary>
         /// This routine allows to lock the authentication key and once locked, it is no longer possible to change it.
         /// </summary>
-        void AuthKeyLock();
+        CubeProgrammerError AuthKeyLock();
 
         /// <summary>
         /// This routine allows to write a customized user key.
         /// </summary>
-        void WriteUserKey();
+        CubeProgrammerError WriteUserKey(string filePath, byte keyType);
 
         /// <summary>
         /// This routine allows to activate the AntiRollBack.
         /// </summary>
-        void AntiRollBack();
+        CubeProgrammerError AntiRollBack();
 
         /// <summary>
         /// This routine allows to start and establish a communication with the FUS operator.
         /// </summary>
-        void StartFus();
+        CubeProgrammerError StartFus();
 
         /// <summary>
         /// This routine allows to set default option Bytes.
         /// </summary>
         /// <returns></returns>
-        void UnlockChip();
+        CubeProgrammerError UnlockChip();
+
+        #endregion
+
+        #region [STM32MP specific functions]
+
+        //Specific APIs used exclusively for STM32MP devices. The connection is available only through USB DFU and UART interfaces
+
+        /// <summary>
+        /// This routine aims to launch the Secure Secret Provisioning.
+        /// If you are trying to start the SSP with HSM, the licenseFile parameter should be empty.
+        /// </summary>
+        /// <param name="sspFile">Indicates the full path of the ssp file [Use STM32TrustedPackageCreator to generate a ssp image].</param>
+        /// <param name="licenseFile">Indicates the full path of the license file. If you are trying to start the SSP without HSM, the hsmSlotId should be 0.</param>
+        /// <param name="tfaFile">Indicates the full path of the tfa-ssp file.</param>
+        /// <param name="hsmSlotId">Indicates the HSM slot ID.</param>
+        /// <returns>0 if the SSP was finished successfully, otherwise an error occurred.</returns>
+        CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId);
+
+        #endregion
+
+        #region [STM32 HSM specific functions]
+
+        //Specific APIs used exclusively for STM32 devices to manage the Hardware Secure Module.
+
+        /// <summary>
+        /// This routine aims to get the HSM Firmware Identifier.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string that contains the HSM Firmware Identifier.</returns>
+        string GetHsmFirmwareID(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the current HSM counter.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>Counter value</returns>
+        ulong GetHsmCounter(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM State.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: ST_STATE , OEM_STATE, OPERATIONAL_STATE , UNKNOWN_STATE</returns>
+        string GetHsmState(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM version.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: 1 , 2</returns>
+        string GetHsmVersion(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM type.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: SFI. SMU. SSP...</returns>
+        string GetHsmType(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get and save the HSM license into a binary file.
+        /// Connection to target must be established before performing this routine.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <param name="outLicensePath">Path of the output binary file.</param>
+        /// <returns>0 if the operation was finished successfully, otherwise an error occurred.</returns>
+        CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath);
 
         #endregion
 

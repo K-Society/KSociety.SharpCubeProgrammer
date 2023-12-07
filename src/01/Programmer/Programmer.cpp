@@ -530,5 +530,48 @@ int StartFus()
 
 int UnlockChip()
 {
-	return -1; // unlockchip();
+	return unlockchip();
+}
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32MP specific functions                                       */
+/* -------------------------------------------------------------------------------------------- */
+
+int ProgramSsp(const wchar_t* sspFile, const wchar_t* licenseFile, const wchar_t* tfaFile, int hsmSlotId)
+{
+    return programSsp(sspFile, licenseFile, tfaFile, hsmSlotId);
+}
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32 HSM specific functions                                     */
+/* -------------------------------------------------------------------------------------------- */
+
+const char* GetHsmFirmwareID(int hsmSlotId)
+{
+    return getHsmFirmwareID(hsmSlotId);
+}
+
+unsigned long GetHsmCounter(int hsmSlotId)
+{
+    return getHsmCounter(hsmSlotId);
+}
+
+const char* GetHsmState(int hsmSlotId)
+{
+    return getHsmState(hsmSlotId);
+}
+
+const char* GetHsmVersion(int hsmSlotId)
+{
+    return getHsmVersion(hsmSlotId);
+}
+
+const char* GetHsmType(int hsmSlotId)
+{
+    return getHsmType(hsmSlotId);
+}
+
+int GetHsmLicense(int hsmSlotId, const wchar_t* outLicensePath)
+{
+    return getHsmLicense(hsmSlotId, outLicensePath);
 }
