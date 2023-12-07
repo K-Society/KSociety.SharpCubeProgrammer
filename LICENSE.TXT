@@ -1,5 +1,5 @@
 Copyright (c) K-Society and contributors.
-This software is released under the Microsoft Reciprocal License (MS-RL) (the "License"); you may not use the software except in compliance with the License.
+This software is released under the Microsoft Reciprocal License (MS-RL) AND (SLA0048) (the "License"); you may not use the software except in compliance with the License.
 
 The text of the Microsoft Reciprocal License (MS-RL) can be found online at:
  http://opensource.org/licenses/ms-rl

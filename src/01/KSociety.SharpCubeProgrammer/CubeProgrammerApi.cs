@@ -1013,63 +1013,178 @@ namespace KSociety.SharpCubeProgrammer
         /// Connection under Reset is mandatory.
 
         /// <inheritdoc />
-        public void GetUID64()
+        public (CubeProgrammerError, byte[]) GetUID64()
         {
-            throw new NotImplementedException();
+            var buffer = new byte[8];
+            var bufferPtr = new IntPtr();
+
+            var getUID64Result = Native.ProgrammerApi.GetUID64(ref bufferPtr );
+
+            var result = this.CheckResult(getUID64Result);
+            if (result.Equals(CubeProgrammerError.CubeprogrammerNoError) && bufferPtr != IntPtr.Zero)
+            {
+                Marshal.Copy(bufferPtr, buffer, 0, 8);
+            }
+
+            return (result, buffer);
         }
 
         /// <inheritdoc />
-        public void FirmwareDelete()
+        public CubeProgrammerError FirmwareDelete()
         {
-            throw new NotImplementedException();
+            var firmwareDeleteResult = Native.ProgrammerApi.FirmwareDelete();
+
+            var result = this.CheckResult(firmwareDeleteResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void FirmwareUpgrade()
+        public CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify)
         {
-            throw new NotImplementedException();
+            var uintAddress = this.HexConverterToUint(address);
+            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+
+            var firmwareUpgradeResult =
+                Native.ProgrammerApi.FirmwareUpgrade(filePathAdapted, uintAddress, firstInstall, startStack, verify);
+
+            var result = this.CheckResult(firmwareUpgradeResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void StartWirelessStack()
+        public CubeProgrammerError StartWirelessStack()
         {
-            throw new NotImplementedException();
+            var startWirelessStackResult = Native.ProgrammerApi.StartWirelessStack();
+
+            var result = this.CheckResult(startWirelessStackResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void UpdateAuthKey()
+        public CubeProgrammerError UpdateAuthKey(string filePath)
         {
-            throw new NotImplementedException();
+            var updateAuthKeyResult = Native.ProgrammerApi.UpdateAuthKey(filePath);
+
+            var result = this.CheckResult(updateAuthKeyResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void AuthKeyLock()
+        public CubeProgrammerError AuthKeyLock()
         {
-            throw new NotImplementedException();
+            var authKeyLockResult = Native.ProgrammerApi.AuthKeyLock();
+
+            var result = this.CheckResult(authKeyLockResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void WriteUserKey()
+        public CubeProgrammerError WriteUserKey(string filePath, byte keyType)
         {
-            throw new NotImplementedException();
+            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+
+            var writeUserKeyResult = Native.ProgrammerApi.WriteUserKey(filePathAdapted, keyType);
+
+            var result = this.CheckResult(writeUserKeyResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void AntiRollBack()
+        public CubeProgrammerError AntiRollBack()
         {
-            throw new NotImplementedException();
+            var antiRollBackResult = Native.ProgrammerApi.AntiRollBack();
+
+            var result = this.CheckResult(antiRollBackResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void StartFus()
+        public CubeProgrammerError StartFus()
         {
-            throw new NotImplementedException();
+            var startFusResult = Native.ProgrammerApi.StartFus();
+
+            var result = this.CheckResult(startFusResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void UnlockChip()
+        public CubeProgrammerError UnlockChip()
         {
-            throw new NotImplementedException();
+            var unlockChipResult = Native.ProgrammerApi.UnlockChip();
+
+            var result = this.CheckResult(unlockChipResult);
+
+            return result;
+        }
+
+        #endregion
+
+        #region [STM32MP specific functions]
+
+        /// <inheritdoc />
+        public CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
+        {
+            var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
+            var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace(@"\", "/");
+            var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
+            var programSspResult = Native.ProgrammerApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
+
+            var result = this.CheckResult(programSspResult);
+
+            return result;
+        }
+
+        #endregion
+
+        #region [STM32 HSM specific functions]
+
+        /// <inheritdoc />
+        public string GetHsmFirmwareID(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmFirmwareID(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public ulong GetHsmCounter(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmCounter(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmState(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmState(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmVersion(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmVersion(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmType(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmType(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath)
+        {
+            var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
+            var getHsmLicenseResult = Native.ProgrammerApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
+
+            var result = this.CheckResult(getHsmLicenseResult);
+
+            return result;
         }
 
         #endregion

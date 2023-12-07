@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<Project>
+  <PropertyGroup>
+	<BaseLicensePath>$(MSBuildThisFileDirectory)..\docs\</BaseLicensePath>
+	<LicenseFile Condition=" Exists('$(BaseLicensePath)license.txt') ">docs\license.txt</LicenseFile>
+  </PropertyGroup>
+  
+  <ItemGroup Condition=" Exists('$(BaseLicensePath)license.txt') ">
+	<None Include="$(BaseLicensePath)license.txt">
+	  <Pack>true</Pack>
+	  <PackagePath>docs</PackagePath>
+	  <Visible>false</Visible>
+	</None>
+  </ItemGroup>
+
+</Project>

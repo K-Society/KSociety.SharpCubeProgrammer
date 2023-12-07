@@ -7,7 +7,6 @@
 	
 	<AssemblyOriginatorKeyFile>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)ksociety.snk))</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-	
   </PropertyGroup>
   
   <ItemGroup>
@@ -28,5 +27,6 @@
   <Import Project="Icon.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('Icon.Build.props') " />
   <Import Project="CSharp.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('CSharp.Build.props') " />
   <Import Project="Readme.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('Readme.Build.props') " />
+  <Import Project="License.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('License.Build.props') " />
   <Import Project="Custom.Build.props" Condition=" Exists('Custom.Build.props') " />
 </Project>

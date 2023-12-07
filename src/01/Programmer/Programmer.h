@@ -145,3 +145,25 @@ extern "C" PROGRAMMER_API int AntiRollBack();
 extern "C" PROGRAMMER_API int StartFus();
 
 extern "C" PROGRAMMER_API int UnlockChip();
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32MP specific functions                                       */
+/* -------------------------------------------------------------------------------------------- */
+
+extern "C" PROGRAMMER_API int ProgramSsp(const wchar_t* sspFile, const wchar_t* licenseFile, const wchar_t* tfaFile, int hsmSlotId);
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32 HSM specific functions                                     */
+/* -------------------------------------------------------------------------------------------- */
+
+extern "C" PROGRAMMER_API const char* GetHsmFirmwareID(int hsmSlotId);
+
+extern "C" PROGRAMMER_API unsigned long GetHsmCounter(int hsmSlotId);
+
+extern "C" PROGRAMMER_API const char* GetHsmState(int hsmSlotId);
+
+extern "C" PROGRAMMER_API const char* GetHsmVersion(int hsmSlotId);
+
+extern "C" PROGRAMMER_API const char* GetHsmType(int hsmSlotId);
+
+extern "C" PROGRAMMER_API int GetHsmLicense(int hsmSlotId, const wchar_t* outLicensePath);
