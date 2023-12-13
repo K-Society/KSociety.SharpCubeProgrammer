@@ -121,7 +121,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
             {
                 this.StLinkReady = true;
@@ -136,8 +135,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortScanned: {0}", e.PortsList.Count);
-
             if (e.PortsList.Any())
             {
                 this.StLinkReady = true;
@@ -149,7 +146,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
             {
                 this.Stm32BootLoaderReady = true;
@@ -164,8 +160,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortScanned: {0}", e.PortsList.Count);
-
             if (e.PortsList.Any())
             {
                 this.Stm32BootLoaderReady = true;
@@ -189,8 +183,6 @@ namespace KSociety.SharpCubeProgrammer
                 var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
 
                 output = this.CheckResult(connectStLinkResult);
-
-                //this._logger?.LogTrace("TryConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
             }
             catch (Exception ex)
             {
@@ -203,22 +195,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
-            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
-                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
-                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
                         parametersList.Add(currentItem);
                     }
                 }
@@ -238,22 +226,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false)
         {
-            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
-                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
-                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
                         parametersList.Add(currentItem);
                     }
                 }
@@ -280,8 +264,6 @@ namespace KSociety.SharpCubeProgrammer
                 var connectStLinkResult = Native.ProgrammerApi.ConnectStLink(debugConnectParameters);
 
                 output = this.CheckResult(connectStLinkResult);
-
-                this._logger?.LogTrace("ConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
             }
             catch (Exception ex)
             {
@@ -296,7 +278,6 @@ namespace KSociety.SharpCubeProgrammer
         {
             var resetResult = Native.ProgrammerApi.Reset(rstMode);
             var output = this.CheckResult(resetResult);
-            this._logger?.LogTrace("Reset: {0} result: {1}", rstMode, output);
             return output;
         }
 
@@ -339,19 +320,13 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
-
-                //this._logger?.LogTrace("GetDfuDeviceList iPID: {0} iVID: {1}", 0xdf11, 0x0483);
                 numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
-                //this._logger?.LogTrace("GetDfuDeviceList DFU devices found : {0}", numberOfItems);
 
-                //var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
-
-                        //this._logger?.LogTrace("GetDfuDeviceList DfuDeviceInfo: {0} - {1}", i, currentItem.SerialNumber);
                         dfuDeviceList.Add(currentItem);
                     }
                 }
@@ -371,7 +346,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
-            //this._logger?.LogTrace("ConnectDfuBootloader: {0}", usbIndex);
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
@@ -424,10 +398,7 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public bool CheckDeviceConnection()
         {
-            //Register();
-
             var checkDeviceConnectionResult = Native.ProgrammerApi.CheckDeviceConnection();
-            //this._logger?.LogTrace("CheckDeviceConnection. {0} ROW: {1}", checkDeviceConnectionResult ? "OK" : "KO", checkDeviceConnectionResult);
             return checkDeviceConnectionResult;
         }
 
@@ -440,7 +411,6 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
-                //this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Value.Name, generalInf.Value.Type, generalInf.Value.Cpu);
             }
             catch (Exception ex)
             {
@@ -456,25 +426,16 @@ namespace KSociety.SharpCubeProgrammer
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
-            //var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
 
             try
             {
-                var bufferPtr = new IntPtr(); //Marshal.AllocHGlobal(bufferSize);
+                var bufferPtr = new IntPtr();
                 var readMemoryResult =
                     Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero)
                 {
-                    //var byteArray = Marshal.PtrToStringAnsi(bufferPtr);//Marshal.PtrToStructure<byte[]>(bufferPtr);
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
-
-                    //for(int i = 0; i < size; i += 4)
-                    //{
-                    //    _logger.LogTrace("ReadMemory: {0} {1} {2} {3}", buffer[i].ToString("X"), buffer[i+1].ToString("X"), buffer[i+2].ToString("X"), buffer[i+3].ToString("X"));
-                    //}
-
-                    //_logger.LogTrace("ReadMemory: {0}", BitConverter.ToString(buffer));
                 }
             }
             catch (Exception ex)
@@ -514,7 +475,6 @@ namespace KSociety.SharpCubeProgrammer
             var extension = Path.GetExtension(inputFilePath);
             var binPath = @"";
 
-
             string filePath;
             switch (extension)
             {
@@ -535,8 +495,6 @@ namespace KSociety.SharpCubeProgrammer
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
             var binPathAdapted = String.IsNullOrEmpty(binPath) ? "" : binPath.Replace(@"\", "/");
 
-            //this._logger?.LogTrace("DownloadFile: {0} - {1}", filePathAdapted, binPathAdapted);
-
             try
             {
                 var downloadFileResult = Native.ProgrammerApi.DownloadFile(
@@ -546,9 +504,7 @@ namespace KSociety.SharpCubeProgrammer
                     verify,
                     binPathAdapted
                 );
-                //_logger?.LogTrace("DownloadFile result: {0}", downloadFileResult);
                 output = this.CheckResult(downloadFileResult);
-                //this._logger?.LogTrace("DownloadFile filePathAdapted: {0} binPathAdapted: {1} downloadFileResult: {2}", filePathAdapted, binPathAdapted, output);
             }
             catch (Exception ex)
             {
@@ -569,7 +525,6 @@ namespace KSociety.SharpCubeProgrammer
                 var executeResult = Native.ProgrammerApi.Execute(uintAddress);
 
                 output = this.CheckResult(executeResult);
-                //this._logger?.LogTrace("Execute address: {0} result: {1}", address, output);
             }
             catch (Exception ex)
             {
@@ -585,8 +540,6 @@ namespace KSociety.SharpCubeProgrammer
             var massEraseResult = Native.ProgrammerApi.MassErase(sFlashMemName);
             var output = this.CheckResult(massEraseResult);
 
-            //this._logger?.LogTrace("MassErase flash mem name: {0} result: {1}", sFlashMemName, output);
-
             return output;
         }
 
@@ -595,8 +548,6 @@ namespace KSociety.SharpCubeProgrammer
         {
             var sectorEraseResult = Native.ProgrammerApi.SectorErase(sectors, sectorNbr, sFlashMemName);
             var output = this.CheckResult(sectorEraseResult);
-
-            //this._logger?.LogTrace("SectorErase sectors: {0}, sectors number: {1}, flash mem name: {2}, result: {3}", sectors, sectorNbr, sFlashMemName, output);
 
             return output;
         }
@@ -636,7 +587,6 @@ namespace KSociety.SharpCubeProgrammer
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
-                //this._logger?.LogTrace("File Open: {0}", filePathAdapted);
 
                 var filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
 
@@ -687,7 +637,6 @@ namespace KSociety.SharpCubeProgrammer
         public CubeProgrammerError Verify(byte[] data, string address)
         {
             var uintAddress = this.HexConverterToUint(address);
-            //this._logger?.LogTrace("Verify address: {0}", uintAddress);
 
             var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
@@ -764,8 +713,6 @@ namespace KSociety.SharpCubeProgrammer
                     Native.ProgrammerApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
 
                 output = this.CheckResult(saveMemoryToFileResult);
-
-                //this._logger?.LogTrace("SaveMemoryToFile address: {0} size: {1} file name: {2} result: {3}", intAddress, intSize, fileName, output);
             }
             catch (Exception ex)
             {
@@ -778,7 +725,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError Disconnect()
         {
-            //this._logger?.LogTrace("Disconnect. ");
             var result = Native.ProgrammerApi.Disconnect();
 
             var output = this.CheckResult(result);
@@ -789,7 +735,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void DeleteInterfaceList()
         {
-            //this._logger?.LogTrace(" DeleteInterfaceList. ");
             Native.ProgrammerApi.DeleteInterfaceList();
         }
 
@@ -826,8 +771,6 @@ namespace KSociety.SharpCubeProgrammer
                         deviceStorageStructure.Index = bankSectors.Index;
                         deviceStorageStructure.Size = bankSectors.Size;
                         deviceStorageStructure.Address = bankSectors.Address;
-
-                        //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
                     }
                 }
             }
@@ -850,23 +793,19 @@ namespace KSociety.SharpCubeProgrammer
         {
             var result = Native.ProgrammerApi.SendOptionBytesCmd(command);
             var output = this.CheckResult(result);
-            this._logger?.LogTrace("SendOptionBytesCmd: {0} result: {1}", command, output);
             return output;
         }
 
         /// <inheritdoc />
         public PeripheralC? InitOptionBytesInterface()
         {
-            //this._logger?.LogTrace("InitOptionBytesInterface.");
             PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
             try
             {
-
                 peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-
             }
             catch (Exception ex)
             {
@@ -883,16 +822,13 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
-            //this._logger?.LogTrace("FastRomInitOptionBytesInterface.");
             PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
 
             try
             {
-
                 peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-
             }
             catch (Exception ex)
             {
@@ -1263,7 +1199,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinksFoundStatus()
         {
-            //this._logger?.LogTrace("OnStLinkFoundStatus");
             try
             {
                 this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
@@ -1276,7 +1211,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinkAdded()
         {
-            //this._logger?.LogTrace("OnStLinkAdded");
             try
             {
                 this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
@@ -1289,7 +1223,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinkRemoved()
         {
-            //this._logger?.LogTrace("OnStLinkRemoved");
             try
             {
                 this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
@@ -1302,7 +1235,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoadersFoundStatus()
         {
-            //this._logger?.LogTrace("OnStm32BootLoadersFoundStatus");
             try
             {
                 this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
@@ -1315,7 +1247,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoaderAdded()
         {
-            //this._logger?.LogTrace("OnStm32BootLoaderAdded");
             try
             {
                 this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
@@ -1328,7 +1259,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoaderRemoved()
         {
-            //this._logger?.LogTrace("OnStm32BootLoaderRemoved");
             try
             {
                 this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());
