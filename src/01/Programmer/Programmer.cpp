@@ -255,6 +255,31 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 	}
 }
 
+int EditSector(unsigned int address, char* data, unsigned int size)
+{
+    try
+    {
+        int result = -99;
+
+        if (size == 0)
+        {
+            return -99;
+        }
+
+        result = editSector(address, data, size);
+        return result;
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
+}
+
 int DownloadFile(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, const wchar_t* binPath)
 {
 	try 
@@ -307,7 +332,7 @@ int ReadUnprotect()
 int TzenRegression()
 {
 	//return tzenRegression();
-	return -99;
+    return -99;
 }
 
 int GetTargetInterfaceType()
@@ -530,5 +555,48 @@ int StartFus()
 
 int UnlockChip()
 {
-	return -1; // unlockchip();
+	return unlockchip();
+}
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32MP specific functions                                       */
+/* -------------------------------------------------------------------------------------------- */
+
+int ProgramSsp(const wchar_t* sspFile, const wchar_t* licenseFile, const wchar_t* tfaFile, int hsmSlotId)
+{
+    return programSsp(sspFile, licenseFile, tfaFile, hsmSlotId);
+}
+
+/* -------------------------------------------------------------------------------------------- */
+/*                             STM32 HSM specific functions                                     */
+/* -------------------------------------------------------------------------------------------- */
+
+const char* GetHsmFirmwareID(int hsmSlotId)
+{
+    return getHsmFirmwareID(hsmSlotId);
+}
+
+unsigned long GetHsmCounter(int hsmSlotId)
+{
+    return getHsmCounter(hsmSlotId);
+}
+
+const char* GetHsmState(int hsmSlotId)
+{
+    return getHsmState(hsmSlotId);
+}
+
+const char* GetHsmVersion(int hsmSlotId)
+{
+    return getHsmVersion(hsmSlotId);
+}
+
+const char* GetHsmType(int hsmSlotId)
+{
+    return getHsmType(hsmSlotId);
+}
+
+int GetHsmLicense(int hsmSlotId, const wchar_t* outLicensePath)
+{
+    return getHsmLicense(hsmSlotId, outLicensePath);
 }

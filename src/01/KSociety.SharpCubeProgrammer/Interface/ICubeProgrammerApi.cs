@@ -136,10 +136,20 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError WriteMemory(string address, byte[] data);
 
         /// <summary>
+        /// This routine allows to write sector data on the user interface with the configuration already initialized.
+        /// </summary>
+        /// <param name="address">The address to start writing from.</param>
+        /// <param name="data">Data buffer.</param>
+        /// <returns>CubeprogrammerNoError if the writing operation correctly finished, otherwise an error occurred.</returns>
+        /// <remarks>Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.</remarks>
+        /// <remarks>Data size should not exceed sector size.</remarks>
+        CubeProgrammerError EditSector(string address, byte[] data);
+
+        /// <summary>
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase, uint verify);
+        CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U);
 
         /// <summary>
         /// This routine allows to run the application.
@@ -164,6 +174,13 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError ReadUnprotect();
 
         /// <summary>
+        /// This routine allows the TZEN Option Byte regression.
+        /// </summary>
+        /// <returns>CubeprogrammerNoError if the disabling correctly accomplished, otherwise an error occurred.</returns>
+        /// <remarks>Depending on the device used, this routine take a specific time.</remarks>
+        CubeProgrammerError TzenRegression();
+
+        /// <summary>
         /// This routine allows to know the interface what is in use.
         /// </summary>
         TargetInterfaceType? GetTargetInterfaceType();
@@ -181,7 +198,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to clean up the handled file data.
         /// </summary>
-        void FreeFileData();
+        void FreeFileData(FileDataC data);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
@@ -196,7 +213,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        void SaveFileToFile();
+        CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.
@@ -216,7 +233,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
         /// </summary>
-        void AutomaticMode();
+        void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1);
 
         /// <summary>
         /// This routine allows to get Flash storage information.
@@ -287,60 +304,127 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         #region [STM32WB specific]
 
-        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
+        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
         /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
         /// <summary>
         /// This routine allows to read the device unique identifier.
         /// </summary>
-        void GetUID64();
+        (CubeProgrammerError, byte[]) GetUID64();
 
         /// <summary>
         /// This routine allows to erase the BLE stack firmware.
         /// </summary>
-        void FirmwareDelete();
+        CubeProgrammerError FirmwareDelete();
 
         /// <summary>
         /// This routine allows to make upgrade of BLE stack firmware or FUS firmware.
         /// </summary>
-        void FirmwareUpgrade();
+        CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        void StartWirelessStack();
+        CubeProgrammerError StartWirelessStack();
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        void UpdateAuthKey();
+        CubeProgrammerError UpdateAuthKey(string filePath);
 
         /// <summary>
         /// This routine allows to lock the authentication key and once locked, it is no longer possible to change it.
         /// </summary>
-        void AuthKeyLock();
+        CubeProgrammerError AuthKeyLock();
 
         /// <summary>
         /// This routine allows to write a customized user key.
         /// </summary>
-        void WriteUserKey();
+        CubeProgrammerError WriteUserKey(string filePath, byte keyType);
 
         /// <summary>
         /// This routine allows to activate the AntiRollBack.
         /// </summary>
-        void AntiRollBack();
+        CubeProgrammerError AntiRollBack();
 
         /// <summary>
         /// This routine allows to start and establish a communication with the FUS operator.
         /// </summary>
-        void StartFus();
+        CubeProgrammerError StartFus();
 
         /// <summary>
         /// This routine allows to set default option Bytes.
         /// </summary>
         /// <returns></returns>
-        void UnlockChip();
+        CubeProgrammerError UnlockChip();
+
+        #endregion
+
+        #region [STM32MP specific functions]
+
+        //Specific APIs used exclusively for STM32MP devices. The connection is available only through USB DFU and UART interfaces
+
+        /// <summary>
+        /// This routine aims to launch the Secure Secret Provisioning.
+        /// If you are trying to start the SSP with HSM, the licenseFile parameter should be empty.
+        /// </summary>
+        /// <param name="sspFile">Indicates the full path of the ssp file [Use STM32TrustedPackageCreator to generate a ssp image].</param>
+        /// <param name="licenseFile">Indicates the full path of the license file. If you are trying to start the SSP without HSM, the hsmSlotId should be 0.</param>
+        /// <param name="tfaFile">Indicates the full path of the tfa-ssp file.</param>
+        /// <param name="hsmSlotId">Indicates the HSM slot ID.</param>
+        /// <returns>0 if the SSP was finished successfully, otherwise an error occurred.</returns>
+        CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId);
+
+        #endregion
+
+        #region [STM32 HSM specific functions]
+
+        //Specific APIs used exclusively for STM32 devices to manage the Hardware Secure Module.
+
+        /// <summary>
+        /// This routine aims to get the HSM Firmware Identifier.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string that contains the HSM Firmware Identifier.</returns>
+        string GetHsmFirmwareID(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the current HSM counter.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>Counter value</returns>
+        ulong GetHsmCounter(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM State.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: ST_STATE , OEM_STATE, OPERATIONAL_STATE , UNKNOWN_STATE</returns>
+        string GetHsmState(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM version.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: 1 , 2</returns>
+        string GetHsmVersion(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get the HSM type.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <returns>string with possible values: SFI. SMU. SSP...</returns>
+        string GetHsmType(int hsmSlotId);
+
+        /// <summary>
+        /// This routine aims to get and save the HSM license into a binary file.
+        /// Connection to target must be established before performing this routine.
+        /// </summary>
+        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
+        /// <param name="outLicensePath">Path of the output binary file.</param>
+        /// <returns>0 if the operation was finished successfully, otherwise an error occurred.</returns>
+        CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath);
 
         #endregion
 

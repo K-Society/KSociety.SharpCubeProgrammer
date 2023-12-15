@@ -148,10 +148,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [Reset]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "Reset", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "Reset", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Reset32([MarshalAs(UnmanagedType.U4)] DebugResetMode rstMode);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "Reset", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "Reset", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Reset64([MarshalAs(UnmanagedType.U4)] DebugResetMode rstMode);
 
         private static int ResetNative(DebugResetMode rstMode)
@@ -185,10 +185,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetUsartList]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetUsartList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetUsartList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetUsartList32(ref IntPtr usartList);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetUsartList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetUsartList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetUsartList64(ref IntPtr usartList);
 
         private static int GetUsartListNative(ref IntPtr usartList)
@@ -218,10 +218,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectUsartBootloader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectUsartBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectUsartBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectUsartBootloader32(UsartConnectParameters usartParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectUsartBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectUsartBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectUsartBootloader64(UsartConnectParameters usartParameters);
 
         private static int ConnectUsartBootloaderNative(UsartConnectParameters usartParameters)
@@ -251,10 +251,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SendByteUart]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SendByteUart", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SendByteUart", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int SendByteUart32(int bytes);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SendByteUart", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SendByteUart", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int SendByteUart64(int bytes);
 
         private static int SendByteUartNative(int bytes)
@@ -284,10 +284,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetDfuDeviceList]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetDfuDeviceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetDfuDeviceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetDfuDeviceList32(ref IntPtr dfuList, int iPID, int iVID);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetDfuDeviceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetDfuDeviceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetDfuDeviceList64(ref IntPtr dfuList, int iPID, int iVID);
 
         private static int GetDfuDeviceListNative(ref IntPtr dfuList, int iPID, int iVID)
@@ -317,10 +317,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectDfuBootloader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectDfuBootloader32(string usbIndex);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int ConnectDfuBootloader64(string usbIndex);
 
         private static int ConnectDfuBootloaderNative(string usbIndex)
@@ -350,10 +350,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectDfuBootloader2]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader2", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader2", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectDfuBootloader232(DfuConnectParameters dfuParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader2", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader2", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectDfuBootloader264(DfuConnectParameters dfuParameters);
 
         private static int ConnectDfuBootloader2Native(DfuConnectParameters dfuParameters)
@@ -383,10 +383,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectSpiBootloader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectSpiBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectSpiBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectSpiBootloader32(SpiConnectParameters spiParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectSpiBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectSpiBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectSpiBootloader64(SpiConnectParameters spiParameters);
 
         private static int ConnectSpiBootloaderNative(SpiConnectParameters spiParameters)
@@ -416,10 +416,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectCanBootloader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectCanBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectCanBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectCanBootloader32(CanConnectParameters canParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectCanBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectCanBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectCanBootloader64(CanConnectParameters canParameters);
 
         private static int ConnectCanBootloaderNative(CanConnectParameters canParameters)
@@ -449,10 +449,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ConnectI2cBootloader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ConnectI2cBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectI2cBootloader32(I2CConnectParameters i2cParameters);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ConnectI2cBootloader", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ConnectI2cBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ConnectI2cBootloader64(I2CConnectParameters i2cParameters);
 
         private static int ConnectI2cBootloaderNative(I2CConnectParameters i2cParameters)
@@ -492,10 +492,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [CheckDeviceConnection]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "CheckDeviceConnection", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "CheckDeviceConnection", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern bool CheckDeviceConnection32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "CheckDeviceConnection", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "CheckDeviceConnection", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern bool CheckDeviceConnection64();
 
         private static bool CheckDeviceConnectionNative()
@@ -525,10 +525,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetDeviceGeneralInf]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetDeviceGeneralInf", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr GetDeviceGeneralInf32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetDeviceGeneralInf", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr GetDeviceGeneralInf64();
 
         private static IntPtr GetDeviceGeneralInfNative()
@@ -558,10 +558,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ReadMemory]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ReadMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ReadMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ReadMemory32(uint address, ref IntPtr data, uint size);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ReadMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ReadMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ReadMemory64(uint address, ref IntPtr data, uint size);
 
         private static int ReadMemoryNative(uint address, ref IntPtr data, uint size)
@@ -591,10 +591,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [WriteMemory]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "WriteMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "WriteMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int WriteMemory32(uint address, IntPtr data, uint size);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "WriteMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "WriteMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int WriteMemory64(uint address, IntPtr data, uint size);
 
         private static int WriteMemoryNative(uint address, IntPtr data, uint size)
@@ -622,12 +622,45 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [EditSector]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int EditSector32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int EditSector64(uint address, IntPtr data, uint size);
+
+        private static int EditSectorNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? EditSector32(address, data, size)
+                : EditSector64(address, data, size);
+        }
+
+        internal static int EditSector(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return EditSectorNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [DownloadFile]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "DownloadFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "DownloadFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int DownloadFile32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "DownloadFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "DownloadFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int DownloadFile64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
 
         private static int DownloadFileNative(string filePath, uint address, uint skipErase, uint verify, string binPath)
@@ -657,10 +690,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [Execute]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "Execute", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "Execute", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int Execute32(uint address);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "Execute", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "Execute", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int Execute64(uint address);
 
         private static int ExecuteNative(uint address)
@@ -690,10 +723,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [MassErase]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "MassErase", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int MassErase32(string sFlashMemName);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "MassErase", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int MassErase64(string sFlashMemName);
 
         private static int MassEraseNative(string sFlashMemName)
@@ -723,10 +756,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SectorErase]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SectorErase", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SectorErase32(uint[] sectors, uint sectorNbr, string sFlashMemName);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SectorErase", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SectorErase64(uint[] sectors, uint sectorNbr, string sFlashMemName);
 
         private static int SectorEraseNative(uint[] sectors, uint sectorNbr, string sFlashMemName)
@@ -756,10 +789,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ReadUnprotect]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ReadUnprotect", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ReadUnprotect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ReadUnprotect32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ReadUnprotect", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ReadUnprotect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ReadUnprotect64();
 
         private static int ReadUnprotectNative()
@@ -787,12 +820,45 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [TzenRegression]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int TzenRegression32();
+
+        [DllImport(ProgrammerDll64, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int TzenRegression64();
+
+        private static int TzenRegressionNative()
+        {
+            return !Environment.Is64BitProcess
+                ? TzenRegression32()
+                : TzenRegression64();
+        }
+
+        internal static int TzenRegression()
+        {
+            try
+            {
+                return TzenRegressionNative();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [GetTargetInterfaceType]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetTargetInterfaceType", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetTargetInterfaceType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetTargetInterfaceType32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetTargetInterfaceType", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetTargetInterfaceType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetTargetInterfaceType64();
 
         private static int GetTargetInterfaceTypeNative()
@@ -822,10 +888,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetCancelPointer]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetCancelPointer", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr GetCancelPointer32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetCancelPointer", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr GetCancelPointer64();
 
         private static IntPtr GetCancelPointerNative()
@@ -855,10 +921,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [FileOpen]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "FileOpen", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "FileOpen", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern IntPtr FileOpen32([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "FileOpen", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "FileOpen", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern IntPtr FileOpen64([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
         private static IntPtr FileOpenNative(string filePath)
@@ -888,10 +954,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [FreeFileData]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "FreeFileData", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void FreeFileData32(FileDataC data);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "FreeFileData", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void FreeFileData64(FileDataC data);
 
         private static void FreeFileDataNative(FileDataC data)
@@ -926,10 +992,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [Verify]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "Verify", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Verify32(FileDataC fileData, uint address);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "Verify", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Verify64(FileDataC fileData, uint address);
 
         private static int VerifyNative(FileDataC fileData, uint address)
@@ -959,10 +1025,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [VerifyMemory]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "VerifyMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "VerifyMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int VerifyMemory32(uint address, IntPtr data, uint size);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "VerifyMemory", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "VerifyMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int VerifyMemory64(uint address, IntPtr data, uint size);
 
         private static int VerifyMemoryNative(uint address, IntPtr data, uint size)
@@ -992,10 +1058,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SaveFileToFile]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SaveFileToFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SaveFileToFile32(FileDataC fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SaveFileToFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SaveFileToFile64(FileDataC fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         private static int SaveFileToFileNative(FileDataC fileData, string sFileName)
@@ -1025,10 +1091,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SaveMemoryToFile]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SaveMemoryToFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SaveMemoryToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SaveMemoryToFile32(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SaveMemoryToFile", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SaveMemoryToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SaveMemoryToFile64(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         private static int SaveMemoryToFileNative(int address, int size, string sFileName)
@@ -1058,10 +1124,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [Disconnect]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "Disconnect", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "Disconnect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Disconnect32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "Disconnect", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "Disconnect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Disconnect64();
 
         private static int DisconnectNative()
@@ -1091,10 +1157,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [DeleteInterfaceList]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "DeleteInterfaceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "DeleteInterfaceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void DeleteInterfaceList32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "DeleteInterfaceList", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "DeleteInterfaceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void DeleteInterfaceList64();
 
         private static void DeleteInterfaceListNative()
@@ -1129,10 +1195,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [AutomaticMode]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "AutomaticMode", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void AutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "AutomaticMode", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void AutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run);
 
         private static void AutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run)
@@ -1167,10 +1233,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetStorageStructure]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetStorageStructure", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "GetStorageStructure", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetStorageStructure32(ref IntPtr deviceStorageStruct);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetStorageStructure", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "GetStorageStructure", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int GetStorageStructure64(ref IntPtr deviceStorageStruct);
 
         private static int GetStorageStructureNative(ref IntPtr deviceStorageStruct)
@@ -1204,10 +1270,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SendOptionBytesCmd]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SendOptionBytesCmd", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SendOptionBytesCmd32(string command);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SendOptionBytesCmd", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SendOptionBytesCmd64(string command);
 
         private static int SendOptionBytesCmdNative(string command)
@@ -1237,10 +1303,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [InitOptionBytesInterface]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "InitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "InitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr InitOptionBytesInterface32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "InitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "InitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr InitOptionBytesInterface64();
 
         private static IntPtr InitOptionBytesInterfaceNative()
@@ -1270,10 +1336,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [FastRomInitOptionBytesInterface]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "FastRomInitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "FastRomInitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr FastRomInitOptionBytesInterface32(ushort deviceId);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "FastRomInitOptionBytesInterface", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "FastRomInitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern IntPtr FastRomInitOptionBytesInterface64(ushort deviceId);
 
         private static IntPtr FastRomInitOptionBytesInterfaceNative(ushort deviceId)
@@ -1303,10 +1369,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [ObDisplay]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "ObDisplay", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "ObDisplay", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ObDisplay32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "ObDisplay", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "ObDisplay", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int ObDisplay64();
 
         private static int ObDisplayNative()
@@ -1340,10 +1406,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SetLoadersPath]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SetLoadersPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SetLoadersPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void SetLoadersPath32(string path);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SetLoadersPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SetLoadersPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void SetLoadersPath64(string path);
 
         private static void SetLoadersPathNative(string path)
@@ -1378,10 +1444,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [SetExternalLoaderPath]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "SetExternalLoaderPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "SetExternalLoaderPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void SetExternalLoaderPath32(string path, ref IntPtr externalLoaderInfo);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderPath", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void SetExternalLoaderPath64(string path, ref IntPtr externalLoaderInfo);
 
         private static void SetExternalLoaderPathNative(string path, ref IntPtr externalLoaderInfo)
@@ -1447,10 +1513,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [RemoveExternalLoader]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "RemoveExternalLoader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "RemoveExternalLoader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void RemoveExternalLoader32(string path);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "RemoveExternalLoader", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "RemoveExternalLoader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern void RemoveExternalLoader64(string path);
 
         private static void RemoveExternalLoaderNative(string path)
@@ -1485,10 +1551,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [DeleteLoaders]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "DeleteLoaders", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "DeleteLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void DeleteLoaders32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "DeleteLoaders", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "DeleteLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern void DeleteLoaders64();
 
         private static void DeleteLoadersNative()
@@ -1527,24 +1593,24 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [GetUID64]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "GetUID64", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUID6432(out IntPtr data);
+        [DllImport(ProgrammerDll32, EntryPoint = "GetUID64", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int GetUID6432(ref IntPtr data);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "GetUID64", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUID6464(out IntPtr data);
+        [DllImport(ProgrammerDll64, EntryPoint = "GetUID64", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int GetUID6464(ref IntPtr data);
 
-        private static int GetUID64Native(out IntPtr data)
+        private static int GetUID64Native(ref IntPtr data)
         {
             return !Environment.Is64BitProcess
-                ? GetUID6432(out data)
-                : GetUID6464(out data);
+                ? GetUID6432(ref data)
+                : GetUID6464(ref data);
         }
 
-        internal static int GetUID64(out IntPtr data)
+        internal static int GetUID64(ref IntPtr data)
         {
             try
             {
-                return GetUID64Native(out data);
+                return GetUID64Native(ref data);
             }
             catch (DllNotFoundException ex)
             {
@@ -1560,10 +1626,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [FirmwareDelete]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "FirmwareDelete", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "FirmwareDelete", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int FirmwareDelete32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "FirmwareDelete", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "FirmwareDelete", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int FirmwareDelete64();
 
         private static int FirmwareDeleteNative()
@@ -1593,11 +1659,11 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [FirmwareUpgrade]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "FirmwareUpgrade", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int FirmwareUpgrade32(string filePath, uint address, uint firstInstall, uint startStack, uint verify);
+        [DllImport(ProgrammerDll32, EntryPoint = "FirmwareUpgrade", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int FirmwareUpgrade32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "FirmwareUpgrade", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int FirmwareUpgrade64(string filePath, uint address, uint firstInstall, uint startStack, uint verify);
+        [DllImport(ProgrammerDll64, EntryPoint = "FirmwareUpgrade", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int FirmwareUpgrade64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
 
         private static int FirmwareUpgradeNative(string filePath, uint address, uint firstInstall, uint startStack, uint verify)
         {
@@ -1626,10 +1692,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [StartWirelessStack]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "StartWirelessStack", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "StartWirelessStack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int StartWirelessStack32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "StartWirelessStack", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "StartWirelessStack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int StartWirelessStack64();
 
         private static int StartWirelessStackNative()
@@ -1659,11 +1725,11 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [UpdateAuthKey]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "UpdateAuthKey", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int UpdateAuthKey32(string filePath);
+        [DllImport(ProgrammerDll32, EntryPoint = "UpdateAuthKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int UpdateAuthKey32([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "UpdateAuthKey", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int UpdateAuthKey64(string filePath);
+        [DllImport(ProgrammerDll64, EntryPoint = "UpdateAuthKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int UpdateAuthKey64([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
         private static int UpdateAuthKeyNative(string filePath)
         {
@@ -1692,10 +1758,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [AuthKeyLock]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "AuthKeyLock", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "AuthKeyLock", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int AuthKeyLock32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "AuthKeyLock", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "AuthKeyLock", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int AuthKeyLock64();
 
         private static int AuthKeyLockNative()
@@ -1725,11 +1791,11 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [WriteUserKey]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "WriteUserKey", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int WriteUserKey32(string filePath, byte keyType);
+        [DllImport(ProgrammerDll32, EntryPoint = "WriteUserKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int WriteUserKey32([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
 
-        [DllImport(ProgrammerDll64, EntryPoint = "WriteUserKey", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int WriteUserKey64(string filePath, byte keyType);
+        [DllImport(ProgrammerDll64, EntryPoint = "WriteUserKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int WriteUserKey64([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
 
         private static int WriteUserKeyNative(string filePath, byte keyType)
         {
@@ -1758,10 +1824,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [AntiRollBack]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "AntiRollBack", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "AntiRollBack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int AntiRollBack32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "AntiRollBack", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "AntiRollBack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int AntiRollBack64();
 
         private static int AntiRollBackNative()
@@ -1791,10 +1857,10 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [StartFus]
 
-        [DllImport(ProgrammerDll32, EntryPoint = "StartFus", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll32, EntryPoint = "StartFus", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int StartFus32();
 
-        [DllImport(ProgrammerDll64, EntryPoint = "StartFus", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        [DllImport(ProgrammerDll64, EntryPoint = "StartFus", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int StartFus64();
 
         private static int StartFusNative()
@@ -1809,6 +1875,278 @@ namespace KSociety.SharpCubeProgrammer.Native
             try
             {
                 return StartFusNative();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [UnlockChip]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "UnlockChip", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int UnlockChip32();
+
+        [DllImport(ProgrammerDll64, EntryPoint = "UnlockChip", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int UnlockChip64();
+
+        private static int UnlockChipNative()
+        {
+            return !Environment.Is64BitProcess
+                ? UnlockChip32()
+                : UnlockChip64();
+        }
+
+        internal static int UnlockChip()
+        {
+            try
+            {
+                return UnlockChipNative();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region [STM32MP specific functions]
+
+        #region [ProgramSsp]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "ProgramSsp", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int ProgramSsp32([MarshalAs(UnmanagedType.LPWStr)] string sspFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string tfaFile, int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "ProgramSsp", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int ProgramSsp64([MarshalAs(UnmanagedType.LPWStr)] string sspFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string tfaFile, int hsmSlotId);
+
+        private static int ProgramSspNative(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? ProgramSsp32(sspFile, licenseFile, tfaFile, hsmSlotId)
+                : ProgramSsp64(sspFile, licenseFile, tfaFile, hsmSlotId);
+        }
+
+        internal static int ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
+        {
+            try
+            {
+                return ProgramSspNative(sspFile, licenseFile, tfaFile, hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region [STM32 HSM specific functions]
+
+        #region [GetHsmFirmwareID]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmFirmwareID", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmFirmwareID32(int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmFirmwareID", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmFirmwareID64(int hsmSlotId);
+
+        private static string GetHsmFirmwareIDNative(int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmFirmwareID32(hsmSlotId)
+                : GetHsmFirmwareID64(hsmSlotId);
+        }
+
+        internal static string GetHsmFirmwareID(int hsmSlotId)
+        {
+            try
+            {
+                return GetHsmFirmwareIDNative(hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetHsmCounter]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmCounter", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern ulong GetHsmCounter32(int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmCounter", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern ulong GetHsmCounter64(int hsmSlotId);
+
+        private static ulong GetHsmCounterNative(int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmCounter32(hsmSlotId)
+                : GetHsmCounter64(hsmSlotId);
+        }
+
+        internal static ulong GetHsmCounter(int hsmSlotId)
+        {
+            try
+            {
+                return GetHsmCounterNative(hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetHsmState]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmState", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmState32(int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmState", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmState64(int hsmSlotId);
+
+        private static string GetHsmStateNative(int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmState32(hsmSlotId)
+                : GetHsmState64(hsmSlotId);
+        }
+
+        internal static string GetHsmState(int hsmSlotId)
+        {
+            try
+            {
+                return GetHsmStateNative(hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetHsmVersion]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmVersion32(int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmVersion64(int hsmSlotId);
+
+        private static string GetHsmVersionNative(int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmVersion32(hsmSlotId)
+                : GetHsmVersion64(hsmSlotId);
+        }
+
+        internal static string GetHsmVersion(int hsmSlotId)
+        {
+            try
+            {
+                return GetHsmVersionNative(hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetHsmType]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmType32(int hsmSlotId);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern string GetHsmType64(int hsmSlotId);
+
+        private static string GetHsmTypeNative(int hsmSlotId)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmType32(hsmSlotId)
+                : GetHsmType64(hsmSlotId);
+        }
+
+        internal static string GetHsmType(int hsmSlotId)
+        {
+            try
+            {
+                return GetHsmTypeNative(hsmSlotId);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [GetHsmLicense]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "GetHsmLicense", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetHsmLicense32(int hsmSlotId, [MarshalAs(UnmanagedType.LPWStr)] string outLicensePath);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "GetHsmLicense", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int GetHsmLicense64(int hsmSlotId, [MarshalAs(UnmanagedType.LPWStr)] string outLicensePath);
+
+        private static int GetHsmLicenseNative(int hsmSlotId, string outLicensePath)
+        {
+            return !Environment.Is64BitProcess
+                ? GetHsmLicense32(hsmSlotId, outLicensePath)
+                : GetHsmLicense64(hsmSlotId, outLicensePath);
+        }
+
+        internal static int GetHsmLicense(int hsmSlotId, string outLicensePath)
+        {
+            try
+            {
+                return GetHsmLicenseNative(hsmSlotId, outLicensePath);
             }
             catch (DllNotFoundException ex)
             {

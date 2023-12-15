@@ -8,6 +8,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Threading;
     using System.Threading.Tasks;
     using Base.InfraSub.Shared.Class;
@@ -121,7 +122,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
             {
                 this.StLinkReady = true;
@@ -136,8 +136,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStLinkPortScanned: {0}", e.PortsList.Count);
-
             if (e.PortsList.Any())
             {
                 this.StLinkReady = true;
@@ -149,7 +147,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortChangeStatus: {0} - {1}", e.PortName, e.Status);
             if (e.Status)
             {
                 this.Stm32BootLoaderReady = true;
@@ -164,8 +161,6 @@ namespace KSociety.SharpCubeProgrammer
 
         private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
         {
-            //this._logger?.LogTrace("CubeProgrammerApi WmiManagerOnStm32BootLoaderPortScanned: {0}", e.PortsList.Count);
-
             if (e.PortsList.Any())
             {
                 this.Stm32BootLoaderReady = true;
@@ -189,8 +184,6 @@ namespace KSociety.SharpCubeProgrammer
                 var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
 
                 output = this.CheckResult(connectStLinkResult);
-
-                //this._logger?.LogTrace("TryConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
             }
             catch (Exception ex)
             {
@@ -203,22 +196,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
-            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
-                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
-                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
                         parametersList.Add(currentItem);
                     }
                 }
@@ -238,22 +227,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false)
         {
-            //this._logger?.LogTrace("GetStLinkList shared: {0}", shared);
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
             try
             {
                 var size = Marshal.SizeOf<DebugConnectParameters>();
-                //this._logger?.LogTrace("GetStLinkList size: {0}", size);
                 var numberOfItems = Native.ProgrammerApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
-                //this._logger?.LogTrace("GetStLinkList number of items: {0}", numberOfItems);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        //this._logger?.LogTrace("GetStLinkList DebugConnectParameters: {0} - {1}", i, currentItem.SerialNumber);
                         parametersList.Add(currentItem);
                     }
                 }
@@ -280,8 +265,6 @@ namespace KSociety.SharpCubeProgrammer
                 var connectStLinkResult = Native.ProgrammerApi.ConnectStLink(debugConnectParameters);
 
                 output = this.CheckResult(connectStLinkResult);
-
-                this._logger?.LogTrace("ConnectStLink: {0} result: {1}", debugConnectParameters.SerialNumber, output);
             }
             catch (Exception ex)
             {
@@ -296,7 +279,6 @@ namespace KSociety.SharpCubeProgrammer
         {
             var resetResult = Native.ProgrammerApi.Reset(rstMode);
             var output = this.CheckResult(resetResult);
-            this._logger?.LogTrace("Reset: {0} result: {1}", rstMode, output);
             return output;
         }
 
@@ -339,19 +321,13 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
-
-                //this._logger?.LogTrace("GetDfuDeviceList iPID: {0} iVID: {1}", 0xdf11, 0x0483);
                 numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
-                //this._logger?.LogTrace("GetDfuDeviceList DFU devices found : {0}", numberOfItems);
 
-                //var listDereference = Marshal.PtrToStructure<IntPtr>(listPtr);
                 if (listPtr != IntPtr.Zero)
                 {
                     for (var i = 0; i < numberOfItems; i++)
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
-
-                        //this._logger?.LogTrace("GetDfuDeviceList DfuDeviceInfo: {0} - {1}", i, currentItem.SerialNumber);
                         dfuDeviceList.Add(currentItem);
                     }
                 }
@@ -371,7 +347,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
-            //this._logger?.LogTrace("ConnectDfuBootloader: {0}", usbIndex);
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
@@ -424,10 +399,7 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public bool CheckDeviceConnection()
         {
-            //Register();
-
             var checkDeviceConnectionResult = Native.ProgrammerApi.CheckDeviceConnection();
-            //this._logger?.LogTrace("CheckDeviceConnection. {0} ROW: {1}", checkDeviceConnectionResult ? "OK" : "KO", checkDeviceConnectionResult);
             return checkDeviceConnectionResult;
         }
 
@@ -440,7 +412,6 @@ namespace KSociety.SharpCubeProgrammer
             try
             {
                 generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
-                //this._logger?.LogTrace("GetDeviceGeneralInf: Name: {0} Type: {1} CPU: {2}", generalInf.Value.Name, generalInf.Value.Type, generalInf.Value.Cpu);
             }
             catch (Exception ex)
             {
@@ -456,25 +427,16 @@ namespace KSociety.SharpCubeProgrammer
             var uintAddress = this.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
             var buffer = new byte[byteSize];
-            //var bufferSize = Marshal.SizeOf(buffer[0]) * buffer.Length;
 
             try
             {
-                var bufferPtr = new IntPtr(); //Marshal.AllocHGlobal(bufferSize);
+                var bufferPtr = new IntPtr();
                 var readMemoryResult =
                     Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero)
                 {
-                    //var byteArray = Marshal.PtrToStringAnsi(bufferPtr);//Marshal.PtrToStructure<byte[]>(bufferPtr);
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
-
-                    //for(int i = 0; i < size; i += 4)
-                    //{
-                    //    _logger.LogTrace("ReadMemory: {0} {1} {2} {3}", buffer[i].ToString("X"), buffer[i+1].ToString("X"), buffer[i+2].ToString("X"), buffer[i+3].ToString("X"));
-                    //}
-
-                    //_logger.LogTrace("ReadMemory: {0}", BitConverter.ToString(buffer));
                 }
             }
             catch (Exception ex)
@@ -495,8 +457,7 @@ namespace KSociety.SharpCubeProgrammer
 
                 var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var writeMemoryResult =
-                    Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                 gch.Free();
                 result = this.CheckResult(writeMemoryResult);
                 
@@ -508,12 +469,33 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase, uint verify)
+        public CubeProgrammerError EditSector(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+                var writeMemoryResult = Native.ProgrammerApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                gch.Free();
+                result = this.CheckResult(writeMemoryResult);
+
+
+                return result;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             var extension = Path.GetExtension(inputFilePath);
             var binPath = @"";
-
 
             string filePath;
             switch (extension)
@@ -535,8 +517,6 @@ namespace KSociety.SharpCubeProgrammer
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
             var binPathAdapted = String.IsNullOrEmpty(binPath) ? "" : binPath.Replace(@"\", "/");
 
-            //this._logger?.LogTrace("DownloadFile: {0} - {1}", filePathAdapted, binPathAdapted);
-
             try
             {
                 var downloadFileResult = Native.ProgrammerApi.DownloadFile(
@@ -546,9 +526,7 @@ namespace KSociety.SharpCubeProgrammer
                     verify,
                     binPathAdapted
                 );
-                //_logger?.LogTrace("DownloadFile result: {0}", downloadFileResult);
                 output = this.CheckResult(downloadFileResult);
-                //this._logger?.LogTrace("DownloadFile filePathAdapted: {0} binPathAdapted: {1} downloadFileResult: {2}", filePathAdapted, binPathAdapted, output);
             }
             catch (Exception ex)
             {
@@ -569,7 +547,6 @@ namespace KSociety.SharpCubeProgrammer
                 var executeResult = Native.ProgrammerApi.Execute(uintAddress);
 
                 output = this.CheckResult(executeResult);
-                //this._logger?.LogTrace("Execute address: {0} result: {1}", address, output);
             }
             catch (Exception ex)
             {
@@ -585,8 +562,6 @@ namespace KSociety.SharpCubeProgrammer
             var massEraseResult = Native.ProgrammerApi.MassErase(sFlashMemName);
             var output = this.CheckResult(massEraseResult);
 
-            //this._logger?.LogTrace("MassErase flash mem name: {0} result: {1}", sFlashMemName, output);
-
             return output;
         }
 
@@ -596,8 +571,6 @@ namespace KSociety.SharpCubeProgrammer
             var sectorEraseResult = Native.ProgrammerApi.SectorErase(sectors, sectorNbr, sFlashMemName);
             var output = this.CheckResult(sectorEraseResult);
 
-            //this._logger?.LogTrace("SectorErase sectors: {0}, sectors number: {1}, flash mem name: {2}, result: {3}", sectors, sectorNbr, sFlashMemName, output);
-
             return output;
         }
 
@@ -605,6 +578,15 @@ namespace KSociety.SharpCubeProgrammer
         public CubeProgrammerError ReadUnprotect()
         {
             var result = Native.ProgrammerApi.ReadUnprotect();
+            var output = this.CheckResult(result);
+
+            return output;
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError TzenRegression()
+        {
+            var result = Native.ProgrammerApi.TzenRegression();
             var output = this.CheckResult(result);
 
             return output;
@@ -636,7 +618,6 @@ namespace KSociety.SharpCubeProgrammer
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
-                //this._logger?.LogTrace("File Open: {0}", filePathAdapted);
 
                 var filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
 
@@ -678,16 +659,15 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void FreeFileData()
+        public void FreeFileData(FileDataC data)
         {
-            throw new NotImplementedException();
+            Native.ProgrammerApi.FreeFileData(data);
         }
 
         /// <inheritdoc />
         public CubeProgrammerError Verify(byte[] data, string address)
         {
             var uintAddress = this.HexConverterToUint(address);
-            //this._logger?.LogTrace("Verify address: {0}", uintAddress);
 
             var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
@@ -740,9 +720,27 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void SaveFileToFile()
+        public CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName)
         {
-            throw new NotImplementedException();
+            var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (String.IsNullOrEmpty(sFileNameAdapted))
+            {
+                return output;
+            }
+
+            try
+            {
+                var saveFileToFileResult = Native.ProgrammerApi.SaveFileToFile(fileData, sFileNameAdapted);
+                output = this.CheckResult(saveFileToFileResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "SaveFileToFile: ");
+            }
+
+            return output;
         }
 
         /// <inheritdoc />
@@ -764,8 +762,6 @@ namespace KSociety.SharpCubeProgrammer
                     Native.ProgrammerApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
 
                 output = this.CheckResult(saveMemoryToFileResult);
-
-                //this._logger?.LogTrace("SaveMemoryToFile address: {0} size: {1} file name: {2} result: {3}", intAddress, intSize, fileName, output);
             }
             catch (Exception ex)
             {
@@ -778,7 +774,6 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError Disconnect()
         {
-            //this._logger?.LogTrace("Disconnect. ");
             var result = Native.ProgrammerApi.Disconnect();
 
             var output = this.CheckResult(result);
@@ -789,14 +784,19 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void DeleteInterfaceList()
         {
-            //this._logger?.LogTrace(" DeleteInterfaceList. ");
             Native.ProgrammerApi.DeleteInterfaceList();
         }
 
         /// <inheritdoc />
-        public void AutomaticMode()
+        public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(filePath) || !String.IsNullOrEmpty(address))
+            {
+                var filePathAdapted = filePath.Replace(@"\", "/");
+                var uintAddress = this.HexConverterToUint(address);
+
+                Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+            }
         }
 
         /// <inheritdoc />
@@ -826,8 +826,6 @@ namespace KSociety.SharpCubeProgrammer
                         deviceStorageStructure.Index = bankSectors.Index;
                         deviceStorageStructure.Size = bankSectors.Size;
                         deviceStorageStructure.Address = bankSectors.Address;
-
-                        //_logger?.LogTrace("GetStorageStructure: BanksNumber: {0}, SectorsNumber: {1}, Index: {2}, Size: {3}, Address: {4}", deviceStorageStructure.BanksNumber, deviceStorageStructure.SectorsNumber, deviceStorageStructure.Index, deviceStorageStructure.Size, deviceStorageStructure.Address);
                     }
                 }
             }
@@ -850,23 +848,19 @@ namespace KSociety.SharpCubeProgrammer
         {
             var result = Native.ProgrammerApi.SendOptionBytesCmd(command);
             var output = this.CheckResult(result);
-            this._logger?.LogTrace("SendOptionBytesCmd: {0} result: {1}", command, output);
             return output;
         }
 
         /// <inheritdoc />
         public PeripheralC? InitOptionBytesInterface()
         {
-            //this._logger?.LogTrace("InitOptionBytesInterface.");
             PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
             try
             {
-
                 peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-
             }
             catch (Exception ex)
             {
@@ -883,16 +877,13 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
-            //this._logger?.LogTrace("FastRomInitOptionBytesInterface.");
             PeripheralC? peripheralC = null;
 
             var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
 
             try
             {
-
                 peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-
             }
             catch (Exception ex)
             {
@@ -1013,63 +1004,178 @@ namespace KSociety.SharpCubeProgrammer
         /// Connection under Reset is mandatory.
 
         /// <inheritdoc />
-        public void GetUID64()
+        public (CubeProgrammerError, byte[]) GetUID64()
         {
-            throw new NotImplementedException();
+            var buffer = new byte[8];
+            var bufferPtr = new IntPtr();
+
+            var getUID64Result = Native.ProgrammerApi.GetUID64(ref bufferPtr );
+
+            var result = this.CheckResult(getUID64Result);
+            if (result.Equals(CubeProgrammerError.CubeprogrammerNoError) && bufferPtr != IntPtr.Zero)
+            {
+                Marshal.Copy(bufferPtr, buffer, 0, 8);
+            }
+
+            return (result, buffer);
         }
 
         /// <inheritdoc />
-        public void FirmwareDelete()
+        public CubeProgrammerError FirmwareDelete()
         {
-            throw new NotImplementedException();
+            var firmwareDeleteResult = Native.ProgrammerApi.FirmwareDelete();
+
+            var result = this.CheckResult(firmwareDeleteResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void FirmwareUpgrade()
+        public CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify)
         {
-            throw new NotImplementedException();
+            var uintAddress = this.HexConverterToUint(address);
+            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+
+            var firmwareUpgradeResult =
+                Native.ProgrammerApi.FirmwareUpgrade(filePathAdapted, uintAddress, firstInstall, startStack, verify);
+
+            var result = this.CheckResult(firmwareUpgradeResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void StartWirelessStack()
+        public CubeProgrammerError StartWirelessStack()
         {
-            throw new NotImplementedException();
+            var startWirelessStackResult = Native.ProgrammerApi.StartWirelessStack();
+
+            var result = this.CheckResult(startWirelessStackResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void UpdateAuthKey()
+        public CubeProgrammerError UpdateAuthKey(string filePath)
         {
-            throw new NotImplementedException();
+            var updateAuthKeyResult = Native.ProgrammerApi.UpdateAuthKey(filePath);
+
+            var result = this.CheckResult(updateAuthKeyResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void AuthKeyLock()
+        public CubeProgrammerError AuthKeyLock()
         {
-            throw new NotImplementedException();
+            var authKeyLockResult = Native.ProgrammerApi.AuthKeyLock();
+
+            var result = this.CheckResult(authKeyLockResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void WriteUserKey()
+        public CubeProgrammerError WriteUserKey(string filePath, byte keyType)
         {
-            throw new NotImplementedException();
+            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+
+            var writeUserKeyResult = Native.ProgrammerApi.WriteUserKey(filePathAdapted, keyType);
+
+            var result = this.CheckResult(writeUserKeyResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void AntiRollBack()
+        public CubeProgrammerError AntiRollBack()
         {
-            throw new NotImplementedException();
+            var antiRollBackResult = Native.ProgrammerApi.AntiRollBack();
+
+            var result = this.CheckResult(antiRollBackResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void StartFus()
+        public CubeProgrammerError StartFus()
         {
-            throw new NotImplementedException();
+            var startFusResult = Native.ProgrammerApi.StartFus();
+
+            var result = this.CheckResult(startFusResult);
+
+            return result;
         }
 
         /// <inheritdoc />
-        public void UnlockChip()
+        public CubeProgrammerError UnlockChip()
         {
-            throw new NotImplementedException();
+            var unlockChipResult = Native.ProgrammerApi.UnlockChip();
+
+            var result = this.CheckResult(unlockChipResult);
+
+            return result;
+        }
+
+        #endregion
+
+        #region [STM32MP specific functions]
+
+        /// <inheritdoc />
+        public CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
+        {
+            var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
+            var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace(@"\", "/");
+            var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
+            var programSspResult = Native.ProgrammerApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
+
+            var result = this.CheckResult(programSspResult);
+
+            return result;
+        }
+
+        #endregion
+
+        #region [STM32 HSM specific functions]
+
+        /// <inheritdoc />
+        public string GetHsmFirmwareID(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmFirmwareID(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public ulong GetHsmCounter(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmCounter(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmState(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmState(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmVersion(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmVersion(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public string GetHsmType(int hsmSlotId)
+        {
+            return Native.ProgrammerApi.GetHsmType(hsmSlotId);
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath)
+        {
+            var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
+            var getHsmLicenseResult = Native.ProgrammerApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
+
+            var result = this.CheckResult(getHsmLicenseResult);
+
+            return result;
         }
 
         #endregion
@@ -1148,7 +1254,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinksFoundStatus()
         {
-            //this._logger?.LogTrace("OnStLinkFoundStatus");
             try
             {
                 this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
@@ -1161,7 +1266,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinkAdded()
         {
-            //this._logger?.LogTrace("OnStLinkAdded");
             try
             {
                 this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
@@ -1174,7 +1278,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStLinkRemoved()
         {
-            //this._logger?.LogTrace("OnStLinkRemoved");
             try
             {
                 this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
@@ -1187,7 +1290,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoadersFoundStatus()
         {
-            //this._logger?.LogTrace("OnStm32BootLoadersFoundStatus");
             try
             {
                 this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
@@ -1200,7 +1302,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoaderAdded()
         {
-            //this._logger?.LogTrace("OnStm32BootLoaderAdded");
             try
             {
                 this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
@@ -1213,7 +1314,6 @@ namespace KSociety.SharpCubeProgrammer
 
         protected void OnStm32BootLoaderRemoved()
         {
-            //this._logger?.LogTrace("OnStm32BootLoaderRemoved");
             try
             {
                 this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());

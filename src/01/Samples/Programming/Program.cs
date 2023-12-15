@@ -142,6 +142,9 @@ namespace Programming
                             storageStructure.Item2.Size);
                     }
 
+                    //var uid64 = CubeProgrammerApi.GetUID64();
+                    //var startFusREsult = CubeProgrammerApi.StartFus();
+
                     var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
 
                     if (peripheral.HasValue)
