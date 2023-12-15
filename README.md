@@ -54,7 +54,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - MassErase
 - SectorErase
 - ReadUnprotect
-- TzenRegression
+- TzenRegression (does not exist)
 - GetTargetInterfaceType
 - GetCancelPointer
 - FileOpen
