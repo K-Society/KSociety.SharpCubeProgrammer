@@ -24,7 +24,7 @@ The ST-Link drivers is required, and can be downloaded from st.com and installed
 This has been tested on Windows 10, you don't need to install cubeprogrammer.
 
 ### KSociety.SharpCubeProgrammer
-STM32CubeProgrammer_API C# wrapper.
+STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions are welcome.
 
 ## Get Packages
 
@@ -104,7 +104,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 ## Prerequisites
 
-- Visual Studio 2022 (17.7.6 or higher) with the following installed:
+- Visual Studio 2022 (17.8.3 or higher) with the following installed:
 
 | Workloads |
 | :-------- |
