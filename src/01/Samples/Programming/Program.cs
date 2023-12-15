@@ -143,6 +143,7 @@ namespace Programming
                     }
 
                     //var uid64 = CubeProgrammerApi.GetUID64();
+                    //var startFusREsult = CubeProgrammerApi.StartFus();
 
                     var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
 

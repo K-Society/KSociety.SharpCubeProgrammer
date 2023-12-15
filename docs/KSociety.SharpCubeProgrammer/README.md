@@ -24,42 +24,87 @@ The ST-Link drivers is required, and can be downloaded from st.com and installed
 This has been tested on Windows 10, you don't need to install cubeprogrammer.
 
 ### KSociety.SharpCubeProgrammer
-STM32CubeProgrammer_API C# wrapper.
+STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions are welcome.
 
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).
 
 ## Currently supported features
+
+## STLINK functions
 - GetStLinkList
 - GetStLinkEnumerationList
 - ConnectStLink
 - Reset
+
+## Bootloader functions 
 - GetDfuDeviceList
 - ConnectDfuBootloader
+
+## General purposes functions
 - CheckDeviceConnection
 - GetDeviceGeneralInf
 - ReadMemory
 - WriteMemory
+- EditSector
 - DownloadFile
 - Execute
 - MassErase
 - SectorErase
+- ReadUnprotect
+- TzenRegression (does not exist)
+- GetTargetInterfaceType
+- GetCancelPointer
 - FileOpen
 - Verify
 - VerifyMemory
+- SaveFileToFile
 - SaveMemoryToFile
 - Disconnect
 - DeleteInterfaceList
+- AutomaticMode
 - GetStorageStructure
+
+## Option Bytes functions
 - SendOptionBytesCmd
 - InitOptionBytesInterface
 - FastRomInitOptionBytesInterface
 - ObDisplay
 
+## Loaders functions
+- SetLoadersPath
+- SetExternalLoaderPath
+- GetExternalLoaders
+- RemoveExternalLoader
+- DeleteLoaders
+
+## STM32WB specific functions
+- GetUID64
+- FirmwareDelete
+- FirmwareUpgrade
+- StartWirelessStack
+- UpdateAuthKey
+- AuthKeyLock
+- WriteUserKey
+- AntiRollBack
+- StartFus
+- UnlockChip
+
+## STM32MP specific functions
+- ProgramSsp
+
+## STM32 HSM specific functions
+- GetHsmFirmwareID
+- GetHsmCounter
+- GetHsmState
+- GetHsmVersion
+- GetHsmType
+- GetHsmLicense
+
 ## Prerequisites
 
-- Visual Studio 2022 (17.7.6 or higher) with the following installed:
+- Visual Studio 2022 (17.8.3 or higher) with the following installed:
 
 | Workloads |
 | :-------- |
