@@ -136,10 +136,20 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError WriteMemory(string address, byte[] data);
 
         /// <summary>
+        /// This routine allows to write sector data on the user interface with the configuration already initialized.
+        /// </summary>
+        /// <param name="address">The address to start writing from.</param>
+        /// <param name="data">Data buffer.</param>
+        /// <returns>CubeprogrammerNoError if the writing operation correctly finished, otherwise an error occurred.</returns>
+        /// <remarks>Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.</remarks>
+        /// <remarks>Data size should not exceed sector size.</remarks>
+        CubeProgrammerError EditSector(string address, byte[] data);
+
+        /// <summary>
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase, uint verify);
+        CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U);
 
         /// <summary>
         /// This routine allows to run the application.
@@ -164,6 +174,13 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError ReadUnprotect();
 
         /// <summary>
+        /// This routine allows the TZEN Option Byte regression.
+        /// </summary>
+        /// <returns>CubeprogrammerNoError if the disabling correctly accomplished, otherwise an error occurred.</returns>
+        /// <remarks>Depending on the device used, this routine take a specific time.</remarks>
+        CubeProgrammerError TzenRegression();
+
+        /// <summary>
         /// This routine allows to know the interface what is in use.
         /// </summary>
         TargetInterfaceType? GetTargetInterfaceType();
@@ -181,7 +198,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to clean up the handled file data.
         /// </summary>
-        void FreeFileData();
+        void FreeFileData(FileDataC data);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
@@ -196,7 +213,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        void SaveFileToFile();
+        CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.
@@ -216,7 +233,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
         /// </summary>
-        void AutomaticMode();
+        void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1);
 
         /// <summary>
         /// This routine allows to get Flash storage information.
@@ -287,7 +304,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         #region [STM32WB specific]
 
-        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
+        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
         /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 

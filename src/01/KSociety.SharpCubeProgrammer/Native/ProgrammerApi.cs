@@ -622,6 +622,39 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [EditSector]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int EditSector32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int EditSector64(uint address, IntPtr data, uint size);
+
+        private static int EditSectorNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? EditSector32(address, data, size)
+                : EditSector64(address, data, size);
+        }
+
+        internal static int EditSector(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return EditSectorNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [DownloadFile]
 
         [DllImport(ProgrammerDll32, EntryPoint = "DownloadFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
@@ -774,6 +807,39 @@ namespace KSociety.SharpCubeProgrammer.Native
             try
             {
                 return ReadUnprotectNative();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [TzenRegression]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int TzenRegression32();
+
+        [DllImport(ProgrammerDll64, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int TzenRegression64();
+
+        private static int TzenRegressionNative()
+        {
+            return !Environment.Is64BitProcess
+                ? TzenRegression32()
+                : TzenRegression64();
+        }
+
+        internal static int TzenRegression()
+        {
+            try
+            {
+                return TzenRegressionNative();
             }
             catch (DllNotFoundException ex)
             {

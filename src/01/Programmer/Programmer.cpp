@@ -255,6 +255,31 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 	}
 }
 
+int EditSector(unsigned int address, char* data, unsigned int size)
+{
+    try
+    {
+        int result = -99;
+
+        if (size == 0)
+        {
+            return -99;
+        }
+
+        result = editSector(address, data, size);
+        return result;
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
+}
+
 int DownloadFile(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, const wchar_t* binPath)
 {
 	try 
@@ -306,8 +331,7 @@ int ReadUnprotect()
 
 int TzenRegression()
 {
-	//return tzenRegression();
-	return -99;
+	return tzenRegression();
 }
 
 int GetTargetInterfaceType()

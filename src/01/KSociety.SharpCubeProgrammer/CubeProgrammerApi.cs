@@ -8,6 +8,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Threading;
     using System.Threading.Tasks;
     using Base.InfraSub.Shared.Class;
@@ -456,8 +457,7 @@ namespace KSociety.SharpCubeProgrammer
 
                 var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var writeMemoryResult =
-                    Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                 gch.Free();
                 result = this.CheckResult(writeMemoryResult);
                 
@@ -469,7 +469,29 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase, uint verify)
+        public CubeProgrammerError EditSector(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+                var writeMemoryResult = Native.ProgrammerApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                gch.Free();
+                result = this.CheckResult(writeMemoryResult);
+
+
+                return result;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             var extension = Path.GetExtension(inputFilePath);
@@ -562,6 +584,15 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        public CubeProgrammerError TzenRegression()
+        {
+            var result = Native.ProgrammerApi.TzenRegression();
+            var output = this.CheckResult(result);
+
+            return output;
+        }
+
+        /// <inheritdoc />
         public TargetInterfaceType? GetTargetInterfaceType()
         {
             var result = Native.ProgrammerApi.GetTargetInterfaceType();
@@ -628,9 +659,9 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void FreeFileData()
+        public void FreeFileData(FileDataC data)
         {
-            throw new NotImplementedException();
+            Native.ProgrammerApi.FreeFileData(data);
         }
 
         /// <inheritdoc />
@@ -689,9 +720,27 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void SaveFileToFile()
+        public CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName)
         {
-            throw new NotImplementedException();
+            var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (String.IsNullOrEmpty(sFileNameAdapted))
+            {
+                return output;
+            }
+
+            try
+            {
+                var saveFileToFileResult = Native.ProgrammerApi.SaveFileToFile(fileData, sFileNameAdapted);
+                output = this.CheckResult(saveFileToFileResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "SaveFileToFile: ");
+            }
+
+            return output;
         }
 
         /// <inheritdoc />
@@ -739,9 +788,15 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void AutomaticMode()
+        public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(filePath) || !String.IsNullOrEmpty(address))
+            {
+                var filePathAdapted = filePath.Replace(@"\", "/");
+                var uintAddress = this.HexConverterToUint(address);
+
+                Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+            }
         }
 
         /// <inheritdoc />
