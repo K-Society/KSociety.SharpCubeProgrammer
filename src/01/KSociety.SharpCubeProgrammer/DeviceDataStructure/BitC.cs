@@ -8,10 +8,10 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct BitC
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string Name;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 300)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public string Description;
 
         public uint WordOffset;

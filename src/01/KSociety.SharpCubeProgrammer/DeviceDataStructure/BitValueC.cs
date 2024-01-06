@@ -9,7 +9,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
     {
         public uint Value;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 200)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public string Description;
     }
 }

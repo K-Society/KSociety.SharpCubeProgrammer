@@ -2,7 +2,6 @@
 
 namespace KSociety.SharpCubeProgrammer.Struct
 {
-    using System;
     using System.Runtime.InteropServices;
 
     public delegate void InitProgressBar();
@@ -15,10 +14,10 @@ namespace KSociety.SharpCubeProgrammer.Struct
     /// Functions must be implemented to personalize the display of messages.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public class DisplayCallBacks
+    public struct DisplayCallBacks
     {
-        public IntPtr InitProgressBar; // = IntPtr.Zero;
-        public IntPtr LogMessage; // = IntPtr.Zero;
-        public IntPtr LoadBar; // = IntPtr.Zero;
+        public InitProgressBar InitProgressBar;
+        public LogMessageReceived LogMessage;
+        public ProgressBarUpdateReceived LoadBar;
     }
 }

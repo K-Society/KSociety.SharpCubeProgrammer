@@ -114,6 +114,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         // General module groups general purposes functions used by any interface.
 
+        DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate);
+
+        void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle);
+
+        void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
+
         /// <summary>
         /// This routine allows to check connection status [maintained or lost].
         /// </summary>

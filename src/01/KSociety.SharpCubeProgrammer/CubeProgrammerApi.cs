@@ -8,7 +8,6 @@ namespace KSociety.SharpCubeProgrammer
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
     using System.Threading;
     using System.Threading.Tasks;
     using Base.InfraSub.Shared.Class;
@@ -395,6 +394,45 @@ namespace KSociety.SharpCubeProgrammer
         #region [General purposes]
 
         // General module groups general purposes functions used by any interface.
+
+        /// <inheritdoc />
+        //public DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
+        //{
+        //    var callbacksHandle = new DisplayCallBacks
+        //    {
+        //        InitProgressBar = Marshal.GetFunctionPointerForDelegate(initProgressBar),
+        //        LogMessage = Marshal.GetFunctionPointerForDelegate(messageReceived),
+        //        LoadBar = Marshal.GetFunctionPointerForDelegate(progressBarUpdate)
+        //    };
+
+        //    Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
+
+        //    return callbacksHandle;
+        //}
+
+        public DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
+        {
+            var callbacksHandle = new DisplayCallBacks
+            {
+                InitProgressBar = initProgressBar,
+                LogMessage = messageReceived,
+                LoadBar = progressBarUpdate
+            };
+
+            Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
+
+            return callbacksHandle;
+        }
+
+        public void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle)
+        {
+            Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
+        }
+
+        public void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
+        {
+            Native.ProgrammerApi.SetVerbosityLevel((int)level);
+        }
 
         /// <inheritdoc />
         public bool CheckDeviceConnection()

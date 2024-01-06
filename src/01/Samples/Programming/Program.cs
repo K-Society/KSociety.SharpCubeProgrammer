@@ -4,7 +4,11 @@ namespace Programming
 {
     using System;
     using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+    using System.Text.RegularExpressions;
     using Autofac;
+    using KSociety.SharpCubeProgrammer;
     using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
@@ -87,6 +91,23 @@ namespace Programming
             //        currentItem.sectorsTypeNbr);
             //}
 
+
+            #region [Log Testing]
+
+            var displayCallBacks = new DisplayCallBacks
+            {
+                InitProgressBar = InitProgressBar,
+                LogMessage = ReceiveMessage,
+                LoadBar = ProgressBarUpdate
+            };
+
+            CubeProgrammerApi.SetDisplayCallbacks(ref displayCallBacks);
+            //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
+
+            //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+
+            #endregion
+
             var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
             {
@@ -160,6 +181,25 @@ namespace Programming
                             peripheral.Value.Banks);
                     }
 
+
+                    //if (generalInfo.HasValue)
+                    //{
+                    //    var peripheral = CubeProgrammerApi.FastRomInitOptionBytesInterface(generalInfo.Value.DeviceId);
+
+                    //    if (peripheral.HasValue)
+                    //    {
+                    //        Logger.LogInformation("PeripheralC: \n" +
+                    //                              "Name: {0} \n" +
+                    //                              "Description: {1} \n" +
+                    //                              "Banks Nbr: {2} \n" +
+                    //                              "Banks: {3} \n",
+                    //            peripheral.Value.Name,
+                    //            peripheral.Value.Description,
+                    //            peripheral.Value.BanksNbr,
+                    //            peripheral.Value.Banks);
+                    //    }
+                    //}
+
                     var targetInterfaceType = CubeProgrammerApi.GetTargetInterfaceType();
 
                     Logger.LogInformation("TargetInterfaceType: {0}", targetInterfaceType);
@@ -205,6 +245,68 @@ namespace Programming
             builder.RegisterModule(new KSociety.Wmi.Bindings.Wmi());
             builder.RegisterModule(new KSociety.SharpCubeProgrammer.Bindings.ProgrammerApi());
             return builder.Build();
+        }
+
+        private static void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        {
+            //Logger?.LogTrace(message);
+            message = Regex.Replace(message, "(?<!\r)\n", "");
+            if (String.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            switch ((MessageType)messageType)
+            {
+                case MessageType.Normal:
+                    Logger?.LogTrace("Message: {0}", message);
+                    break;
+
+                case MessageType.Info:
+                    Logger?.LogDebug("Message: {0}", message);
+                    break;
+
+                case MessageType.GreenInfo:
+                    Logger?.LogInformation("Message: {0}", message);
+                    break;
+
+                case MessageType.Title:
+                    Logger?.LogInformation("Message: {0}", message);
+                    break;
+
+                case MessageType.Warning:
+                    Logger?.LogWarning("Message: {0}", message);
+                    break;
+
+                case MessageType.Error:
+                    Logger.LogError("Message: {0}", message);
+                    break;
+
+                case MessageType.Verbosity1:
+                case MessageType.Verbosity2:
+                case MessageType.Verbosity3:
+                    Logger.LogTrace("Message: {0}", message);
+                    break;
+
+                case MessageType.GreenInfoNoPopup:
+                case MessageType.WarningNoPopup:
+                case MessageType.ErrorNoPopup:
+                    Logger.LogTrace("Message: {0}", message);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private static void InitProgressBar()
+        {
+            //Logger?.LogTrace("InitProgressBar");
+        }
+
+        private static void ProgressBarUpdate(int currentProgress, int total)
+        {
+            //Logger?.LogTrace("ProgressBarUpdate");
         }
     }
 }
