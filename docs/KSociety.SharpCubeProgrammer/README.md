@@ -43,6 +43,8 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - ConnectDfuBootloader
 
 ## General purposes functions
+- SetDisplayCallbacks
+- SetVerbosityLevel
 - CheckDeviceConnection
 - GetDeviceGeneralInf
 - ReadMemory

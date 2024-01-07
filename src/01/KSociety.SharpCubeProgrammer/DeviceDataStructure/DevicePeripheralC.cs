@@ -4,9 +4,14 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
 {
     using System.Collections.Generic;
 
-    public struct DeviceStorageStructure
+    public struct DevicePeripheralC
     {
-        public uint BanksNumber;
-        public List<DeviceDeviceBank> Banks;
+        public string Name;
+
+        public string Description;
+
+        public uint BanksNbr;
+
+        public List<DeviceBankC> Banks;
     }
 }

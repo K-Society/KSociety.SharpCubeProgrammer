@@ -2,16 +2,12 @@
 
 namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
 {
-    using System;
-    using System.Runtime.InteropServices;
+    using System.Collections.Generic;
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct BitC
+    public struct DeviceBitC
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string Name;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
         public string Description;
 
         public uint WordOffset;
@@ -21,7 +17,7 @@ namespace KSociety.SharpCubeProgrammer.DeviceDataStructure
 
         public uint ValuesNbr;
 
-        public IntPtr Values;
+        public List<BitValueC> Values;
         public BitCoefficientC Equation;
         public string Reference;
         public uint BitValue;
