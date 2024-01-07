@@ -4,11 +4,9 @@ namespace Programming
 {
     using System;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
-    using KSociety.SharpCubeProgrammer;
     using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
@@ -96,15 +94,15 @@ namespace Programming
 
             var displayCallBacks = new DisplayCallBacks
             {
-                InitProgressBar = InitProgressBar,
+                InitProgressBar = null, //InitProgressBar,
                 LogMessage = ReceiveMessage,
-                LoadBar = ProgressBarUpdate
+                LoadBar = null, //ProgressBarUpdate
             };
 
             CubeProgrammerApi.SetDisplayCallbacks(ref displayCallBacks);
             //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
 
-            //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+            CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
 
             #endregion
 
@@ -166,6 +164,7 @@ namespace Programming
                     //var uid64 = CubeProgrammerApi.GetUID64();
                     //var startFusREsult = CubeProgrammerApi.StartFus();
 
+
                     var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
 
                     if (peripheral.HasValue)
@@ -173,12 +172,10 @@ namespace Programming
                         Logger.LogInformation("PeripheralC: \n" +
                                               "Name: {0} \n" +
                                               "Description: {1} \n" +
-                                              "Banks Nbr: {2} \n" +
-                                              "Banks: {3} \n",
+                                              "Banks Nbr: {2} \n",
                             peripheral.Value.Name,
                             peripheral.Value.Description,
-                            peripheral.Value.BanksNbr,
-                            peripheral.Value.Banks);
+                            peripheral.Value.BanksNbr);
                     }
 
 
@@ -302,11 +299,13 @@ namespace Programming
         private static void InitProgressBar()
         {
             //Logger?.LogTrace("InitProgressBar");
+            ;
         }
 
         private static void ProgressBarUpdate(int currentProgress, int total)
         {
             //Logger?.LogTrace("ProgressBarUpdate");
+            ;
         }
     }
 }

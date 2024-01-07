@@ -16,8 +16,8 @@ namespace KSociety.SharpCubeProgrammer.Struct
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DisplayCallBacks
     {
-        public InitProgressBar InitProgressBar;
-        public LogMessageReceived LogMessage;
-        public ProgressBarUpdateReceived LoadBar;
+        public InitProgressBar? InitProgressBar;
+        public LogMessageReceived? LogMessage;
+        public ProgressBarUpdateReceived? LoadBar;
     }
 }
