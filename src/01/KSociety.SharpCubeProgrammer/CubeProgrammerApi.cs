@@ -8,6 +8,7 @@ namespace KSociety.SharpCubeProgrammer
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -830,7 +831,8 @@ namespace KSociety.SharpCubeProgrammer
         public (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure()
         {
             var deviceStorageStructure = new DeviceStorageStructure();
-
+            var deviceBankSize = Marshal.SizeOf<DeviceBank>();
+            var bankSectorSize = Marshal.SizeOf<BankSector>();
             var storageStructurePtr = new IntPtr();
 
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -847,12 +849,39 @@ namespace KSociety.SharpCubeProgrammer
                         var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
 
                         deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
-                        var deviceBankResult = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks);
-                        deviceStorageStructure.SectorsNumber = deviceBankResult.SectorsNumber;
-                        var bankSectors = Marshal.PtrToStructure<BankSector>(deviceBankResult.Sectors);
-                        deviceStorageStructure.Index = bankSectors.Index;
-                        deviceStorageStructure.Size = bankSectors.Size;
-                        deviceStorageStructure.Address = bankSectors.Address;
+                        var deviceBankList = new List<DeviceDeviceBank>();
+                        for (var i = 0; i < storageStructure.BanksNumber; i++)
+                        {
+                            
+                            if (storageStructure.Banks != IntPtr.Zero)
+                            {
+                                var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
+                                var bankSectorList = new List<BankSector>();
+                                if (deviceBank.Sectors != IntPtr.Zero)
+                                {
+                                    for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
+                                    {
+                                        var bankSector = Marshal.PtrToStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+
+                                        bankSectorList.Add(bankSector);
+
+                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+                                    }
+                                }
+
+                                var deviceDeviceBank = new DeviceDeviceBank
+                                {
+                                    SectorsNumber = deviceBank.SectorsNumber, Sectors = bankSectorList
+                                };
+
+                                deviceBankList.Add(deviceDeviceBank);
+
+                                Marshal.DestroyStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
+                            }
+                        }
+
+                        deviceStorageStructure.Banks = deviceBankList;
+                        Marshal.DestroyStructure<StorageStructure>(storageStructurePtr);
                     }
                 }
             }
@@ -882,7 +911,20 @@ namespace KSociety.SharpCubeProgrammer
         public DevicePeripheralC? InitOptionBytesInterface()
         {
             var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
-          
+
+            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+        }
+
+        /// <inheritdoc />
+        public DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
+        {
+            var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
+
+            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+        }
+
+        private DevicePeripheralC? DevicePeripheralCHandler(IntPtr pointer)
+        {
             var pointerSize = Marshal.SizeOf<IntPtr>();
 
             try
@@ -989,7 +1031,7 @@ namespace KSociety.SharpCubeProgrammer
             }
             catch (Exception ex)
             {
-                this._logger?.LogError(ex, "InitOptionBytesInterface: ");
+                this._logger?.LogError(ex, "DevicePeripheralCHandler: ");
             }
             finally
             {
@@ -997,29 +1039,6 @@ namespace KSociety.SharpCubeProgrammer
             }
 
             return null;
-        }
-
-        /// <inheritdoc />
-        public PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
-        {
-            PeripheralC? peripheralC = null;
-
-            var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
-
-            try
-            {
-                peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "FastRomInitOptionBytesInterface: ");
-            }
-            finally
-            {
-                Marshal.DestroyStructure<PeripheralC>(pointer);
-            }
-
-            return peripheralC;
         }
 
         /// <inheritdoc />

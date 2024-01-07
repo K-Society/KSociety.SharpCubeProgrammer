@@ -148,17 +148,28 @@ namespace Programming
 
                     if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
+
+                        var storage = storageStructure.Item2;
                         Logger.LogInformation("Storage structure: \n" +
-                                              "Address: {0} \n" +
-                                              "BanksNumber: {1} \n" +
-                                              "Index: {2} \n" +
-                                              "Sectors number: {3} \n" +
-                                              "Size: {4} \n",
-                            CubeProgrammerApi.HexConverterToString(storageStructure.Item2.Address),
-                            storageStructure.Item2.BanksNumber,
-                            storageStructure.Item2.Index,
-                            storageStructure.Item2.SectorsNumber,
-                            storageStructure.Item2.Size);
+                                              "BanksNumber: {0} \n",
+ 
+                            storageStructure.Item2.BanksNumber);
+
+                        for (var i = 0; i < storageStructure.Item2.BanksNumber; i++)
+                        {
+                            var bank = storageStructure.Item2.Banks[i];
+                            Logger.LogInformation("Bank [{0}] \n" +
+                                "Sector number: {1}", i, bank.SectorsNumber);
+
+                            for (var ii = 0; ii < bank.SectorsNumber; ii++)
+                            {
+                                var sector = bank.Sectors[ii];
+                                Logger.LogInformation("Sector [{0}] \n" +
+                                                      "Sector address: {1} \n" +
+                                                      "Sector index: {2} \n" +
+                                                      "Sector size: {3} \n", ii, CubeProgrammerApi.HexConverterToString(sector.Address), sector.Index, sector.Size);
+                            }
+                        }
                     }
 
                     //var uid64 = CubeProgrammerApi.GetUID64();

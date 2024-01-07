@@ -281,7 +281,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
+        DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
 
         /// <summary>
         /// This routine allows to display the Option bytes.
