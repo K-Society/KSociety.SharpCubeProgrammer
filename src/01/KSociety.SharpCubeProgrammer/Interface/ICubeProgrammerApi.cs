@@ -5,6 +5,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -24,7 +25,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         bool Stm32BootLoaderReady { get; }
 
-        void GetStLinkPorts(CancellationToken cancellationToken = default);
+        ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 
