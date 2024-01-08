@@ -4,11 +4,9 @@ namespace KSociety.SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -92,21 +90,19 @@ namespace KSociety.SharpCubeProgrammer
 
         public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
         {
-            await this.RegisterStLinkEvents(cancellationToken).ConfigureAwait(false);
-            await this.RegisterStm32BootLoaderEvents(cancellationToken).ConfigureAwait(false);
+            this.RegisterStLinkEvents();
+            this.RegisterStm32BootLoaderEvents();
+            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly | SearchPortType.STM32BootLoaderOnly, "CubeProgrammerApi", null, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask RegisterStLinkEvents(CancellationToken cancellationToken = default)
+        private void RegisterStLinkEvents()
         {
             this.RegisterStLink();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly, this, null, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask RegisterStm32BootLoaderEvents(CancellationToken cancellationToken = default)
+        private void RegisterStm32BootLoaderEvents()
         {
             this.RegisterStm32BootLoader();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.STM32BootLoaderOnly, this, null, cancellationToken)
-                .ConfigureAwait(false);
         }
 
         private void RegisterStLink()
@@ -120,6 +116,8 @@ namespace KSociety.SharpCubeProgrammer
             this.WmiManager.STM32BootLoaderPortChangeStatus += this.WmiManagerOnStm32BootLoaderPortChangeStatus;
             this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
         }
+
+        #region [Handlers]
 
         private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
         {
@@ -170,6 +168,8 @@ namespace KSociety.SharpCubeProgrammer
 
             this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
         }
+
+        #endregion
 
         #region [ST-LINK]
 

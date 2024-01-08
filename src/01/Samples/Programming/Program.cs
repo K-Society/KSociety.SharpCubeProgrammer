@@ -36,10 +36,10 @@ namespace Programming
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
             //CubeProgrammerApi.Start();
-            //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
-            //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
-            //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
-
+            CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
+            CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
+            CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
+            Console.ReadLine();
             //var testStLink = CubeProgrammerApi.TryConnectStLink(0, 0, DebugConnectionMode.UnderResetMode);
 
             //if (testStLink.Equals(CubeProgrammerError.CubeprogrammerNoError))
