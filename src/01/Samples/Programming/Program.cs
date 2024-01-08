@@ -35,7 +35,7 @@ namespace Programming
             Logger.LogDebug("Resolve ICubeProgrammerApi...");
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
-            //CubeProgrammerApi.Start();
+
             CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
             CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
