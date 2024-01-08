@@ -30,9 +30,6 @@
     <ClInclude Include="DeviceDataStructure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DisplayManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -42,9 +39,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Programmer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DisplayManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

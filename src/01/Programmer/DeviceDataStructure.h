@@ -1,7 +1,7 @@
 
 /*******************************************************************************
  *
- * Copyright (C) 2022 STMicroelectronics - All rights reserved
+ * Copyright (C) 2021 STMicroelectronics - All rights reserved
  *
  * This file is part of STM32CubeProgrammer project.
  *
@@ -92,7 +92,7 @@ typedef struct bitValue_C
  */
 typedef struct bit_C
 {
-    char name[32];                  /**< Bit name such as RDP, BOR_LEV, nBOOT0... */
+    char name[64];                  /**< Bit name such as RDP, BOR_LEV, nBOOT0... */
     char description[1000];          /**< Config description. */
     unsigned int wordOffset;       /**< Word offset. */
     unsigned int bitOffset;        /**< Bit offset. */
@@ -139,7 +139,7 @@ typedef struct bank_C
  */
 typedef struct peripheral_C
 {
-    char name[32];                  /**< Peripheral name. */
+    char name[64];                  /**< Peripheral name. */
     char description[1000];          /**< Peripheral description. */
     unsigned int banksNbr;         /**< Number of existed banks. */
     bank_C** banks;                 /**< Get banks descriptions #Bank_C. */

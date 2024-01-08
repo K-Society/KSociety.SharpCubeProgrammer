@@ -484,11 +484,81 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #region [General purposes]
 
-        //[DllImport(ProgrammerDll64, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //internal static extern void SetDisplayCallbacks(DisplayCallBacks c);
+        #region [SetDisplayCallbacks]
 
-        //[DllImport(ProgrammerDll64, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //internal static extern void SetVerbosityLevel(int level);
+        [DllImport(ProgrammerDll32, EntryPoint = "SetDisplayCallbacks", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void SetDisplayCallbacks32(DisplayCallBacks c);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "SetDisplayCallbacks", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void SetDisplayCallbacks64(DisplayCallBacks c);
+
+        private static void SetDisplayCallbacksNative(DisplayCallBacks c)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                SetDisplayCallbacks32(c);
+            }
+            else
+            {
+                SetDisplayCallbacks64(c);
+            }
+        }
+
+        internal static void SetDisplayCallbacks(DisplayCallBacks c)
+        {
+            try
+            {
+                SetDisplayCallbacksNative(c);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [SetVerbosityLevel]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "SetVerbosityLevel", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void SetVerbosityLevel32(int level);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "SetVerbosityLevel", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void SetVerbosityLevel64(int level);
+
+        private static void SetVerbosityLevelNative(int level)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                SetVerbosityLevel32(level);
+            }
+            else
+            {
+                SetVerbosityLevel64(level);
+            }
+        }
+
+        internal static void SetVerbosityLevel(int level)
+        {
+            try
+            {
+                SetVerbosityLevelNative(level);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
 
         #region [CheckDeviceConnection]
 

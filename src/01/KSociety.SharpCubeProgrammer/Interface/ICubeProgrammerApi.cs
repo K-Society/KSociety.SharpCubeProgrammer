@@ -5,6 +5,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
     using DeviceDataStructure;
     using Enum;
     using Events;
@@ -24,7 +25,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
         bool Stm32BootLoaderReady { get; }
 
-        void GetStLinkPorts(CancellationToken cancellationToken = default);
+        ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 
@@ -113,6 +114,27 @@ namespace KSociety.SharpCubeProgrammer.Interface
         #region [General purposes]
 
         // General module groups general purposes functions used by any interface.
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="initProgressBar"></param>
+        /// <param name="messageReceived"></param>
+        /// <param name="progressBarUpdate"></param>
+        /// <returns></returns>
+        DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate);
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
+        void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle);
+
+        /// <summary>
+        /// This routine allows to choose the verbosity level for display.
+        /// </summary>
+        /// <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
+        void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
 
         /// <summary>
         /// This routine allows to check connection status [maintained or lost].
@@ -255,12 +277,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        PeripheralC? InitOptionBytesInterface();
+        DevicePeripheralC? InitOptionBytesInterface();
 
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        PeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
+        DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
 
         /// <summary>
         /// This routine allows to display the Option bytes.

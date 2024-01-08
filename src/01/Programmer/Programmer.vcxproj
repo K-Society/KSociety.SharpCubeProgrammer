@@ -193,15 +193,13 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CubeProgrammer_API.h" />
     <ClInclude Include="DeviceDataStructure.h" />
-    <ClInclude Include="DisplayManager.h" />
+    <ClInclude Include="CubeProgrammer_API.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Programmer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DisplayManager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
