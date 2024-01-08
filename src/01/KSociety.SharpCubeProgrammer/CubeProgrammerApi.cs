@@ -117,6 +117,8 @@ namespace KSociety.SharpCubeProgrammer
             this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
         }
 
+        #region [Handlers]
+
         private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
         {
             if (e.Status)
@@ -166,6 +168,8 @@ namespace KSociety.SharpCubeProgrammer
 
             this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
         }
+
+        #endregion
 
         #region [ST-LINK]
 
