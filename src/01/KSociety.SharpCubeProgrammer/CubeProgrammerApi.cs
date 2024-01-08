@@ -90,10 +90,10 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        public async void GetStLinkPorts(CancellationToken cancellationToken = default)
+        public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
         {
-            await this.RegisterStLinkEvents(cancellationToken);
-            await this.RegisterStm32BootLoaderEvents(cancellationToken);
+            await this.RegisterStLinkEvents(cancellationToken).ConfigureAwait(false);
+            await this.RegisterStm32BootLoaderEvents(cancellationToken).ConfigureAwait(false);
         }
 
         private async ValueTask RegisterStLinkEvents(CancellationToken cancellationToken = default)
@@ -444,6 +444,10 @@ namespace KSociety.SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetDeviceGeneralInf: ");
+            }
+            finally
+            {
+                Marshal.DestroyStructure<GeneralInf>(pointer);
             }
 
             return generalInf;
