@@ -39,6 +39,7 @@ namespace Programming
             CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
             CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
             CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
+            Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
             //var testStLink = CubeProgrammerApi.TryConnectStLink(0, 0, DebugConnectionMode.UnderResetMode);
 
@@ -94,12 +95,13 @@ namespace Programming
 
             var displayCallBacks = new DisplayCallBacks
             {
-                InitProgressBar = null, //InitProgressBar,
+                InitProgressBar = InitProgressBar,
                 LogMessage = ReceiveMessage,
-                LoadBar = null, //ProgressBarUpdate
+                LoadBar = ProgressBarUpdate
             };
 
             CubeProgrammerApi.SetDisplayCallbacks(ref displayCallBacks);
+            
             //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
 
             CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
@@ -226,7 +228,7 @@ namespace Programming
             }
 
             CubeProgrammerApi.Dispose();
-
+            Console.WriteLine("Press a button to exit.");
             Console.ReadLine();
             
         }
@@ -310,13 +312,19 @@ namespace Programming
         private static void InitProgressBar()
         {
             //Logger?.LogTrace("InitProgressBar");
-            ;
+            
         }
 
         private static void ProgressBarUpdate(int currentProgress, int total)
         {
-            //Logger?.LogTrace("ProgressBarUpdate");
-            ;
+            if (total > 0)
+            {
+                //can use current variable to set a progress bar, I have noticed that currentProgress is advancing only by write or download 
+                //operation, erase operation does not produce advance
+                var current = (currentProgress * 100F) / total;
+
+                Logger.LogInformation("ProgressBarUpdate: {0}", current);
+            }
         }
     }
 }

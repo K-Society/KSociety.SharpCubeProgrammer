@@ -4,10 +4,13 @@ namespace KSociety.SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
     public delegate void InitProgressBar();
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
     public delegate void LogMessageReceived(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
     public delegate void ProgressBarUpdateReceived(int currentProgress, int total);
 
     /// <summary>
