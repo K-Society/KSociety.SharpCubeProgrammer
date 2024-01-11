@@ -100,7 +100,7 @@ namespace Programming
                 LoadBar = ProgressBarUpdate
             };
 
-            CubeProgrammerApi.SetDisplayCallbacks(ref displayCallBacks);
+            CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
             
             //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
 
