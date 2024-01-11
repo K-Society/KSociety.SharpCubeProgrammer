@@ -4,6 +4,7 @@ namespace KSociety.SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -210,6 +211,8 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
+
+                        Marshal.DestroyStructure<GeneralInf>(listPtr + (i * size));
                     }
                 }
                 else
@@ -241,6 +244,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
+                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                     }
                 }
                 else
@@ -330,6 +334,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
                         dfuDeviceList.Add(currentItem);
+                        Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
                     }
                 }
                 else
@@ -413,7 +418,7 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle)
+        public void SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
         {
             Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
         }
@@ -1095,6 +1100,13 @@ namespace KSociety.SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "SetExternalLoaderPath: ");
+            }
+            finally
+            {
+                if (externalLoaderPtr != IntPtr.Zero)
+                {
+                    Marshal.DestroyStructure<ExternalLoader>(externalLoaderPtr);
+                }
             }
 
             return externalLoaderStructure;
