@@ -212,7 +212,7 @@ namespace KSociety.SharpCubeProgrammer
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
 
-                        Marshal.DestroyStructure<GeneralInf>(listPtr + (i * size));
+                        //Marshal.DestroyStructure<GeneralInf>(listPtr + (i * size));
                     }
                 }
                 else
@@ -244,7 +244,9 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        
+                        //Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        //Marshal.FreeHGlobal(listPtr + (i * size));
                     }
                 }
                 else
@@ -255,6 +257,10 @@ namespace KSociety.SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
+            }
+            finally
+            {
+                Marshal.FreeCoTaskMem(listPtr);//.FreeHGlobal(listPtr);
             }
 
             return parametersList;
@@ -334,7 +340,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
                         dfuDeviceList.Add(currentItem);
-                        Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
+                        //Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
                     }
                 }
                 else
@@ -450,10 +456,10 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetDeviceGeneralInf: ");
             }
-            finally
-            {
-                Marshal.DestroyStructure<GeneralInf>(pointer);
-            }
+            //finally
+            //{
+            //    Marshal.DestroyStructure<GeneralInf>(pointer);
+            //}
 
             return generalInf;
         }
@@ -1101,13 +1107,13 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "SetExternalLoaderPath: ");
             }
-            finally
-            {
-                if (externalLoaderPtr != IntPtr.Zero)
-                {
-                    Marshal.DestroyStructure<ExternalLoader>(externalLoaderPtr);
-                }
-            }
+            //finally
+            //{
+            //    if (externalLoaderPtr != IntPtr.Zero)
+            //    {
+            //        Marshal.DestroyStructure<ExternalLoader>(externalLoaderPtr);
+            //    }
+            //}
 
             return externalLoaderStructure;
         }
@@ -1160,7 +1166,7 @@ namespace KSociety.SharpCubeProgrammer
         #region [STM32WB specific]
 
         /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
-        /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
+        /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
         /// <inheritdoc />
