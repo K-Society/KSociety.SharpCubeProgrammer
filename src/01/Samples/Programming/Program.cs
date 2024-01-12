@@ -101,7 +101,7 @@ namespace Programming
             };
 
             CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
-            
+
             //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
 
             CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
