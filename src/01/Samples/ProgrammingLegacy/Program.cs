@@ -34,7 +34,7 @@ namespace ProgrammingLegacy
             var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
             {
-                var stLink = (DebugConnectParameters)stLinkList.First().Clone();
+                var stLink = stLinkList.First();
                 stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
