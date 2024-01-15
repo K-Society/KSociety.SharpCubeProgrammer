@@ -4,28 +4,25 @@ namespace KSociety.SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
     using DeviceDataStructure;
     using Enum;
-    using Events;
     using Struct;
 
     public interface ICubeProgrammerApi : IDisposable
     {
-        event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
+        //event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
+        //event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
+        //event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
 
-        event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
+        //event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
+        //event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
+        //event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
 
-        bool StLinkReady { get; }
+        //bool StLinkReady { get; }
 
-        bool Stm32BootLoaderReady { get; }
+        //bool Stm32BootLoaderReady { get; }
 
-        ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
+        //ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 

@@ -4,22 +4,15 @@ namespace KSociety.SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
-    using Events;
     using Interface;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
-    using Wmi;
 
     public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
     {
@@ -30,28 +23,39 @@ namespace KSociety.SharpCubeProgrammer
 
         private Native.SafeLibraryHandle? _handle;
 
-        public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
+        //public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
+        //public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
+        //public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
 
-        public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
+        //public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
+        //public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
+        //public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
 
         private readonly ILogger<CubeProgrammerApi>? _logger;
 
-        protected readonly IWmiManager WmiManager;
+        //protected readonly IWmiManager WmiManager;
 
-        public bool StLinkReady { get; private set; }
+        //public bool StLinkReady { get; private set; }
 
-        public bool Stm32BootLoaderReady { get; private set; }
+        //public bool Stm32BootLoaderReady { get; private set; }
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
-        {
-            this.WmiManager = wmiManager;
+        //public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
+        //{
+        //    this.WmiManager = wmiManager;
 
+        //    if (logger == null)
+        //    {
+        //        logger = new NullLogger<CubeProgrammerApi>();
+        //    }
+
+        //    this._logger = logger;
+        //    this.Init();
+        //}
+
+        public CubeProgrammerApi(ILogger<CubeProgrammerApi>? logger = default)
+        {
             if (logger == null)
             {
                 logger = new NullLogger<CubeProgrammerApi>();
@@ -89,86 +93,86 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
-        {
-            this.RegisterStLinkEvents();
-            this.RegisterStm32BootLoaderEvents();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly | SearchPortType.STM32BootLoaderOnly, "CubeProgrammerApi", null, cancellationToken).ConfigureAwait(false);
-        }
+        //public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
+        //{
+        //    this.RegisterStLinkEvents();
+        //    this.RegisterStm32BootLoaderEvents();
+        //    await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly | SearchPortType.STM32BootLoaderOnly, "CubeProgrammerApi", null, cancellationToken).ConfigureAwait(false);
+        //}
 
-        private void RegisterStLinkEvents()
-        {
-            this.RegisterStLink();
-        }
+        //private void RegisterStLinkEvents()
+        //{
+        //    this.RegisterStLink();
+        //}
 
-        private void RegisterStm32BootLoaderEvents()
-        {
-            this.RegisterStm32BootLoader();
-        }
+        //private void RegisterStm32BootLoaderEvents()
+        //{
+        //    this.RegisterStm32BootLoader();
+        //}
 
-        private void RegisterStLink()
-        {
-            this.WmiManager.StLinkPortChangeStatus += this.WmiManagerOnStLinkPortChangeStatus;
-            this.WmiManager.StLinkPortScanned += this.WmiManagerOnStLinkPortScanned;
-        }
+        //private void RegisterStLink()
+        //{
+        //    this.WmiManager.StLinkPortChangeStatus += this.WmiManagerOnStLinkPortChangeStatus;
+        //    this.WmiManager.StLinkPortScanned += this.WmiManagerOnStLinkPortScanned;
+        //}
 
-        private void RegisterStm32BootLoader()
-        {
-            this.WmiManager.STM32BootLoaderPortChangeStatus += this.WmiManagerOnStm32BootLoaderPortChangeStatus;
-            this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
-        }
+        //private void RegisterStm32BootLoader()
+        //{
+        //    this.WmiManager.STM32BootLoaderPortChangeStatus += this.WmiManagerOnStm32BootLoaderPortChangeStatus;
+        //    this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
+        //}
 
         #region [Handlers]
 
-        private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
-        {
-            if (e.Status)
-            {
-                this.StLinkReady = true;
-                this.OnStLinkAdded();
-            }
-            else
-            {
-                this.StLinkReady = false;
-                this.OnStLinkRemoved();
-            }
-        }
+        //private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
+        //{
+        //    if (e.Status)
+        //    {
+        //        this.StLinkReady = true;
+        //        this.OnStLinkAdded();
+        //    }
+        //    else
+        //    {
+        //        this.StLinkReady = false;
+        //        this.OnStLinkRemoved();
+        //    }
+        //}
 
-        private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
-        {
-            if (e.PortsList.Any())
-            {
-                this.StLinkReady = true;
-                this.OnStLinksFoundStatus();
-            }
+        //private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
+        //{
+        //    if (e.PortsList.Any())
+        //    {
+        //        this.StLinkReady = true;
+        //        this.OnStLinksFoundStatus();
+        //    }
 
-            this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
-        }
+        //    this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
+        //}
 
-        private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
-        {
-            if (e.Status)
-            {
-                this.Stm32BootLoaderReady = true;
-                this.OnStm32BootLoaderAdded();
-            }
-            else
-            {
-                this.Stm32BootLoaderReady = false;
-                this.OnStm32BootLoaderRemoved();
-            }
-        }
+        //private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
+        //{
+        //    if (e.Status)
+        //    {
+        //        this.Stm32BootLoaderReady = true;
+        //        this.OnStm32BootLoaderAdded();
+        //    }
+        //    else
+        //    {
+        //        this.Stm32BootLoaderReady = false;
+        //        this.OnStm32BootLoaderRemoved();
+        //    }
+        //}
 
-        private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
-        {
-            if (e.PortsList.Any())
-            {
-                this.Stm32BootLoaderReady = true;
-                this.OnStm32BootLoadersFoundStatus();
-            }
+        //private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
+        //{
+        //    if (e.PortsList.Any())
+        //    {
+        //        this.Stm32BootLoaderReady = true;
+        //        this.OnStm32BootLoadersFoundStatus();
+        //    }
 
-            this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
-        }
+        //    this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
+        //}
 
         #endregion
 
@@ -1418,86 +1422,86 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [EventWrapper]
 
-        protected void OnStLinksFoundStatus()
-        {
-            try
-            {
-                this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkFoundStatus: ");
-            }
-        }
+        //protected void OnStLinksFoundStatus()
+        //{
+        //    try
+        //    {
+        //        this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStLinkFoundStatus: ");
+        //    }
+        //}
 
-        protected void OnStLinkAdded()
-        {
-            try
-            {
-                this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkAdded: ");
-            }
-        }
+        //protected void OnStLinkAdded()
+        //{
+        //    try
+        //    {
+        //        this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStLinkAdded: ");
+        //    }
+        //}
 
-        protected void OnStLinkRemoved()
-        {
-            try
-            {
-                this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkRemoved: ");
-            }
-        }
+        //protected void OnStLinkRemoved()
+        //{
+        //    try
+        //    {
+        //        this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStLinkRemoved: ");
+        //    }
+        //}
 
-        protected void OnStm32BootLoadersFoundStatus()
-        {
-            try
-            {
-                this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoadersFoundStatus: ");
-            }
-        }
+        //protected void OnStm32BootLoadersFoundStatus()
+        //{
+        //    try
+        //    {
+        //        this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStm32BootLoadersFoundStatus: ");
+        //    }
+        //}
 
-        protected void OnStm32BootLoaderAdded()
-        {
-            try
-            {
-                this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoaderAdded: ");
-            }
-        }
+        //protected void OnStm32BootLoaderAdded()
+        //{
+        //    try
+        //    {
+        //        this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStm32BootLoaderAdded: ");
+        //    }
+        //}
 
-        protected void OnStm32BootLoaderRemoved()
-        {
-            try
-            {
-                this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoaderRemoved: ");
-            }
-        }
+        //protected void OnStm32BootLoaderRemoved()
+        //{
+        //    try
+        //    {
+        //        this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this._logger?.LogError(ex, "OnStm32BootLoaderRemoved: ");
+        //    }
+        //}
 
         #endregion
 
         #region [Dispose]
 
-        protected override void DisposeManagedResources()
-        {
-            this.WmiManager.Dispose();
-        }
+        //protected override void DisposeManagedResources()
+        //{
+        //    this.WmiManager.Dispose();
+        //}
 
         protected override void DisposeUnmanagedResources()
         {
