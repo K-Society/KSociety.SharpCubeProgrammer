@@ -8,7 +8,6 @@ namespace Programming
     using System.Text.RegularExpressions;
     using Autofac;
     using KSociety.SharpCubeProgrammer.Enum;
-    using KSociety.SharpCubeProgrammer.Events;
     using KSociety.SharpCubeProgrammer.Interface;
     using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
@@ -36,9 +35,6 @@ namespace Programming
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
 
-            //CubeProgrammerApi.StLinkAdded += CubeProgrammerApiOnStLinkAdded;
-            //CubeProgrammerApi.StLinkRemoved += CubeProgrammerApiOnStLinkRemoved;
-            //CubeProgrammerApi.StLinksFoundStatus += CubeProgrammerApiOnStLinksFoundStatus;
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
             //var testStLink = CubeProgrammerApi.TryConnectStLink(0, 0, DebugConnectionMode.UnderResetMode);
@@ -233,26 +229,10 @@ namespace Programming
             
         }
 
-        //private static void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
-        //{
-        //    Logger?.LogInformation("StLinksFound...");
-        //}
-
-        //private static void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)
-        //{
-        //    Logger?.LogInformation("StLinkRemoved...");
-        //}
-
-        //private static void CubeProgrammerApiOnStLinkAdded(object? sender, StLinkAddedEventArgs e)
-        //{
-        //    Logger?.LogInformation("StLinkAdded...");
-        //}
-
         private static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new Bindings.Log());
-            //builder.RegisterModule(new KSociety.Wmi.Bindings.Wmi());
             builder.RegisterModule(new Bindings.ProgrammerApi());
             return builder.Build();
         }

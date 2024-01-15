@@ -122,8 +122,29 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 - Register SharpCubeProgrammer as service with Autofac IoC:
 
+Create the module for Autofac in a dedicated file (in this example under the Bindings folder) with the following contents:
+
 ```csharp
-builder.RegisterModule(new KSociety.SharpCubeProgrammer.Bindings.ProgrammerApi());
+namespace MyNamespace.Bindings
+{
+    using Autofac;
+    using KSociety.SharpCubeProgrammer;
+    using KSociety.SharpCubeProgrammer.Interface;
+
+    public class ProgrammerApi : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance();
+        }
+    }
+}
+```
+
+Register the module:
+
+```csharp
+builder.RegisterModule(new Bindings.ProgrammerApi());
 ```
 
 - Get ST-Link list and connect:
@@ -165,4 +186,5 @@ The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensourc
 
 List of technologies, frameworks and libraries used for implementation:
 
-- [KSociety.Wmi](https://github.com/K-Society/KSociety.Wmi) (WMI)
+- [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces)
+- [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions)
