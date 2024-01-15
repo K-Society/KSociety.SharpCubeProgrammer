@@ -151,7 +151,7 @@ builder.RegisterModule(new Bindings.ProgrammerApi());
 
 ```csharp
 var stLinkList = _cubeProgrammerApi.GetStLinkList();
-var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
+var stLink = stLinkList.First();
 var connectionResult = _cubeProgrammerApi.ConnectStLink(stLink);
 ```
 

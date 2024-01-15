@@ -262,10 +262,10 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
             }
-            finally
-            {
-                Marshal.FreeCoTaskMem(listPtr);//.FreeHGlobal(listPtr);
-            }
+            //finally
+            //{
+            //    Marshal.FreeCoTaskMem(listPtr);//.FreeHGlobal(listPtr);
+            //}
 
             return parametersList;
         }
@@ -1093,54 +1093,105 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public ExternalLoader SetExternalLoaderPath(string path)
+        public DeviceExternalLoader? SetExternalLoaderPath(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderStructure = new ExternalLoader();
             var externalLoaderPtr = new IntPtr();
+            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+            var output = new DeviceExternalLoader();
 
             try
             {
                 Native.ProgrammerApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
                 if (externalLoaderPtr != IntPtr.Zero)
                 {
-                    externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                    output.filePath = externalLoaderStructure.filePath;
+                    output.deviceName = externalLoaderStructure.deviceName;
+                    output.deviceType = externalLoaderStructure.deviceType;
+                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
+                    output.deviceSize = externalLoaderStructure.deviceSize;
+                    output.pageSize = externalLoaderStructure.pageSize;
+                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+
+                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                    {
+                        var deviceSectorList = new List<DeviceSector>();
+                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        {
+                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                            deviceSectorList.Add(deviceSectorItem);
+                        }
+
+                        output.sectors = deviceSectorList;
+
+                        return output;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "SetExternalLoaderPath: ");
             }
-            //finally
-            //{
-            //    if (externalLoaderPtr != IntPtr.Zero)
-            //    {
-            //        Marshal.DestroyStructure<ExternalLoader>(externalLoaderPtr);
-            //    }
-            //}
 
-            return externalLoaderStructure;
+            return null;
         }
 
         /// <inheritdoc />
-        public IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer")
+        public DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer")
         {
             var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderList = new List<ExternalLoader>();
+            var externalLoaderList = new List<DeviceExternalLoader>();
             var externalStorageInfoPtr = new IntPtr();
+            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+            var output = new DeviceExternalStorageInfo();
 
             try
             {
                 var result = Native.ProgrammerApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
                 if (result.Equals(0))
                 {
-                    var size = Marshal.SizeOf<ExternalLoader>();
+                    var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
                     var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
-                    for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+
+                    output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
+
+                    if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * size));
-                        //var deviceSectors = Marshal.PtrToStructure<DeviceSector>(currentItem.sectors);
-                        externalLoaderList.Add(currentItem);
+                        for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                        {
+                            var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
+
+                            var deviceExternalLoader = new DeviceExternalLoader
+                            {
+                                filePath = externalLoaderStructure.filePath,
+                                deviceName = externalLoaderStructure.deviceName,
+                                deviceType = externalLoaderStructure.deviceType,
+                                deviceStartAddress = externalLoaderStructure.deviceStartAddress,
+                                deviceSize = externalLoaderStructure.deviceSize,
+                                pageSize = externalLoaderStructure.pageSize,
+                                sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
+                            };
+
+                            if (externalLoaderStructure.sectors != IntPtr.Zero)
+                            {
+                                var deviceSectorList = new List<DeviceSector>();
+                                for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                {
+                                    var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
+                                    deviceSectorList.Add(deviceSectorItem);
+                                }
+
+                                deviceExternalLoader.sectors = deviceSectorList;
+                            }
+
+                            externalLoaderList.Add(deviceExternalLoader);
+                        }
+
+                        output.ExternalLoader = externalLoaderList;
+
+                        return output;
                     }
                 }
             }
@@ -1149,7 +1200,7 @@ namespace KSociety.SharpCubeProgrammer
                 this._logger?.LogError(ex, "GetExternalLoaders: ");
             }
 
-            return externalLoaderList;
+            return null;
         }
 
         /// <inheritdoc />

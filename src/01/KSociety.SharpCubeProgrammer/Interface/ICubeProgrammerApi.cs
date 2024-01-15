@@ -302,12 +302,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to specify the path of the external Loaders to be loaded.
         /// </summary>
         /// <param name="path"></param>
-        ExternalLoader SetExternalLoaderPath(string path);
+        DeviceExternalLoader? SetExternalLoaderPath(string path);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer");
+        DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer");
 
         /// <summary>
         /// This routine allows to unload an external Loaders.
@@ -324,7 +324,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         #region [STM32WB specific]
 
         /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
-        /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
+        /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
         /// <summary>
