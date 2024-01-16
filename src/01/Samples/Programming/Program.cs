@@ -7,7 +7,6 @@ namespace Programming
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
-    using KSociety.SharpCubeProgrammer;
     using KSociety.SharpCubeProgrammer.Enum;
     using KSociety.SharpCubeProgrammer.Interface;
     using KSociety.SharpCubeProgrammer.Struct;
@@ -54,7 +53,24 @@ namespace Programming
 
             #endregion
 
+            #region [External Loader Testing]
+
             var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
+
+
+            if (deviceExternalStorageInfo.HasValue)
+            {
+                var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
+
+                var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
+
+                if (externalLoader.HasValue)
+                {
+                    CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
+                }
+            }
+
+            #endregion
 
             var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
