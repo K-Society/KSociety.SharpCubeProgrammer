@@ -502,14 +502,19 @@ namespace KSociety.SharpCubeProgrammer
             {
                 var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
 
-                var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                gch.Free();
-                result = this.CheckResult(writeMemoryResult);
-                
-
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemory: ");
+                }
             }
 
             return result;
@@ -538,7 +543,7 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U)
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             var extension = Path.GetExtension(inputFilePath);
