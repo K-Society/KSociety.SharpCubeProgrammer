@@ -10,19 +10,6 @@ namespace KSociety.SharpCubeProgrammer.Interface
 
     public interface ICubeProgrammerApi : IDisposable
     {
-        //event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        //event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        //event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
-
-        //event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        //event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        //event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
-
-        //bool StLinkReady { get; }
-
-        //bool Stm32BootLoaderReady { get; }
-
-        //ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 

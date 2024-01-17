@@ -22,37 +22,9 @@ namespace KSociety.SharpCubeProgrammer
         private readonly object _syncRoot = new object();
 
         private Native.SafeLibraryHandle? _handle;
-
-        //public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        //public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        //public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
-
-        //public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        //public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        //public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
-
         private readonly ILogger<CubeProgrammerApi>? _logger;
 
-        //protected readonly IWmiManager WmiManager;
-
-        //public bool StLinkReady { get; private set; }
-
-        //public bool Stm32BootLoaderReady { get; private set; }
-
         #region [Constructor]
-
-        //public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
-        //{
-        //    this.WmiManager = wmiManager;
-
-        //    if (logger == null)
-        //    {
-        //        logger = new NullLogger<CubeProgrammerApi>();
-        //    }
-
-        //    this._logger = logger;
-        //    this.Init();
-        //}
 
         public CubeProgrammerApi(ILogger<CubeProgrammerApi>? logger = default)
         {
@@ -93,89 +65,6 @@ namespace KSociety.SharpCubeProgrammer
             }
         }
 
-        //public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
-        //{
-        //    this.RegisterStLinkEvents();
-        //    this.RegisterStm32BootLoaderEvents();
-        //    await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly | SearchPortType.STM32BootLoaderOnly, "CubeProgrammerApi", null, cancellationToken).ConfigureAwait(false);
-        //}
-
-        //private void RegisterStLinkEvents()
-        //{
-        //    this.RegisterStLink();
-        //}
-
-        //private void RegisterStm32BootLoaderEvents()
-        //{
-        //    this.RegisterStm32BootLoader();
-        //}
-
-        //private void RegisterStLink()
-        //{
-        //    this.WmiManager.StLinkPortChangeStatus += this.WmiManagerOnStLinkPortChangeStatus;
-        //    this.WmiManager.StLinkPortScanned += this.WmiManagerOnStLinkPortScanned;
-        //}
-
-        //private void RegisterStm32BootLoader()
-        //{
-        //    this.WmiManager.STM32BootLoaderPortChangeStatus += this.WmiManagerOnStm32BootLoaderPortChangeStatus;
-        //    this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
-        //}
-
-        #region [Handlers]
-
-        //private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
-        //{
-        //    if (e.Status)
-        //    {
-        //        this.StLinkReady = true;
-        //        this.OnStLinkAdded();
-        //    }
-        //    else
-        //    {
-        //        this.StLinkReady = false;
-        //        this.OnStLinkRemoved();
-        //    }
-        //}
-
-        //private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
-        //{
-        //    if (e.PortsList.Any())
-        //    {
-        //        this.StLinkReady = true;
-        //        this.OnStLinksFoundStatus();
-        //    }
-
-        //    this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
-        //}
-
-        //private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
-        //{
-        //    if (e.Status)
-        //    {
-        //        this.Stm32BootLoaderReady = true;
-        //        this.OnStm32BootLoaderAdded();
-        //    }
-        //    else
-        //    {
-        //        this.Stm32BootLoaderReady = false;
-        //        this.OnStm32BootLoaderRemoved();
-        //    }
-        //}
-
-        //private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
-        //{
-        //    if (e.PortsList.Any())
-        //    {
-        //        this.Stm32BootLoaderReady = true;
-        //        this.OnStm32BootLoadersFoundStatus();
-        //    }
-
-        //    this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
-        //}
-
-        #endregion
-
         #region [ST-LINK]
 
         //ST-LINK module groups debug ports JTAG/SWD functions together.
@@ -215,8 +104,6 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
-
-                        //Marshal.DestroyStructure<GeneralInf>(listPtr + (i * size));
                     }
                 }
                 else
@@ -248,9 +135,6 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
-                        
-                        //Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
-                        //Marshal.FreeHGlobal(listPtr + (i * size));
                     }
                 }
                 else
@@ -262,10 +146,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
             }
-            //finally
-            //{
-            //    Marshal.FreeCoTaskMem(listPtr);//.FreeHGlobal(listPtr);
-            //}
 
             return parametersList;
         }
@@ -306,24 +186,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void GetUsartList()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void ConnectUsartBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void SendByteUart()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
@@ -344,7 +218,6 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
                         dfuDeviceList.Add(currentItem);
-                        //Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
                     }
                 }
                 else
@@ -460,10 +333,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetDeviceGeneralInf: ");
             }
-            //finally
-            //{
-            //    Marshal.DestroyStructure<GeneralInf>(pointer);
-            //}
 
             return generalInf;
         }
@@ -737,29 +606,6 @@ namespace KSociety.SharpCubeProgrammer
             }
             return IntPtr.Zero;
         }
-
-        //public FileDataC GetFileFromByteArray(byte[] data)
-        //{
-        //    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-
-        //    var segment = new SegmentDataC
-        //    {
-        //        size = data.Length,
-        //        address = 0,
-        //        data = gch.AddrOfPinnedObject()
-        //    };
-
-        //    var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
-
-        //    var fileData = new FileDataC
-        //    {
-        //        Type = 0,
-        //        segmentsNbr = 1,
-        //        segments = gchSegment.AddrOfPinnedObject()
-        //    };
-
-        //    return fileData;
-        //}
 
         /// <inheritdoc />
         public void FreeFileData(IntPtr data)
@@ -1506,88 +1352,7 @@ namespace KSociety.SharpCubeProgrammer
             return output;
         }
 
-        #region [EventWrapper]
-
-        //protected void OnStLinksFoundStatus()
-        //{
-        //    try
-        //    {
-        //        this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStLinkFoundStatus: ");
-        //    }
-        //}
-
-        //protected void OnStLinkAdded()
-        //{
-        //    try
-        //    {
-        //        this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStLinkAdded: ");
-        //    }
-        //}
-
-        //protected void OnStLinkRemoved()
-        //{
-        //    try
-        //    {
-        //        this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStLinkRemoved: ");
-        //    }
-        //}
-
-        //protected void OnStm32BootLoadersFoundStatus()
-        //{
-        //    try
-        //    {
-        //        this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStm32BootLoadersFoundStatus: ");
-        //    }
-        //}
-
-        //protected void OnStm32BootLoaderAdded()
-        //{
-        //    try
-        //    {
-        //        this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStm32BootLoaderAdded: ");
-        //    }
-        //}
-
-        //protected void OnStm32BootLoaderRemoved()
-        //{
-        //    try
-        //    {
-        //        this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this._logger?.LogError(ex, "OnStm32BootLoaderRemoved: ");
-        //    }
-        //}
-
-        #endregion
-
         #region [Dispose]
-
-        //protected override void DisposeManagedResources()
-        //{
-        //    this.WmiManager.Dispose();
-        //}
 
         protected override void DisposeUnmanagedResources()
         {

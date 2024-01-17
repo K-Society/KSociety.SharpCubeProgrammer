@@ -54,12 +54,7 @@ namespace Programming
 
             #endregion
 
-            #region [FileOpen]
-
-            var fileOpenResult = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
-            ;
-            #endregion
-
+            
             #region [External Loader Testing]
 
             var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
@@ -85,7 +80,28 @@ namespace Programming
 
             if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
             {
+                #region [File Open Testing]
 
+                //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
+
+                //if (filePointer != IntPtr.Zero)
+                //{
+                //    var verify = CubeProgrammerApi.Verify(filePointer, "0x08000000");
+
+                //    if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //    {
+                //        var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
+
+                //        if (saveFileToFileTest.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //        {
+
+                //        }
+                //    }
+
+                //    CubeProgrammerApi.FreeFileData(filePointer);
+                //}
+
+                #endregion
             }
 
             CubeProgrammerApi.Disconnect();
