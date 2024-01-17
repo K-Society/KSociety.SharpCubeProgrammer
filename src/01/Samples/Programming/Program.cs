@@ -54,6 +54,12 @@ namespace Programming
 
             #endregion
 
+            #region [FileOpen]
+
+            var fileOpenResult = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
+            ;
+            #endregion
+
             #region [External Loader Testing]
 
             var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();

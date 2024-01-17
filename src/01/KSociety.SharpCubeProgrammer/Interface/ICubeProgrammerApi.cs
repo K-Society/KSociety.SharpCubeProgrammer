@@ -212,17 +212,22 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to open and get data from any supported file extension.
         /// </summary>
-        FileDataC? FileOpen(string filePath);
+        DeviceFileDataC? FileOpen(string filePath);
+
+        /// <summary>
+        /// This routine allows to open and get pointer from any supported file extension.
+        /// </summary>
+        IntPtr FileOpenAsPointer(string filePath);
 
         /// <summary>
         /// This routine allows to clean up the handled file data.
         /// </summary>
-        void FreeFileData(FileDataC data);
+        void FreeFileData(IntPtr data);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
         /// </summary>
-        CubeProgrammerError Verify(byte[] data, string address);
+        CubeProgrammerError Verify(IntPtr fileData, string address);
 
         /// <summary>
         /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
@@ -232,7 +237,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName);
+        CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.

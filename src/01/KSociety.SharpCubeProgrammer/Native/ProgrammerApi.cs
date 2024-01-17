@@ -1025,12 +1025,12 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [FreeFileData]
 
         [DllImport(ProgrammerDll32, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void FreeFileData32(FileDataC data);
+        private static extern void FreeFileData32(IntPtr data);
 
         [DllImport(ProgrammerDll64, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void FreeFileData64(FileDataC data);
+        private static extern void FreeFileData64(IntPtr data);
 
-        private static void FreeFileDataNative(FileDataC data)
+        private static void FreeFileDataNative(IntPtr data)
         {
             if (!Environment.Is64BitProcess)
             {
@@ -1042,7 +1042,7 @@ namespace KSociety.SharpCubeProgrammer.Native
             }
         }
 
-        internal static void FreeFileData(FileDataC data)
+        internal static void FreeFileData(IntPtr data)
         {
             try
             {
@@ -1063,19 +1063,19 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [Verify]
 
         [DllImport(ProgrammerDll32, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int Verify32(FileDataC fileData, uint address);
+        private static extern int Verify32(IntPtr fileData, uint address);
 
         [DllImport(ProgrammerDll64, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int Verify64(FileDataC fileData, uint address);
+        private static extern int Verify64(IntPtr fileData, uint address);
 
-        private static int VerifyNative(FileDataC fileData, uint address)
+        private static int VerifyNative(IntPtr fileData, uint address)
         {
             return !Environment.Is64BitProcess
                 ? Verify32(fileData, address)
                 : Verify64(fileData, address);
         }
 
-        internal static int Verify(FileDataC fileData, uint address)
+        internal static int Verify(IntPtr fileData, uint address)
         {
             try
             {
@@ -1129,19 +1129,19 @@ namespace KSociety.SharpCubeProgrammer.Native
         #region [SaveFileToFile]
 
         [DllImport(ProgrammerDll32, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SaveFileToFile32(FileDataC fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
+        private static extern int SaveFileToFile32(IntPtr fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         [DllImport(ProgrammerDll64, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SaveFileToFile64(FileDataC fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
+        private static extern int SaveFileToFile64(IntPtr fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
-        private static int SaveFileToFileNative(FileDataC fileData, string sFileName)
+        private static int SaveFileToFileNative(IntPtr fileData, string sFileName)
         {
             return !Environment.Is64BitProcess
                 ? SaveFileToFile32(fileData, sFileName)
                 : SaveFileToFile64(fileData, sFileName);
         }
 
-        internal static int SaveFileToFile(FileDataC fileData, string sFileName)
+        internal static int SaveFileToFile(IntPtr fileData, string sFileName)
         {
             try
             {
