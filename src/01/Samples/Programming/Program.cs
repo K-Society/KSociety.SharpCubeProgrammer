@@ -3,6 +3,7 @@
 namespace Programming
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
@@ -53,6 +54,12 @@ namespace Programming
 
             #endregion
 
+            #region [FileOpen]
+
+            var fileOpenResult = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
+            ;
+            #endregion
+
             #region [External Loader Testing]
 
             var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
@@ -69,6 +76,19 @@ namespace Programming
                     CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
                 }
             }
+
+            #endregion
+
+            #region [TryConnectStLink]
+
+            var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
+
+            if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+            {
+
+            }
+
+            CubeProgrammerApi.Disconnect();
 
             #endregion
 
@@ -141,6 +161,44 @@ namespace Programming
                     //var uid64 = CubeProgrammerApi.GetUID64();
                     //var startFusREsult = CubeProgrammerApi.StartFus();
 
+                    var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
+
+                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    {
+
+                    }
+
+                    #region [DownloadFile Test]
+
+                    //var downloadFileResult = CubeProgrammerApi.DownloadFile(
+                    //    @"..\..\..\..\..\Test\NUCLEO-WBA52CG.bin", "0x08000000");
+
+                    //if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+
+                    //}
+
+                    #endregion
+
+                    #region [Memory Leak Test]
+
+                    //var firmware = File.ReadAllBytes(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
+                    //for (var i = 0; i < 20; i++)
+                    //{
+                    //    var massEraseResult = CubeProgrammerApi.MassErase();
+
+                    //    if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //    {
+                    //        var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
+
+                    //        if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //        {
+
+                    //        }
+                    //    }
+                    //}
+
+                    #endregion
 
                     var peripheral = CubeProgrammerApi.InitOptionBytesInterface();
 

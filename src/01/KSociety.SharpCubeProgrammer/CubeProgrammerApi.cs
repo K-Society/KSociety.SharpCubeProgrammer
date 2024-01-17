@@ -502,14 +502,19 @@ namespace KSociety.SharpCubeProgrammer
             {
                 var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
 
-                var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                gch.Free();
-                result = this.CheckResult(writeMemoryResult);
-                
-
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemory: ");
+                }
             }
 
             return result;
@@ -538,11 +543,11 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U)
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             var extension = Path.GetExtension(inputFilePath);
-            var binPath = @"";
+            var binPath = "";
 
             string filePath;
             switch (extension)
@@ -659,86 +664,116 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public FileDataC? FileOpen(string filePath)
+        public DeviceFileDataC? FileOpen(string filePath)
         {
-            FileDataC? fileData = null;
+            var segmentSize = Marshal.SizeOf<SegmentDataC>();
+            var deviceSegmentData = new DeviceFileDataC();
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
 
                 var filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
-
-                if (!filePointer.Equals(IntPtr.Zero))
+                try
                 {
-                    fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.Value.segments);
-                    var data = new byte[segment.size];
-                    Marshal.Copy(segment.data, data, 0, segment.size);
-                    Marshal.DestroyStructure<SegmentDataC>(fileData.Value.segments);
-                    Marshal.DestroyStructure<FileDataC>(filePointer);
+                    if (!filePointer.Equals(IntPtr.Zero))
+                    {
+                        var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
+                        deviceSegmentData.Type = fileData.Type;
+                        deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
+                        deviceSegmentData.segments = new List<DeviceSegmentDataC>();
+
+                        if (fileData.segments != IntPtr.Zero)
+                        {
+                            for (var i = 0; i < fileData.segmentsNbr; i++)
+                            {
+                                var deviceSegment = new DeviceSegmentDataC();
+                                var segment =
+                                    Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
+                                deviceSegment.address = segment.address;
+                                deviceSegment.size = segment.size;
+                                if (segment.data != IntPtr.Zero)
+                                {
+                                    deviceSegment.data = new byte[segment.size];
+                                    Marshal.Copy(segment.data, deviceSegment.data, 0, segment.size);
+                                }
+
+                                deviceSegmentData.segments.Add(deviceSegment);
+                            }
+                        }
+
+                        return deviceSegmentData;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "FileOpen: ");
+                }
+                finally
+                {
+                    if (!filePointer.Equals(IntPtr.Zero))
+                    {
+                        this.FreeFileData(filePointer);
+                    }
                 }
             }
-
-            return fileData;
-        }
-
-        public FileDataC GetFileFromByteArray(byte[] data)
-        {
-            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-
-            var segment = new SegmentDataC
-            {
-                size = data.Length,
-                address = 0,
-                data = gch.AddrOfPinnedObject()
-            };
-
-            var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
-
-            var fileData = new FileDataC
-            {
-                Type = 0,
-                segmentsNbr = 1,
-                segments = gchSegment.AddrOfPinnedObject()
-            };
-
-            return fileData;
+            return null;
         }
 
         /// <inheritdoc />
-        public void FreeFileData(FileDataC data)
+        public IntPtr FileOpenAsPointer(string filePath)
+        {
+            if (!String.IsNullOrEmpty(filePath))
+            {
+                try
+                {
+                    var filePathAdapted = filePath.Replace(@"\", "/");
+
+                    return Native.ProgrammerApi.FileOpen(filePathAdapted);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "FileOpen: ");
+                }
+            }
+            return IntPtr.Zero;
+        }
+
+        //public FileDataC GetFileFromByteArray(byte[] data)
+        //{
+        //    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+        //    var segment = new SegmentDataC
+        //    {
+        //        size = data.Length,
+        //        address = 0,
+        //        data = gch.AddrOfPinnedObject()
+        //    };
+
+        //    var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
+
+        //    var fileData = new FileDataC
+        //    {
+        //        Type = 0,
+        //        segmentsNbr = 1,
+        //        segments = gchSegment.AddrOfPinnedObject()
+        //    };
+
+        //    return fileData;
+        //}
+
+        /// <inheritdoc />
+        public void FreeFileData(IntPtr data)
         {
             Native.ProgrammerApi.FreeFileData(data);
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError Verify(byte[] data, string address)
+        public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
             var uintAddress = this.HexConverterToUint(address);
 
-            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-
-            var segment = new SegmentDataC
-            {
-                size = data.Length,
-                address = 0,
-                data = gch.AddrOfPinnedObject()
-            };
-
-            var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
-
-            var fileData = new FileDataC
-            {
-                Type = 0,
-                segmentsNbr = 1,
-                segments = gchSegment.AddrOfPinnedObject()
-            };
-
             var verifyResult = Native.ProgrammerApi.Verify(fileData, uintAddress);
             var output = this.CheckResult(verifyResult);
-
-            gchSegment.Free();
-            gch.Free();
 
             return output;
         }
@@ -767,7 +802,7 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName)
+        public CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName)
         {
             var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
