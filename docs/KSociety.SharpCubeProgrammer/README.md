@@ -146,15 +146,13 @@ Register the module:
 builder.RegisterModule(new Bindings.ProgrammerApi());
 ```
 
-- Get ST-Link list and connect:
+- Connect:
 
 ```csharp
-var stLinkList = _cubeProgrammerApi.GetStLinkList();
-var stLink = stLinkList.First();
-var connectionResult = _cubeProgrammerApi.ConnectStLink(stLink);
+var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 ```
 
-- GeneralInfo:
+- General Info:
 
 ```csharp
 var generalInfo = _cubeProgrammerApi.GetDeviceGeneralInf();
@@ -176,6 +174,18 @@ var downloadFile = _cubeProgrammerApi.DownloadFile(firmwarePath, "0x08000000", 1
 
 ```csharp
 var execute = _cubeProgrammerApi.Execute("0x08000000");
+```
+
+- Send Option Bytes:
+
+```csharp
+var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
+```
+
+- Disconnect:
+
+```csharp
+CubeProgrammerApi.Disconnect();
 ```
 
 ## License
