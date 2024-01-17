@@ -34,7 +34,7 @@ namespace ProgrammingLegacy
             var stLinkList = CubeProgrammerApi.GetStLinkEnumerationList();
             if (stLinkList.Any())
             {
-                var stLink = (DebugConnectParameters)stLinkList.First().Clone();
+                var stLink = stLinkList.First();
                 stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
@@ -127,8 +127,8 @@ namespace ProgrammingLegacy
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new Bindings.Log());
-            builder.RegisterModule(new KSociety.Wmi.Bindings.Wmi());
-            builder.RegisterModule(new KSociety.SharpCubeProgrammer.Bindings.ProgrammerApi());
+            //builder.RegisterModule(new KSociety.Wmi.Bindings.Wmi());
+            builder.RegisterModule(new Bindings.ProgrammerApi());
             return builder.Build();
         }
     }

@@ -2,14 +2,12 @@
 
 namespace KSociety.SharpCubeProgrammer.Struct
 {
-    using System;
-    using System.Runtime.InteropServices;
+    using System.Collections.Generic;
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ExternalStorageInfo
+    public struct DeviceFileDataC
     {
-        public uint ExternalLoaderNbr;
-
-        public IntPtr ExternalLoader;
+        public int Type;
+        public int segmentsNbr;
+        public List<DeviceSegmentDataC> segments;
     }
 }

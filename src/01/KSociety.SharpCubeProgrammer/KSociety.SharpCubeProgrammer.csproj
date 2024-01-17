@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSociety.Wmi" Version="0.0.49" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="BuildMultiTargeting\KSociety.SharpCubeProgrammer.props">
       <PackagePath>buildMultiTargeting</PackagePath>
       <Pack>true</Pack>
@@ -56,6 +52,11 @@
     <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*">
        <PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

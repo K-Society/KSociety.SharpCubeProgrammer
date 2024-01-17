@@ -2,7 +2,6 @@
 
 namespace KSociety.SharpCubeProgrammer.Struct
 {
-    using System;
     using System.Runtime.InteropServices;
     using Enum;
 
@@ -11,7 +10,7 @@ namespace KSociety.SharpCubeProgrammer.Struct
     /// </summary>
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct DebugConnectParameters : ICloneable
+    public struct DebugConnectParameters //: ICloneable
     {
         /// <summary>
         /// Select the type of debug interface #debugPort.
@@ -99,9 +98,9 @@ namespace KSociety.SharpCubeProgrammer.Struct
         /// </summary>
         public int Speed;
 
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
+        //public object Clone()
+        //{
+        //    return this.MemberwiseClone();
+        //}
     }
 }

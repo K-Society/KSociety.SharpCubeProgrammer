@@ -121,19 +121,38 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 - Register SharpCubeProgrammer as service with Autofac IoC:
 
-```csharp
-builder.RegisterModule(new KSociety.SharpCubeProgrammer.Bindings.ProgrammerApi());
-```
-
-- Get ST-Link list and connect:
+Create the module for Autofac in a dedicated file (in this example under the Bindings folder) with the following contents:
 
 ```csharp
-var stLinkList = _cubeProgrammerApi.GetStLinkList();
-var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
-var connectionResult = _cubeProgrammerApi.ConnectStLink(stLink);
+namespace MyNamespace.Bindings
+{
+    using Autofac;
+    using KSociety.SharpCubeProgrammer;
+    using KSociety.SharpCubeProgrammer.Interface;
+
+    public class ProgrammerApi : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance();
+        }
+    }
+}
 ```
 
-- GeneralInfo:
+Register the module:
+
+```csharp
+builder.RegisterModule(new Bindings.ProgrammerApi());
+```
+
+- Connect:
+
+```csharp
+var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
+```
+
+- General Info:
 
 ```csharp
 var generalInfo = _cubeProgrammerApi.GetDeviceGeneralInf();
@@ -157,6 +176,18 @@ var downloadFile = _cubeProgrammerApi.DownloadFile(firmwarePath, "0x08000000", 1
 var execute = _cubeProgrammerApi.Execute("0x08000000");
 ```
 
+- Send Option Bytes:
+
+```csharp
+var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
+```
+
+- Disconnect:
+
+```csharp
+CubeProgrammerApi.Disconnect();
+```
+
 ## License
 The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)
 
@@ -164,4 +195,5 @@ The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensourc
 
 List of technologies, frameworks and libraries used for implementation:
 
-- [KSociety.Wmi](https://github.com/K-Society/KSociety.Wmi) (WMI)
+- [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces)
+- [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions)

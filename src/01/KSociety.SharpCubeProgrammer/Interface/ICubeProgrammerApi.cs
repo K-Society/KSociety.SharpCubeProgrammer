@@ -4,28 +4,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
     using DeviceDataStructure;
     using Enum;
-    using Events;
     using Struct;
 
     public interface ICubeProgrammerApi : IDisposable
     {
-        event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
-
-        event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
-
-        bool StLinkReady { get; }
-
-        bool Stm32BootLoaderReady { get; }
-
-        ValueTask GetStLinkPorts(CancellationToken cancellationToken = default);
 
         #region [STLINK]
 
@@ -128,7 +112,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to choose your custom display.
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
-        void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle);
+        void SetDisplayCallbacks(DisplayCallBacks callbacksHandle);
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.
@@ -171,7 +155,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U);
+        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U);
 
         /// <summary>
         /// This routine allows to run the application.
@@ -215,17 +199,22 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to open and get data from any supported file extension.
         /// </summary>
-        FileDataC? FileOpen(string filePath);
+        DeviceFileDataC? FileOpen(string filePath);
+
+        /// <summary>
+        /// This routine allows to open and get pointer from any supported file extension.
+        /// </summary>
+        IntPtr FileOpenAsPointer(string filePath);
 
         /// <summary>
         /// This routine allows to clean up the handled file data.
         /// </summary>
-        void FreeFileData(FileDataC data);
+        void FreeFileData(IntPtr data);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
         /// </summary>
-        CubeProgrammerError Verify(byte[] data, string address);
+        CubeProgrammerError Verify(IntPtr fileData, string address);
 
         /// <summary>
         /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
@@ -235,7 +224,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName);
+        CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.
@@ -305,12 +294,12 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to specify the path of the external Loaders to be loaded.
         /// </summary>
         /// <param name="path"></param>
-        ExternalLoader SetExternalLoaderPath(string path);
+        DeviceExternalLoader? SetExternalLoaderPath(string path);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer");
+        DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer");
 
         /// <summary>
         /// This routine allows to unload an external Loaders.
@@ -327,7 +316,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
         #region [STM32WB specific]
 
         /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
-        /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
+        /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
         /// <summary>

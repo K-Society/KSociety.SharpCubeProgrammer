@@ -1,14 +1,11 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace KSociety.SharpCubeProgrammer.Events
+namespace KSociety.SharpCubeProgrammer.Struct
 {
-    using System;
-
-    public class StLinkAddedEventArgs : EventArgs
+    public struct DeviceSegmentDataC
     {
-        public StLinkAddedEventArgs()
-        {
-
-        }
+        public int address;
+        public int size;
+        public byte[] data;
     }
 }

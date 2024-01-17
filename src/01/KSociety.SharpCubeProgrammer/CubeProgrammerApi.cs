@@ -6,19 +6,13 @@ namespace KSociety.SharpCubeProgrammer
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Base.InfraSub.Shared.Class;
     using DeviceDataStructure;
     using Enum;
-    using Events;
     using Interface;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
-    using Wmi;
 
     public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
     {
@@ -28,29 +22,12 @@ namespace KSociety.SharpCubeProgrammer
         private readonly object _syncRoot = new object();
 
         private Native.SafeLibraryHandle? _handle;
-
-        public event EventHandler<StLinkFoundEventArgs>? StLinksFoundStatus;
-        public event EventHandler<StLinkAddedEventArgs>? StLinkAdded;
-        public event EventHandler<StLinkRemovedEventArgs>? StLinkRemoved;
-
-        public event EventHandler<Stm32BootLoaderFoundEventArgs>? Stm32BootLoaderFoundStatus;
-        public event EventHandler<Stm32BootLoaderAddedEventArgs>? Stm32BootLoaderAdded;
-        public event EventHandler<Stm32BootLoaderRemovedEventArgs>? Stm32BootLoaderRemoved;
-
         private readonly ILogger<CubeProgrammerApi>? _logger;
-
-        protected readonly IWmiManager WmiManager;
-
-        public bool StLinkReady { get; private set; }
-
-        public bool Stm32BootLoaderReady { get; private set; }
 
         #region [Constructor]
 
-        public CubeProgrammerApi(IWmiManager wmiManager, ILogger<CubeProgrammerApi>? logger = default) 
+        public CubeProgrammerApi(ILogger<CubeProgrammerApi>? logger = default)
         {
-            this.WmiManager = wmiManager;
-
             if (logger == null)
             {
                 logger = new NullLogger<CubeProgrammerApi>();
@@ -87,89 +64,6 @@ namespace KSociety.SharpCubeProgrammer
                 }
             }
         }
-
-        public async ValueTask GetStLinkPorts(CancellationToken cancellationToken = default)
-        {
-            this.RegisterStLinkEvents();
-            this.RegisterStm32BootLoaderEvents();
-            await this.WmiManager.SearchAllPortsAsync(SearchPortType.StLinkOnly | SearchPortType.STM32BootLoaderOnly, "CubeProgrammerApi", null, cancellationToken).ConfigureAwait(false);
-        }
-
-        private void RegisterStLinkEvents()
-        {
-            this.RegisterStLink();
-        }
-
-        private void RegisterStm32BootLoaderEvents()
-        {
-            this.RegisterStm32BootLoader();
-        }
-
-        private void RegisterStLink()
-        {
-            this.WmiManager.StLinkPortChangeStatus += this.WmiManagerOnStLinkPortChangeStatus;
-            this.WmiManager.StLinkPortScanned += this.WmiManagerOnStLinkPortScanned;
-        }
-
-        private void RegisterStm32BootLoader()
-        {
-            this.WmiManager.STM32BootLoaderPortChangeStatus += this.WmiManagerOnStm32BootLoaderPortChangeStatus;
-            this.WmiManager.STM32BootLoaderPortScanned += this.WmiManagerOnStm32BootLoaderPortScanned;
-        }
-
-        #region [Handlers]
-
-        private void WmiManagerOnStLinkPortChangeStatus(object sender, Wmi.StLink.StLinkPortChangeStatusEventArgs e)
-        {
-            if (e.Status)
-            {
-                this.StLinkReady = true;
-                this.OnStLinkAdded();
-            }
-            else
-            {
-                this.StLinkReady = false;
-                this.OnStLinkRemoved();
-            }
-        }
-
-        private void WmiManagerOnStLinkPortScanned(object sender, Wmi.StLink.StLinkPortScannedEventArgs e)
-        {
-            if (e.PortsList.Any())
-            {
-                this.StLinkReady = true;
-                this.OnStLinksFoundStatus();
-            }
-
-            this.WmiManager.StLinkPortScanned -= this.WmiManagerOnStLinkPortScanned;
-        }
-
-        private void WmiManagerOnStm32BootLoaderPortChangeStatus(object sender, Wmi.STM32.STM32BootLoaderPortChangeStatusEventArgs e)
-        {
-            if (e.Status)
-            {
-                this.Stm32BootLoaderReady = true;
-                this.OnStm32BootLoaderAdded();
-            }
-            else
-            {
-                this.Stm32BootLoaderReady = false;
-                this.OnStm32BootLoaderRemoved();
-            }
-        }
-
-        private void WmiManagerOnStm32BootLoaderPortScanned(object sender, Wmi.STM32.STM32BootLoaderPortScannedEventArgs e)
-        {
-            if (e.PortsList.Any())
-            {
-                this.Stm32BootLoaderReady = true;
-                this.OnStm32BootLoadersFoundStatus();
-            }
-
-            this.WmiManager.STM32BootLoaderPortScanned -= this.WmiManagerOnStm32BootLoaderPortScanned;
-        }
-
-        #endregion
 
         #region [ST-LINK]
 
@@ -292,24 +186,18 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void GetUsartList()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void ConnectUsartBootloader()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void SendByteUart()
         {
-            //Register();
-
             throw new NotImplementedException();
         }
 
@@ -413,7 +301,7 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void SetDisplayCallbacks(ref DisplayCallBacks callbacksHandle)
+        public void SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
         {
             Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
         }
@@ -444,10 +332,6 @@ namespace KSociety.SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "GetDeviceGeneralInf: ");
-            }
-            finally
-            {
-                Marshal.DestroyStructure<GeneralInf>(pointer);
             }
 
             return generalInf;
@@ -487,14 +371,19 @@ namespace KSociety.SharpCubeProgrammer
             {
                 var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
 
-                var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                gch.Free();
-                result = this.CheckResult(writeMemoryResult);
-                
-
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemory: ");
+                }
             }
 
             return result;
@@ -523,11 +412,11 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address, uint skipErase = 0U, uint verify = 1U)
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             var extension = Path.GetExtension(inputFilePath);
-            var binPath = @"";
+            var binPath = "";
 
             string filePath;
             switch (extension)
@@ -644,86 +533,93 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public FileDataC? FileOpen(string filePath)
+        public DeviceFileDataC? FileOpen(string filePath)
         {
-            FileDataC? fileData = null;
+            var segmentSize = Marshal.SizeOf<SegmentDataC>();
+            var deviceSegmentData = new DeviceFileDataC();
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
 
                 var filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
-
-                if (!filePointer.Equals(IntPtr.Zero))
+                try
                 {
-                    fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                    var segment = Marshal.PtrToStructure<SegmentDataC>(fileData.Value.segments);
-                    var data = new byte[segment.size];
-                    Marshal.Copy(segment.data, data, 0, segment.size);
-                    Marshal.DestroyStructure<SegmentDataC>(fileData.Value.segments);
-                    Marshal.DestroyStructure<FileDataC>(filePointer);
+                    if (!filePointer.Equals(IntPtr.Zero))
+                    {
+                        var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
+                        deviceSegmentData.Type = fileData.Type;
+                        deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
+                        deviceSegmentData.segments = new List<DeviceSegmentDataC>();
+
+                        if (fileData.segments != IntPtr.Zero)
+                        {
+                            for (var i = 0; i < fileData.segmentsNbr; i++)
+                            {
+                                var deviceSegment = new DeviceSegmentDataC();
+                                var segment =
+                                    Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
+                                deviceSegment.address = segment.address;
+                                deviceSegment.size = segment.size;
+                                if (segment.data != IntPtr.Zero)
+                                {
+                                    deviceSegment.data = new byte[segment.size];
+                                    Marshal.Copy(segment.data, deviceSegment.data, 0, segment.size);
+                                }
+
+                                deviceSegmentData.segments.Add(deviceSegment);
+                            }
+                        }
+
+                        return deviceSegmentData;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "FileOpen: ");
+                }
+                finally
+                {
+                    if (!filePointer.Equals(IntPtr.Zero))
+                    {
+                        this.FreeFileData(filePointer);
+                    }
                 }
             }
-
-            return fileData;
-        }
-
-        public FileDataC GetFileFromByteArray(byte[] data)
-        {
-            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-
-            var segment = new SegmentDataC
-            {
-                size = data.Length,
-                address = 0,
-                data = gch.AddrOfPinnedObject()
-            };
-
-            var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
-
-            var fileData = new FileDataC
-            {
-                Type = 0,
-                segmentsNbr = 1,
-                segments = gchSegment.AddrOfPinnedObject()
-            };
-
-            return fileData;
+            return null;
         }
 
         /// <inheritdoc />
-        public void FreeFileData(FileDataC data)
+        public IntPtr FileOpenAsPointer(string filePath)
+        {
+            if (!String.IsNullOrEmpty(filePath))
+            {
+                try
+                {
+                    var filePathAdapted = filePath.Replace(@"\", "/");
+
+                    return Native.ProgrammerApi.FileOpen(filePathAdapted);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "FileOpen: ");
+                }
+            }
+            return IntPtr.Zero;
+        }
+
+        /// <inheritdoc />
+        public void FreeFileData(IntPtr data)
         {
             Native.ProgrammerApi.FreeFileData(data);
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError Verify(byte[] data, string address)
+        public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
             var uintAddress = this.HexConverterToUint(address);
 
-            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-
-            var segment = new SegmentDataC
-            {
-                size = data.Length,
-                address = 0,
-                data = gch.AddrOfPinnedObject()
-            };
-
-            var gchSegment = GCHandle.Alloc(segment, GCHandleType.Pinned);
-
-            var fileData = new FileDataC
-            {
-                Type = 0,
-                segmentsNbr = 1,
-                segments = gchSegment.AddrOfPinnedObject()
-            };
-
             var verifyResult = Native.ProgrammerApi.Verify(fileData, uintAddress);
             var output = this.CheckResult(verifyResult);
-
-            gchSegment.Free();
-            gch.Free();
 
             return output;
         }
@@ -752,7 +648,7 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError SaveFileToFile(FileDataC fileData, string sFileName)
+        public CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName)
         {
             var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1078,18 +974,41 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public ExternalLoader SetExternalLoaderPath(string path)
+        public DeviceExternalLoader? SetExternalLoaderPath(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderStructure = new ExternalLoader();
             var externalLoaderPtr = new IntPtr();
+            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+            var output = new DeviceExternalLoader();
 
             try
             {
                 Native.ProgrammerApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
                 if (externalLoaderPtr != IntPtr.Zero)
                 {
-                    externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                    output.filePath = externalLoaderStructure.filePath;
+                    output.deviceName = externalLoaderStructure.deviceName;
+                    output.deviceType = externalLoaderStructure.deviceType;
+                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
+                    output.deviceSize = externalLoaderStructure.deviceSize;
+                    output.pageSize = externalLoaderStructure.pageSize;
+                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+
+                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                    {
+                        var deviceSectorList = new List<DeviceSector>();
+                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        {
+                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                            deviceSectorList.Add(deviceSectorItem);
+                        }
+
+                        output.sectors = deviceSectorList;
+
+                        return output;
+                    }
                 }
             }
             catch (Exception ex)
@@ -1097,28 +1016,63 @@ namespace KSociety.SharpCubeProgrammer
                 this._logger?.LogError(ex, "SetExternalLoaderPath: ");
             }
 
-            return externalLoaderStructure;
+            return null;
         }
 
         /// <inheritdoc />
-        public IEnumerable<ExternalLoader> GetExternalLoaders(string path = @".\st\Programmer")
+        public DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer")
         {
             var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderList = new List<ExternalLoader>();
+            var externalLoaderList = new List<DeviceExternalLoader>();
             var externalStorageInfoPtr = new IntPtr();
+            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+            var output = new DeviceExternalStorageInfo();
 
             try
             {
                 var result = Native.ProgrammerApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
                 if (result.Equals(0))
                 {
-                    var size = Marshal.SizeOf<ExternalLoader>();
+                    var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
                     var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
-                    for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+
+                    output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
+
+                    if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * size));
-                        //var deviceSectors = Marshal.PtrToStructure<DeviceSector>(currentItem.sectors);
-                        externalLoaderList.Add(currentItem);
+                        for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                        {
+                            var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
+
+                            var deviceExternalLoader = new DeviceExternalLoader
+                            {
+                                filePath = externalLoaderStructure.filePath,
+                                deviceName = externalLoaderStructure.deviceName,
+                                deviceType = externalLoaderStructure.deviceType,
+                                deviceStartAddress = externalLoaderStructure.deviceStartAddress,
+                                deviceSize = externalLoaderStructure.deviceSize,
+                                pageSize = externalLoaderStructure.pageSize,
+                                sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
+                            };
+
+                            if (externalLoaderStructure.sectors != IntPtr.Zero)
+                            {
+                                var deviceSectorList = new List<DeviceSector>();
+                                for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                {
+                                    var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
+                                    deviceSectorList.Add(deviceSectorItem);
+                                }
+
+                                deviceExternalLoader.sectors = deviceSectorList;
+                            }
+
+                            externalLoaderList.Add(deviceExternalLoader);
+                        }
+
+                        output.ExternalLoader = externalLoaderList;
+
+                        return output;
                     }
                 }
             }
@@ -1127,7 +1081,7 @@ namespace KSociety.SharpCubeProgrammer
                 this._logger?.LogError(ex, "GetExternalLoaders: ");
             }
 
-            return externalLoaderList;
+            return null;
         }
 
         /// <inheritdoc />
@@ -1148,7 +1102,7 @@ namespace KSociety.SharpCubeProgrammer
         #region [STM32WB specific]
 
         /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
-        /// except for the “firmwareDelete" and the “firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
+        /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
         /// <inheritdoc />
@@ -1398,88 +1352,7 @@ namespace KSociety.SharpCubeProgrammer
             return output;
         }
 
-        #region [EventWrapper]
-
-        protected void OnStLinksFoundStatus()
-        {
-            try
-            {
-                this.StLinksFoundStatus?.Invoke(this, new StLinkFoundEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkFoundStatus: ");
-            }
-        }
-
-        protected void OnStLinkAdded()
-        {
-            try
-            {
-                this.StLinkAdded?.Invoke(this, new StLinkAddedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkAdded: ");
-            }
-        }
-
-        protected void OnStLinkRemoved()
-        {
-            try
-            {
-                this.StLinkRemoved?.Invoke(this, new StLinkRemovedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStLinkRemoved: ");
-            }
-        }
-
-        protected void OnStm32BootLoadersFoundStatus()
-        {
-            try
-            {
-                this.Stm32BootLoaderFoundStatus?.Invoke(this, new Stm32BootLoaderFoundEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoadersFoundStatus: ");
-            }
-        }
-
-        protected void OnStm32BootLoaderAdded()
-        {
-            try
-            {
-                this.Stm32BootLoaderAdded?.Invoke(this, new Stm32BootLoaderAddedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoaderAdded: ");
-            }
-        }
-
-        protected void OnStm32BootLoaderRemoved()
-        {
-            try
-            {
-                this.Stm32BootLoaderRemoved?.Invoke(this, new Stm32BootLoaderRemovedEventArgs());
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "OnStm32BootLoaderRemoved: ");
-            }
-        }
-
-        #endregion
-
         #region [Dispose]
-
-        protected override void DisposeManagedResources()
-        {
-            this.WmiManager.Dispose();
-        }
 
         protected override void DisposeUnmanagedResources()
         {
