@@ -10,7 +10,7 @@ int TryConnectStLink(int stLinkProbeIndex, int shared, debugConnectMode debugCon
     debugConnectParameters* stLinkList;
     debugConnectParameters debugParameters;
 
-    int getStlinkListNb = getStLinkList(&stLinkList, shared);
+    int getStlinkListNb = getStLinkEnumerationList(&stLinkList, shared);
 
     if (getStlinkListNb == 0)
     {
@@ -430,12 +430,10 @@ int VerifyMemoryBySegment(unsigned int address, unsigned char* data, unsigned in
         return -99;
     }
 
-    segmentData_C segmentData
-    {
-        address = 0,
-        size = size,
-        data = data
-    };
+    segmentData_C segmentData{};
+    segmentData.address = 0;
+    segmentData.size = size;
+    segmentData.data = data;
 
     fileData_C fileData{};
     fileData.Type = 0;
