@@ -86,6 +86,8 @@ extern "C" PROGRAMMER_API int Verify(fileData_C* fileData, unsigned int address)
 
 extern "C" PROGRAMMER_API int VerifyMemory(unsigned int address, char* data, unsigned int size);
 
+extern "C" PROGRAMMER_API int VerifyMemoryBySegment(unsigned int address, unsigned char* data, unsigned int size);
+
 extern "C" PROGRAMMER_API int SaveFileToFile(fileData_C* fileData, const wchar_t* sFileName);
 
 extern "C" PROGRAMMER_API int SaveMemoryToFile(int address, int size, const wchar_t* sFileName);

@@ -346,7 +346,9 @@ namespace KSociety.SharpCubeProgrammer
 
             try
             {
-                var bufferPtr = new IntPtr();
+                //var gch = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                var bufferPtr = IntPtr.Zero;
+                //var addrOfPinnedObject = gch.AddrOfPinnedObject();
                 var readMemoryResult =
                     Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
@@ -354,6 +356,13 @@ namespace KSociety.SharpCubeProgrammer
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
                 }
+
+                //if (addrOfPinnedObject != IntPtr.Zero)
+                //{
+                //    Marshal.Copy(addrOfPinnedObject, buffer, 0, byteSize);
+                //}
+
+                //gch.Free();
             }
             catch (Exception ex)
             {
@@ -637,6 +646,29 @@ namespace KSociety.SharpCubeProgrammer
 
                 var verifyMemoryResult =
                     Native.ProgrammerApi.VerifyMemory(uintAddress, gch.AddrOfPinnedObject(), (uint) data.Length);
+                gch.Free();
+                result = this.CheckResult(verifyMemoryResult);
+
+
+                return result;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+                var verifyMemoryResult =
+                    Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                 gch.Free();
                 result = this.CheckResult(verifyMemoryResult);
 
