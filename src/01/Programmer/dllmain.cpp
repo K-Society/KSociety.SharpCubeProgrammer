@@ -24,7 +24,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             break;
 
         case DLL_PROCESS_DETACH:
-            DeleteInterfaceList();
             break;
     }
 
