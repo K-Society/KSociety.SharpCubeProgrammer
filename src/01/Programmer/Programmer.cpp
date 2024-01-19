@@ -442,8 +442,6 @@ void AutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int s
 int GetStorageStructure(storageStructure** deviceStorageStruct)
 {
 	return getStorageStructure(deviceStorageStruct);
-
-	//return -99;
 }
 
 /* -------------------------------------------------------------------------------------------- */
