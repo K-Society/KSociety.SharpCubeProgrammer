@@ -60,6 +60,8 @@ extern "C" PROGRAMMER_API int ReadMemory(unsigned int address, unsigned char** d
 
 extern "C" PROGRAMMER_API int WriteMemory(unsigned int address, char* data, unsigned int size);
 
+extern "C" PROGRAMMER_API int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size);
+
 extern "C" PROGRAMMER_API int EditSector(unsigned int address, char* data, unsigned int size);
 
 extern "C" PROGRAMMER_API int DownloadFile(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, const wchar_t* binPath);

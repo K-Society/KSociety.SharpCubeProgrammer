@@ -255,6 +255,47 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 	}
 }
 
+int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
+{
+    try
+    {
+        int result = -99;
+
+        if (size == 0)
+        {
+            return -99;
+        }
+
+        result = writeMemory(address, data, size);
+
+        if (result == 0)
+        {
+            segmentData_C segmentData{};
+            segmentData.address = 0;
+            segmentData.size = size;
+            segmentData.data = reinterpret_cast<unsigned char*>(data);
+            
+            fileData_C fileData{};
+            fileData.Type = 0;
+            fileData.segmentsNbr = 1;
+            fileData.segments = &segmentData;
+
+            return verify(&fileData, address);
+        }
+
+        return result;
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
+}
+
 int EditSector(unsigned int address, char* data, unsigned int size)
 {
     try
@@ -384,6 +425,11 @@ int VerifyMemory(unsigned int address, char* data, unsigned int size)
 
 int VerifyMemoryBySegment(unsigned int address, unsigned char* data, unsigned int size)
 {
+    if (size == 0)
+    {
+        return -99;
+    }
+
     segmentData_C segmentData
     {
         address = 0,
