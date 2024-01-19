@@ -692,6 +692,39 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [WriteMemoryAndVerify]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAndVerify32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAndVerify64(uint address, IntPtr data, uint size);
+
+        private static int WriteMemoryAndVerifyNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? WriteMemoryAndVerify32(address, data, size)
+                : WriteMemoryAndVerify64(address, data, size);
+        }
+
+        internal static int WriteMemoryAndVerify(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return WriteMemoryAndVerifyNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [EditSector]
 
         [DllImport(ProgrammerDll32, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]

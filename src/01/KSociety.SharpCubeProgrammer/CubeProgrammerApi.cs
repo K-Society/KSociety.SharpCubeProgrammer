@@ -398,6 +398,32 @@ namespace KSociety.SharpCubeProgrammer
             return result;
         }
 
+        public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemoryAndVerify: ");
+                }
+            }
+
+            return result;
+        }
+
         /// <inheritdoc />
         public CubeProgrammerError EditSector(string address, byte[] data)
         {

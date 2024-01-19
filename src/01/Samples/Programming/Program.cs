@@ -106,7 +106,7 @@ namespace Programming
                 #region [Verify Memory Testing memory leak]
 
                 var firmware = File.ReadAllBytes(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
-                //var openFile1 = CubeProgrammerApi.FileOpen(@"C:\Users\aklede\Desktop\NuovoMicro_P1\NuovoMicro_P1.18_R07092023_FULL.hex");
+                //var openFile1 = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var openFile = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var length = firmware.Length;
                 //for (var i = 0; i < 200; i++)
@@ -126,11 +126,11 @@ namespace Programming
                     //{
                     //var readMemoryResult = CubeProgrammerApi.Verify(openFile, "0x08000000");
                     //var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
-                    var verifyMemoryResult = CubeProgrammerApi.VerifyMemoryBySegment("0x08000000", firmware);
+                    var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
 
                     if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-
+                        ;
                     }
 
                     //CubeProgrammerApi.Disconnect();
