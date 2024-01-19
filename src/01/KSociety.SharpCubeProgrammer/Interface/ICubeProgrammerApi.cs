@@ -222,6 +222,11 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError VerifyMemory(string address, byte[] data);
 
         /// <summary>
+        /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
+        /// </summary>
+        CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data);
+
+        /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
         CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName);

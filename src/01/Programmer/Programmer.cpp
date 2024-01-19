@@ -365,27 +365,38 @@ int VerifyMemory(unsigned int address, char* data, unsigned int size)
 {
 	int output = -99;
 	int compare = -1;
-	unsigned char** buffer = (unsigned char**)malloc(size);
-	if (buffer == NULL) 
-	{
-		return output;
-	}
 
-	output = readMemory(address, buffer, size);
+    unsigned char* verifyMemoryDataStruct = 0;
+
+    output = readMemory(address, &verifyMemoryDataStruct, size);
 
 	if (output == 0) 
 	{
-		compare = memcmp(data, buffer, size);
+        compare = memcmp(data, verifyMemoryDataStruct, size);
 	}
 
 	if (compare == 0) 
 	{
 		output = 0;
 	}
-
-	free(buffer);
-
 	return output;
+}
+
+int VerifyMemoryBySegment(unsigned int address, unsigned char* data, unsigned int size)
+{
+    segmentData_C segmentData
+    {
+        address = 0,
+        size = size,
+        data = data
+    };
+
+    fileData_C fileData{};
+    fileData.Type = 0;
+    fileData.segmentsNbr = 1;
+    fileData.segments = &segmentData;
+
+    return verify(&fileData, address);
 }
 
 int SaveFileToFile(fileData_C* fileData, const wchar_t* sFileName)

@@ -54,23 +54,23 @@ namespace Programming
 
             #endregion
 
-            
+
             #region [External Loader Testing]
 
-            var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
+            //var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
 
 
-            if (deviceExternalStorageInfo.HasValue)
-            {
-                var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
+            //if (deviceExternalStorageInfo.HasValue)
+            //{
+            //    var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
 
-                var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
+            //    var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
 
-                if (externalLoader.HasValue)
-                {
-                    CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
-                }
-            }
+            //    if (externalLoader.HasValue)
+            //    {
+            //        CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
+            //    }
+            //}
 
             #endregion
 
@@ -81,6 +81,65 @@ namespace Programming
             if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
             {
                 #region [File Open Testing]
+
+                //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
+
+                //if (filePointer != IntPtr.Zero)
+                //{
+                //    var verify = CubeProgrammerApi.Verify(filePointer, "0x08000000");
+
+                //    if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //    {
+                //        var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
+
+                //        if (saveFileToFileTest.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //        {
+
+                //        }
+                //    }
+
+                //    CubeProgrammerApi.FreeFileData(filePointer);
+                //}
+
+                #endregion
+
+                #region [Verify Memory Testing memory leak]
+
+                var firmware = File.ReadAllBytes(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
+                //var openFile1 = CubeProgrammerApi.FileOpen(@"C:\Users\aklede\Desktop\NuovoMicro_P1\NuovoMicro_P1.18_R07092023_FULL.hex");
+                //var openFile = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
+                //var length = firmware.Length;
+                //for (var i = 0; i < 200; i++)
+                //{
+                    //var massEraseResult = CubeProgrammerApi.MassErase();
+
+                    //if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+                        //var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
+
+                        //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                        //{
+                            for (var i = 0; i < 20; i++)
+                            {
+                    //var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
+                    //if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+                    //var readMemoryResult = CubeProgrammerApi.Verify(openFile, "0x08000000");
+                    //var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
+                    var verifyMemoryResult = CubeProgrammerApi.VerifyMemoryBySegment("0x08000000", firmware);
+
+                    if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    {
+
+                    }
+
+                    //CubeProgrammerApi.Disconnect();
+                    //CubeProgrammerApi.DeleteInterfaceList();
+                    //}
+                }
+                        //}
+                    //}
+                //}
 
                 //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
 
