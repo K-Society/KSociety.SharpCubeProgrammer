@@ -54,42 +54,42 @@ namespace Programming
 
             #endregion
 
-            #region []
+            //#region []
 
-            var stLinkListResult = CubeProgrammerApi.GetStLinkList();
-            var stLink1 = stLinkListResult.FirstOrDefault();
-            stLink1.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
-            stLink1.Shared = 0;
-            CubeProgrammerApi.ConnectStLink(stLink1);
-            var generalInfo1 = CubeProgrammerApi.GetDeviceGeneralInf();
-            if (generalInfo1 != null)
-            {
-                Logger.LogInformation("INFO: \n" +
-                                      "Board: {0} \n" +
-                                      "Bootloader Version: {1} \n" +
-                                      "Cpu: {2} \n" +
-                                      "Description: {3} \n" +
-                                      "DeviceId: {4} \n" +
-                                      "FlashSize: {5} \n" +
-                                      "RevisionId: {6} \n" +
-                                      "Name: {7} \n" +
-                                      "Series: {8} \n" +
-                                      "Type: {9}",
-                    generalInfo1.Value.Board,
-                    generalInfo1.Value.BootloaderVersion,
-                    generalInfo1.Value.Cpu,
-                    generalInfo1.Value.Description,
-                    generalInfo1.Value.DeviceId,
-                    generalInfo1.Value.FlashSize,
-                    generalInfo1.Value.RevisionId,
-                    generalInfo1.Value.Name,
-                    generalInfo1.Value.Series,
-                    generalInfo1.Value.Type);
-            }
+            //var stLinkListResult = CubeProgrammerApi.GetStLinkList();
+            //var stLink1 = stLinkListResult.FirstOrDefault();
+            //stLink1.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+            //stLink1.Shared = 0;
+            //CubeProgrammerApi.ConnectStLink(stLink1);
+            //var generalInfo1 = CubeProgrammerApi.GetDeviceGeneralInf();
+            //if (generalInfo1 != null)
+            //{
+            //    Logger.LogInformation("INFO: \n" +
+            //                          "Board: {0} \n" +
+            //                          "Bootloader Version: {1} \n" +
+            //                          "Cpu: {2} \n" +
+            //                          "Description: {3} \n" +
+            //                          "DeviceId: {4} \n" +
+            //                          "FlashSize: {5} \n" +
+            //                          "RevisionId: {6} \n" +
+            //                          "Name: {7} \n" +
+            //                          "Series: {8} \n" +
+            //                          "Type: {9}",
+            //        generalInfo1.Value.Board,
+            //        generalInfo1.Value.BootloaderVersion,
+            //        generalInfo1.Value.Cpu,
+            //        generalInfo1.Value.Description,
+            //        generalInfo1.Value.DeviceId,
+            //        generalInfo1.Value.FlashSize,
+            //        generalInfo1.Value.RevisionId,
+            //        generalInfo1.Value.Name,
+            //        generalInfo1.Value.Series,
+            //        generalInfo1.Value.Type);
+            //}
 
-            CubeProgrammerApi.Disconnect();
-            ;
-            #endregion
+            //CubeProgrammerApi.Disconnect();
+            //;
+            //#endregion
 
 
             #region [External Loader Testing]
@@ -156,7 +156,7 @@ namespace Programming
 
                         //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                         //{
-                            for (var i = 0; i < 20; i++)
+                            for (var i = 0; i < 4; i++)
                             {
                     //var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
                     //if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))

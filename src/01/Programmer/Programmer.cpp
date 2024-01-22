@@ -281,8 +281,6 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
             fileData.segments = &segmentData;
 
             result = verify(&fileData, address);
-
-            freeFileData(&fileData);
         }
 
         return result;
