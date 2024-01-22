@@ -104,7 +104,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        //Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                     }
                 }
                 else
@@ -136,7 +136,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        //Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                     }
                 }
                 else
