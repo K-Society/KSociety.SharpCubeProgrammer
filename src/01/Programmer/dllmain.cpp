@@ -1,8 +1,6 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 
-extern unsigned int verbosityLevel;
-
 const char* loaderPath = "./st/Programmer";
 
 BOOL APIENTRY DllMain( HMODULE hModule,
@@ -24,6 +22,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             break;
 
         case DLL_PROCESS_DETACH:
+            //DeleteInterfaceList();
             break;
     }
 

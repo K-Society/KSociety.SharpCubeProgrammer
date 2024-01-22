@@ -54,6 +54,12 @@ namespace Programming
 
             #endregion
 
+            #region []
+
+            var stLinkListResult = CubeProgrammerApi.GetStLinkList();
+            ;
+            #endregion
+
 
             #region [External Loader Testing]
 
