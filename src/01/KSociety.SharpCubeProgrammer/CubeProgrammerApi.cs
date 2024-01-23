@@ -116,6 +116,10 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkList: ");
             }
+            //finally
+            //{
+            //    Marshal.FreeHGlobal(listPtr);
+            //}
 
             return parametersList;
         }
@@ -148,6 +152,10 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
             }
+            //finally
+            //{
+            //    Marshal.FreeHGlobal(listPtr);
+            //}
 
             return parametersList;
         }
@@ -358,7 +366,7 @@ namespace KSociety.SharpCubeProgrammer
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
                 }
-
+                //Marshal..FreeHGlobal(bufferPtr);
                 //if (addrOfPinnedObject != IntPtr.Zero)
                 //{
                 //    Marshal.Copy(addrOfPinnedObject, buffer, 0, byteSize);
@@ -812,7 +820,7 @@ namespace KSociety.SharpCubeProgrammer
                         var deviceBankList = new List<DeviceDeviceBank>();
                         for (var i = 0; i < storageStructure.BanksNumber; i++)
                         {
-                            
+
                             if (storageStructure.Banks != IntPtr.Zero)
                             {
                                 var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
@@ -821,12 +829,16 @@ namespace KSociety.SharpCubeProgrammer
                                 {
                                     for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
                                     {
-                                        var bankSector = Marshal.PtrToStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+                                        var bankSector =
+                                            Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
+                                                                               (ii * bankSectorSize));
 
                                         bankSectorList.Add(bankSector);
 
-                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
+                                                                             (ii * bankSectorSize));
                                     }
+                                    //Marshal.FreeHGlobal(deviceBank.Sectors);
                                 }
 
                                 var deviceDeviceBank = new DeviceDeviceBank
@@ -849,6 +861,10 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStorageStructure:");
             }
+            //finally
+            //{
+            //    Marshal.FreeHGlobal(storageStructurePtr);
+            //}
 
             return (output, deviceStorageStructure);
         }

@@ -148,34 +148,41 @@ namespace Programming
                 //var length = firmware.Length;
                 //for (var i = 0; i < 200; i++)
                 //{
-                    //var massEraseResult = CubeProgrammerApi.MassErase();
+                //var massEraseResult = CubeProgrammerApi.MassErase();
 
-                    //if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                    //{
-                        //var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
+                //if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //{
+                //var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
 
-                        //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                        //{
-                            for (var i = 0; i < 4; i++)
-                            {
+                //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //{
+                for (var i = 0; i < 10; i++)
+                {
                     //var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
                     //if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     //{
                     //var readMemoryResult = CubeProgrammerApi.Verify(openFile, "0x08000000");
-                    //var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
-                    var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
+                    var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
 
-                    if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (readMemoryResult.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-                        ;
-                    }
 
+                    }
+                    Logger.LogInformation("{0}: {1}", i, readMemoryResult.Item1);
+
+                    //var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
+
+                    //if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+
+                    //}
+                    //Logger.LogInformation("{0}: {1}", i, verifyMemoryResult);
                     //CubeProgrammerApi.Disconnect();
                     //CubeProgrammerApi.DeleteInterfaceList();
                     //}
                 }
-                        //}
-                    //}
+                //}
+                //}
                 //}
 
                 //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
