@@ -6,6 +6,7 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <RootNamespace>SharpCubeProgrammer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

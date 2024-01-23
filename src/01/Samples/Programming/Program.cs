@@ -8,12 +8,12 @@ namespace Programming
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
-    using KSociety.SharpCubeProgrammer.Enum;
-    using KSociety.SharpCubeProgrammer.Interface;
-    using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Struct;
 
     internal class Program
     {
@@ -49,65 +49,28 @@ namespace Programming
             };
 
             CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
+            
             //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
             CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
 
             #endregion
 
-            //#region []
-
-            //var stLinkListResult = CubeProgrammerApi.GetStLinkList();
-            //var stLink1 = stLinkListResult.FirstOrDefault();
-            //stLink1.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
-            //stLink1.Shared = 0;
-            //CubeProgrammerApi.ConnectStLink(stLink1);
-            //var generalInfo1 = CubeProgrammerApi.GetDeviceGeneralInf();
-            //if (generalInfo1 != null)
-            //{
-            //    Logger.LogInformation("INFO: \n" +
-            //                          "Board: {0} \n" +
-            //                          "Bootloader Version: {1} \n" +
-            //                          "Cpu: {2} \n" +
-            //                          "Description: {3} \n" +
-            //                          "DeviceId: {4} \n" +
-            //                          "FlashSize: {5} \n" +
-            //                          "RevisionId: {6} \n" +
-            //                          "Name: {7} \n" +
-            //                          "Series: {8} \n" +
-            //                          "Type: {9}",
-            //        generalInfo1.Value.Board,
-            //        generalInfo1.Value.BootloaderVersion,
-            //        generalInfo1.Value.Cpu,
-            //        generalInfo1.Value.Description,
-            //        generalInfo1.Value.DeviceId,
-            //        generalInfo1.Value.FlashSize,
-            //        generalInfo1.Value.RevisionId,
-            //        generalInfo1.Value.Name,
-            //        generalInfo1.Value.Series,
-            //        generalInfo1.Value.Type);
-            //}
-
-            //CubeProgrammerApi.Disconnect();
-            //;
-            //#endregion
-
-
             #region [External Loader Testing]
 
-            //var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
+            var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
 
 
-            //if (deviceExternalStorageInfo.HasValue)
-            //{
-            //    var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
+            if (deviceExternalStorageInfo.HasValue)
+            {
+                var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
 
-            //    var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
+                var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
 
-            //    if (externalLoader.HasValue)
-            //    {
-            //        CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
-            //    }
-            //}
+                if (externalLoader.HasValue)
+                {
+                    CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
+                }
+            }
 
             #endregion
 
@@ -215,7 +178,7 @@ namespace Programming
             if (stLinkList.Any())
             {
                 var stLink = stLinkList.First();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
@@ -253,12 +216,10 @@ namespace Programming
 
                     if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-
                         var storage = storageStructure.Item2;
                         Logger.LogInformation("Storage structure: \n" +
                                               "BanksNumber: {0} \n",
- 
-                            storageStructure.Item2.BanksNumber);
+                                                storageStructure.Item2.BanksNumber);
 
                         for (var i = 0; i < storageStructure.Item2.BanksNumber; i++)
                         {
@@ -367,7 +328,7 @@ namespace Programming
             {
                 Logger?.LogWarning("No ST-Link found!");
             }
-
+            CubeProgrammerApi.DeleteInterfaceList();
             CubeProgrammerApi.Dispose();
             Console.WriteLine("Press a button to exit.");
             Console.ReadLine();
