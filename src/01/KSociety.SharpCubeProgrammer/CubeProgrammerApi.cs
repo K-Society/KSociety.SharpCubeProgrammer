@@ -116,10 +116,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkList: ");
             }
-            //finally
-            //{
-            //    Marshal.FreeHGlobal(listPtr);
-            //}
 
             return parametersList;
         }
@@ -152,10 +148,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
             }
-            //finally
-            //{
-            //    Marshal.FreeHGlobal(listPtr);
-            //}
 
             return parametersList;
         }
@@ -356,9 +348,7 @@ namespace KSociety.SharpCubeProgrammer
 
             try
             {
-                //var gch = GCHandle.Alloc(buffer, GCHandleType.Pinned);
                 var bufferPtr = IntPtr.Zero;
-                //var addrOfPinnedObject = gch.AddrOfPinnedObject();
                 var readMemoryResult =
                     Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
@@ -366,13 +356,6 @@ namespace KSociety.SharpCubeProgrammer
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
                 }
-                //Marshal..FreeHGlobal(bufferPtr);
-                //if (addrOfPinnedObject != IntPtr.Zero)
-                //{
-                //    Marshal.Copy(addrOfPinnedObject, buffer, 0, byteSize);
-                //}
-
-                //gch.Free();
             }
             catch (Exception ex)
             {
@@ -838,7 +821,6 @@ namespace KSociety.SharpCubeProgrammer
                                         Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
                                                                              (ii * bankSectorSize));
                                     }
-                                    //Marshal.FreeHGlobal(deviceBank.Sectors);
                                 }
 
                                 var deviceDeviceBank = new DeviceDeviceBank
@@ -861,10 +843,6 @@ namespace KSociety.SharpCubeProgrammer
             {
                 this._logger?.LogError(ex, "GetStorageStructure:");
             }
-            //finally
-            //{
-            //    Marshal.FreeHGlobal(storageStructurePtr);
-            //}
 
             return (output, deviceStorageStructure);
         }
