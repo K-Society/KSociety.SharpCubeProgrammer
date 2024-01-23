@@ -128,8 +128,8 @@ Create the module for Autofac in a dedicated file (in this example under the Bin
 namespace MyNamespace.Bindings
 {
     using Autofac;
-    using KSociety.SharpCubeProgrammer;
-    using KSociety.SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer;
+    using SharpCubeProgrammer.Interface;
 
     public class ProgrammerApi : Module
     {
