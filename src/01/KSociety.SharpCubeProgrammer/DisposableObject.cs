@@ -10,13 +10,13 @@ namespace SharpCubeProgrammer
 
         public void Dispose()
         {
-            this.Dispose(true);
+            this.Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
         ~DisposableObject()
         {
-            this.Dispose(false);
+            this.Dispose(disposing: false);
         }
 
         private void Dispose(bool disposing)

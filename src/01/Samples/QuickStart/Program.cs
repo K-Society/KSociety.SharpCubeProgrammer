@@ -40,7 +40,6 @@ namespace QuickStart
                 stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
-                Console.WriteLine("Speed: {0}", stLink.Speed);
                 var connectionResult = cubeProgrammerApi.ConnectStLink(stLink);
 
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
@@ -71,32 +70,6 @@ namespace QuickStart
                             generalInfo.Value.Type);
                     }
 
-                    var storageStructure = cubeProgrammerApi.GetStorageStructure();
-
-                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                    {
-                        var storage = storageStructure.Item2;
-                        Console.WriteLine("Storage structure: \n" +
-                                          "BanksNumber: {0} \n",
-                                                storageStructure.Item2.BanksNumber);
-
-                        for (var i = 0; i < storageStructure.Item2.BanksNumber; i++)
-                        {
-                            var bank = storageStructure.Item2.Banks[i];
-                            Console.WriteLine("Bank [{0}] \n" +
-                                              "Sector number: {1}", i, bank.SectorsNumber);
-
-                            for (var ii = 0; ii < bank.SectorsNumber; ii++)
-                            {
-                                var sector = bank.Sectors[ii];
-                                Console.WriteLine("Sector [{0}] \n" +
-                                                  "Sector address: {1} \n" +
-                                                  "Sector index: {2} \n" +
-                                                  "Sector size: {3} \n", ii, cubeProgrammerApi.HexConverterToString(sector.Address), sector.Index, sector.Size);
-                            }
-                        }
-                    }
-
                     var sendOptionBytesCmd = cubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
                     if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeprogrammerNoError))
@@ -107,31 +80,14 @@ namespace QuickStart
                     #region [DownloadFile Test]
 
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
-                        @"..\..\..\..\..\Test\NUCLEO-WBA52CG.bin", "0x08000000");
+                        @"..\..\..\..\..\Test\NUCLEO-L452RE.bin", "0x08000000");
 
                     if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-
+                        ;
                     }
 
                     #endregion
-
-                    var peripheral = cubeProgrammerApi.InitOptionBytesInterface();
-
-                    if (peripheral.HasValue)
-                    {
-                        Console.WriteLine("PeripheralC: \n" +
-                                          "Name: {0} \n" +
-                                          "Description: {1} \n" +
-                                          "Banks Nbr: {2} \n",
-                            peripheral.Value.Name,
-                            peripheral.Value.Description,
-                            peripheral.Value.BanksNbr);
-                    }
-
-                    var targetInterfaceType = cubeProgrammerApi.GetTargetInterfaceType();
-
-                    Console.WriteLine("TargetInterfaceType: {0}", targetInterfaceType);
 
                     cubeProgrammerApi.Disconnect();
                 }
@@ -204,7 +160,7 @@ namespace QuickStart
 
         private static void InitProgressBar()
         {
-
+            Console.WriteLine("InitProgressBar");
         }
 
         private static void ProgressBarUpdate(int currentProgress, int total)

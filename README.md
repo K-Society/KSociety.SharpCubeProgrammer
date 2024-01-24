@@ -120,75 +120,123 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 
 ## Get Started
 
-- Register SharpCubeProgrammer as service with Autofac IoC:
+Examples include the QuickStart project, is a very basic example.
 
-Create the module for Autofac in a dedicated file (in this example under the Bindings folder) with the following contents:
+- Creates a new instance of the CharpCubeProgrammer class:
 
 ```csharp
-namespace MyNamespace.Bindings
-{
-    using Autofac;
-    using SharpCubeProgrammer;
-    using SharpCubeProgrammer.Interface;
-
-    public class ProgrammerApi : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance();
-        }
-    }
-}
+var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
 ```
 
-Register the module:
+- Set up the logging system:
 
 ```csharp
-builder.RegisterModule(new Bindings.ProgrammerApi());
+var displayCallBacks = new DisplayCallBacks
+{
+    InitProgressBar = InitProgressBar,
+    LogMessage = ReceiveMessage,
+    LoadBar = ProgressBarUpdate
+};
+
+cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
+
+cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+```
+
+- Retrieves all ST-LINK connected probes:
+
+```csharp
+var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 ```
 
 - Connect:
 
 ```csharp
-var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
+if (stLinkList.Any())
+{
+    var stLink = stLinkList.First();
+    stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
+    stLink.Shared = 0;
+
+    var connectionResult = cubeProgrammerApi.ConnectStLink(stLink);
+
+    //...
+
+}
+else
+{
+    Console.WriteLine("No ST-Link found!");
+}
 ```
 
-- General Info:
+- Retrieve general info:
 
 ```csharp
-var generalInfo = _cubeProgrammerApi.GetDeviceGeneralInf();
+if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+{
+    var generalInfo = cubeProgrammerApi.GetDeviceGeneralInf();
+    if (generalInfo != null)
+    {
+        Console.WriteLine("INFO: \n" +
+                            "Board: {0} \n" +
+                            "Bootloader Version: {1} \n" +
+                            "Cpu: {2} \n" +
+                            "Description: {3} \n" +
+                            "DeviceId: {4} \n" +
+                            "FlashSize: {5} \n" +
+                            "RevisionId: {6} \n" +
+                            "Name: {7} \n" +
+                            "Series: {8} \n" +
+                            "Type: {9}",
+            generalInfo.Value.Board,
+            generalInfo.Value.BootloaderVersion,
+            generalInfo.Value.Cpu,
+            generalInfo.Value.Description,
+            generalInfo.Value.DeviceId,
+            generalInfo.Value.FlashSize,
+            generalInfo.Value.RevisionId,
+            generalInfo.Value.Name,
+            generalInfo.Value.Series,
+            generalInfo.Value.Type);
+    }
+}
+```
+
+- Send option bytes:
+
+```csharp
+var sendOptionBytesCmd = cubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 ```
 
 - Erase:
 
 ```csharp
-var massErase = _cubeProgrammerApi.MassErase("");
+var massErase = cubeProgrammerApi.MassErase("");
 ```
 
 - Flash:
 
 ```csharp
-var downloadFile = _cubeProgrammerApi.DownloadFile(firmwarePath, "0x08000000", 1U, 1U);
+var downloadFile = cubeProgrammerApi.DownloadFile(firmwarePath, "0x08000000", 1U, 1U);
 ```
 
 - Run:
 
 ```csharp
-var execute = _cubeProgrammerApi.Execute("0x08000000");
-```
-
-- Send Option Bytes:
-
-```csharp
-var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
+var execute = cubeProgrammerApi.Execute("0x08000000");
 ```
 
 - Disconnect:
 
 ```csharp
-CubeProgrammerApi.Disconnect();
+cubeProgrammerApi.Disconnect();
 ```
 
+- DeleteInterfaceList:
+
+```csharp
+cubeProgrammerApi.DeleteInterfaceList();
+```
 
 ## License
 The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)

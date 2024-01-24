@@ -1411,6 +1411,7 @@ namespace SharpCubeProgrammer
         protected override void DisposeUnmanagedResources()
         {
             this._handle?.Dispose();
+            this._handle = null;
         }
 
         #endregion

@@ -21,7 +21,6 @@ namespace KSociety.Test
         private readonly ICubeProgrammerApi _cubeProgrammerApi;
         private readonly bool _isConnected;
         private readonly ILogger<Programmer> _logger;
-        //private readonly ILogger<WmiManager> _loggerWmiManager;
         private readonly ILogger<CubeProgrammerApi> _loggerCubeProgrammerApi;
 
         public Programmer(ITestOutputHelper output)
@@ -31,25 +30,17 @@ namespace KSociety.Test
                 .WriteTo.TestOutput(output, Serilog.Events.LogEventLevel.Verbose)
                 .CreateLogger()
                 .ForContext<Programmer>()
-                //.ForContext<WmiManager>()
                 .ForContext<CubeProgrammerApi>();
 
             this._logger = new SerilogLoggerFactory(this._output)
                 .CreateLogger<Programmer>();
 
-            //this._loggerWmiManager = new SerilogLoggerFactory(this._output)
-            //    .CreateLogger<WmiManager>();
-
             this._loggerCubeProgrammerApi = new SerilogLoggerFactory(this._output)
                 .CreateLogger<CubeProgrammerApi>();
 
-            //IWmiManager wmiManager = new WmiManager(this._loggerWmiManager);
-
             this._cubeProgrammerApi = new CubeProgrammerApi(this._loggerCubeProgrammerApi);
 
-            //_isConnected = DfuConnect();
             this._isConnected = this.Connect();
-            //ProgrammingInitOptionBytesInterface();
         }
 
         public bool Connect()
