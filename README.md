@@ -232,7 +232,7 @@ var execute = cubeProgrammerApi.Execute("0x08000000");
 cubeProgrammerApi.Disconnect();
 ```
 
-- DeleteInterfaceList:
+- Delete interface list:
 
 ```csharp
 cubeProgrammerApi.DeleteInterfaceList();

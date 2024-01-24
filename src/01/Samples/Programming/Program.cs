@@ -238,9 +238,6 @@ namespace Programming
                         }
                     }
 
-                    //var uid64 = CubeProgrammerApi.GetUID64();
-                    //var startFusREsult = CubeProgrammerApi.StartFus();
-
                     var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
                     if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeprogrammerNoError))
@@ -375,19 +372,19 @@ namespace Programming
                     break;
 
                 case MessageType.Error:
-                    Logger.LogError("Message: {0}", message);
+                    Logger?.LogError("Message: {0}", message);
                     break;
 
                 case MessageType.Verbosity1:
                 case MessageType.Verbosity2:
                 case MessageType.Verbosity3:
-                    Logger.LogTrace("Message: {0}", message);
+                    Logger?.LogTrace("Message: {0}", message);
                     break;
 
                 case MessageType.GreenInfoNoPopup:
                 case MessageType.WarningNoPopup:
                 case MessageType.ErrorNoPopup:
-                    Logger.LogTrace("Message: {0}", message);
+                    Logger?.LogTrace("Message: {0}", message);
                     break;
 
                 default:
