@@ -18,10 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
       <Version>3.6.133</Version>
     </PackageReference>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   
   <Import Project="Icon.Build.props" Condition=" '$(MSBuildProjectExtension)'=='.csproj' and Exists('Icon.Build.props') " />

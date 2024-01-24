@@ -8,12 +8,13 @@ namespace Programming
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
-    using KSociety.SharpCubeProgrammer.Enum;
-    using KSociety.SharpCubeProgrammer.Interface;
-    using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using SharpCubeProgrammer;
+    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Struct;
 
     internal class Program
     {
@@ -39,60 +40,23 @@ namespace Programming
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
             
-            #region [Log Testing]
+            //#region [Log Testing]
 
-            var displayCallBacks = new DisplayCallBacks
-            {
-                InitProgressBar = InitProgressBar,
-                LogMessage = ReceiveMessage,
-                LoadBar = ProgressBarUpdate
-            };
-
-            CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
-            //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
-            CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
-
-            #endregion
-
-            //#region []
-
-            //var stLinkListResult = CubeProgrammerApi.GetStLinkList();
-            //var stLink1 = stLinkListResult.FirstOrDefault();
-            //stLink1.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
-            //stLink1.Shared = 0;
-            //CubeProgrammerApi.ConnectStLink(stLink1);
-            //var generalInfo1 = CubeProgrammerApi.GetDeviceGeneralInf();
-            //if (generalInfo1 != null)
+            //var displayCallBacks = new DisplayCallBacks
             //{
-            //    Logger.LogInformation("INFO: \n" +
-            //                          "Board: {0} \n" +
-            //                          "Bootloader Version: {1} \n" +
-            //                          "Cpu: {2} \n" +
-            //                          "Description: {3} \n" +
-            //                          "DeviceId: {4} \n" +
-            //                          "FlashSize: {5} \n" +
-            //                          "RevisionId: {6} \n" +
-            //                          "Name: {7} \n" +
-            //                          "Series: {8} \n" +
-            //                          "Type: {9}",
-            //        generalInfo1.Value.Board,
-            //        generalInfo1.Value.BootloaderVersion,
-            //        generalInfo1.Value.Cpu,
-            //        generalInfo1.Value.Description,
-            //        generalInfo1.Value.DeviceId,
-            //        generalInfo1.Value.FlashSize,
-            //        generalInfo1.Value.RevisionId,
-            //        generalInfo1.Value.Name,
-            //        generalInfo1.Value.Series,
-            //        generalInfo1.Value.Type);
-            //}
+            //    InitProgressBar = InitProgressBar,
+            //    LogMessage = ReceiveMessage,
+            //    LoadBar = ProgressBarUpdate
+            //};
 
-            //CubeProgrammerApi.Disconnect();
-            //;
+            //CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
+            
+            ////CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
+            //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+
             //#endregion
 
-
-            #region [External Loader Testing]
+            //#region [External Loader Testing]
 
             //var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
 
@@ -109,7 +73,7 @@ namespace Programming
             //    }
             //}
 
-            #endregion
+            //#endregion
 
             #region [TryConnectStLink]
 
@@ -142,40 +106,41 @@ namespace Programming
 
                 #region [Verify Memory Testing memory leak]
 
-                var firmware = File.ReadAllBytes(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var openFile1 = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var openFile = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var length = firmware.Length;
                 //for (var i = 0; i < 200; i++)
                 //{
-                    //var massEraseResult = CubeProgrammerApi.MassErase();
+                //var massEraseResult = CubeProgrammerApi.MassErase();
 
-                    //if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                    //{
-                        //var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
+                //if (massEraseResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //{
+                //var writeMemoryResult = CubeProgrammerApi.WriteMemory("0x08000000", firmware);
 
-                        //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                        //{
-                            for (var i = 0; i < 4; i++)
-                            {
+                //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                //{
+                for (var i = 0; i < 100; i++)
+                {
                     //var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
                     //if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     //{
                     //var readMemoryResult = CubeProgrammerApi.Verify(openFile, "0x08000000");
-                    //var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
-                    var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
+                    
+                    
 
-                    if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                    {
-                        ;
-                    }
+                    //var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
 
+                    //if (verifyMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+
+                    //}
+                    //Logger.LogInformation("{0}: {1}", i, verifyMemoryResult);
                     //CubeProgrammerApi.Disconnect();
                     //CubeProgrammerApi.DeleteInterfaceList();
                     //}
                 }
-                        //}
-                    //}
+                //}
+                //}
                 //}
 
                 //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
@@ -208,7 +173,7 @@ namespace Programming
             if (stLinkList.Any())
             {
                 var stLink = stLinkList.First();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
@@ -246,12 +211,10 @@ namespace Programming
 
                     if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-
-                        var storage = storageStructure.Item2;
+                        //var storage = storageStructure.Item2;
                         Logger.LogInformation("Storage structure: \n" +
                                               "BanksNumber: {0} \n",
- 
-                            storageStructure.Item2.BanksNumber);
+                                                storageStructure.Item2.BanksNumber);
 
                         for (var i = 0; i < storageStructure.Item2.BanksNumber; i++)
                         {
@@ -269,9 +232,6 @@ namespace Programming
                             }
                         }
                     }
-
-                    //var uid64 = CubeProgrammerApi.GetUID64();
-                    //var startFusREsult = CubeProgrammerApi.StartFus();
 
                     var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
@@ -360,7 +320,7 @@ namespace Programming
             {
                 Logger?.LogWarning("No ST-Link found!");
             }
-
+            CubeProgrammerApi.DeleteInterfaceList();
             CubeProgrammerApi.Dispose();
             Console.WriteLine("Press a button to exit.");
             Console.ReadLine();
@@ -407,19 +367,19 @@ namespace Programming
                     break;
 
                 case MessageType.Error:
-                    Logger.LogError("Message: {0}", message);
+                    Logger?.LogError("Message: {0}", message);
                     break;
 
                 case MessageType.Verbosity1:
                 case MessageType.Verbosity2:
                 case MessageType.Verbosity3:
-                    Logger.LogTrace("Message: {0}", message);
+                    Logger?.LogTrace("Message: {0}", message);
                     break;
 
                 case MessageType.GreenInfoNoPopup:
                 case MessageType.WarningNoPopup:
                 case MessageType.ErrorNoPopup:
-                    Logger.LogTrace("Message: {0}", message);
+                    Logger?.LogTrace("Message: {0}", message);
                     break;
 
                 default:

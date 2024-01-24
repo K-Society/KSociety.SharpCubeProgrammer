@@ -3,8 +3,8 @@
 namespace Programming.Bindings
 {
     using Autofac;
-    using KSociety.SharpCubeProgrammer;
-    using KSociety.SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer;
+    using SharpCubeProgrammer.Interface;
 
     public class ProgrammerApi : Module
     {
