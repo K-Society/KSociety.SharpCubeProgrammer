@@ -49,9 +49,9 @@ jobs:
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.nbgv.outputs.SemVer2 }}
-          name: Release ${{ steps.nbgv.outputs.SemVer2 }}
-          body: ${{ steps.nbgv.outputs.SemVer2 }}
+          tag: ${{ steps.nbgv.outputs.SimpleVersion }}
+          name: Release ${{ steps.nbgv.outputs.SimpleVersion }}
+          body: ${{ steps.nbgv.outputs.SimpleVersion }}
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
