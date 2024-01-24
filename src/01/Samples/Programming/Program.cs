@@ -11,6 +11,7 @@ namespace Programming
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using SharpCubeProgrammer;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
@@ -39,40 +40,40 @@ namespace Programming
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
             
-            #region [Log Testing]
+            //#region [Log Testing]
 
-            var displayCallBacks = new DisplayCallBacks
-            {
-                InitProgressBar = InitProgressBar,
-                LogMessage = ReceiveMessage,
-                LoadBar = ProgressBarUpdate
-            };
+            //var displayCallBacks = new DisplayCallBacks
+            //{
+            //    InitProgressBar = InitProgressBar,
+            //    LogMessage = ReceiveMessage,
+            //    LoadBar = ProgressBarUpdate
+            //};
 
-            CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
+            //CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
             
-            //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
-            CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+            ////CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
+            //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
 
-            #endregion
+            //#endregion
 
-            #region [External Loader Testing]
+            //#region [External Loader Testing]
 
-            var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
+            //var deviceExternalStorageInfo = CubeProgrammerApi.GetExternalLoaders();
 
 
-            if (deviceExternalStorageInfo.HasValue)
-            {
-                var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
+            //if (deviceExternalStorageInfo.HasValue)
+            //{
+            //    var externalStorage = deviceExternalStorageInfo.Value.ExternalLoader.FirstOrDefault();
 
-                var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
+            //    var externalLoader = CubeProgrammerApi.SetExternalLoaderPath(externalStorage.filePath);
 
-                if (externalLoader.HasValue)
-                {
-                    CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
-                }
-            }
+            //    if (externalLoader.HasValue)
+            //    {
+            //        CubeProgrammerApi.RemoveExternalLoader(externalLoader.Value.filePath);
+            //    }
+            //}
 
-            #endregion
+            //#endregion
 
             #region [TryConnectStLink]
 
@@ -105,7 +106,6 @@ namespace Programming
 
                 #region [Verify Memory Testing memory leak]
 
-                var firmware = File.ReadAllBytes(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var openFile1 = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var openFile = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var length = firmware.Length;
@@ -119,19 +119,14 @@ namespace Programming
 
                 //if (writeMemoryResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 //{
-                for (var i = 0; i < 10; i++)
+                for (var i = 0; i < 100; i++)
                 {
                     //var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
                     //if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     //{
                     //var readMemoryResult = CubeProgrammerApi.Verify(openFile, "0x08000000");
-                    var readMemoryResult = CubeProgrammerApi.ReadMemory("0x08000000", firmware.Length);
-
-                    if (readMemoryResult.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                    {
-
-                    }
-                    Logger.LogInformation("{0}: {1}", i, readMemoryResult.Item1);
+                    
+                    
 
                     //var verifyMemoryResult = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", firmware);
 
@@ -216,7 +211,7 @@ namespace Programming
 
                     if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-                        var storage = storageStructure.Item2;
+                        //var storage = storageStructure.Item2;
                         Logger.LogInformation("Storage structure: \n" +
                                               "BanksNumber: {0} \n",
                                                 storageStructure.Item2.BanksNumber);
