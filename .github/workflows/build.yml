@@ -46,12 +46,13 @@ jobs:
       #    name: artifacts
       #    path: build/**/Release/*.*nupkg
           
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
+      - name: Bump version and push tag
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1        
         with:
-          tag: ${{ steps.nbgv.outputs.SimpleVersion }}
-          name: Release ${{ steps.nbgv.outputs.SimpleVersion }}
-          body: ${{ steps.nbgv.outputs.SimpleVersion }}
+          custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
