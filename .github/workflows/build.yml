@@ -50,6 +50,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
+          custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to GitHub Packages
