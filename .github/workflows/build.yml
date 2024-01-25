@@ -46,10 +46,11 @@ jobs:
       #    name: artifacts
       #    path: build/**/Release/*.*nupkg
           
-      - name: Create Tag
-        id: create_tag
-        uses: jaywcjlove/create-tag-action@main
-        version: ${{ steps.nbgv.outputs.SimpleVersion }}
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
