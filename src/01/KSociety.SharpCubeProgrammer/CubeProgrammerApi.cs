@@ -206,7 +206,7 @@ namespace SharpCubeProgrammer
 
         #region [Bootloader]
 
-        //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN functions together.
+        //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN function together.
 
         /// <inheritdoc />
         public void GetUsartList()
@@ -1175,7 +1175,7 @@ namespace SharpCubeProgrammer
 
         #region [STM32WB specific]
 
-        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
+        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
         /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
@@ -1399,7 +1399,7 @@ namespace SharpCubeProgrammer
 
             if (hex.StartsWith("0x") || hex.StartsWith("0X"))
             {
-                return hex.Split(new char[] {'x', 'X'})[1];
+                return hex.Split('x', 'X')[1];
             }
 
             return hex;
