@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammingLegacy", "src\01
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickStart", "src\01\Samples\QuickStart\QuickStart.csproj", "{5702BE45-C9C6-476E-9AA5-836FF996B7BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dojo", "src\01\Samples\Dojo\Dojo.csproj", "{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,15 @@ Global
 		{5702BE45-C9C6-476E-9AA5-836FF996B7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5702BE45-C9C6-476E-9AA5-836FF996B7BB}.Release|x64.ActiveCfg = Release|x64
 		{5702BE45-C9C6-476E-9AA5-836FF996B7BB}.Release|x86.ActiveCfg = Release|x86
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|x64.ActiveCfg = Debug|x64
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|x64.Build.0 = Debug|x64
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|x86.ActiveCfg = Debug|x86
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Debug|x86.Build.0 = Debug|x86
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Release|x64.ActiveCfg = Release|x64
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +142,7 @@ Global
 		{5DD743B1-AB1B-4509-9930-2AEBF3541F98} = {4EE1D5AC-4198-4753-A277-FA7F730B5184}
 		{3285B360-3124-4A10-8D51-BE29EBA68D33} = {4EE1D5AC-4198-4753-A277-FA7F730B5184}
 		{5702BE45-C9C6-476E-9AA5-836FF996B7BB} = {4EE1D5AC-4198-4753-A277-FA7F730B5184}
+		{F8F4C8A6-874F-4DF5-9F30-17F115EAD013} = {4EE1D5AC-4198-4753-A277-FA7F730B5184}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D151E62-C748-4733-BFAC-CDAD83F0B9A8}
