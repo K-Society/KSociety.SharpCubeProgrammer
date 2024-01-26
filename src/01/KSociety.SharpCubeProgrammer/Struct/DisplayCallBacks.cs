@@ -19,8 +19,18 @@ namespace SharpCubeProgrammer.Struct
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DisplayCallBacks
     {
+        #if NETSTANDARD2_0
+
+        public InitProgressBar InitProgressBar;
+        public LogMessageReceived LogMessage;
+        public ProgressBarUpdateReceived LoadBar;
+
+        #elif NETSTANDARD2_1
+
         public InitProgressBar? InitProgressBar;
         public LogMessageReceived? LogMessage;
         public ProgressBarUpdateReceived? LoadBar;
+
+        #endif
     }
 }
