@@ -4,7 +4,9 @@
 <Project>
   <PropertyGroup>
 	<DefaultLanguage>en-US</DefaultLanguage>
-	<Nullable>enable</Nullable>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
