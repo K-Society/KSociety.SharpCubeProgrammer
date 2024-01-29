@@ -3,7 +3,6 @@
 namespace Programming
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
@@ -11,10 +10,8 @@ namespace Programming
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
-    using SharpCubeProgrammer;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
-    using SharpCubeProgrammer.Struct;
 
     internal class Program
     {
@@ -77,6 +74,7 @@ namespace Programming
 
             #region [TryConnectStLink]
 
+            
             var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 
             if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
@@ -164,6 +162,7 @@ namespace Programming
 
                 #endregion
             }
+            
 
             CubeProgrammerApi.Disconnect();
 

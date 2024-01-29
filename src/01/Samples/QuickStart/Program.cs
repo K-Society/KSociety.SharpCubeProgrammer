@@ -9,9 +9,9 @@ namespace QuickStart
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
 

@@ -8,7 +8,7 @@ namespace SharpCubeProgrammer.Interface
     using Enum;
     using Struct;
 
-    public interface ICubeProgrammerApi : IDisposable
+    public interface ICubeProgrammerApi : IDisposable, IAsyncDisposable
     {
 
         #region [STLINK]
