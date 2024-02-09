@@ -13,29 +13,19 @@ namespace SharpCubeProgrammer
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
+    using Util;
 
-    public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
+    public class CubeProgrammerApi : Disposable, ICubeProgrammerApi
     {
         /// <summary>
         /// Synchronization object to protect loading the native library and its functions. This field is read-only.
         /// </summary>
         private readonly object _syncRoot = new object();
 
-        #if NETSTANDARD2_0
-        
         private Native.SafeLibraryHandle _handle;
         private readonly ILogger<CubeProgrammerApi> _logger;
 
-        #elif NETSTANDARD2_1
-
-        private Native.SafeLibraryHandle? _handle;
-        private readonly ILogger<CubeProgrammerApi>? _logger;
-
-        #endif
-
         #region [Constructor]
-
-        #if NETSTANDARD2_0
 
         public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger = default)
         {
@@ -47,18 +37,6 @@ namespace SharpCubeProgrammer
             this._logger = logger;
             this.Init();
         }
-
-        #elif NETSTANDARD2_1
-
-        public CubeProgrammerApi(ILogger<CubeProgrammerApi>? logger = default)
-        {
-            logger ??= new NullLogger<CubeProgrammerApi>();
-
-            this._logger = logger;
-            this.Init();
-        }
-
-        #endif
 
         #endregion
 
@@ -1428,10 +1406,16 @@ namespace SharpCubeProgrammer
 
         #region [Dispose]
 
-        protected override void DisposeUnmanagedResources()
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
         {
-            this._handle?.Dispose();
-            this._handle = null;
+            if (disposing)
+            {
+                this._handle?.Dispose();
+                this._handle = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
