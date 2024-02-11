@@ -22,7 +22,7 @@ Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can 
 The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
 for the purpose of flash downloads or general memory access. 
 The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
-This has been tested on Windows 10, you don't need to install cubeprogrammer.
+This has been tested on Windows 10, you don't need to install STM32CubeProgrammer.
 
 ### KSociety.SharpCubeProgrammer
 STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions are welcome.
