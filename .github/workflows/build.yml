@@ -26,13 +26,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Update CHANGELOG
-        id: changelog
-        uses: requarks/changelog-action@v1.10.1
-        with:
-          token: ${{ github.token }}
-          tag: ${{ github.ref_name }} 
-          
       - name: Set package source
         run: dotnet nuget add source --username maniglia --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/K-Society/index.json"
           
@@ -42,6 +35,13 @@ jobs:
       - run: |
           echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
           echo 'SimpleVersion=${{ steps.nbgv.outputs.SimpleVersion }}'
+          
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1.10.1
+        with:
+          token: ${{ github.token }}
+          tag: v${{ steps.nbgv.outputs.SimpleVersion }} 
 
       - name: Build KSociety.SharpCubeProgrammer
         shell: cmd
