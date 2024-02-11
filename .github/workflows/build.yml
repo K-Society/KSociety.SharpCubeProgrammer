@@ -36,13 +36,19 @@ jobs:
           echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
           echo 'SimpleVersion=${{ steps.nbgv.outputs.SimpleVersion }}'
           
-      - name: Update CHANGELOG
-        id: changelog
-        uses: requarks/changelog-action@v1.10.1
-        with:
-          token: ${{ github.token }}
+      #- name: Update CHANGELOG
+      #  id: changelog
+      #  uses: requarks/changelog-action@v1.10.1
+      #  with:
+      #    token: ${{ github.token }}
           #tag: ${{ steps.nbgv.outputs.SimpleVersion }} 
-          tag: v0.2.40
+      #    tag: v0.2.40
+      
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build KSociety.SharpCubeProgrammer
         shell: cmd
