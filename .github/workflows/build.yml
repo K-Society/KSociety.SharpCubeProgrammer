@@ -37,7 +37,7 @@ jobs:
           echo 'SimpleVersion=${{ steps.nbgv.outputs.SimpleVersion }}'
           
       - name: Build Changelog
-        #if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/develop')
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v4.1.1
         env:
@@ -48,12 +48,19 @@ jobs:
         run: ./build.cmd
           
       - name: Bump version and push tag
-        #if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/develop')
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1        
         with:
           custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: develop
+          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
+          file_pattern: CHANGELOG.md
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
