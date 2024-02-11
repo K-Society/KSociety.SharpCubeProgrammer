@@ -54,7 +54,13 @@ jobs:
         with:
           custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{steps.build_changelog.outputs.changelog}}
+          
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: develop
+          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
+          file_pattern: CHANGELOG.md
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
