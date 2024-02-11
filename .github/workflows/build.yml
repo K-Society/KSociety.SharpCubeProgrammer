@@ -47,12 +47,19 @@ jobs:
       #    path: build/**/Release/*.*nupkg
           
       - name: Bump version and push tag
-        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        #if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1        
         with:
           custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1.10.1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }} 
 
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')

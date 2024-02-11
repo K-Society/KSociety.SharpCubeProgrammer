@@ -770,12 +770,15 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            if (!String.IsNullOrEmpty(filePath) || !String.IsNullOrEmpty(address))
+            if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
-                var uintAddress = this.HexConverterToUint(address);
+                if (!String.IsNullOrEmpty(address))
+                {
+                    var uintAddress = this.HexConverterToUint(address);
 
-                Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                    Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                }
             }
         }
 
