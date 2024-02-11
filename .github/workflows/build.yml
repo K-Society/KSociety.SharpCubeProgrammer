@@ -50,8 +50,7 @@ jobs:
       - name: Bump version and push tag
         #if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
         id: tag_version
-        uses: mathieudutour/github-tag-action@v6.1     
-        body: ${{steps.build_changelog.outputs.changelog}}        
+        uses: mathieudutour/github-tag-action@v6.1        
         with:
           custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
