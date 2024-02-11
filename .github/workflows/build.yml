@@ -41,7 +41,8 @@ jobs:
         uses: requarks/changelog-action@v1.10.1
         with:
           token: ${{ github.token }}
-          tag: ${{ steps.nbgv.outputs.SimpleVersion }} 
+          #tag: ${{ steps.nbgv.outputs.SimpleVersion }} 
+          tag: v0.2.40
 
       - name: Build KSociety.SharpCubeProgrammer
         shell: cmd
