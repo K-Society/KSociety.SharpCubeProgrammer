@@ -3,12 +3,11 @@ namespace ProgrammingLegacy
     using System.Linq;
     using System;
     using Autofac;
-    using KSociety.SharpCubeProgrammer.Enum;
-    using KSociety.SharpCubeProgrammer.Interface;
-    using KSociety.SharpCubeProgrammer.Struct;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Interface;
 
     internal class Program
     {
@@ -35,7 +34,7 @@ namespace ProgrammingLegacy
             if (stLinkList.Any())
             {
                 var stLink = stLinkList.First();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 stLink.Shared = 0;
 
                 Logger.LogInformation("Speed: {0}", stLink.Speed);

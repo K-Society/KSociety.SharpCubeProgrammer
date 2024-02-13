@@ -1,6 +1,6 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace KSociety.SharpCubeProgrammer.Native
+namespace SharpCubeProgrammer.Native
 {
     using System;
     using System.Runtime.InteropServices;
@@ -692,6 +692,39 @@ namespace KSociety.SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [WriteMemoryAndVerify]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAndVerify32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAndVerify64(uint address, IntPtr data, uint size);
+
+        private static int WriteMemoryAndVerifyNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? WriteMemoryAndVerify32(address, data, size)
+                : WriteMemoryAndVerify64(address, data, size);
+        }
+
+        internal static int WriteMemoryAndVerify(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return WriteMemoryAndVerifyNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [EditSector]
 
         [DllImport(ProgrammerDll32, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -1113,6 +1146,39 @@ namespace KSociety.SharpCubeProgrammer.Native
             try
             {
                 return VerifyMemoryNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [VerifyMemoryBySegment]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "VerifyMemoryBySegment", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int VerifyMemoryBySegment32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "VerifyMemoryBySegment", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int VerifyMemoryBySegment64(uint address, IntPtr data, uint size);
+
+        private static int VerifyMemoryBySegmentNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? VerifyMemoryBySegment32(address, data, size)
+                : VerifyMemoryBySegment64(address, data, size);
+        }
+
+        internal static int VerifyMemoryBySegment(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return VerifyMemoryBySegmentNative(address, data, size);
             }
             catch (DllNotFoundException ex)
             {

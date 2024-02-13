@@ -1,6 +1,6 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace KSociety.SharpCubeProgrammer.Interface
+namespace SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace KSociety.SharpCubeProgrammer.Interface
     using Enum;
     using Struct;
 
-    public interface ICubeProgrammerApi : IDisposable
+    public interface ICubeProgrammerApi : IDisposable, IAsyncDisposable
     {
 
         #region [STLINK]
@@ -142,6 +142,11 @@ namespace KSociety.SharpCubeProgrammer.Interface
         CubeProgrammerError WriteMemory(string address, byte[] data);
 
         /// <summary>
+        /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
+        /// </summary>
+        CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data);
+
+        /// <summary>
         /// This routine allows to write sector data on the user interface with the configuration already initialized.
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
@@ -220,6 +225,11 @@ namespace KSociety.SharpCubeProgrammer.Interface
         /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
         /// </summary>
         CubeProgrammerError VerifyMemory(string address, byte[] data);
+
+        /// <summary>
+        /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
+        /// </summary>
+        CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data);
 
         /// <summary>
         /// This routine allows to save the data file content to another file.

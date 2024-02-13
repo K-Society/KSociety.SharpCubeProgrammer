@@ -9,9 +9,9 @@ namespace KSociety.Test
     using Serilog;
     using Serilog.Extensions.Logging;
     using SharpCubeProgrammer;
-    using SharpCubeProgrammer.Events;
+    using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
-    using Wmi;
+    using SharpCubeProgrammer.Struct;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -21,7 +21,6 @@ namespace KSociety.Test
         private readonly ICubeProgrammerApi _cubeProgrammerApi;
         private readonly bool _isConnected;
         private readonly ILogger<Programmer> _logger;
-        private readonly ILogger<WmiManager> _loggerWmiManager;
         private readonly ILogger<CubeProgrammerApi> _loggerCubeProgrammerApi;
 
         public Programmer(ITestOutputHelper output)
@@ -31,44 +30,17 @@ namespace KSociety.Test
                 .WriteTo.TestOutput(output, Serilog.Events.LogEventLevel.Verbose)
                 .CreateLogger()
                 .ForContext<Programmer>()
-                .ForContext<WmiManager>()
                 .ForContext<CubeProgrammerApi>();
 
             this._logger = new SerilogLoggerFactory(this._output)
                 .CreateLogger<Programmer>();
 
-            this._loggerWmiManager = new SerilogLoggerFactory(this._output)
-                .CreateLogger<WmiManager>();
-
             this._loggerCubeProgrammerApi = new SerilogLoggerFactory(this._output)
                 .CreateLogger<CubeProgrammerApi>();
 
-            IWmiManager wmiManager = new WmiManager(this._loggerWmiManager);
+            this._cubeProgrammerApi = new CubeProgrammerApi(this._loggerCubeProgrammerApi);
 
-            this._cubeProgrammerApi = new CubeProgrammerApi(wmiManager, this._loggerCubeProgrammerApi);
-
-            this._cubeProgrammerApi.StLinkAdded += this.CubeProgrammerApiOnStLinkAdded;
-            this._cubeProgrammerApi.StLinkRemoved += this.CubeProgrammerApiOnStLinkRemoved;
-            this._cubeProgrammerApi.StLinksFoundStatus += this.CubeProgrammerApiOnStLinksFoundStatus;
-
-            //_isConnected = DfuConnect();
             this._isConnected = this.Connect();
-            //ProgrammingInitOptionBytesInterface();
-        }
-
-        private void CubeProgrammerApiOnStLinksFoundStatus(object? sender, StLinkFoundEventArgs e)
-        {
-            this._logger?.LogTrace("CubeProgrammerApiOnStLinksFoundStatus: {0}", "OK");
-        }
-
-        private void CubeProgrammerApiOnStLinkRemoved(object? sender, StLinkRemovedEventArgs e)
-        {
-            this._logger?.LogTrace("CubeProgrammerApiOnStLinkRemoved: {0}", false);
-        }
-
-        private void CubeProgrammerApiOnStLinkAdded(object? sender, StLinkAddedEventArgs e)
-        {
-            this._logger?.LogTrace("CubeProgrammerApiOnStLinkAdded: {0}", true);
         }
 
         public bool Connect()
@@ -82,12 +54,12 @@ namespace KSociety.Test
                     return false;
                 }
 
-                var stLink = (KSociety.SharpCubeProgrammer.Struct.DebugConnectParameters)stLinkList.First().Clone();
-                stLink.ConnectionMode = KSociety.SharpCubeProgrammer.Enum.DebugConnectionMode.UnderResetMode;
+                var stLink = (DebugConnectParameters)stLinkList.First();
+                stLink.ConnectionMode = DebugConnectionMode.UnderResetMode;
 
                 var connectionResult = this._cubeProgrammerApi.ConnectStLink(stLink);
 
-                if (!connectionResult.Equals(KSociety.SharpCubeProgrammer.Enum.CubeProgrammerError.CubeprogrammerNoError))
+                if (!connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 {
                     return false;
                 }
@@ -122,7 +94,7 @@ namespace KSociety.Test
             if (this._isConnected)
             {
                 var eraseResult = this._cubeProgrammerApi.GetStorageStructure();
-                Assert.Equal(KSociety.SharpCubeProgrammer.Enum.CubeProgrammerError.CubeprogrammerNoError, eraseResult.Item1);
+                Assert.Equal(CubeProgrammerError.CubeprogrammerNoError, eraseResult.Item1);
 
                 //var result = eraseResult.Item2;
 

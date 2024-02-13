@@ -1,6 +1,6 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace KSociety.SharpCubeProgrammer
+namespace SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
@@ -13,20 +13,21 @@ namespace KSociety.SharpCubeProgrammer
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
+    using Util;
 
-    public class CubeProgrammerApi : DisposableObject, ICubeProgrammerApi
+    public class CubeProgrammerApi : Disposable, ICubeProgrammerApi
     {
         /// <summary>
         /// Synchronization object to protect loading the native library and its functions. This field is read-only.
         /// </summary>
         private readonly object _syncRoot = new object();
 
-        private Native.SafeLibraryHandle? _handle;
-        private readonly ILogger<CubeProgrammerApi>? _logger;
+        private Native.SafeLibraryHandle _handle;
+        private readonly ILogger<CubeProgrammerApi> _logger;
 
         #region [Constructor]
 
-        public CubeProgrammerApi(ILogger<CubeProgrammerApi>? logger = default)
+        public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger = default)
         {
             if (logger == null)
             {
@@ -104,6 +105,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
+                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                     }
                 }
                 else
@@ -135,6 +137,7 @@ namespace KSociety.SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
                         parametersList.Add(currentItem);
+                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                     }
                 }
                 else
@@ -181,7 +184,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Bootloader]
 
-        //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN functions together.
+        //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN function together.
 
         /// <inheritdoc />
         public void GetUsartList()
@@ -346,7 +349,7 @@ namespace KSociety.SharpCubeProgrammer
 
             try
             {
-                var bufferPtr = new IntPtr();
+                var bufferPtr = IntPtr.Zero;
                 var readMemoryResult =
                     Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
@@ -383,6 +386,32 @@ namespace KSociety.SharpCubeProgrammer
                 catch (Exception ex)
                 {
                     this._logger?.LogError(ex, "WriteMemory: ");
+                }
+            }
+
+            return result;
+        }
+
+        public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemoryAndVerify: ");
                 }
             }
 
@@ -648,6 +677,29 @@ namespace KSociety.SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+                var verifyMemoryResult =
+                    Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                gch.Free();
+                result = this.CheckResult(verifyMemoryResult);
+
+
+                return result;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
         public CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName)
         {
             var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
@@ -718,12 +770,15 @@ namespace KSociety.SharpCubeProgrammer
         /// <inheritdoc />
         public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            if (!String.IsNullOrEmpty(filePath) || !String.IsNullOrEmpty(address))
+            if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
-                var uintAddress = this.HexConverterToUint(address);
+                if (!String.IsNullOrEmpty(address))
+                {
+                    var uintAddress = this.HexConverterToUint(address);
 
-                Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                    Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                }
             }
         }
 
@@ -752,7 +807,7 @@ namespace KSociety.SharpCubeProgrammer
                         var deviceBankList = new List<DeviceDeviceBank>();
                         for (var i = 0; i < storageStructure.BanksNumber; i++)
                         {
-                            
+
                             if (storageStructure.Banks != IntPtr.Zero)
                             {
                                 var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
@@ -761,11 +816,14 @@ namespace KSociety.SharpCubeProgrammer
                                 {
                                     for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
                                     {
-                                        var bankSector = Marshal.PtrToStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+                                        var bankSector =
+                                            Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
+                                                                               (ii * bankSectorSize));
 
                                         bankSectorList.Add(bankSector);
 
-                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors + (ii * bankSectorSize));
+                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
+                                                                             (ii * bankSectorSize));
                                     }
                                 }
 
@@ -831,103 +889,100 @@ namespace KSociety.SharpCubeProgrammer
             {
                 PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
 
-                if (peripheralC.HasValue)
+                var bankCList = new List<DeviceBankC>();
+                for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
                 {
-                    var bankCList = new List<DeviceBankC>();
-                    for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
+                    if (peripheralC.Value.Banks != IntPtr.Zero)
                     {
-                        if (peripheralC.Value.Banks != IntPtr.Zero)
+                        var bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks + (i * pointerSize));
+                        var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
+
+                        if (bankCItem.Categories != IntPtr.Zero)
                         {
-                            var bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks + (i * pointerSize));
-                            var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
-
-                            if (bankCItem.Categories != IntPtr.Zero)
+                            var categoryCList = new List<DeviceCategoryC>();
+                            for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
                             {
-                                var categoryCList = new List<DeviceCategoryC>();
-                                for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
-                                {
-                                    var categoryCItemPointer =
-                                        Marshal.ReadIntPtr(bankCItem.Categories + (ii * pointerSize));
-                                    var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
+                                var categoryCItemPointer =
+                                    Marshal.ReadIntPtr(bankCItem.Categories + (ii * pointerSize));
+                                var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
 
-                                    if (categoryCItem.Bits != IntPtr.Zero)
+                                if (categoryCItem.Bits != IntPtr.Zero)
+                                {
+                                    var bitCList = new List<DeviceBitC>();
+                                    for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
                                     {
-                                        var bitCList = new List<DeviceBitC>();
-                                        for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
-                                        {
-                                            var bitCItemPointer =
-                                                Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
-                                            var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+                                        var bitCItemPointer =
+                                            Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
+                                        var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
 
-                                            if (bitCItem.Values != IntPtr.Zero)
+                                        if (bitCItem.Values != IntPtr.Zero)
+                                        {
+                                            var bitValueCList = new List<BitValueC>();
+                                            for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
                                             {
-                                                var bitValueCList = new List<BitValueC>();
-                                                for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
-                                                {
-                                                    var bitValueCItemPointer =
-                                                        Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
-                                                    var bitValueCItem =
-                                                        Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
-                                                    bitValueCList.Add(bitValueCItem);
+                                                var bitValueCItemPointer =
+                                                    Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
+                                                var bitValueCItem =
+                                                    Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
+                                                bitValueCList.Add(bitValueCItem);
 
-                                                    Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
-                                                }
-
-                                                var deviceBitC = new DeviceBitC
-                                                {
-                                                    Name = bitCItem.Name,
-                                                    Description = bitCItem.Description,
-                                                    WordOffset = bitCItem.WordOffset,
-                                                    BitOffset = bitCItem.BitOffset,
-                                                    BitWidth = bitCItem.BitWidth,
-                                                    Access = bitCItem.Access,
-                                                    ValuesNbr = bitCItem.ValuesNbr,
-                                                    Values = bitValueCList,
-                                                    Equation = bitCItem.Equation,
-                                                    Reference = bitCItem.Reference,
-                                                    BitValue = bitCItem.BitValue
-                                                };
-                                                bitCList.Add(deviceBitC);
-
-                                                Marshal.DestroyStructure<BitC>(bitCItemPointer);
+                                                Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
                                             }
+
+                                            var deviceBitC = new DeviceBitC
+                                            {
+                                                Name = bitCItem.Name,
+                                                Description = bitCItem.Description,
+                                                WordOffset = bitCItem.WordOffset,
+                                                BitOffset = bitCItem.BitOffset,
+                                                BitWidth = bitCItem.BitWidth,
+                                                Access = bitCItem.Access,
+                                                ValuesNbr = bitCItem.ValuesNbr,
+                                                Values = bitValueCList,
+                                                Equation = bitCItem.Equation,
+                                                Reference = bitCItem.Reference,
+                                                BitValue = bitCItem.BitValue
+                                            };
+                                            bitCList.Add(deviceBitC);
+
+                                            Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                         }
-
-                                        var deviceCategoryC = new DeviceCategoryC
-                                        {
-                                            Name = categoryCItem.Name,
-                                            BitsNbr = categoryCItem.BitsNbr,
-                                            Bits = bitCList
-                                        };
-                                        categoryCList.Add(deviceCategoryC);
-                                        Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
                                     }
-                                }
 
-                                var deviceBankC = new DeviceBankC
-                                {
-                                    Size = bankCItem.Size,
-                                    Address = bankCItem.Address,
-                                    Access = bankCItem.Access,
-                                    CategoriesNbr = bankCItem.CategoriesNbr,
-                                    Categories = categoryCList
-                                };
-                                bankCList.Add(deviceBankC);
-                                Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                                    var deviceCategoryC = new DeviceCategoryC
+                                    {
+                                        Name = categoryCItem.Name,
+                                        BitsNbr = categoryCItem.BitsNbr,
+                                        Bits = bitCList
+                                    };
+                                    categoryCList.Add(deviceCategoryC);
+                                    Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
+                                }
                             }
+
+                            var deviceBankC = new DeviceBankC
+                            {
+                                Size = bankCItem.Size,
+                                Address = bankCItem.Address,
+                                Access = bankCItem.Access,
+                                CategoriesNbr = bankCItem.CategoriesNbr,
+                                Categories = categoryCList
+                            };
+                            bankCList.Add(deviceBankC);
+                            Marshal.DestroyStructure<BankC>(bankCItemPointer);
                         }
                     }
-
-                    var devicePeripheralC = new DevicePeripheralC
-                    {
-                        Name = peripheralC.Value.Name,
-                        Description = peripheralC.Value.Description,
-                        BanksNbr = peripheralC.Value.BanksNbr,
-                        Banks = bankCList
-                    };
-
-                    return devicePeripheralC;
                 }
+
+                var devicePeripheralC = new DevicePeripheralC
+                {
+                    Name = peripheralC.Value.Name,
+                    Description = peripheralC.Value.Description,
+                    BanksNbr = peripheralC.Value.BanksNbr,
+                    Banks = bankCList
+                };
+
+                return devicePeripheralC;
             }
             catch (Exception ex)
             {
@@ -1101,7 +1156,7 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [STM32WB specific]
 
-        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack and they are available only through USB DFU and UART bootloader interfaces,
+        /// Specific APIs used exclusively for STM32WB series to manage BLE Stack, and they are available only through USB DFU and UART bootloader interfaces,
         /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
@@ -1325,7 +1380,7 @@ namespace KSociety.SharpCubeProgrammer
 
             if (hex.StartsWith("0x") || hex.StartsWith("0X"))
             {
-                return hex.Split(new char[] {'x', 'X'})[1];
+                return hex.Split('x', 'X')[1];
             }
 
             return hex;
@@ -1354,9 +1409,16 @@ namespace KSociety.SharpCubeProgrammer
 
         #region [Dispose]
 
-        protected override void DisposeUnmanagedResources()
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
         {
-            this._handle?.Dispose();
+            if (disposing)
+            {
+                this._handle?.Dispose();
+                this._handle = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
