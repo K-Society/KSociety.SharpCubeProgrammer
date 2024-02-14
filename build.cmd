@@ -23,10 +23,6 @@ msbuild src\01\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj 
 
 msbuild src\01\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-REM msbuild src\01\Programmer\Programmer.vcxproj -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
-
-REM msbuild src\01\Programmer\Programmer.vcxproj -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
-
 goto LExit
 
 :StartDeveloperCommandPrompt
