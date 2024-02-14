@@ -3,7 +3,7 @@
 
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-	<TargetFrameworks>netstandard2.0</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 	
 	<AssemblyOriginatorKeyFile>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)ksociety.snk))</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
