@@ -39,8 +39,15 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - Reset
 
 ## Bootloader functions 
+- GetUsartList
+- ConnectUsartBootloader
+- SendByteUart
 - GetDfuDeviceList
 - ConnectDfuBootloader
+- ConnectDfuBootloader2
+- ConnectSpiBootloader
+- ConnectCanBootloader
+- ConnectI2CBootloader
 
 ## General purposes functions
 - SetDisplayCallbacks
