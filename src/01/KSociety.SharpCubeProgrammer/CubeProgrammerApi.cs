@@ -187,21 +187,69 @@ namespace SharpCubeProgrammer
         //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN function together.
 
         /// <inheritdoc />
-        public void GetUsartList()
+        public IEnumerable<UsartConnectParameters> GetUsartList()
         {
-            throw new NotImplementedException();
+            var listPtr = new IntPtr();
+            var parametersList = new List<UsartConnectParameters>();
+            try
+            {
+                var size = Marshal.SizeOf<DebugConnectParameters>();
+                var numberOfItems = Native.ProgrammerApi.GetUsartList(ref listPtr);
+                if (listPtr != IntPtr.Zero)
+                {
+                    for (var i = 0; i < numberOfItems; i++)
+                    {
+                        var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
+                        parametersList.Add(currentItem);
+                        Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                    }
+                }
+                else
+                {
+                    this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "GetUsartList: ");
+            }
+            return parametersList;
         }
 
         /// <inheritdoc />
-        public void ConnectUsartBootloader()
+        public CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            try
+            {
+                var connectUsartResult = Native.ProgrammerApi.ConnectUsartBootloader(usartConnectParameters);
+
+                output = this.CheckResult(connectUsartResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectUsartBootloader: ");
+            }
+
+            return output;
         }
 
         /// <inheritdoc />
-        public void SendByteUart()
+        public CubeProgrammerError SendByteUart(int bytes)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            try
+            {
+                var connectUsartResult = Native.ProgrammerApi.SendByteUart(bytes);
+
+                output = this.CheckResult(connectUsartResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "SendByteUart: ");
+            }
+            return output;
         }
 
         /// <inheritdoc />
@@ -259,27 +307,87 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void ConnectDfuBootloader2()
+        public CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            try
+            {
+                var connectDfuBootloader2Result = Native.ProgrammerApi.ConnectDfuBootloader2(dfuParameters);
+                if (connectDfuBootloader2Result != 0)
+                {
+                    this.Disconnect();
+                }
+
+                output = this.CheckResult(connectDfuBootloader2Result);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectDfuBootloader2: ");
+            }
+            return output;
         }
 
         /// <inheritdoc />
-        public void ConnectSpiBootloader()
+        public CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            try
+            {
+                var connectSpiBootloaderResult = Native.ProgrammerApi.ConnectSpiBootloader(spiParameters);
+                if (connectSpiBootloaderResult != 0)
+                {
+                    this.Disconnect();
+                }
+
+                output = this.CheckResult(connectSpiBootloaderResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectSpiBootloader: ");
+            }
+            return output;
         }
 
         /// <inheritdoc />
-        public void ConnectCanBootloader()
+        public CubeProgrammerError ConnectCanBootloader(CanConnectParameters canParameters)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            try
+            {
+                var connectCanBootloaderResult = Native.ProgrammerApi.ConnectCanBootloader(canParameters);
+                if (connectCanBootloaderResult != 0)
+                {
+                    this.Disconnect();
+                }
+
+                output = this.CheckResult(connectCanBootloaderResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectCanBootloader: ");
+            }
+            return output;
         }
 
         /// <inheritdoc />
-        public void ConnectI2cBootloader()
+        public CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters)
         {
-            throw new NotImplementedException();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            try
+            {
+                var connectI2CBootloaderResult = Native.ProgrammerApi.ConnectI2cBootloader(i2CParameters);
+                if (connectI2CBootloaderResult != 0)
+                {
+                    this.Disconnect();
+                }
+
+                output = this.CheckResult(connectI2CBootloaderResult);
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectI2CBootloader: ");
+            }
+            return output;
         }
 
         #endregion
