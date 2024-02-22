@@ -29,6 +29,7 @@ STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions ar
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).
+You need to use _PackageReference_, otherwise some contents will not be copied to the output folder and consequently it will not work.
 
 ## Currently supported features
 
@@ -125,7 +126,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 | MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
-Examples include the QuickStart project, is a very basic example.
+Examples include the [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
 
 - Creates a new instance of the CharpCubeProgrammer class:
 
