@@ -1522,13 +1522,21 @@ namespace SharpCubeProgrammer
         {
             if (disposing)
             {
-                this._handle?.Dispose();
-                this._handle = null;
+                // Free any other managed objects here.
             }
+
+            // Free any unmanaged objects here.
+            this._handle?.Dispose();
+            this._handle = null;
 
             base.Dispose(disposing);
         }
 
         #endregion
+
+        ~CubeProgrammerApi()
+        {
+            this.Dispose(false);
+        }
     } // CubeProgrammerApi.
 }
