@@ -51,17 +51,17 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected serial ports.
         /// </summary>
-        void GetUsartList();
+        IEnumerable<UsartConnectParameters> GetUsartList();
 
         /// <summary>
         /// This routine allows to start connection to device through USART interface.
         /// </summary>
-        void ConnectUsartBootloader();
+        CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters);
 
         /// <summary>
         /// This routine allows to send a single byte through the USART interface.
         /// </summary>
-        void SendByteUart();
+        CubeProgrammerError SendByteUart(int bytes);
 
         /// <summary>
         /// This routine allows to get connected DFU devices.
@@ -76,22 +76,22 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through USB DFU interface.
         /// </summary>
-        void ConnectDfuBootloader2();
+        CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
 
         /// <summary>
         /// This routine allows to start connection to device through SPI interface.
         /// </summary>
-        void ConnectSpiBootloader();
+        CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);
 
         /// <summary>
         /// This routine allows to start connection to device through CAN interface.
         /// </summary>
-        void ConnectCanBootloader();
+        CubeProgrammerError ConnectCanBootloader(CanConnectParameters canParameters);
 
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        void ConnectI2cBootloader();
+        CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters);
 
         #endregion
 

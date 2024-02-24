@@ -371,4 +371,6 @@ Visual Studio 2022/
 Visual Studio 2022Templates/
 Test/
 src/01/Samples/Dojo/
+src/01/KSociety.ProgrammerTerminal
 KSociety.Dojo.sln
+KSociety.ProgrammerTerminal.sln

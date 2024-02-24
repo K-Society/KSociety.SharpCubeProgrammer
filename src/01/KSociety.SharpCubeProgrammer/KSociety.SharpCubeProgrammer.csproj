@@ -53,6 +53,9 @@
     <None Include="..\..\..\Programmer\ExternalLoader\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\ExternalLoader" Visible="false" Link="st\Programmer\ExternalLoader\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" Exclude="**\N25Q256A_STM32L476G-EVAL\**\*.*;**\M29W128GL_STM3210E-EVAL\**\*.*;**\M25P64_STM3210E-EVAL\**\*.*;**\IS61WV51216BLL_STM3210E-EVAL\**\*.*">
        <PackageCopyToOutput>true</PackageCopyToOutput>
     </None>
+    <None Include="..\..\..\Programmer\FastROM_Data_Base\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Programmer\FastROM_Data_Base" Visible="false" Link="st\Programmer\FastROM_Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
