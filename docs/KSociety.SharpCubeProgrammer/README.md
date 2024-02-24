@@ -8,6 +8,10 @@
 
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
 
+
+First unofficial and open source C# wrapper.
+
+
 It makes use of several 3rd party tools:
 
 - STM32 Cube Programmer
@@ -29,6 +33,7 @@ STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions ar
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).
+You need to use _PackageReference_, otherwise some contents will not be copied to the output folder and consequently it will not work.
 
 ## Currently supported features
 
@@ -39,8 +44,15 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 - Reset
 
 ## Bootloader functions 
+- GetUsartList
+- ConnectUsartBootloader
+- SendByteUart
 - GetDfuDeviceList
 - ConnectDfuBootloader
+- ConnectDfuBootloader2
+- ConnectSpiBootloader
+- ConnectCanBootloader
+- ConnectI2CBootloader
 
 ## General purposes functions
 - SetDisplayCallbacks
@@ -118,7 +130,7 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 | MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
-Examples include the QuickStart project, is a very basic example.
+Examples include the [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
 
 - Creates a new instance of the CharpCubeProgrammer class:
 
@@ -243,5 +255,5 @@ The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensourc
 
 List of technologies, frameworks and libraries used for implementation:
 
-- [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces)
+- [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces) for .NET Standard 2.0 only.
 - [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions)
