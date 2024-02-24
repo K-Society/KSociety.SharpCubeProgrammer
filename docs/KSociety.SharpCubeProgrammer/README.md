@@ -8,6 +8,10 @@
 
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
 
+
+First unofficial and open source C# wrapper.
+
+
 It makes use of several 3rd party tools:
 
 - STM32 Cube Programmer

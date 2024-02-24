@@ -1,13 +1,20 @@
 [![Logo](https://raw.githubusercontent.com/k-society/KSociety.SharpCubeProgrammer/master/docs/K-Society__Logo_vs-negative.png)](https://github.com/K-Society)
 
+
 [![build status](https://img.shields.io/github/actions/workflow/status/K-Society/KSociety.SharpCubeProgrammer/build.yml?branch=develop)](https://github.com/K-Society/KSociety.SharpCubeProgrammer/actions/workflows/build.yml?query=branch%3Adevelop) 
 [![latest version](https://img.shields.io/nuget/v/KSociety.SharpCubeProgrammer)](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer)
 [![download count](https://img.shields.io/nuget/dt/KSociety.SharpCubeProgrammer)](https://www.nuget.org/stats/packages/KSociety.SharpCubeProgrammer?groupby=Version)
+
+
 [KSociety.SharpCubeProgrammer Home](https://github.com/K-Society/KSociety.SharpCubeProgrammer)
 
 # KSociety.SharpCubeProgrammer
 
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.15.0.
+
+
+First unofficial and open source C# wrapper.
+
 
 It makes use of several 3rd party tools:
 
