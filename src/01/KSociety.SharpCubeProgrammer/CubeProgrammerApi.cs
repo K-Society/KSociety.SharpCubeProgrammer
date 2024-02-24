@@ -1534,9 +1534,13 @@ namespace SharpCubeProgrammer
 
         #endregion
 
+        #region [Destructor]
+
         ~CubeProgrammerApi()
         {
             this.Dispose(false);
         }
+
+        #endregion
     } // CubeProgrammerApi.
 }
