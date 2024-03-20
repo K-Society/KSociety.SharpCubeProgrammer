@@ -93,7 +93,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
-				<Configuration config="1,0,3,5">
+				<Configuration config="1,0,3,4,5">
 					<Parameters address="0x0c000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>

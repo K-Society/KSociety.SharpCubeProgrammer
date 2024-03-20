@@ -125,6 +125,7 @@
 										<Val value="0xCC">Level 2, chip protection</Val>
 									</Values>
 									<DefaultVal>0xAA</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -194,6 +195,7 @@
 										<Val value="0x1">No reset generated when entering Stop mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nRST_STDBY</Name>
@@ -206,6 +208,7 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nRST_SHDW</Name>
@@ -230,6 +233,7 @@
 										<Val value="0x1">Software independent watchdog</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>IWDG_STOP</Name>
@@ -242,6 +246,7 @@
 										<Val value="0x1">IWDG counter active in stop mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
@@ -254,6 +259,7 @@
 										<Val value="0x1">IWDG counter active in standby mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WWDG_SW</Name>
@@ -266,6 +272,7 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>RAM_PARITY_CHECK</Name>
@@ -278,6 +285,7 @@
 										<Val value="0x1">SRAM parity check disable</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT_SEL</Name>
@@ -290,6 +298,7 @@
 										<Val value="0x1">BOOT0 signal is defined by nBOOT0 option bit</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT1</Name>
@@ -302,6 +311,7 @@
 										<Val value="0x1">Boot from Flash if BOOT0 = 0, otherwise system memory</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT0</Name>
@@ -314,6 +324,7 @@
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>				
 								<Bit>
 									<Name>NRST_MODE</Name>
@@ -428,6 +439,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0xFF</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WRP1A_END</Name>
@@ -437,6 +449,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0x0</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -451,6 +464,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0xFF</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WRP1B_END</Name>
@@ -460,6 +474,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0x0</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>

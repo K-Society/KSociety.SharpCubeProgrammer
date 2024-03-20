@@ -150,6 +150,7 @@
 										<Val value="0xCC">Level 2, chip protection</Val>
 									</Values>
 									<DefaultVal>0xAA</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -218,6 +219,7 @@
 										<Val value="0x1">No reset generated when entering Stop mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nRST_STDBY</Name>
@@ -230,6 +232,7 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nRST_SHDW</Name>
@@ -253,6 +256,7 @@
 										<Val value="0x1">Software independent watchdog</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>IWDG_STOP</Name>
@@ -265,6 +269,7 @@
 										<Val value="0x1">IWDG counter active in stop mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
@@ -277,6 +282,7 @@
 										<Val value="0x1">IWDG counter active in standby mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WWDG_SW</Name>
@@ -289,6 +295,7 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>RAM_PARITY_CHECK</Name>
@@ -301,6 +308,7 @@
 										<Val value="0x1">SRAM parity check disable</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT_SEL</Name>
@@ -313,6 +321,7 @@
 										<Val value="0x1">BOOT0 signal is defined by nBOOT0 option bit</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT1</Name>
@@ -325,6 +334,7 @@
 										<Val value="0x1">Boot from Flash if BOOT0 = 1, otherwise system memory</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>nBOOT0</Name>
@@ -337,6 +347,7 @@
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>				
 								<Bit>
 									<Name>NRST_MODE</Name>
@@ -409,34 +420,6 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022044" name="FLASH_PCROP2ASR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>PCROP2A_STRT</Name>
-									<Description>Flash Area A in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-									<DefaultVal>0xFF</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022048" name="FLASH_PCROP2AER" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>PCROP2A_END</Name>
-									<Description>Flash Area A in Bank 2 PCROP end address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
 							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
@@ -464,34 +447,6 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
-						<Field>
-							<Parameters address="0x40022054" name="FLASH_PCROP2BSR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>PCROP2B_STRT</Name>
-									<Description>Flash Area B in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-									<DefaultVal>0xFF</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022058" name="FLASH_PCROP2BER" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>PCROP2B_END</Name>
-									<Description>Flash Area B in Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000200"/>
-									<DefaultVal>0x0</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
 					</Category>
 					<Category>
 						<Name>Write Protection</Name>
@@ -506,6 +461,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0xFF</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WRP1A_END</Name>
@@ -515,6 +471,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0x0</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -529,6 +486,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0xFF</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 								<Bit>
 									<Name>WRP1B_END</Name>
@@ -538,52 +496,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 									<DefaultVal>0x0</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x4002204C" name="FLASH_WRP2AR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2A_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-									<DefaultVal>0xFF</DefaultVal>
-								</Bit>
-								<Bit>
-									<Name>WRP2A_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022050" name="FLASH_WRP2BR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2B_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-									<DefaultVal>0xFF</DefaultVal>
-								</Bit>
-								<Bit>
-									<Name>WRP2B_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
+									<ValLine>0x1</ValLine>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -611,15 +524,6 @@
 								<Bit>
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
-								</Bit>
-								<Bit>
-									<Name>SEC_SIZE2</Name>
-									<Description>Securable memory area size, Bank 2</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>

@@ -731,6 +731,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>SEC_SIZE2</Name>
@@ -1216,6 +1217,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>SEC_SIZE2</Name>
