@@ -193,8 +193,8 @@
 										<Val value="0x0">Hardware window watchdog</Val>
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
+									<DefaultVal>0x1</DefaultVal>
 								</Bit>
-								<DefaultVal>0x1</DefaultVal>
 								<Bit>
 									<Name>IWDG_SW</Name>
 									<Description/>
@@ -242,18 +242,6 @@
 										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
-								</Bit>
-								<Bit>
-									<Name>BFB2</Name>
-									<Description/>
-									<BitOffset>0x14</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">Dual-bank boot disable</Val>
-										<Val value="0x1">Dual-bank boot enable</Val>
-									</Values>
-									<DefaultVal>0x0</DefaultVal>
 								</Bit>
 								<Bit>
 									<Name>nBOOT1</Name>

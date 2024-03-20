@@ -5,60 +5,123 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M33</CPU>
-		<Name>STM32H5xx</Name>
+		<Name>STM32H56x/573</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
-				<Configuration number="0x0">	<!-- dual Bank non secure -->
-					
+				<Configuration number="0x0">	<!-- 2M dual Bank non secure -->
 					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x4">	<!-- 2M Dual Bank  secure+PROVISIONED STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00002E00"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x9">	<!-- 2M Dual Bank  TZ-Closed STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0xA">	<!-- 2M Dual Bank  Closed STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00007200"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x8">	<!-- 2M Dual Bank  secure provisioning -->
+					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00001700"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x5">	<!-- 2M Dual Bank  secure provisioning other -->
+					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00000000"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x1">	<!-- 2M Dual Bank  secure -->
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
 				</Configuration>
 				
-				<Configuration number="0x4">	<!-- Dual Bank  secure+PROVISIONED STATE -->
+				<Configuration number="0x10">	<!-- 1M dual Bank non secure -->
+					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x14">	<!-- 1M Dual Bank  secure+PROVISIONED STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00002E00"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x19">	<!-- 1M Dual Bank  TZ-Closed STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x1A">	<!-- 1M Dual Bank  Closed STATE -->
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00007200"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x18">	<!-- 1M Dual Bank  secure provisioning -->
+					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00001700"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x15">	<!-- 1M Dual Bank  secure provisioning other -->
+					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00000000"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x11">	<!-- 1M Dual Bank  secure -->
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				
+				
+				<!-- config to avoid read issue of flash size address -->
+				<Configuration number="0xB">	<!-- 1M\2M Dual Bank  secure+PROVISIONED STATE -->
 					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00002E00"/> </RDP>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x9">	<!-- Dual Bank  TZ-Closed STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
+				<Configuration number="0xC">	<!-- 1M\2M Dual Bank  TZ-Closed STATE -->
+					<RDP reference="0xC"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x10">	<!-- Dual Bank  Closed STATE -->
+				<Configuration number="0xD">	<!-- 1M\2M Dual Bank  Closed STATE -->
 					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00007200"/> </RDP>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x8">	<!-- Dual Bank  secure provisioning -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00001700"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
 				
-				<Configuration number="0x5">	<!-- Dual Bank  secure provisioning other -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00000000"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+				<Configuration number="0x6">	<!-- 1M/2M Empty config to avoid crash -->
 				</Configuration>
 
-				<Configuration number="0x1">	<!-- Dual Bank  secure -->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
-
-				<Configuration number="0x6">	<!-- Empty config to avoid crash -->
-				</Configuration>
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
-				
-				<Configuration number="0x2">	<!-- Dual Bank Secure-->
-				
-				<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+				<Configuration number="0x2">	<!-- 2M Dual Bank Secure-->
+					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x3">	<!-- 2M Dual Bank non Secure-->
+					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x800"/> </FLASHSIZE>
 				</Configuration>
 				
-				<Configuration number="0x3">	<!-- Dual Bank non Secure-->
-					
+				
+
+				<Configuration number="0x13">	<!-- 1M Dual Bank non Secure-->
+					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/> </FLASHSIZE>
+				</Configuration>
+				
+				
+				<!-- config to avoid read issue of flash size address -->
+				<Configuration number="0xF">	<!-- 2M Dual Bank non Secure-->
 					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
 				</Configuration>
-
-				<Configuration number="0x7">	<!-- Empty config to avoid crash -->
+				
+				<Configuration number="0x7">	<!-- 1M/2M Empty config to avoid crash when flash size addres nor accessible-->
 				</Configuration>
 			</Interface>
 		</Configurations>
@@ -71,24 +134,23 @@
 				<Description/>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<!-- 96 KB -->
-				<Configuration config="0,3">
-					<Parameters address="0x20003000" name="SRAM" size="0x40000"/>
-					<Description/>
-					<Organization>Single</Organization>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x20003000" name="SRAM" occurrence="0x1" size="0x40000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="1,2,4,9,16,5,6,7,8">
+				<Configuration config="0,3,16,19,15">
 					<Parameters address="0x20003000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x20003000" name="SRAM" occurrence="0x1" size="0x10000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="1,2,4,9,10,5,6,7,8, 17,18,20,25,26,21,22,23,24,11,12,13,14">
+					<Parameters address="0x20003000" name="SRAM" size="0x10000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x20004000" name="SRAM" occurrence="0x1" size="0x10000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -106,7 +168,7 @@
 				<DBGMCU_CR address="0x44024004" mask="0x06"/>
 				<DBGMCU_APB1_FZ address="0x44024008" mask="0x1800"/>
 				<SFSPVersion address="0x0BF960CC"/>
-				<Configuration config="0,2,3,6,7"> <!-- dual Bank nn secure -->
+				<Configuration config="0,2,3,6,7,14,15"> <!-- 2M dual Bank nn secure -->
 					<Parameters address="0x08000000" name=" 2 Mbyte Embedded Flash" size="0x200000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -122,7 +184,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,5,8"> <!-- dual Bank secure -->
+				<Configuration config="1,5,8"> <!-- 2M dual Bank secure -->
 					<Parameters address="0x08000000" name=" 2 Mbyte Embedded Flash" size="0x200000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -138,7 +200,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="4,9,16"> <!-- dual Bank secure -->
+				<Configuration config="4,9,10,11,12,13"> <!-- 2M dual Bank secure -->
 					<Parameters address="0x0C000000" name=" 2 Mbyte Embedded Flash" size="0x200000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -154,7 +216,57 @@
 						</Field>
 					</Bank>
 				</Configuration>
+
+				<Configuration config="16,18,19,22,23"> <!-- 1M dual Bank nn secure -->
+					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="17,21,24"> <!-- 1M dual Bank secure -->
+					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="20,25,26"> <!-- 1M dual Bank secure -->
+					<Parameters address="0x0C000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x0C080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
 			</Peripheral>
+
 			<!-- Data EEPROM -->
 			<Peripheral>
 				<Name>Data EEPROM</Name>
@@ -162,8 +274,7 @@
 				<Description>The Data EEPROM memory block. It contains user data.</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
-				<Configuration config="0,2,3,6,7,1,5,8">
+				<Configuration config="0,2,3,6,7,1,5,8,14,15"> <!-- 2M -->
 					<Parameters address="0x0C000000" name=" 2 Mbyte Data EEPROM" size="0x200000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -179,7 +290,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="4,9,16">
+				<Configuration config="4,9,10,11,12,13"> <!-- 2M -->
 					<Parameters address="0x08000000" name=" 2 Mbyte Data EEPROM" size="0x200000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -192,6 +303,39 @@
 					<Bank name="Bank 2">
 						<Field>
 							<Parameters address="0x08100000" name="sector128" occurrence="0x80" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+
+				<Configuration config="16,18,19,22,23,17,21,24"> <!-- 1M -->
+					<Parameters address="0x0C000000" name=" 1 Mbyte Data EEPROM" size="0x200000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x0C080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="20,25,26"> <!-- 1M -->
+					<Parameters address="0x08000000" name=" 1 Mbyte Data EEPROM" size="0x200000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08080000" name="sector64" occurrence="0x40" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -222,7 +366,7 @@
 				<Type>Configuration</Type>
 				<Description/>
 				<Access>RW</Access>
-				<Configuration config="0,5,6,8,4,9,16">
+				<Configuration config="0,5,6,8,4,9,10,16,21,22,24,20,25,26,11,12,13">
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x40022050" name="Bank 1" size="0x70"/>
 						<Category>
@@ -281,9 +425,8 @@
 										<Access>R</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -299,9 +442,8 @@
 										<Access>W</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -311,7 +453,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>R</Access>
@@ -325,7 +467,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>W</Access>
@@ -929,7 +1071,7 @@
 							<Field>
 								<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 2M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
@@ -937,20 +1079,36 @@
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="0,5,6,8,4,9,10,11,12,13">  <!-- Flash 2M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit config="16,21,22,24,20,25,26">  <!-- Flash 1M -->
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
+									</Bit>
+									<Bit config="16,21,22,24,20,25,26">  <!-- Flash 1M -->
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
 								<Parameters address="0x400221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 2M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
@@ -958,13 +1116,29 @@
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 2M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit config="16,21,22,24,20,25,26"> <!-- Flash 1M -->
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
+									</Bit>
+									<Bit config="16,21,22,24,20,25,26"> <!-- Flash 1M -->
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1236,7 +1410,7 @@
 						</Category>
 					</Bank>
 				</Configuration>
-				<Configuration config="1">
+				<Configuration config="1,17">
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x50022050" name="Bank 1" size="0x70"/>
 						<Category>
@@ -1295,9 +1469,8 @@
 										<Access>R</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -1313,9 +1486,8 @@
 										<Access>W</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -1325,7 +1497,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>R</Access>
@@ -1339,7 +1511,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>W</Access>
@@ -1943,7 +2115,7 @@
 							<Field>
 								<Parameters address="0x500221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="1"> <!-- Flash 2M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
@@ -1951,20 +2123,36 @@
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="1">  <!-- Flash 2M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit config="17">  <!-- Flash 1M -->
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
+									</Bit>
+									<Bit config="17">  <!-- Flash 1M -->
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
 								<Parameters address="0x500221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="1"> <!-- Flash 2M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
@@ -1972,13 +2160,29 @@
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="1"> <!-- Flash 2M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x7</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit config="17"> <!-- Flash 1M -->
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
+									</Bit>
+									<Bit config="17"> <!-- Flash 1M -->
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -2307,10 +2511,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>R</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -2325,10 +2528,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>W</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -2338,7 +2540,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
@@ -2352,7 +2554,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
@@ -3072,7 +3274,7 @@
 						<Field>
 							<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
 							<AssignedBits>
-								<Bit>
+								<Bit config="2,3,7,14,15"> <!-- Flash 2M -->
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
@@ -3080,20 +3282,36 @@
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
-								<Bit>
+								<Bit config="2,3,7,14,15"> <!-- Flash 2M -->
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
+								</Bit>
+								<Bit config="18,19,23"> <!-- Flash 1M -->
+									<Name>SECWM2_STRT</Name>
+									<Description>Bank 2 security WM area start sector</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>R</Access>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
+								</Bit>
+								<Bit config="18,19,23"> <!-- Flash 1M -->
+									<Name>SECWM2_END</Name>
+									<Description>Bank 2 security WM area end sector</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>R</Access>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x400221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
 							<AssignedBits>
-								<Bit>
+								<Bit config="2,3,7,14,15"> <!-- Flash 2M -->
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
@@ -3101,13 +3319,29 @@
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
-								<Bit>
+								<Bit config="2,3,7,14,15"> <!-- Flash 2M -->
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
+								</Bit>
+								<Bit config="18,19,23"> <!-- Flash 1M -->
+									<Name>SECWM2_STRT</Name>
+									<Description>Bank 2 security WM area start sector</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>W</Access>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
+								</Bit>
+								<Bit config="18,19,23"> <!-- Flash 1M -->
+									<Name>SECWM2_END</Name>
+									<Description>Bank 2 security WM area end sector</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>W</Access>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>

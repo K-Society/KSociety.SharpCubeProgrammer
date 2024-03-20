@@ -5,7 +5,7 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M0+</CPU>
-		<Name>STM32G051/STM32G061</Name> 
+		<Name>STM32G05x/STM32G06x</Name> 
 		<Series>STM32G0</Series>
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
 		<Configurations>

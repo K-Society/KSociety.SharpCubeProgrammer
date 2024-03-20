@@ -42,6 +42,11 @@
 					<ValueLine> <ReadRegister address="0x1FFF77DD" mask="0xFF" value="0x31"/> </ValueLine>
 					<ValueLine> <ReadRegister address="0x1FFF75E0" mask="0xFF" value="0x10"/> </ValueLine>
 				</Configuration>
+				<!-- 16KB for G041/G030/G031-->
+				<Configuration	number="0x7">
+					<ValueLine> <ReadRegister address="0x1FFF77DD" mask="0xFF" value="0x00"/> </ValueLine>
+					<ValueLine> <ReadRegister address="0x1FFF75E0" mask="0xFF" value="0x00"/> </ValueLine>
+				</Configuration>
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
@@ -99,7 +104,7 @@
 					<Description>The Flash memory interface manages CPU AHB I-Code and D-Code accesses to the Flash memory. It implements the erase and program Flash memory operations and the read and write protection mechanisms</Description>
 					<ErasedValue>0xFF</ErasedValue>
 					<Access>RWE</Access>
-					<FlashSize address="0x1FFF75E0" default="0x10000"/>
+					<FlashSize address="0x1FFF75E0" default="0x4000"/>
 					<BootloaderVersion address="0x1FFF1FFE"/>
 					<!-- 64 KB Single Bank -->
 					<Configuration config="3,4,5">
@@ -128,6 +133,18 @@
 					<!-- 16 KB Single Bank -->
 					<Configuration config="6">
 							<Parameters address="0x08000000" name=" 16 KB Embedded Flash" size="0x4000"/>
+							<Description/>
+							<Organization>Single</Organization>
+							<Alignment>0x8</Alignment>
+							<Bank name="Bank 1">
+								<Field>
+									<Parameters address="0x08000000" name="sector0" occurrence="0x8" size="0x800"/>
+								</Field>
+							</Bank>
+					</Configuration>
+					<!-- 16 KB Single Bank -->
+					<Configuration config="7">
+							<Parameters address="0x08000000" name=" 16 KB Embedded Flash" size="0x2000"/>
 							<Description/>
 							<Organization>Single</Organization>
 							<Alignment>0x8</Alignment>
