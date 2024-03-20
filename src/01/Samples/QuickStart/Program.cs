@@ -80,7 +80,7 @@ namespace QuickStart
                     #region [DownloadFile Test]
 
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
-                        @"..\..\..\..\..\Test\NUCLEO-L452RE.bin", "0x08000000");
+                        @"..\..\..\..\..\Test\NUCLEO-L452RE.hex", "0x08000000");
 
                     if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
