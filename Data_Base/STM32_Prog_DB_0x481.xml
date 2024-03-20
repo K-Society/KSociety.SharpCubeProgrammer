@@ -112,7 +112,23 @@
 				<BootloaderVersion address="0x0BF99EFE"/>
 				<DBGMCU_CR address="0xE0044004" mask="0x06"/>
 				<DBGMCU_APB1_FZ address="0xE0044008" mask="0x1800"/> 
-				<Configuration config="0,6,10"> <!-- Single Bank -->
+				<Configuration config="0"> <!-- Single Bank -->
+					<Parameters address="0x08000000" name=" 4096 Kbyte Embedded Flash" size="0x400000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="6,10"> <!-- Single Bank -->
 					<Parameters address="0x08000000" name=" 4096 Kbyte Embedded Flash" size="0x400000"/>
 					<Description/>
 					<Organization>Single</Organization>

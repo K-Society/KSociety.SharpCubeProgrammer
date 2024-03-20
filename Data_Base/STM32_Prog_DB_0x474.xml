@@ -218,7 +218,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>R</Access>
@@ -232,7 +232,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
-										<Description>Brownout high enable configuration bit</Description>
+										<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>W</Access>
@@ -252,9 +252,8 @@
 										<Access>R</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -270,9 +269,8 @@
 										<Access>W</Access>
 										<Values>
 											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-											<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-											<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 										</Values>
 									</Bit>
 								</AssignedBits>
@@ -962,7 +960,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
@@ -976,7 +974,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
@@ -995,10 +993,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>R</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1013,10 +1010,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>W</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1705,7 +1701,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
@@ -1719,7 +1715,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
-									<Description>Brownout high enable configuration bit</Description>
+									<Description>Brownout high enable configuration bit. Checked : BOR Level taken from BOR_LEV. Unchecked : BOR off</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
@@ -1738,10 +1734,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>R</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1756,10 +1751,9 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>W</Access>
 									<Values>
-										<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x1">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
-										<Val value="0x2">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
-										<Val value="0x3">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
+											<Val value="0x0">BOR Level 1, the threshold level is low (around 2.1 V)</Val>
+											<Val value="0x1">BOR Level 2, the threshold level is medium (around 2.4 V)</Val>
+											<Val value="0x2">BOR Level 3, the threshold level is high (around 2.7 V)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>

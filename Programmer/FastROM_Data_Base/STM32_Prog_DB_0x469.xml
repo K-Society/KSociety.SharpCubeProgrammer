@@ -531,7 +531,7 @@
 						<Field>
 							<Parameters address="0x40022044" name="FLASH_PCROP2SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit>
 									<Name>PCROP2_STRT</Name>
 									<Description>Flash Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -581,7 +581,7 @@
 						<Field>
 							<Parameters address="0x40022050" name="FLASH_WRP2BR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit>
 									<Name>WRP2B_STRT</Name>
 									<Description>The address of first page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -589,7 +589,7 @@
 									<Access>RW</Access>
 									<DefaultVal>0x7F</DefaultVal>
 								</Bit>
-								<Bit config="0,3,5">
+								<Bit>
 									<Name>WRP2B_END</Name>
 									<Description>The address of last page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x10</BitOffset>

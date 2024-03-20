@@ -47,28 +47,28 @@
 			<Interface name="Bootloader">
 				<Configuration number="0x0">	
 					<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
-					<DBANK reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </DBANK>
+
 				</Configuration>
 				<Configuration number="0x1">	
 					<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
-					<DBANK reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </DBANK>
+
 				</Configuration>
 				
 				<Configuration number="0x3">	<!-- 256KB  single Bank-->	
 						<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
-						<DBANK reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </DBANK>
+
 				</Configuration>
 				<Configuration number="0x4">	<!-- 256KB Dual Bank-->	
 						<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
-						<DBANK reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </DBANK>
+
 				</Configuration>
 				<Configuration number="0x5">	<!-- 128KB  single Bank-->	
 						<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
-						<DBANK reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </DBANK>
+
 				</Configuration>
 				<Configuration number="0x6">	<!-- 128KB Dual Bank-->	
 						<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
-						<DBANK reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </DBANK>
+
 				</Configuration>
 				
 				<Configuration number="0x2">	
@@ -762,8 +762,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">This bit can be reset by SW only in level0. In level 1, an RDP level regression will reset this bit, which will force a mass erase of the flash.</Val>
-										<Val value="0x1">the boot will be done from user flash only, whatever the RDP level</Val>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot will be done from user flash only, whatever the RDP level</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1152,33 +1152,10 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
-						<Field>
-							<Parameters address="0x1FFF7828" name="FLASH_SECR1" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>SEC_SIZE1</Name>
-									<Description>sets the number of pages used in the bank 1 securable area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-								</Bit>
-								<Bit>
-									<Name>BOOT_LOCK</Name>
-									<Description>Unique boot entry point</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">This bit can be reset by SW only in level0. In level 1, an RDP level regression will reset this bit, which will force a mass erase of the flash.</Val>
-										<Val value="0x1">the boot will be done from user flash only, whatever the RDP level</Val>
-									</Values>
-								</Bit>
-							</AssignedBits>
-						</Field>
 					</Category>
 				</Bank>
 				<Bank interface="Bootloader">
-					<Parameters address="0x1FFFF808" name="Bank 2" size="0x1C"/>
+					<Parameters address="0x1FFFF808" name="Bank 2" size="0x24"/>
 					<Category>
 						<Name>PCROP Protection (Bank 2)</Name>
 						<Field>
@@ -1301,8 +1278,40 @@
 							</AssignedBits>
 						</Field>
 					</Category>
+				</Bank>
+				<Bank interface="Bootloader">
+					<Parameters address="0x1FFF7828" name="Bank 3" size="0x4"/>
 					<Category>
-						<Name>Secure Protection</Name>
+						<Name>Secure Protection (Bank 1)</Name>
+						<Field>
+							<Parameters address="0x1FFF7828" name="FLASH_SECR1" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>SEC_SIZE1</Name>
+									<Description>sets the number of pages used in the bank 1 securable area</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>RW</Access>
+								</Bit>
+								<Bit>
+									<Name>BOOT_LOCK</Name>
+									<Description>Unique boot entry point</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot will be done from user flash only, whatever the RDP level</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+					</Category>
+				</Bank>
+				<Bank interface="Bootloader">
+					<Parameters address="0x1FFFF828" name="Bank 4" size="0x8"/>
+					<Category>
+						<Name>Secure Protection (Bank 2)</Name>
 						<Field>
 							<Parameters address="0x1FFFF828" name="FLASH_SECR2" size="0x4"/>
 							<AssignedBits>

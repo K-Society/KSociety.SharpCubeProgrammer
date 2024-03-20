@@ -483,8 +483,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">This bit can be reset by SW only in level0. In level 1, an RDP level regression will reset this bit, which will force a mass erase of the flash.</Val>
-										<Val value="0x1">the boot will be done from user flash only, whatever the RDP level</Val>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot will be done from user flash only, whatever the RDP level</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -858,8 +858,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">This bit can be reset by SW only in level0. In level 1, an RDP level regression will reset this bit, which will force a mass erase of the flash.</Val>
-										<Val value="0x1">the boot will be done from user flash only, whatever the RDP level</Val>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot will be done from user flash only, whatever the RDP level</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
