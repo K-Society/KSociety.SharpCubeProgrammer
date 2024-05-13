@@ -21,6 +21,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             if (size > 0)
             {
                 std::wstring dllNameStr(dllName);
+
                 std::size_t pos = dllNameStr.size() - 14;
                 dllNameStr = dllNameStr.substr(0, pos);
                 dllNameStr += loaderPath;

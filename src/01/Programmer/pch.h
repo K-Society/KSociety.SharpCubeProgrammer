@@ -10,5 +10,9 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 #include "Programmer.h"
+#include <string>
+#include <tchar.h>
+#include <stdio.h>
+#include <algorithm>
 
 #endif //PCH_H
