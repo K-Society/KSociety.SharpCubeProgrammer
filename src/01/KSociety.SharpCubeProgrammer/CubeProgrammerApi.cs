@@ -7,6 +7,7 @@ namespace SharpCubeProgrammer
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -53,7 +54,9 @@ namespace SharpCubeProgrammer
                 {
                     if (this._handle == null)
                     {
-                        this._handle = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? @".\dll\x64\STLinkUSBDriver.dll" : @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                        var currentDirectory = GetAssemblyDirectory();
+
+                        this._handle = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? currentDirectory + @".\dll\x64\STLinkUSBDriver.dll" : currentDirectory + @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
 
                         if (this._handle.IsInvalid)
                         {
@@ -69,6 +72,14 @@ namespace SharpCubeProgrammer
                     }
                 }
             }
+        }
+
+        private static string GetAssemblyDirectory()
+        {
+            var codeBase = Assembly.GetExecutingAssembly().Location;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
 
         #region [ST-LINK]
