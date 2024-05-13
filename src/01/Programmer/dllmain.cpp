@@ -10,12 +10,14 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 {
     UNREFERENCED_PARAMETER(lpReserved);
 
+    WCHAR dllName[MAX_PATH + 1];
+    DWORD size = 0;
+
     switch (ul_reason_for_call)
     {
         case DLL_PROCESS_ATTACH:
 
-            WCHAR dllName[MAX_PATH + 1];
-            DWORD size = GetModuleFileNameW(hModule, dllName, MAX_PATH);
+            size = GetModuleFileNameW(hModule, dllName, MAX_PATH);
             if (size > 0)
             {
                 std::wstring dllNameStr(dllName);

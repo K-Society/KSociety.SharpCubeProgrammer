@@ -42,7 +42,7 @@ int main()
 
         size_t convertedSize;
         wcstombs_s(&convertedSize, buffer, size1, input, size1);
-        delete buffer;
+        delete[] buffer;
     ;
     /*std::cout << "Hello World!\n";
     debugConnectParameters* stLinkList;
