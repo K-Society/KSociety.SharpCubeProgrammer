@@ -1,7 +1,7 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 
-const wchar_t* loaderPath = L"..\\..\\st\\Programmer";
+const wchar_t* loaderPath = L"st\\Programmer";
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -12,6 +12,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
     WCHAR dllName[MAX_PATH + 1];
     DWORD size = 0;
+    int result = 0;
 
     switch (ul_reason_for_call)
     {
@@ -21,8 +22,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             if (size > 0)
             {
                 std::wstring dllNameStr(dllName);
-
-                std::size_t pos = dllNameStr.size() - 14;
+                std::size_t pos = dllNameStr.size() - 22;
                 dllNameStr = dllNameStr.substr(0, pos);
                 dllNameStr += loaderPath;
                 std::replace(dllNameStr.begin(), dllNameStr.end(), '\\', '/');
@@ -35,12 +35,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                 size_t convertedSize;
                 wcstombs_s(&convertedSize, buffer, bufferSize, input, bufferSize);
 
-                /* Set device loaders path that contains FlashLoader and ExternalLoader folders*/
+                // Set device loaders path that contains FlashLoader and ExternalLoader folders.
                 SetLoadersPath(buffer);
 
                 delete[] buffer;
+
+                result = 1;
             }
-                
             break;
 
         case DLL_THREAD_ATTACH:
@@ -53,5 +54,10 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             break;
     }
 
-    return TRUE;
+    if (result == 1)
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }

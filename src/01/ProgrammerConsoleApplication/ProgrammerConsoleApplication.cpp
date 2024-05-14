@@ -21,7 +21,7 @@ int main()
     //s += std::wstring(ws2);
 
     std::wstring s(dllName);
-    std::size_t pos = s.size() - 32;
+    std::size_t pos = s.size() - 40;
     s = s.substr(0, pos);
     s += wide;
 
