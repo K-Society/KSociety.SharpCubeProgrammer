@@ -1,7 +1,7 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 
-const wchar_t* loaderPath = L"..\\..\\st\\Programmer";
+const wchar_t* loaderPath = L"st\\Programmer";
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -22,7 +22,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             {
                 std::wstring dllNameStr(dllName);
 
-                std::size_t pos = dllNameStr.size() - 14;
+                std::size_t pos = dllNameStr.size() - 22;
                 dllNameStr = dllNameStr.substr(0, pos);
                 dllNameStr += loaderPath;
                 std::replace(dllNameStr.begin(), dllNameStr.end(), '\\', '/');
