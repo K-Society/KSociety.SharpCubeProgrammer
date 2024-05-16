@@ -1,12 +1,50 @@
 // ProgrammerConsoleApplication.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <windows.h>
+#include <tchar.h>
+#include <stdio.h>
 #include <iostream>
-#include "../Programmer/Programmer.h"
+#include <stdlib.h>
+#include <algorithm>
+//#include "../Programmer/Programmer.h"
+
+const wchar_t* wide = L"zyxw\\..\\..\\pippo";
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    WCHAR dllName[MAX_PATH + 1];
+    DWORD size = GetModuleFileNameW(NULL, dllName, MAX_PATH);
+
+    //std::wstring s(dllName);
+
+    //s += std::wstring(ws2);
+
+    std::wstring s(dllName);
+    std::size_t pos = s.size() - 40;
+    s = s.substr(0, pos);
+    s += wide;
+
+    std::replace(s.begin(), s.end(), '\\', '/');
+    const wchar_t* input = s.c_str();
+
+    // Count required buffer size (plus one for null-terminator).
+    size_t size1 = (wcslen(input) + 1) * sizeof(wchar_t);
+    char* buffer = new char[size1];
+
+    #ifdef __STDC_LIB_EXT1__
+        // wcstombs_s is only guaranteed to be available if __STDC_LIB_EXT1__ is defined
+        size_t convertedSize;
+        std::wcstombs_s(&convertedSize, buffer, size, input, size);
+    #else
+        //std::wcstombs(buffer, input, size1);
+    #endif
+
+        size_t convertedSize;
+        wcstombs_s(&convertedSize, buffer, size1, input, size1);
+        delete[] buffer;
+    ;
+    /*std::cout << "Hello World!\n";
     debugConnectParameters* stLinkList;
     debugConnectParameters debugParameters;
     generalInf* genInfo;
@@ -32,21 +70,21 @@ int main()
         }
 
         std::cout << "-----------------------------------------------\n\n";
-    }
+    }*/
 
-    for (int index = 0; index < getStlinkListNb; index++) {
+    //for (int index = 0; index < getStlinkListNb; index++) {
 
         //logMessage(Title, "\n--------------------- ");
         //logMessage(Title, "\n ST-LINK Probe : %d ", index);
         //logMessage(Title, "\n--------------------- \n\n");
 
-        debugParameters = stLinkList[index];
+        /*debugParameters = stLinkList[index];
         debugParameters.connectionMode = UNDER_RESET_MODE;
-        debugParameters.shared = 0;
+        debugParameters.shared = 0;*/
         //debugParameters.speed = 1;
 
         /* Target connect */
-        int connectStlinkFlag = ConnectStLink(debugParameters);
+        /*int connectStlinkFlag = ConnectStLink(debugParameters);
         if (connectStlinkFlag != 0) {
             std::cout << "Establishing connection with the device failed: " << connectStlinkFlag << " \n" << std::endl;
             Disconnect();
@@ -54,25 +92,25 @@ int main()
         }
         else {
             std::cout << "\n--- Device Connected --- \n" ;
-        }
+        }*/
 
         /* Display device informations */
-        genInfo = GetDeviceGeneralInf();
+        /*genInfo = GetDeviceGeneralInf();
         std::cout << "\nDevice name: " << genInfo->name << std::endl;
         std::cout << "\nDevice type: " << genInfo->type << std::endl;
-        std::cout << "\nDevice CPU : " << genInfo->cpu << std::endl;
+        std::cout << "\nDevice CPU : " << genInfo->cpu << std::endl;*/
 
         /* Read Option bytes from target device memory */
-        peripheral_C* ob;
+        /*peripheral_C* ob;
         ob = InitOptionBytesInterface();
         if (ob == 0)
         {
             Disconnect();
             continue;
-        }
+        }*/
 
         /* Display option bytes */
-        for (unsigned int i = 0; i < ob->banksNbr; i++)
+        /*for (unsigned int i = 0; i < ob->banksNbr; i++)
         {
             std::cout << "\nOPTION BYTES BANK: " << i << std::endl;
             for (unsigned int j = 0; j < ob->banks[i]->categoriesNbr; j++)
@@ -88,10 +126,10 @@ int main()
                     }
                 }
             }
-        }
-    }
+        }*/
+    //}
 
-    Disconnect();
+    //Disconnect();
 
     return 1;
 }

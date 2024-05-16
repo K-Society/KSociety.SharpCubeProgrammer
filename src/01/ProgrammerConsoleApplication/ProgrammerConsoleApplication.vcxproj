@@ -132,12 +132,6 @@
   <ItemGroup>
     <ClCompile Include="ProgrammerConsoleApplication.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Programmer\Programmer.vcxproj">
-      <Project>{52455efe-41b6-4c8b-97c0-db796fe725b5}</Project>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

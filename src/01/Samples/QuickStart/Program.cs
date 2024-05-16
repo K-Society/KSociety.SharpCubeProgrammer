@@ -106,7 +106,7 @@ namespace QuickStart
             Console.WriteLine("Press a button to exit.");
             Console.ReadLine();
         }
-
+        
         private static void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
         {
             message = Regex.Replace(message, "(?<!\r)\n", "");
