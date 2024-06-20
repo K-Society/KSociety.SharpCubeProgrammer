@@ -165,7 +165,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to run the application.
         /// </summary>
-        CubeProgrammerError Execute(string address);
+        CubeProgrammerError Execute(string address = "0x08000000");
 
         /// <summary>
         /// This routine allows to erase the whole Flash memory.

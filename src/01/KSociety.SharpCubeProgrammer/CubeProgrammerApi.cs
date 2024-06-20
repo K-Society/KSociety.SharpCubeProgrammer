@@ -611,7 +611,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError Execute(string address)
+        public CubeProgrammerError Execute(string address = "0x08000000")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
 
