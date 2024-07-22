@@ -84,6 +84,8 @@ extern "C" PROGRAMMER_API void* FileOpen(const wchar_t* filePath);
 
 extern "C" PROGRAMMER_API void FreeFileData(fileData_C* data);
 
+extern "C" PROGRAMMER_API void FreeLibraryMemory(void* ptr);
+
 extern "C" PROGRAMMER_API int Verify(fileData_C* fileData, unsigned int address);
 
 extern "C" PROGRAMMER_API int VerifyMemory(unsigned int address, char* data, unsigned int size);
@@ -99,6 +101,8 @@ extern "C" PROGRAMMER_API int Disconnect();
 extern "C" PROGRAMMER_API void DeleteInterfaceList();
 
 extern "C" PROGRAMMER_API void AutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run);
+
+extern "C" PROGRAMMER_API void SerialNumberingAutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, char* serialInitialData);
 
 extern "C" PROGRAMMER_API int GetStorageStructure(storageStructure** deviceStorageStruct);
 
@@ -121,6 +125,8 @@ extern "C" PROGRAMMER_API int ObDisplay();
 extern "C" PROGRAMMER_API void SetLoadersPath(const char* path);
 
 extern "C" PROGRAMMER_API void SetExternalLoaderPath(const char* path, externalLoader** externalLoaderInfo);
+
+extern "C" PROGRAMMER_API void SetExternalLoaderOBL(const char* path, externalLoader** externalLoaderInfo);
 
 extern "C" PROGRAMMER_API int GetExternalLoaders(const char* path, externalStorageInfo** externalStorageNfo);
 

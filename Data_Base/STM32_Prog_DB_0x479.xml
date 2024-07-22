@@ -11,20 +11,60 @@
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
-				<Configuration number="0x0"> <!-- DBANK=0x1-->
+				<Configuration number="0x0"> <!-- 512K DBANK=0x1-->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </FLASHSIZE>
 				</Configuration>
-				<Configuration number="0x1"> <!-- DBANK=0x0-->
+				<Configuration number="0x1"> <!-- 512K DBANK=0x0-->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x000000"/> </DBANK>
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </FLASHSIZE>
+				</Configuration>
+				
+				<Configuration number="0x3">	<!-- 256KB DBANK=0x0-->	
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x400000" value="0x0"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x4">	<!-- 256KB DBANK=0x1-->	
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </FLASHSIZE>
+				</Configuration>
+				
+				<Configuration number="0x5">	<!-- 128KB DBANK=0x0-->	
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x400000" value="0x0"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x6">	<!-- 128KB DBANK=0x1-->	
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </FLASHSIZE>
 				</Configuration>
 				</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
-			    <Configuration number="0x0"> <!-- DBANK=0x1-->
+			    <Configuration number="0x0"> <!-- 512K DBANK=0x1-->
 					<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </FLASHSIZE>
 				</Configuration>
-				<Configuration number="0x1"> <!-- DBANK=0x0-->
+				<Configuration number="0x1"> <!-- 512K DBANK=0x0-->
 					<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x000000"/> </DBANK>
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x200"/> </FLASHSIZE>
+				</Configuration>
+				
+				<Configuration number="0x3">	<!-- 256KB  DBANK=0x0-->	
+					<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x4">	<!-- 256KB DBANK=0x1-->	
+					<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x100"/> </FLASHSIZE>
+				</Configuration>
+				
+				<Configuration number="0x5">	<!-- 128KB  DBANK=0x0-->	
+					<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x6">	<!-- 128KB DBANK=0x1-->	
+					<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
+					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </FLASHSIZE>
 				</Configuration>
 				</Interface>
 		</Configurations>
@@ -59,7 +99,7 @@
 				<FlashSize address="0x1FFF75E0" default="0x80000"/>
 				<BootloaderVersion address="0x1FFF6FFE"/>
 				<!-- single Bank -->
-				<Configuration>  
+				<Configuration config="1">  
 					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -67,6 +107,83 @@
 					<Bank>
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<!-- 512KB dual Bank -->
+				<Configuration config="0,2">
+					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x800"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08040000" name="sector65280" occurrence="0x80" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				
+				<!-- 265KB single Bank -->
+				<Configuration config="3">  
+					<Parameters address="0x08000000" name=" 256 Kbyte Embedded Flash" size="0x40000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<!-- 265KB dual Bank -->
+				<Configuration config="4">
+					<Parameters address="0x08000000" name=" 256 Kbyte Embedded Flash" size="0x20000"/> <!-- size="0x80000" to avoid the download Issue in bank2 -->
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x800"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08040000" name="sector65280" occurrence="0x40" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				
+				<!-- 128KB single Bank -->
+				<Configuration config="5">  
+					<Parameters address="0x08000000" name=" 128 Kbyte Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x1000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<!-- 128KB dual Bank -->
+				<Configuration config="6">
+					<Parameters address="0x08000000" name=" 128 Kbyte Embedded Flash" size="0x80000"/> <!-- size="0x80000" to avoid the download Issue in bank2 -->
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x800"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08040000" name="sector65280" occurrence="0x20" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>

@@ -32,12 +32,12 @@
 				<Access>RWE</Access>
 				<!-- 192 KB -->
 				<Configuration>
-					<Parameters address="0x20000000" name="SRAM" size="0x3000"/>
+					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x3000"/>
+							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x10000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -259,7 +259,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IWGD_STDBY</Name>
+									<Name>IWDG_STDBY</Name>
 									<Description/>
 									<BitOffset>0x12</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -515,14 +515,14 @@
 									
 								</Bit>
 								<Bit config="1">
-									<Name>SUBGHSPISD</Name>
+									<Name>SUBGHZSPISD</Name>
 									<Description>SPI3 security disable. This bit can only be accessed by software when HDPADIS = 0. FSD=1: SPI3 security is disabled</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">FSD=0 and SUBGHSPISD=0: SPI3 security enabled</Val>
-										<Val value="0x1">FSD=0 and SUBGHSPISD=1: SPI3 security disabled</Val>
+										<Val value="0x0">FSD=0 and SUBGHZSPISD=0: SPI3 security enabled</Val>
+										<Val value="0x1">FSD=0 and SUBGHZSPISD=1: SPI3 security disabled</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -737,7 +737,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IWGD_STDBY</Name>
+									<Name>IWDG_STDBY</Name>
 									<Description/>
 									<BitOffset>0x12</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -780,7 +780,7 @@
 										<Val value="0x1">CPU1 CM4 Boot lock enabled</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1">
 									<Name>C2BOOT_LOCK</Name>
 									<Description/>
 									<BitOffset>0x1F</BitOffset>
@@ -796,7 +796,7 @@
 						<Field>
 							<Parameters address="0x1FFF7868" name="FLASH_IPCCBR" size="0x4"/>
 							<AssignedBits>
-								<Bit>
+								<Bit config="1">
 									<Name>IPCCDBA</Name>
 									<Description>IPCC mailbox data buffer base address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -872,7 +872,7 @@
 									
 								</Bit>
 								<Bit>
-									<Name>SUBGHSPISD</Name>
+									<Name>SUBGHZSPISD</Name>
 									<Description>SPI3 security disable. This bit can only be accessed by software when HDPADIS = 0. FSD=1: SPI3 security is disabled</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>

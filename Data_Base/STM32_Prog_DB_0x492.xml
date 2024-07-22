@@ -11,25 +11,44 @@
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
+			
+				<!-- Added For CPN WBA50 -->
+				<Configuration number="0xA">	<!-- 1M non secure TZEN=0x0 --> 
+					<CPN  reference="0x0"> <ReadRegister address="0x0BF905D2" mask="0x000000FF" value="0x30"/> </CPN>
+				</Configuration>
+			
 				<Configuration number="0x0">	<!-- 1M non secure TZEN=0x0 -->
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
+				
 				<Configuration number="0x1">	<!-- 1M secure + RDP=0xAA + TZEN=0x1 -->
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x000000AA"/> </RDP>
 				</Configuration>
+				
 				<Configuration number="0x3">	<!-- 1M secure + TZEN=0x1 -->
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
-				</Configuration>				
+				</Configuration>	
 			</Interface>
+			
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
+			
+				<!-- Added For CPN WBA50 -->
+				<Configuration number="0xB">	<!-- 1M  non Secure-->
+					<CPN  reference="0x0"> <ReadRegister address="0x0BF905D2" mask="0x000000FF" value="0x30"/> </CPN>
+				</Configuration>
+				
 				<Configuration number="0x5">	<!-- 1M  non Secure-->
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
+				
 				<Configuration number="0x4">	<!-- 1M Secure-->
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
+				
+				
+			
 			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
@@ -42,7 +61,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<!-- 128 KB FOR 1M of flash Size --> 
-				<Configuration config="0,5">
+				<Configuration config="0,5,10,11">
 					<Parameters address="0x20000000" name="SRAM" size="0x20000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -73,7 +92,7 @@
 				<FlashSize address="0xBF907A0" default="0x100000"/>
 				<BootloaderVersion address="0x0BF8FEFE"/>
 				<ReconnectAfterOB value="1"/>
-				<Configuration config="0,1,3,4,5"> <!-- 1 Mbyte non secure -->
+				<Configuration config="0,1,3,4,5,10,11"> <!-- 1 Mbyte non secure -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -93,7 +112,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
-				<Configuration config="1,0,3,4,5">
+				<Configuration config="1,0,3,4,5,10,11">
 					<Parameters address="0x0c000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -131,7 +150,7 @@
 				<Type>Configuration</Type>
 				<Description/>
 				<Access>RW</Access>
-				<Configuration config="0">
+				<Configuration config="0,10">
 				<Bank interface="JTAG_SWD">
 						<Parameters address="0x40022040" name="Bank 1" size="0xA0"/>
 					<Category>
@@ -302,7 +321,7 @@
 										<Val value="0x1">nBOOT0 = 1</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="0">
 									<Name>TZEN</Name>
 									<Description>Global TrustZone security enable</Description>
 									<BitOffset>0x1F</BitOffset>
@@ -350,7 +369,7 @@
 						<Field>
 								<Parameters address="0x40022058" name="FLASH_WRP1AR" size="0x4"/>
 							<AssignedBits>
-									<Bit config="0,2">
+									<Bit config="0,2,10">
 										<Name>WRPA_PSTRT</Name>
 										<Description>WPR first area &quot;A&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
@@ -358,7 +377,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
-									<Bit config="0,2">
+									<Bit config="0,2,10">
 										<Name>WRPA_PEND</Name>
 										<Description>WPR first area &quot;A&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
@@ -382,7 +401,7 @@
 							<Field>
 								<Parameters address="0x4002205C" name="FLASH_WRPBR" size="0x4"/>
 								<AssignedBits>
-									<Bit config="0,2">
+									<Bit config="0,2,10">
 										<Name>WRPB_PSTRT</Name>
 										<Description>WPR second area &quot;B&quot; start page</Description>
 										<BitOffset>0x0</BitOffset>
@@ -390,7 +409,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
-									<Bit config="0,2">
+									<Bit config="0,2,10">
 										<Name>WRPB_PEND</Name>
 										<Description>WPR second area &quot;B&quot; end page</Description>
 										<BitOffset>0x10</BitOffset>
@@ -1110,7 +1129,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-									<Equation multiplier="0x4000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 								<Bit config="3">
 									<Name>WRPB_PEND</Name>
@@ -1118,7 +1137,7 @@
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-									<Equation multiplier="0x4000" offset="0x08000000"/>
+									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_B</Name>
@@ -1136,7 +1155,7 @@
 					</Category>
 				</Bank>
 			</Configuration>
-			<Configuration config="5,4">
+			<Configuration config="5,4,11">
 				<Bank interface="Bootloader" name="OB">
                     <Parameters address="0x40022040" name="Bank 1" size="0x20"/>
                     <Category>
@@ -1144,7 +1163,7 @@
 						<Field>
 							<Parameters address="0x40022040" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="5">
+								<Bit config="5,11">
 									<Name>RDP</Name>
 									<Description>Read protection option byte. The read protection is used to protect the software code stored in Flash memory.</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1320,7 +1339,7 @@
 										<Val value="0x1">nBOOT0 = 1</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="4,5">
 									<Name>TZEN</Name>
 									<Description>Global TrustZone security enable</Description>
 									<BitOffset>0x1F</BitOffset>
@@ -1403,7 +1422,7 @@
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 								<Bit config="4">
 									<Name>SECWM_PEND</Name>
@@ -1411,7 +1430,7 @@
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -1445,21 +1464,21 @@
 						<Field>
 							<Parameters address="0x40022058" name="FLASH_WRP1AR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="4,5">
+								<Bit config="4,5,11">
 									<Name>WRP1A_PSTRT</Name>
 									<Description>Bank 1 WPR first area &quot;A&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="4,5">
+								<Bit config="4,5,11">
 									<Name>WRP1A_PEND</Name>
 									<Description>Bank 1 WPR first area &quot;A&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_1A</Name>
@@ -1477,21 +1496,21 @@
 						<Field>
 							<Parameters address="0x4002205C" name="FLASH_WRP1BR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="4,5">
+								<Bit config="4,5,11">
 									<Name>WRP1B_PSTRT</Name>
 									<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="4,5">
+								<Bit config="4,5,11">
 									<Name>WRP1B_PEND</Name>
 									<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
-										<Equation multiplier="0x4000" offset="0x08000000"/>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>UNLOCK_1B</Name>

@@ -397,6 +397,12 @@ void FreeFileData(fileData_C* data)
 	return;
 }
 
+void FreeLibraryMemory(void* ptr)
+{
+    freeLibraryMemory(ptr);
+    return;
+}
+
 int Verify(fileData_C* fileData, unsigned int address)
 {
 	return verify(fileData, address);
@@ -483,6 +489,12 @@ void AutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int s
 	return;
 }
 
+void SerialNumberingAutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, char* serialInitialData)
+{
+    serialNumberingAutomaticMode(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+    return;
+}
+
 int GetStorageStructure(storageStructure** deviceStorageStruct)
 {
 	return getStorageStructure(deviceStorageStruct);
@@ -526,6 +538,12 @@ void SetExternalLoaderPath(const char* path, externalLoader** externalLoaderInfo
 {
 	setExternalLoaderPath(path, externalLoaderInfo);
 	return;
+}
+
+void SetExternalLoaderOBL(const char* path, externalLoader** externalLoaderInfo)
+{
+    setExternalLoaderOBL(path, externalLoaderInfo);
+    return;
 }
 
 int GetExternalLoaders(const char* path, externalStorageInfo** externalStorageNfo)

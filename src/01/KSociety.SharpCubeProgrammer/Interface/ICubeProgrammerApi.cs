@@ -217,6 +217,12 @@ namespace SharpCubeProgrammer.Interface
         void FreeFileData(IntPtr data);
 
         /// <summary>
+        /// This routine allows to free a specific memory region, typically used after readMemory().
+        /// </summary>
+        /// <param name="ptr">The input pointer address.</param>
+        //void FreeLibraryMemory(void* ptr);
+
+        /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
         /// </summary>
         CubeProgrammerError Verify(IntPtr fileData, string address);
@@ -255,6 +261,23 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
         /// </summary>
         void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1);
+
+        /// <summary>
+        /// This routine allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
+        /// Connection to target must be established before performing automatic mode with serial numbering.
+        /// </summary>
+        /// <param name="filePath">Indicates the full file path.</param>
+        /// <param name="address">The address to start downloading from.</param>
+        /// <param name="skipErase">If we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
+        /// <param name="verify">Add verification step after downloading.</param>
+        /// <param name="isMassErase">Erase the whole Flash memory.</param>
+        /// <param name="obCommand">Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."</param>
+        /// <param name="run">Start the application.</param>
+        /// <param name="enableSerialNumbering">Enables the serial numbering.</param>
+        /// <param name="serialAddress">The address where the inital data and the subsequent increments will be made.</param>
+        /// <param name="serialSize">Size for the serial numbering.</param>
+        /// <param name="serialInitialData">Intial data used for the serial numbering that will be incremented.</param>
+        void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "");
 
         /// <summary>
         /// This routine allows to get Flash storage information.
@@ -305,6 +328,12 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="path"></param>
         DeviceExternalLoader? SetExternalLoaderPath(string path);
+
+        /// <summary>
+        /// This routine allows to specify the path of the external Loaders to be loaded via OBL interfaces.
+        /// </summary>
+        /// <param name="path">Indicates the full path of the folder containing external Loaders.</param>
+        DeviceExternalLoader? SetExternalLoaderOBL(string path);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
