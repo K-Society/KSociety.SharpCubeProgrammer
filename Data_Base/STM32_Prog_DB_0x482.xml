@@ -126,7 +126,7 @@
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x8000"/>
+							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0xC0000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -136,7 +136,7 @@
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x30000000" name="SRAM" occurrence="0x1" size="0x8000"/>
+							<Parameters address="0x30000000" name="SRAM" occurrence="0x1" size="0xC0000"/>
 						</Field>
 					</Bank>
 				</Configuration>

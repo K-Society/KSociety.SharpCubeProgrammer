@@ -36,7 +36,7 @@ namespace Programming
 
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
-            
+
             //#region [Log Testing]
 
             //var displayCallBacks = new DisplayCallBacks
@@ -47,7 +47,7 @@ namespace Programming
             //};
 
             //CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
-            
+
             ////CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
             //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
 
@@ -74,7 +74,7 @@ namespace Programming
 
             #region [TryConnectStLink]
 
-            
+
             var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 
             if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
