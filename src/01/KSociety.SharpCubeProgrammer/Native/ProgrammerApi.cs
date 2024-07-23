@@ -1095,39 +1095,39 @@ namespace SharpCubeProgrammer.Native
 
         #region [FreeLibraryMemory]
 
-        //[DllImport(ProgrammerDll32, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void FreeLibraryMemory32(void* ptr);
+        [DllImport(ProgrammerDll32, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void FreeLibraryMemory32(IntPtr ptr);
 
-        //[DllImport(ProgrammerDll64, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void FreeLibraryMemory64(void* ptr);
+        [DllImport(ProgrammerDll64, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void FreeLibraryMemory64(IntPtr ptr);
 
-        //private static void FreeLibraryMemoryNative(void* ptr)
-        //{
-        //    if (!Environment.Is64BitProcess)
-        //    {
-        //        FreeLibraryMemory32(ptr);
-        //    }
-        //    else
-        //    {
-        //        FreeLibraryMemory64(ptr);
-        //    }
-        //}
+        private static void FreeLibraryMemoryNative(IntPtr ptr)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                FreeLibraryMemory32(ptr);
+            }
+            else
+            {
+                FreeLibraryMemory64(ptr);
+            }
+        }
 
-        //internal static void FreeLibraryMemory(void* ptr)
-        //{
-        //    try
-        //    {
-        //        FreeLibraryMemoryNative(ptr);
-        //    }
-        //    catch (DllNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-        //    }
-        //    catch (EntryPointNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-        //    }
-        //}
+        internal static void FreeLibraryMemory(IntPtr ptr)
+        {
+            try
+            {
+                FreeLibraryMemoryNative(ptr);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
 
         #endregion
 

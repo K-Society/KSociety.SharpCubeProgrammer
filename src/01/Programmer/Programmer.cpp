@@ -241,8 +241,8 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 			return -99;
 		}
 
-		result = writeMemory(address, data, size);
-		return result;
+        result = writeMemory(address, data, size);
+        return result;
 	}
 	catch (std::exception& ex)
 	{
@@ -274,14 +274,14 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
             segmentData.address = 0;
             segmentData.size = size;
             segmentData.data = reinterpret_cast<unsigned char*>(data);
-            
+
             fileData_C fileData{};
             fileData.Type = 0;
             fileData.segmentsNbr = 1;
             fileData.segments = &segmentData;
 
             result = verify(&fileData, address);
-        }
+        } 
 
         return result;
     }
