@@ -854,6 +854,12 @@ void *fileOpen(const wchar_t* filePath);
  */
 void freeFileData(fileData_C* data);
 
+/**
+ * @brief This routine allows to free a specific memory region, typically used after readMemory().
+ * @param ptr : The input pointer address.
+ * \note it's crucial to ensure that the data is no longer in use after you free the memory.
+ */
+void freeLibraryMemory(void* ptr);
 
 /**
  * \brief This routine allows to diplay the Option bytes
@@ -916,6 +922,22 @@ void deleteInterfaceList();
  */
 void automaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run);
 
+/**
+ * \brief This routine allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
+ * \param filePath              : Indicates the full file path.
+ * \param address               : The address to start downloading from.
+ * \param skipErase             : If we have a blank device, we can skip erasing memory before programming [skipErase=0].
+ * \param verify                : Add verification step after downloading.
+ * \param isMassErase           : Erase the whole Flash memory.
+ * \param obCommand             : Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."
+ * \param run                   : Start the application.
+ * \param enableSerialNumbering : enables the serial numbering.
+ * \param serialAddress         : the address where the inital data and the subsequent increments will be made.
+ * \param serialSize            : size for the serial numbering.
+ * \param serialInitialData     : intial data used for the serial numbering that will be incremented.
+ * \warning Connection to target must be established before performing automatic mode with serial numbering.
+ */
+void serialNumberingAutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, char* serialInitialData);
 
 /**
  * \brief This routine allows to get Flash storage information.
@@ -993,6 +1015,13 @@ void setLoadersPath(const char* path);
  * \param externalLoaderInfo : Structure in which the external Loaders informations are stored.
  */
 void setExternalLoaderPath(const char* path, externalLoader** externalLoaderInfo);
+
+/**
+ * \brief This routine allows to specify the path of the external Loaders to be loaded via OBL interfaces.
+ * \param path : Indicates the full path of the folder containing external Loaders.
+ * \param externalLoaderInfo : Structure in which the external Loaders informations are stored.
+ */
+void setExternalLoaderOBL(const char* path, externalLoader** externalLoaderInfo);
 
 
 /**

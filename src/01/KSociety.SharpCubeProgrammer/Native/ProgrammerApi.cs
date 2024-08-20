@@ -1093,6 +1093,44 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [FreeLibraryMemory]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void FreeLibraryMemory32(IntPtr ptr);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void FreeLibraryMemory64(IntPtr ptr);
+
+        private static void FreeLibraryMemoryNative(IntPtr ptr)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                FreeLibraryMemory32(ptr);
+            }
+            else
+            {
+                FreeLibraryMemory64(ptr);
+            }
+        }
+
+        internal static void FreeLibraryMemory(IntPtr ptr)
+        {
+            try
+            {
+                FreeLibraryMemoryNative(ptr);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [Verify]
 
         [DllImport(ProgrammerDll32, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -1367,6 +1405,44 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [SerialNumberingAutomaticMode]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern void SerialNumberingAutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern void SerialNumberingAutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
+
+        private static void SerialNumberingAutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                SerialNumberingAutomaticMode32(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+            }
+            else
+            {
+                SerialNumberingAutomaticMode64(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+            }
+        }
+
+        internal static void SerialNumberingAutomaticMode(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
+        {
+            try
+            {
+                SerialNumberingAutomaticModeNative(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #region [GetStorageStructure]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetStorageStructure", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -1603,6 +1679,44 @@ namespace SharpCubeProgrammer.Native
             try
             {
                 SetExternalLoaderPathNative(path, ref externalLoaderInfo);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [SetExternalLoaderOBL]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "SetExternalLoaderOBL", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern void SetExternalLoaderOBL32(string path, ref IntPtr externalLoaderInfo);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderOBL", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern void SetExternalLoaderOBL64(string path, ref IntPtr externalLoaderInfo);
+
+        private static void SetExternalLoaderOBLNative(string path, ref IntPtr externalLoaderInfo)
+        {
+            if (!Environment.Is64BitProcess)
+            {
+                SetExternalLoaderOBL32(path, ref externalLoaderInfo);
+            }
+            else
+            {
+                SetExternalLoaderOBL64(path, ref externalLoaderInfo);
+            }
+        }
+
+        internal static void SetExternalLoaderOBL(string path, ref IntPtr externalLoaderInfo)
+        {
+            try
+            {
+                SetExternalLoaderOBLNative(path, ref externalLoaderInfo);
             }
             catch (DllNotFoundException ex)
             {

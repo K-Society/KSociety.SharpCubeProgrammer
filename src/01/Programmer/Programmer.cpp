@@ -241,8 +241,8 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 			return -99;
 		}
 
-		result = writeMemory(address, data, size);
-		return result;
+        result = writeMemory(address, data, size);
+        return result;
 	}
 	catch (std::exception& ex)
 	{
@@ -274,14 +274,14 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
             segmentData.address = 0;
             segmentData.size = size;
             segmentData.data = reinterpret_cast<unsigned char*>(data);
-            
+
             fileData_C fileData{};
             fileData.Type = 0;
             fileData.segmentsNbr = 1;
             fileData.segments = &segmentData;
 
             result = verify(&fileData, address);
-        }
+        } 
 
         return result;
     }
@@ -397,6 +397,12 @@ void FreeFileData(fileData_C* data)
 	return;
 }
 
+void FreeLibraryMemory(void* ptr)
+{
+    freeLibraryMemory(ptr);
+    return;
+}
+
 int Verify(fileData_C* fileData, unsigned int address)
 {
 	return verify(fileData, address);
@@ -483,6 +489,12 @@ void AutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int s
 	return;
 }
 
+void SerialNumberingAutomaticMode(const wchar_t* filePath, unsigned int address, unsigned int skipErase, unsigned int verify, int isMassErase, char* obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, char* serialInitialData)
+{
+    serialNumberingAutomaticMode(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+    return;
+}
+
 int GetStorageStructure(storageStructure** deviceStorageStruct)
 {
 	return getStorageStructure(deviceStorageStruct);
@@ -526,6 +538,12 @@ void SetExternalLoaderPath(const char* path, externalLoader** externalLoaderInfo
 {
 	setExternalLoaderPath(path, externalLoaderInfo);
 	return;
+}
+
+void SetExternalLoaderOBL(const char* path, externalLoader** externalLoaderInfo)
+{
+    setExternalLoaderOBL(path, externalLoaderInfo);
+    return;
 }
 
 int GetExternalLoaders(const char* path, externalStorageInfo** externalStorageNfo)

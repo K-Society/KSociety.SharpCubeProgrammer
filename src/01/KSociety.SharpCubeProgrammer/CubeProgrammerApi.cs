@@ -480,6 +480,7 @@ namespace SharpCubeProgrammer
                 if (bufferPtr != IntPtr.Zero)
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
+                    this.FreeLibraryMemory(bufferPtr);
                 }
             }
             catch (Exception ex)
@@ -611,7 +612,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError Execute(string address)
+        public CubeProgrammerError Execute(string address = "0x08000000")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
 
@@ -763,7 +764,19 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void FreeFileData(IntPtr data)
         {
-            Native.ProgrammerApi.FreeFileData(data);
+            if (data != IntPtr.Zero)
+            { 
+                Native.ProgrammerApi.FreeFileData(data);
+            }
+        }
+
+        /// <inheritdoc />
+        public void FreeLibraryMemory(IntPtr ptr)
+        {
+            if (ptr != IntPtr.Zero)
+            {
+                Native.ProgrammerApi.FreeLibraryMemory(ptr);
+            }
         }
 
         /// <inheritdoc />
@@ -793,7 +806,6 @@ namespace SharpCubeProgrammer
                 gch.Free();
                 result = this.CheckResult(verifyMemoryResult);
 
-
                 return result;
             }
 
@@ -815,7 +827,6 @@ namespace SharpCubeProgrammer
                     Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                 gch.Free();
                 result = this.CheckResult(verifyMemoryResult);
-
 
                 return result;
             }
@@ -902,6 +913,21 @@ namespace SharpCubeProgrammer
                     var uintAddress = this.HexConverterToUint(address);
 
                     Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "")
+        {
+            if (!String.IsNullOrEmpty(filePath))
+            {
+                var filePathAdapted = filePath.Replace(@"\", "/");
+                if (!String.IsNullOrEmpty(address))
+                {
+                    var uintAddress = this.HexConverterToUint(address);
+
+                    Native.ProgrammerApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
                 }
             }
         }
@@ -1193,6 +1219,52 @@ namespace SharpCubeProgrammer
             catch (Exception ex)
             {
                 this._logger?.LogError(ex, "SetExternalLoaderPath: ");
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public DeviceExternalLoader? SetExternalLoaderOBL(string path)
+        {
+            var pathAdapted = path.Replace(@"\", "/");
+            var externalLoaderPtr = new IntPtr();
+            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+            var output = new DeviceExternalLoader();
+
+            try
+            {
+                Native.ProgrammerApi.SetExternalLoaderOBL(pathAdapted, ref externalLoaderPtr);
+                if (externalLoaderPtr != IntPtr.Zero)
+                {
+                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                    output.filePath = externalLoaderStructure.filePath;
+                    output.deviceName = externalLoaderStructure.deviceName;
+                    output.deviceType = externalLoaderStructure.deviceType;
+                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
+                    output.deviceSize = externalLoaderStructure.deviceSize;
+                    output.pageSize = externalLoaderStructure.pageSize;
+                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+
+                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                    {
+                        var deviceSectorList = new List<DeviceSector>();
+                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        {
+                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                            deviceSectorList.Add(deviceSectorItem);
+                        }
+
+                        output.sectors = deviceSectorList;
+
+                        return output;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "SetExternalLoaderOBL: ");
             }
 
             return null;
