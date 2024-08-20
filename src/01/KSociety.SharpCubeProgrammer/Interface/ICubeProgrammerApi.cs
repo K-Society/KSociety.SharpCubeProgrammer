@@ -220,7 +220,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to free a specific memory region, typically used after readMemory().
         /// </summary>
         /// <param name="ptr">The input pointer address.</param>
-        //void FreeLibraryMemory(void* ptr);
+        void FreeLibraryMemory(IntPtr ptr);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.

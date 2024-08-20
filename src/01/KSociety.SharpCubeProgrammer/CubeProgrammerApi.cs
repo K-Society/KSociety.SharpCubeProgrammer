@@ -480,6 +480,7 @@ namespace SharpCubeProgrammer
                 if (bufferPtr != IntPtr.Zero)
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
+                    this.FreeLibraryMemory(bufferPtr);
                 }
             }
             catch (Exception ex)
@@ -763,14 +764,20 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void FreeFileData(IntPtr data)
         {
-            Native.ProgrammerApi.FreeFileData(data);
+            if (data != IntPtr.Zero)
+            { 
+                Native.ProgrammerApi.FreeFileData(data);
+            }
         }
 
         /// <inheritdoc />
-        //public void FreeLibraryMemory(void* ptr)
-        //{
-        //    Native.ProgrammerApi.FreeLibraryMemory(ptr);
-        //}
+        public void FreeLibraryMemory(IntPtr ptr)
+        {
+            if (ptr != IntPtr.Zero)
+            {
+                Native.ProgrammerApi.FreeLibraryMemory(ptr);
+            }
+        }
 
         /// <inheritdoc />
         public CubeProgrammerError Verify(IntPtr fileData, string address)
@@ -799,7 +806,6 @@ namespace SharpCubeProgrammer
                 gch.Free();
                 result = this.CheckResult(verifyMemoryResult);
 
-
                 return result;
             }
 
@@ -821,7 +827,6 @@ namespace SharpCubeProgrammer
                     Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                 gch.Free();
                 result = this.CheckResult(verifyMemoryResult);
-
 
                 return result;
             }
