@@ -50,35 +50,28 @@ namespace SharpCubeProgrammer
         {
             var currentDirectory = GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
-            //if (Native.Utility.SetDllDirectory(target))
-            //{
-                if (this._handleSTLinkDriver == null)
-                {
-                    lock (this._syncRoot)
-                    {
-                        if (this._handleSTLinkDriver == null)
-                        {
-                            this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
 
-                            if (this._handleSTLinkDriver.IsInvalid)
-                            {
-                                var error = Marshal.GetLastWin32Error();
-                                this._handleSTLinkDriver = null;
-                                this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                            }
-                            else
-                            {
-                                this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                            }
+            if (this._handleSTLinkDriver == null)
+            {
+                lock (this._syncRoot)
+                {
+                    if (this._handleSTLinkDriver == null)
+                    {
+                        this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+
+                        if (this._handleSTLinkDriver.IsInvalid)
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            this._handleSTLinkDriver = null;
+                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                        }
+                        else
+                        {
+                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
                         }
                     }
                 }
-            //}
-            //else
-            //{
-            //    var error = Marshal.GetLastWin32Error();
-            //    this._logger?.LogError("SetDllDirectory {0} -> error: {1}!", target, error);
-            //}
+            }
         }
 
         private static string GetAssemblyDirectory()
