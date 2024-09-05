@@ -9,8 +9,11 @@ namespace SharpCubeProgrammer.Native
 
     internal static class ProgrammerApi
     {
-        private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
-        private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
+        //private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
+        //private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
+
+        private const string ProgrammerDll32 = @"Programmer.dll";
+        private const string ProgrammerDll64 = @"Programmer.dll";
 
         #region [STLINK]
 
