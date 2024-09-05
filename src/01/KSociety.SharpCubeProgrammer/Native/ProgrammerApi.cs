@@ -3,17 +3,16 @@
 namespace SharpCubeProgrammer.Native
 {
     using System;
+    using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using Enum;
     using Struct;
 
     internal static class ProgrammerApi
     {
-        //private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
-        //private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
-
-        private const string ProgrammerDll32 = @"Programmer.dll";
-        private const string ProgrammerDll64 = @"Programmer.dll";
+        private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
+        private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
 
         #region [STLINK]
 

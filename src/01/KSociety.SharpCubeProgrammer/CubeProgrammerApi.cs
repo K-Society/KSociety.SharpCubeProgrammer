@@ -25,7 +25,6 @@ namespace SharpCubeProgrammer
         /// </summary>
         private readonly object _syncRoot = new object();
 
-        private Native.SafeLibraryHandle _handleProgrammerLibrary;
         private Native.SafeLibraryHandle _handleSTLinkDriver;
         private readonly ILogger<CubeProgrammerApi> _logger;
 
@@ -50,49 +49,34 @@ namespace SharpCubeProgrammer
         private void Init()
         {
             var currentDirectory = GetAssemblyDirectory();
-
-            if (this._handleProgrammerLibrary == null)
+            var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+            if (Native.Utility.SetDllDirectory(target))
             {
-                lock (this._syncRoot)
+                if (this._handleSTLinkDriver == null)
                 {
-                    if (this._handleProgrammerLibrary == null)
+                    lock (this._syncRoot)
                     {
-                        this._handleProgrammerLibrary = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? currentDirectory + @".\dll\x64\Programmer.dll" : currentDirectory + @".\dll\x86\Programmer.dll", IntPtr.Zero, 0x00000100);
+                        if (this._handleSTLinkDriver == null)
+                        {
+                            this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
 
-                        if (this._handleProgrammerLibrary.IsInvalid)
-                        {
-                            var error = Marshal.GetLastWin32Error();
-                            this._handleProgrammerLibrary = null;
-                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", currentDirectory, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                        }
-                        else
-                        {
-                            this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                            if (this._handleSTLinkDriver.IsInvalid)
+                            {
+                                var error = Marshal.GetLastWin32Error();
+                                this._handleSTLinkDriver = null;
+                                this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            }
+                            else
+                            {
+                                this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                            }
                         }
                     }
                 }
             }
-
-            if (this._handleSTLinkDriver == null)
+            else
             {
-                lock (this._syncRoot)
-                {
-                    if (this._handleSTLinkDriver == null)
-                    {
-                        this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? currentDirectory + @".\dll\x64\STLinkUSBDriver.dll" : currentDirectory + @".\dll\x86\STLinkUSBDriver.dll", IntPtr.Zero, 0);
-
-                        if (this._handleSTLinkDriver.IsInvalid)
-                        {
-                            var error = Marshal.GetLastWin32Error();
-                            this._handleSTLinkDriver = null;
-                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", currentDirectory, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                        }
-                        else
-                        {
-                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                        }
-                    }
-                }
+                this._logger?.LogError("SetDllDirectory error: {0} !", target);
             }
         }
 
@@ -1655,9 +1639,6 @@ namespace SharpCubeProgrammer
             }
 
             // Free any unmanaged objects here.
-            this._handleProgrammerLibrary?.Dispose();
-            this._handleProgrammerLibrary = null;
-
             this._handleSTLinkDriver?.Dispose();
             this._handleSTLinkDriver = null;
         }
