@@ -7,33 +7,10 @@ namespace SharpCubeProgrammer.Native
 
     internal static class Utility
     {
-        //private static SafeLibraryHandle DllHandle;
-
         /// <summary>
         /// The name of the Windows Kernel library.
         /// </summary>
         private const string KernelLibName = "kernel32.dll";
-
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        [DllImport(KernelLibName, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true, ThrowOnUnmappableChar = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetDllDirectoryW([MarshalAs(UnmanagedType.LPStr)] string lpPathName);
-
-        internal static bool SetDllDirectory(string lpPathName)
-        {
-            try
-            {
-                return SetDllDirectoryW(lpPathName);
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
 
         /// <summary>
         /// Loads the specified module into the address space of the calling process.
