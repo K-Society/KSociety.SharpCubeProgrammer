@@ -76,7 +76,8 @@ namespace SharpCubeProgrammer
             }
             else
             {
-                this._logger?.LogError("SetDllDirectory error: {0} !", target);
+                var error = Marshal.GetLastWin32Error();
+                this._logger?.LogError("SetDllDirectory {0} -> error: {1}!", target, error);
             }
         }
 
