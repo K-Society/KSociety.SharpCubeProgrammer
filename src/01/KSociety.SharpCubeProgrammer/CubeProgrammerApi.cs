@@ -57,13 +57,13 @@ namespace SharpCubeProgrammer
                 {
                     if (this._handleProgrammerLibrary == null)
                     {
-                        this._handleProgrammerLibrary = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? currentDirectory + @".\dll\x64\Programmer.dll" : currentDirectory + @".\dll\x86\Programmer.dll", IntPtr.Zero, 0);
+                        this._handleProgrammerLibrary = Native.Utility.LoadNativeLibrary(Environment.Is64BitProcess ? currentDirectory + @".\dll\x64\Programmer.dll" : currentDirectory + @".\dll\x86\Programmer.dll", IntPtr.Zero, 0x00000100);
 
                         if (this._handleProgrammerLibrary.IsInvalid)
                         {
                             var error = Marshal.GetLastWin32Error();
                             this._handleProgrammerLibrary = null;
-                            this._logger?.LogError("Loading {0} - {1} library error: {3} !", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", currentDirectory, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                         }
                         else
                         {
@@ -85,7 +85,7 @@ namespace SharpCubeProgrammer
                         {
                             var error = Marshal.GetLastWin32Error();
                             this._handleSTLinkDriver = null;
-                            this._logger?.LogError("Loading {0} - {1} library error: {3} !", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", currentDirectory, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                         }
                         else
                         {
