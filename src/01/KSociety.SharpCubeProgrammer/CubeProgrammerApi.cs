@@ -50,8 +50,8 @@ namespace SharpCubeProgrammer
         {
             var currentDirectory = GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
-            if (Native.Utility.SetDllDirectory(target))
-            {
+            //if (Native.Utility.SetDllDirectory(target))
+            //{
                 if (this._handleSTLinkDriver == null)
                 {
                     lock (this._syncRoot)
@@ -73,12 +73,12 @@ namespace SharpCubeProgrammer
                         }
                     }
                 }
-            }
-            else
-            {
-                var error = Marshal.GetLastWin32Error();
-                this._logger?.LogError("SetDllDirectory {0} -> error: {1}!", target, error);
-            }
+            //}
+            //else
+            //{
+            //    var error = Marshal.GetLastWin32Error();
+            //    this._logger?.LogError("SetDllDirectory {0} -> error: {1}!", target, error);
+            //}
         }
 
         private static string GetAssemblyDirectory()
