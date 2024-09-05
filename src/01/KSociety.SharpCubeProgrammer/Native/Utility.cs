@@ -14,6 +14,7 @@ namespace SharpCubeProgrammer.Native
         /// </summary>
         private const string KernelLibName = "kernel32.dll";
 
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [DllImport(KernelLibName, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetDllDirectoryW([MarshalAs(UnmanagedType.LPStr)] string lpPathName);
