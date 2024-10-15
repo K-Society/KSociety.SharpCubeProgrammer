@@ -5,6 +5,7 @@ namespace SharpCubeProgrammer
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Reflection;
@@ -523,12 +524,28 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
+                var size = (uint)data.Length;
+                var remainder = size % 8U;
+                var filling = 8U - remainder;
+                var newSize = size + filling;
+
+                var newData = new byte[newSize];
+
+                Array.Copy(data, 0, newData, 0, data.Length);
+
+                for (var i = 0; i < filling; i++)
+                {
+                    newData[size + i] = 0xFF;
+                }
+
                 var uintAddress = this.HexConverterToUint(address);
 
                 try
                 {
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    //var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var gch = GCHandle.Alloc(newData, GCHandleType.Pinned);
+                    //var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), newSize);
                     gch.Free();
                     result = this.CheckResult(writeMemoryResult);
 
