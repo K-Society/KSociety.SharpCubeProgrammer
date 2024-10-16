@@ -241,7 +241,30 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
 			return -99;
 		}
 
-        result = writeMemory(address, data, size);
+        unsigned int remainder = size % 8U;
+        if (remainder > 0)
+        {
+            unsigned int filling = 8U - remainder;
+            unsigned int newSize = size + filling;
+
+            char* newData = new char[newSize];
+
+            memcpy(newData, data, size);
+
+            for (unsigned int i = 0; i < filling; i++)
+            {
+                if ((size + i) < newSize)
+                {
+                    newData[size + i] = 0xFF;
+                }
+            }
+
+            result = writeMemory(address, newData, newSize);
+        }
+        else
+        {
+            result = writeMemory(address, data, size);
+        }
         return result;
 	}
 	catch (std::exception& ex)
@@ -261,12 +284,7 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
     {
         int result = -99;
 
-        if (size == 0)
-        {
-            return -99;
-        }
-
-        result = writeMemory(address, data, size);
+        result = WriteMemory(address, data, size);
 
         if (result == 0)
         {

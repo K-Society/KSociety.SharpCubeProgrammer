@@ -4,6 +4,7 @@ namespace Programming
 {
     using System;
     using System.Linq;
+    using System.Net;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
@@ -81,23 +82,24 @@ namespace Programming
             {
                 #region [File Open Testing]
 
-                //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.hex");
+                var file = System.IO.File.ReadAllBytes(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
+                //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
 
                 //if (filePointer != IntPtr.Zero)
                 //{
-                //    var verify = CubeProgrammerApi.Verify(filePointer, "0x08000000");
+                    var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", file);
 
-                //    if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                //    {
-                //        var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
+                    if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    {
+                        //var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
 
-                //        if (saveFileToFileTest.Equals(CubeProgrammerError.CubeprogrammerNoError))
-                //        {
+                        //if (saveFileToFileTest.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                        //{
 
-                //        }
-                //    }
+                        //}
+                    }
 
-                //    CubeProgrammerApi.FreeFileData(filePointer);
+                    //CubeProgrammerApi.FreeFileData(filePointer);
                 //}
 
                 #endregion
