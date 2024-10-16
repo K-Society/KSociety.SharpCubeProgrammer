@@ -7,8 +7,6 @@ namespace SharpCubeProgrammer.Native
 
     internal static class Utility
     {
-        //private static SafeLibraryHandle DllHandle;
-
         /// <summary>
         /// The name of the Windows Kernel library.
         /// </summary>
