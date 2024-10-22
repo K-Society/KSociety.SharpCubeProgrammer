@@ -142,9 +142,24 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError WriteMemory(string address, byte[] data);
 
         /// <summary>
+        /// This routine allows to write memory data on the user interface with the configuration already initialized.
+        /// </summary>
+        CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data);
+
+        /// <summary>
+        /// This routine allows to write memory data on the user interface with the configuration already initialized.
+        /// </summary>
+        //CubeProgrammerError WriteMemoryBySector(string address, byte[] data);
+
+        /// <summary>
         /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
         /// </summary>
         CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data);
+
+        /// <summary>
+        /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
+        /// </summary>
+        //CubeProgrammerError WriteMemoryBySectorAndVerify(string address, byte[] data);
 
         /// <summary>
         /// This routine allows to write sector data on the user interface with the configuration already initialized.
@@ -199,7 +214,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to drop the current read/write operation.
         /// </summary>
-        void GetCancelPointer();
+        int GetCancelPointer();
 
         /// <summary>
         /// This routine allows to open and get data from any supported file extension.

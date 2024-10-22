@@ -60,7 +60,13 @@ extern "C" PROGRAMMER_API int ReadMemory(unsigned int address, unsigned char** d
 
 extern "C" PROGRAMMER_API int WriteMemory(unsigned int address, char* data, unsigned int size);
 
+extern "C" PROGRAMMER_API int WriteMemoryAutoFill(unsigned int address, char* data, unsigned int size);
+
+//extern "C" PROGRAMMER_API int WriteMemoryBySector(unsigned int address, char* data, unsigned int size);
+
 extern "C" PROGRAMMER_API int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size);
+
+//extern "C" PROGRAMMER_API int WriteMemoryBySectorAndVerify(unsigned int address, char* data, unsigned int size);
 
 extern "C" PROGRAMMER_API int EditSector(unsigned int address, char* data, unsigned int size);
 
@@ -78,7 +84,7 @@ extern "C" PROGRAMMER_API int TzenRegression();
 
 extern "C" PROGRAMMER_API int GetTargetInterfaceType();
 
-extern "C" PROGRAMMER_API volatile int* GetCancelPointer();
+extern "C" PROGRAMMER_API int GetCancelPointer();
 
 extern "C" PROGRAMMER_API void* FileOpen(const wchar_t* filePath);
 

@@ -232,14 +232,40 @@ int ReadMemory(unsigned int address, unsigned char** data, unsigned int size)
 
 int WriteMemory(unsigned int address, char* data, unsigned int size)
 {
-	try 
-	{
-		int result = -99;
+    int result = -99;
 
-		if (size == 0)
-		{
-			return -99;
-		}
+    try
+    {
+        if (size == 0)
+        {
+            return -99;
+        }
+
+        result = writeMemory(address, data, size);
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
+
+    return result;
+}
+
+int WriteMemoryAutoFill(unsigned int address, char* data, unsigned int size)
+{
+    try
+    {
+        int result = -99;
+
+        if (size == 0)
+        {
+            return -99;
+        }
 
         unsigned int remainder = size % 8U;
         if (remainder > 0)
@@ -266,25 +292,223 @@ int WriteMemory(unsigned int address, char* data, unsigned int size)
             result = writeMemory(address, data, size);
         }
         return result;
-	}
-	catch (std::exception& ex)
-	{
-		ex;
-		return -99;
-	}
-	catch (...)
-	{
-		return -99;
-	}
+    }
+    catch (std::exception& ex)
+    {
+        ex;
+        return -99;
+    }
+    catch (...)
+    {
+        return -99;
+    }
 }
+
+//int WriteMemory2(char* data, unsigned int size)
+//{
+//    int result = -99;
+//
+//	try 
+//	{
+//		if (size == 0)
+//		{
+//			return -99;
+//		}
+//
+//        storageStructure* deviceStorageStruct;
+//        int getStorageStructureResult = getStorageStructure(&deviceStorageStruct);
+//
+//        if (size > 16U)
+//        {
+//            unsigned int remainder = size % 16U;
+//
+//            if (remainder > 0)
+//            {
+//                if (getStorageStructureResult == 0)
+//                {
+//                    if (deviceStorageStruct->banksNumber > 0 && deviceStorageStruct->banks->sectorsNumber > 0)
+//                    {
+//                        unsigned int sectorSize = deviceStorageStruct->banks->sectors->size;
+//
+//                        if (sectorSize > 0)
+//                        {
+//                            if (size <= sectorSize)
+//                            {
+//                                //Test if I have more then 1 byte to write.
+//                                if (remainder > 1)
+//                                {
+//                                    result = writeMemory(deviceStorageStruct->banks->sectors[0].address, data, size);
+//                                }
+//                                else
+//                                {
+//                                    //Error
+//                                }
+//                                //unsigned int newSize = size - remainder;
+//                                
+//                                //if (result == 0)
+//                                //{
+//                                //    result = writeMemory((address + newSize), (data + newSize), remainder);
+//                                //}
+//                            }
+//                            else
+//                            {
+//                                unsigned int sectorsToWrite = size / sectorSize;
+//                                unsigned int sectorRemainder = size % sectorSize;
+//                                unsigned int lastSector = 0;
+//
+//                                if (sectorRemainder > 0U)
+//                                {
+//                                    lastSector = sectorsToWrite + 1;
+//                                }
+//
+//                                if (sectorsToWrite <= deviceStorageStruct->banks->sectorsNumber)
+//                                {
+//                                    printf("first address: %d \n", deviceStorageStruct->banks->sectors[0].address);
+//                                    result = 0; // writeMemory(deviceStorageStruct->banks->sectors[0].address, data, (sectorsToWrite * sectorSize));
+//                                    printf("write memory: %d \n", sectorsToWrite * sectorSize);
+//                                    if (result == 0 && sectorRemainder > 0U)
+//                                    {
+//                                        //Test if I have more then 1 byte to write.
+//                                        //if (remainder > 1)
+//                                        //{
+//                                            unsigned int remainderSize = sectorSize - ((lastSector * sectorSize) - size);
+//                                            printf("remainder size: %d \n", remainderSize);
+//                                            if (remainderSize > 16U)
+//                                            {
+//                                                unsigned int lastRemainder = remainderSize % 16U;
+//                                                printf("last remainder size: %d \n", lastRemainder);
+//                                                if (lastRemainder > 1)
+//                                                {
+//                                                    printf("last address: %d \n", deviceStorageStruct->banks->sectors[sectorsToWrite].address);
+//                                                    printf("last address: %d \n", deviceStorageStruct->banks->sectors[lastSector].address);
+//                                                    result = writeMemory(deviceStorageStruct->banks->sectors[sectorsToWrite].address, data + (sectorsToWrite * sectorSize), remainderSize);
+//                                                }
+//                                                else
+//                                                {
+//                                                    //Error
+//                                                }
+//                                            }
+//                                            else
+//                                            {
+//                                                result = writeMemory(deviceStorageStruct->banks->sectors[sectorsToWrite].address, data + (sectorsToWrite * sectorSize), remainderSize);
+//                                            }
+//                                        //}
+//                                        //else
+//                                        //{
+//                                        //    //Error
+//                                        //}
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                result = writeMemory(deviceStorageStruct->banks->sectors[0].address, data, size);
+//            }
+//        }
+//        else
+//        {
+//            result = writeMemory(deviceStorageStruct->banks->sectors[0].address, data, size);
+//        }
+//	}
+//	catch (std::exception& ex)
+//	{
+//		ex;
+//		return -99;
+//	}
+//	catch (...)
+//	{
+//		return -99;
+//	}
+//
+//    return result;
+//}
+
+//int WriteMemoryBySector(unsigned int address, char* data, unsigned int size)
+//{
+//    int result = -99;
+//
+//    try
+//    {
+//        if (size == 0)
+//        {
+//            return result;
+//        }
+//
+//        storageStructure* deviceStorageStruct;
+//
+//        int getStorageStructureResult = getStorageStructure(&deviceStorageStruct);
+//
+//        if (getStorageStructureResult == 0)
+//        {
+//            if (deviceStorageStruct->banksNumber > 0 && deviceStorageStruct->banks->sectorsNumber > 0)
+//            {
+//                unsigned int sectorSize = deviceStorageStruct->banks->sectors->size;
+//
+//                if (sectorSize > 0)
+//                {
+//                    if (size <= sectorSize)
+//                    {
+//                        result = writeMemory(address, data, size);
+//                    }
+//                    else
+//                    {
+//                        unsigned int sectorsToWrite = size / sectorSize;
+//                        unsigned int remainder = size % sectorSize;
+//                        if (remainder > 0U)
+//                        {
+//                            sectorsToWrite = sectorsToWrite + 1;
+//                        }
+//
+//                        if (sectorsToWrite <= deviceStorageStruct->banks->sectorsNumber)
+//                        {
+//                            for (unsigned int i = 0; i < sectorsToWrite; i++)
+//                            {
+//                                if (i == (sectorsToWrite - 1) && (remainder > 0U))
+//                                {
+//                                    unsigned int remainderSize = sectorSize - ((sectorSize * sectorsToWrite) - size);
+//                                    printf("remainder size: %d \n", remainderSize);
+//                                    result = writeMemory(deviceStorageStruct->banks->sectors[i].address, data + (i * sectorSize), remainderSize);
+//                                }
+//                                else
+//                                {
+//                                    result = writeMemory(deviceStorageStruct->banks->sectors[i].address, data + (i * sectorSize), sectorSize);
+//                                }
+//
+//                                if (result != 0)
+//                                {
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    catch (std::exception& ex)
+//    {
+//        ex;
+//        return -99;
+//    }
+//    catch (...)
+//    {
+//        return -99;
+//    }
+//
+//    return result;
+//}
 
 int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
 {
+    int result = -99;
+
     try
     {
-        int result = -99;
-
-        result = WriteMemory(address, data, size);
+        result = WriteMemoryAutoFill(address, data, size);
 
         if (result == 0)
         {
@@ -299,9 +523,7 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
             fileData.segments = &segmentData;
 
             result = verify(&fileData, address);
-        } 
-
-        return result;
+        }
     }
     catch (std::exception& ex)
     {
@@ -312,7 +534,45 @@ int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size)
     {
         return -99;
     }
+
+    return result;
 }
+
+//int WriteMemoryBySectorAndVerify(unsigned int address, char* data, unsigned int size)
+//{
+//    try
+//    {
+//        int result = -99;
+//
+//        result = WriteMemoryBySector(address, data, size);
+//
+//        if (result == 0)
+//        {
+//            segmentData_C segmentData{};
+//            segmentData.address = 0;
+//            segmentData.size = size;
+//            segmentData.data = reinterpret_cast<unsigned char*>(data);
+//
+//            fileData_C fileData{};
+//            fileData.Type = 0;
+//            fileData.segmentsNbr = 1;
+//            fileData.segments = &segmentData;
+//
+//            result = verify(&fileData, address);
+//        }
+//
+//        return result;
+//    }
+//    catch (std::exception& ex)
+//    {
+//        ex;
+//        return -99;
+//    }
+//    catch (...)
+//    {
+//        return -99;
+//    }
+//}
 
 int EditSector(unsigned int address, char* data, unsigned int size)
 {
@@ -399,9 +659,9 @@ int GetTargetInterfaceType()
     return getTargetInterfaceType();
 }
 
-volatile int* GetCancelPointer()
+int GetCancelPointer()
 {
-	return getCancelPointer();
+    return *getCancelPointer();
 }
 
 void* FileOpen(const wchar_t* filePath)
