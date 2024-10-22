@@ -61,6 +61,8 @@ You need to use _PackageReference_, otherwise some contents will not be copied t
 - GetDeviceGeneralInf
 - ReadMemory
 - WriteMemory
+- WriteMemoryAutoFill
+- WriteMemoryAndVerify
 - EditSector
 - DownloadFile
 - Execute

@@ -5,7 +5,6 @@ namespace SharpCubeProgrammer
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Reflection;
@@ -492,6 +491,7 @@ namespace SharpCubeProgrammer
             return (result, buffer);
         }
 
+        /// <inheritdoc />
         public CubeProgrammerError WriteMemory(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -518,6 +518,61 @@ namespace SharpCubeProgrammer
             return result;
         }
 
+        /// <inheritdoc />
+        public CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data)
+        {
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            {
+                var uintAddress = this.HexConverterToUint(address);
+
+                try
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAutoFill(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "WriteMemoryAutoFill: ");
+                }
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        //public CubeProgrammerError WriteMemoryBySector(string address, byte[] data)
+        //{
+        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
+        //    {
+        //        var uintAddress = this.HexConverterToUint(address);
+
+        //        try
+        //        {
+        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+        //            gch.Free();
+        //            result = this.CheckResult(writeMemoryResult);
+
+        //            return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            this._logger?.LogError(ex, "WriteMemoryBySector: ");
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        /// <inheritdoc />
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -543,6 +598,33 @@ namespace SharpCubeProgrammer
 
             return result;
         }
+
+        /// <inheritdoc />
+        //public CubeProgrammerError WriteMemoryBySectorAndVerify(string address, byte[] data)
+        //{
+        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
+
+        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
+        //    {
+        //        var uintAddress = this.HexConverterToUint(address);
+
+        //        try
+        //        {
+        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySectorAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+        //            gch.Free();
+        //            result = this.CheckResult(writeMemoryResult);
+
+        //            return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            this._logger?.LogError(ex, "WriteMemoryBySectorAndVerify: ");
+        //        }
+        //    }
+
+        //    return result;
+        //}
 
         /// <inheritdoc />
         public CubeProgrammerError EditSector(string address, byte[] data)
@@ -682,9 +764,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void GetCancelPointer()
+        public int GetCancelPointer()
         {
-            Native.ProgrammerApi.GetCancelPointer();
+            return Native.ProgrammerApi.GetCancelPointer();
         }
 
         /// <inheritdoc />

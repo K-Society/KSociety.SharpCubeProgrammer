@@ -3,8 +3,6 @@
 namespace SharpCubeProgrammer.Native
 {
     using System;
-    using System.IO;
-    using System.Reflection;
     using System.Runtime.InteropServices;
     using Enum;
     using Struct;
@@ -694,6 +692,72 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [WriteMemoryAutoFill]
+
+        [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAutoFill", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAutoFill32(uint address, IntPtr data, uint size);
+
+        [DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryAutoFill", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern int WriteMemoryAutoFill64(uint address, IntPtr data, uint size);
+
+        private static int WriteMemoryAutoFillNative(uint address, IntPtr data, uint size)
+        {
+            return !Environment.Is64BitProcess
+                ? WriteMemoryAutoFill32(address, data, size)
+                : WriteMemoryAutoFill64(address, data, size);
+        }
+
+        internal static int WriteMemoryAutoFill(uint address, IntPtr data, uint size)
+        {
+            try
+            {
+                return WriteMemoryAutoFillNative(address, data, size);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        //#region [WriteMemoryBySector]
+
+        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        //private static extern int WriteMemoryBySector32(uint address, IntPtr data, uint size);
+
+        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        //private static extern int WriteMemoryBySector64(uint address, IntPtr data, uint size);
+
+        //private static int WriteMemoryBySectorNative(uint address, IntPtr data, uint size)
+        //{
+        //    return !Environment.Is64BitProcess
+        //        ? WriteMemoryBySector32(address, data, size)
+        //        : WriteMemoryBySector64(address, data, size);
+        //}
+
+        //internal static int WriteMemoryBySector(uint address, IntPtr data, uint size)
+        //{
+        //    try
+        //    {
+        //        return WriteMemoryBySectorNative(address, data, size);
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
+
+        //#endregion
+
         #region [WriteMemoryAndVerify]
 
         [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -726,6 +790,39 @@ namespace SharpCubeProgrammer.Native
         }
 
         #endregion
+
+        //#region [WriteMemoryBySectorAndVerify]
+
+        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        //private static extern int WriteMemoryBySectorAndVerify32(uint address, IntPtr data, uint size);
+
+        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        //private static extern int WriteMemoryBySectorAndVerify64(uint address, IntPtr data, uint size);
+
+        //private static int WriteMemoryBySectorAndVerifyNative(uint address, IntPtr data, uint size)
+        //{
+        //    return !Environment.Is64BitProcess
+        //        ? WriteMemoryBySectorAndVerify32(address, data, size)
+        //        : WriteMemoryBySectorAndVerify64(address, data, size);
+        //}
+
+        //internal static int WriteMemoryBySectorAndVerify(uint address, IntPtr data, uint size)
+        //{
+        //    try
+        //    {
+        //        return WriteMemoryBySectorAndVerifyNative(address, data, size);
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
+
+        //#endregion
 
         #region [EditSector]
 
@@ -994,19 +1091,19 @@ namespace SharpCubeProgrammer.Native
         #region [GetCancelPointer]
 
         [DllImport(ProgrammerDll32, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr GetCancelPointer32();
+        private static extern int GetCancelPointer32();
 
         [DllImport(ProgrammerDll64, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr GetCancelPointer64();
+        private static extern int GetCancelPointer64();
 
-        private static IntPtr GetCancelPointerNative()
+        private static int GetCancelPointerNative()
         {
             return !Environment.Is64BitProcess
                 ? GetCancelPointer32()
                 : GetCancelPointer64();
         }
 
-        internal static IntPtr GetCancelPointer()
+        internal static int GetCancelPointer()
         {
             try
             {
