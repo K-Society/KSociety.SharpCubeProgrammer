@@ -4,7 +4,6 @@ namespace Programming
 {
     using System;
     using System.Linq;
-    using System.Net;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using Autofac;
@@ -80,19 +79,41 @@ namespace Programming
 
             if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
             {
+                //var bu = CubeProgrammerApi.InitOptionBytesInterface();
                 #region [File Open Testing]
 
-                var file = System.IO.File.ReadAllBytes(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
-                //var filePointer = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
+                //var file = System.IO.File.ReadAllBytes(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
+                //var filePointer = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
+                //var buffer = new byte[65537];
+                var buffer = new byte[88996];//2048
+                //var buffer = new byte[89000];//2048
+
+                for (int i = 0; i < 88064; i++)
+                {
+                    buffer[i] = 0xDD;
+                }
+
+                for (int i = 88064; i < 88996; i++)
+                {
+                    buffer[i] = 0x05;
+                }
+
+                //var buffer = new byte[932];
+                //for (int i = 0; i < 932; i++)
+                //{
+                //    buffer[i] = 0x05;
+                //}
 
                 //if (filePointer != IntPtr.Zero)
                 //{
-                    var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08000000", file);
+                //CubeProgrammerApi.MassErase();
+                var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08000400", buffer);
+                //var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08015800", buffer);
 
-                    if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-                        //var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
-
+                    //var saveFileToFileTest = CubeProgrammerApi.SaveFileToFile(filePointer, @"..\..\..\..\..\Test\NUCLEO-L452RE-Test.bin");
+                    ;
                         //if (saveFileToFileTest.Equals(CubeProgrammerError.CubeprogrammerNoError))
                         //{
 
@@ -107,7 +128,7 @@ namespace Programming
                 #region [Verify Memory Testing memory leak]
 
                 //var openFile1 = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
-                //var openFile = CubeProgrammerApi.FileOpenAsPointer(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
+                //var openFile = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\NUCLEO-L452RE.bin");
                 //var length = firmware.Length;
                 //for (var i = 0; i < 200; i++)
                 //{
