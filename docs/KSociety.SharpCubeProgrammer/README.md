@@ -119,7 +119,7 @@ You need to use _PackageReference_, otherwise some contents will not be copied t
 
 ## Prerequisites
 
-- Visual Studio 2022 (17.8.3 or higher) with the following installed:
+- Visual Studio 2022 (17.12.1 or higher) with the following installed:
 
 | Workloads |
 | :-------- |
