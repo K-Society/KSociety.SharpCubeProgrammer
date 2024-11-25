@@ -74,6 +74,7 @@ namespace Programming
 
             #region [TryConnectStLink]
 
+            //var uartList = CubeProgrammerApi.GetUsartList();
 
             var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 

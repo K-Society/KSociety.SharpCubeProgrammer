@@ -9,7 +9,7 @@ msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:RestorePackagesConfig=tru
 
 msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:clean
+msbuild KSociety.SharpCubeProgrammer.sln -t:clean || exit /b
 
 @set _D=x86
 

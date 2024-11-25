@@ -22,8 +22,7 @@ It makes use of several 3rd party tools:
 This is a C# wrapper for STM32 CubeProgrammer_API v2.17.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
 Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
-The STM32 CubeProgrammer_API is a C-library, created by ST for ST-Link access to micro-controllers 
-for the purpose of flash downloads or general memory access. 
+STM32 CubeProgrammer_API is a C library created by ST to manage microcontrollers, it allows to access memory for reading and writing and to manage option bytes.
 The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
 This has been tested on Windows 10 and Windows 11, you don't need to install STM32CubeProgrammer.
 
@@ -120,7 +119,7 @@ You need to use _PackageReference_, otherwise some contents will not be copied t
 
 ## Prerequisites
 
-- Visual Studio 2022 (17.8.3 or higher) with the following installed:
+- Visual Studio 2022 (17.12.1 or higher) with the following installed:
 
 | Workloads |
 | :-------- |

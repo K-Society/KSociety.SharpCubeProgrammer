@@ -209,20 +209,23 @@ namespace SharpCubeProgrammer
             var parametersList = new List<UsartConnectParameters>();
             try
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
                 var numberOfItems = Native.ProgrammerApi.GetUsartList(ref listPtr);
-                if (listPtr != IntPtr.Zero)
+                if (numberOfItems > 0)
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                        var size = Marshal.SizeOf<UsartConnectParameters>();
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                        }
                     }
-                }
-                else
-                {
-                    this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                    else
+                    {
+                        this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                    }
                 }
             }
             catch (Exception ex)
