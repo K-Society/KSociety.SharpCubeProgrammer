@@ -281,7 +281,7 @@ int WriteMemoryAutoFill(unsigned int address, char* data, unsigned int size)
             {
                 if ((size + i) < newSize)
                 {
-                    newData[size + i] = 0xFF;
+                    newData[size + i] = 0xFFu;
                 }
             }
 
