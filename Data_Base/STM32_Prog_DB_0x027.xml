@@ -5,8 +5,8 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M0+</CPU>
-		<Name>STM32WL3</Name>
-		<Series>STM32WL3</Series>
+		<Name>STM32WL33</Name>
+		<Series>STM32WL33</Series>
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
 		<Configurations>
 			<!-- JTAG_SWD Interface -->

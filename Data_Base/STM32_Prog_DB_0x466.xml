@@ -398,7 +398,7 @@
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
 								</Bit>				
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>NRST_MODE</Name>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -410,7 +410,7 @@
 										<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>IRHEN</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
@@ -863,7 +863,7 @@
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
 								</Bit>				
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>NRST_MODE</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
@@ -876,7 +876,7 @@
 										<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>IRHEN</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>

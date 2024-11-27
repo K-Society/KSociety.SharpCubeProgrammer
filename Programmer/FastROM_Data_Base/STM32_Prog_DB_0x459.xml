@@ -417,7 +417,7 @@
 							<Parameters address="0x40022088" name="OEM1KEYR1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM1KEY [31:0]</Name>
+									<Name>OEM1KEYR1</Name>
 									<Description>Bits 31 to 0 of the OEM1 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -431,7 +431,7 @@
 							<Parameters address="0x4002208C" name="OEM1KEYR2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM1KEY [63:32]</Name>
+									<Name>OEM1KEYR2</Name>
 									<Description>Bits 63 to 32 of the OEM1 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -445,7 +445,7 @@
 							<Parameters address="0x40022090" name="OEM1KEYR3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM1KEY [95:64]</Name>
+									<Name>OEM1KEYR3</Name>
 									<Description>Bits 95 to 64 of the OEM1 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -459,7 +459,7 @@
 							<Parameters address="0x40022094" name="OEM1KEYR4" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM1KEY [127:96]</Name>
+									<Name>OEM1KEYR4</Name>
 									<Description>Bits 127 to 96 of the OEM1 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -473,7 +473,7 @@
 							<Parameters address="0x40022098" name="OEM2KEYR1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM2KEY [31:0]</Name>
+									<Name>OEM2KEYR1</Name>
 									<Description>Bits 31 to 0 of the OEM2 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -487,7 +487,7 @@
 							<Parameters address="0x4002209C" name="OEM2KEYR2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM2KEY [63:32]</Name>
+									<Name>OEM2KEYR2</Name>
 									<Description>Bits 63 to 32 of the OEM2 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -501,7 +501,7 @@
 							<Parameters address="0x400220A0" name="OEM2KEYR3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM2KEY [95:64]</Name>
+									<Name>OEM2KEYR3</Name>
 									<Description>Bits 95 to 64 of the OEM2 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>
@@ -515,7 +515,7 @@
 							<Parameters address="0x400220A4" name="OEM2KEYR4" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>OEM2KEY [127:96]</Name>
+									<Name>OEM2KEYR4</Name>
 									<Description>Bits 127 to 96 of the OEM2 key</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x20</BitWidth>

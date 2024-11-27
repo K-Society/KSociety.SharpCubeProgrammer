@@ -2562,7 +2562,7 @@
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
-									<Name>UNLOCK1A</Name>
+									<Name>UNLOCK_1A</Name>
 									<Description>Bank 1 WPR first area A unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>

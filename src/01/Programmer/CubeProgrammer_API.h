@@ -391,7 +391,8 @@ typedef enum debugConnectMode
     HOTPLUG_MODE,           /**< Connect with hotplug mode,  this option allows the user to connect to the target without halt or reset. */
     UNDER_RESET_MODE,       /**< Connect with under reset mode, option allows the user to connect to the target using a reset vector catch before executing any instruction. */
     POWER_DOWN_MODE,        /**< Connect with power down mode. */
-    PRE_RESET_MODE          /**< Connect with pre reset mode. */
+    PRE_RESET_MODE,          /**< Connect with pre reset mode. */
+    hwRstPulse_MODE,          /**< Connect with hwRstPulse mode. */
 }debugConnectMode;
 /**
  * \enum  debugPort
@@ -458,7 +459,8 @@ typedef enum targetInterfaceType
     USB_INTERFACE    = 2,           /**< USB DFU used as connection interface. */
     SPI_INTERFACE    = 3,           /**< SPI used as connection interface. */
     I2C_INTERFACE    = 4,           /**< I2C used as connection interface. */
-    CAN_INTERFACE    = 5            /**< CAN used as connection interface. */
+    CAN_INTERFACE    = 5,           /**< CAN used as connection interface. */
+    JLINK_INTERFACE  = 6            /**< JLINK used as connection interface. */
 }targetInterfaceType;
 
 
@@ -862,11 +864,6 @@ void freeFileData(fileData_C* data);
 void freeLibraryMemory(void* ptr);
 
 /**
- * \brief This routine allows to diplay the Option bytes
- */
-int obDisplay();
-
-/**
  * \brief This routine allows to verfiy if the indicated file data is identical to Flash memory content.
  * \param fileData : Input file name.
  * \param address  : The address to start verifying from, it's considered only if the file has .bin or .binary as extension.
@@ -983,7 +980,7 @@ peripheral_C* fastRomInitOptionBytesInterface(uint16_t deviceId);
 
 
 /**
- * \brief This routine allows to diplay the Option bytes.
+ * \brief This routine allows to display the Option bytes.
  * \return 0 if the programming display correctly done, otherwise an error occurred.
  */
 int obDisplay();

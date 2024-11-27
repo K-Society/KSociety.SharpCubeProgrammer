@@ -35,6 +35,11 @@ namespace SharpCubeProgrammer.Enum
         /// <summary>
         /// CAN used as connection interface.
         /// </summary>
-        CanInterface = 5
+        CanInterface = 5,
+
+        /// <summary>
+        /// JLINK used as connection interface.
+        /// </summary>
+        JLinkInterface = 6
     }
 }
