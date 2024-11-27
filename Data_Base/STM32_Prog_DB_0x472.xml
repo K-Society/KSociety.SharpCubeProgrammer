@@ -92,6 +92,8 @@
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x400000" value="0x400000"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
+
+
 			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
@@ -2894,7 +2896,7 @@
 							<Field>
 								<Parameters address="0x40022050" name="FLASH_SECWM1R1" size="0x4"/>
 								<AssignedBits>
-									<Bit config="6,8">
+									<Bit config="6">
 										<Name>SECWM1_PSTRT</Name>
 										<Description>Start page of first secure area</Description>
 										<BitOffset>0x0</BitOffset>
@@ -2902,7 +2904,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x08000000"/>
 									</Bit>
-									<Bit config="7,9">
+									<Bit config="7">
 										<Name>SECWM1_PSTRT</Name>
 										<Description>Start page of first secure area</Description>
 										<BitOffset>0x0</BitOffset>
@@ -2910,7 +2912,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x800" offset="0x08000000"/>
 									</Bit>
-									<Bit config="6,8">
+									<Bit config="6">
 										<Name>SECWM1_PEND</Name>
 										<Description>End page of first secure area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -2918,7 +2920,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x08000000"/>
 									</Bit>
-									<Bit config="7,9">
+									<Bit config="7">
 										<Name>SECWM1_PEND</Name>
 										<Description>End page of first secure area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -2931,7 +2933,7 @@
 							<Field>
 									<Parameters address="0x40022064" name="FLASH_SECWM2R2" size="0x4"/>
 									<AssignedBits>
-										<Bit config="6,7,8,9">
+										<Bit config="6,7">
 											<Name>HDP2EN</Name>
 											<Description>Hide protection second area enable</Description>
 											<BitOffset>0x1F</BitOffset>
@@ -2942,7 +2944,7 @@
 												<Val value="0x1">HDP second area is enabled</Val>
 											</Values>
 										</Bit>
-										<Bit config="6,8">
+										<Bit config="6">
 											<Name>HDP2_PEND</Name>
 											<Description>End page of second hide protection area</Description>
 											<BitOffset>0x10</BitOffset>
@@ -2950,7 +2952,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x4" offset="0x08000000"/>
 										</Bit>
-										<Bit config="7,9">
+										<Bit config="7">
 											<Name>HDP2_PEND</Name>
 											<Description>End page of second hide protection area</Description>
 											<BitOffset>0x10</BitOffset>
@@ -3043,7 +3045,7 @@
 						<Field>
 							<Parameters address="0x40022060" name="FLASH_SECWM2R1" size="0x4"/>
 							<AssignedBits>
-								<Bit config="6,8">
+								<Bit config="6">
 									<Name>SECWM2_PSTRT</Name>
 									<Description>Start page of second secure area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -3051,7 +3053,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="7,9">
+								<Bit config="7">
 									<Name>SECWM2_PSTRT</Name>
 									<Description>Start page of second secure area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -3059,7 +3061,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="6,8">
+								<Bit config="6">
 									<Name>SECWM2_PEND</Name>
 									<Description>End page of second secure area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -3067,7 +3069,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="7,9">
+								<Bit config="7">
 									<Name>SECWM2_PEND</Name>
 									<Description>End page of second secure area</Description>
 									<BitOffset>0x10</BitOffset>
