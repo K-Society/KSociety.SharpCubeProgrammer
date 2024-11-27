@@ -125,14 +125,14 @@
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
 								<Bit>
-									<Name>SRAM134_RST</Name>
-									<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
+									<Name>SRAM_RST</Name>
+									<Description>All SRAMs (except SRAM2 and BKPSRAM) erase upon system reset</Description>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">SRAM1, SRAM3 and SRAM4 erased when a system reset occurs</Val>
-										<Val value="0x1">SRAM1, SRAM3 and SRAM4 not erased when a system reset occurs</Val>
+										<Val value="0x0">All SRAMs (except SRAM2 and BKPSRAM) erased when a system reset occurs</Val>
+										<Val value="0x1">All SRAMs (except SRAM2 and BKPSRAM) not erased when a system reset occurs</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
@@ -234,13 +234,13 @@
 								</Bit>
 								<Bit>
 									<Name>SRAM2_RST</Name>
-									<Description>SRAM2 Erase when system reset</Description>
+									<Description>SRAM2 erase when system reset</Description>
 									<BitOffset>0x19</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">SRAM2 erased when a system reset occurs</Val>
-										<Val value="0x1">SRAM2 is not erased when a system reset occurs</Val>
+										<Val value="0x1">SRAM2 not erased when a system reset occurs</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
@@ -633,12 +633,12 @@
 									<Parameters address="0x40022070" name="OEM1KEYR1" size="0x4"/>
 									<AssignedBits>
 									<Bit>
-										<Name>OEM1KEY [0:31]</Name>
+										<Name>OEM1KEYR1</Name>
 										<Description>OEM1 least significant bytes key</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x20</BitWidth>
 										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
+										<Equation multiplier="0x1" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 									</AssignedBits>
@@ -647,12 +647,12 @@
 									<Parameters address="0x40022074" name="OEM1KEYR2" size="0x4"/>
 									<AssignedBits>
 									<Bit>
-										<Name>OEM1KEY [63:32]</Name>
+										<Name>OEM1KEYR2</Name>
 										<Description>OEM1 most significant bytes key</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x20</BitWidth>
 										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
+										<Equation multiplier="0x1" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 									</AssignedBits>
@@ -661,12 +661,12 @@
 									<Parameters address="0x40022078" name="OEM2KEYR1" size="0x4"/>
 									<AssignedBits>
 									<Bit>
-										<Name>OEM2KEY [0:31]</Name>
+										<Name>OEM2KEYR1</Name>
 										<Description>OEM2 least significant bytes key</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x20</BitWidth>
 										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
+										<Equation multiplier="0x1" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 									</AssignedBits>
@@ -675,12 +675,12 @@
 									<Parameters address="0x4002207C" name="OEM2KEYR2" size="0x4"/>
 									<AssignedBits>
 									<Bit>
-										<Name>OEM2KEY [63:32]</Name>
+										<Name>OEM2KEYR2</Name>
 										<Description>OEM2 most significant bytes key</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x20</BitWidth>
 										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
+										<Equation multiplier="0x1" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 									</AssignedBits>

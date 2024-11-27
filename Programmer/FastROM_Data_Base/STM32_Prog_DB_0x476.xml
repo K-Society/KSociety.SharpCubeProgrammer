@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
 <Device>
-		<DeviceID>0x482</DeviceID>
+		<DeviceID>0x476</DeviceID>
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M33</CPU>
-		<Name>STM32U575/STM32U585</Name>
+		<Name>STM32U5Fx/5Gx</Name>
 		<Series>STM32U5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
 		<Configurations>
@@ -14,7 +14,7 @@
 				<Configuration number="0x1">	<!-- Dual Bank non secure -->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
-				</Configuration>			
+				</Configuration>
 			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
@@ -27,7 +27,7 @@
 				<Access>RW</Access>
 				<Configuration config="1">
 				<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022040" name="Bank 1" size="0x24"/>
+						<Parameters address="0x40022040" name="Bank 1" size="0x30"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -127,14 +127,14 @@
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
 								<Bit>
-									<Name>SRAM134_RST</Name>
-									<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
+									<Name>SRAM1345_RST</Name>
+									<Description>SRAM1, SRAM3, SRAM4  and SRAM5 erase upon system reset</Description>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">SRAM1, SRAM3 and SRAM4 erased when a system reset occurs</Val>
-										<Val value="0x1">SRAM1, SRAM3 and SRAM4 not erased when a system reset occurs</Val>
+										<Val value="0x0">SRAM1, SRAM3,SRAM4 and SRAM5 erased when a system reset occurs</Val>
+										<Val value="0x1">SRAM1, SRAM3,SRAM4 and SRAM5 not erased when a system reset occurs</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
@@ -145,8 +145,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">Hardware independant watchdog</Val>
-										<Val value="0x1">Software independant watchdog</Val>
+										<Val value="0x0">Hardware independent watchdog</Val>
+										<Val value="0x1">Software independent watchdog</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
@@ -323,10 +323,10 @@
 					</Category>
 					<Category>
 							<Name>Boot Configuration</Name>
-								<Field>
+							<Field>
 								<Parameters address="0x40022044" name="NSBOOTADD0R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+								<Bit>
 										<Name>NSBOOTADD0</Name>
 										<Description>Non-secure Boot base address 0</Description>
 										<BitOffset>0x7</BitOffset>
@@ -336,11 +336,11 @@
 										<DefaultVal>0x100000</DefaultVal>
 									</Bit>
 								</AssignedBits>
-								</Field>
+							</Field>
 							<Field>
 								<Parameters address="0x40022048" name="NSBOOTADD1R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+								<Bit>
 										<Name>NSBOOTADD1</Name>
 										<Description>Non-secure Boot base address 1</Description>
 										<BitOffset>0x7</BitOffset>
@@ -354,7 +354,7 @@
 							<Field>
 								<Parameters address="0x5002204C" name="SECBOOTADD0R" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+								<Bit>
 										<Name>SECBOOTADD0</Name>
 										<Description>Secure boot base address 0</Description>
 										<BitOffset>0x7</BitOffset>
@@ -382,6 +382,9 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
+						</Category>
+					<Category>
+						<Name>Secure Area 1</Name>
 							<Field>
 								<Parameters address="0x50022050" name="SECWM1R1" size="0x4"/>
 								<AssignedBits>
@@ -389,7 +392,7 @@
 										<Name>SECWM1_PSTRT</Name>
 										<Description>Start page of first secure area</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
+										<BitWidth>0x8</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x4000" offset="0x08000000"/>
 										<DefaultVal>0x0</DefaultVal>
@@ -398,10 +401,10 @@
 										<Name>SECWM1_PEND</Name>
 										<Description>End page of first secure area</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
+										<BitWidth>0x8</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x4000" offset="0x08000000"/>
-										<DefaultVal>0x7F</DefaultVal>
+										<DefaultVal>0xFF</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -412,7 +415,7 @@
 											<Name>HDP1_PEND</Name>
 											<Description>End page of first hide protection area</Description>
 											<BitOffset>0x10</BitOffset>
-											<BitWidth>0x7</BitWidth>
+											<BitWidth>0x8</BitWidth>
 											<Access>RW</Access>
 											<Equation multiplier="0x4000" offset="0xC003fff"/>
 											<DefaultVal>0x0</DefaultVal>
@@ -431,30 +434,30 @@
 										</Bit>
 									</AssignedBits>
 							</Field>
-					</Category>
-					<Category>
+						</Category>
+						<Category>
 							<Name>Write Protection 1</Name>
 						<Field>
 								<Parameters address="0x40022058" name="WRP1AR" size="0x4"/>
 							<AssignedBits>
 									<Bit>
-										<Name>WRP1A_PSTRT</Name>
-										<Description>Bank 1 WPR first area &quot;A&quot; start page</Description>
+									<Name>WRP1A_PSTRT</Name>
+									<Description>Bank 1 WPR first area &quot;A&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
-									<DefaultVal>0x7F</DefaultVal>
+									<DefaultVal>0xFF</DefaultVal>
 								</Bit>
 									<Bit>
-										<Name>WRP1A_PEND</Name>
-										<Description>Bank 1 WPR first area &quot;A&quot; end page</Description>
-										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
+									<Name>WRP1A_PEND</Name>
+									<Description>Bank 1 WPR first area &quot;A&quot; end page</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>RW</Access>
+									<Equation multiplier="0x2000" offset="0x08000000"/>
 										<DefaultVal>0x0</DefaultVal>
-									</Bit>
+								</Bit>
 								<Bit>
 									<Name>UNLOCK_1A</Name>
 									<Description>Bank 1 WPR first area A unlock</Description>
@@ -467,25 +470,25 @@
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
-								</AssignedBits>
-							</Field>
-							<Field>
+							</AssignedBits>
+						</Field>
+						<Field>
 								<Parameters address="0x4002205C" name="WRP1BR" size="0x4"/>
-								<AssignedBits>
+							<AssignedBits>
 									<Bit>
-										<Name>WRP1B_PSTRT</Name>
+									<Name>WRP1B_PSTRT</Name>
 										<Description>Bank 1 WPR first area &quot;B&quot; start page</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
-										<DefaultVal>0x7F</DefaultVal>
-									</Bit>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>RW</Access>
+									<Equation multiplier="0x2000" offset="0x08000000"/>
+										<DefaultVal>0xFF</DefaultVal>
+								</Bit>
 									<Bit>
-										<Name>WRP1B_PEND</Name>
+									<Name>WRP1B_PEND</Name>
 										<Description>Bank 1 WPR first area &quot;B&quot; end page</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 									<DefaultVal>0x0</DefaultVal>
@@ -514,75 +517,75 @@
 									<Name>SECWM2_PSTRT</Name>
 									<Description>Start page of second secure area</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x4000" offset="0x08000000"/>
-									<DefaultVal>0x7F</DefaultVal>
+									<DefaultVal>0x0</DefaultVal>
 								</Bit>
 								<Bit>
 									<Name>SECWM2_PEND</Name>
 									<Description>End page of second secure area</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x4000" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
+									<DefaultVal>0xFF</DefaultVal>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x50022064" name="SECWM2R2" size="0x4"/>
-							<AssignedBits>
-									<Bit>
-										<Name>HDP2_PEND</Name>
-										<Description>End page of second hide protection area</Description>
-										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
+									<AssignedBits>
+										<Bit>
+											<Name>HDP2_PEND</Name>
+											<Description>End page of second hide protection area</Description>
+											<BitOffset>0x10</BitOffset>
+											<BitWidth>0x8</BitWidth>
+											<Access>RW</Access>
 										<Equation multiplier="0x4000" offset="0xC103FFF"/>
 										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-									<Bit>
-									<Name>HDP2EN</Name>
-									<Description>Hide protection second area enable</Description>
-									<BitOffset>0x1F</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">No HDP area 2</Val>
-										<Val value="0x1">HDP second area is enabled</Val>
-									</Values>
+										</Bit>
+										<Bit>
+											<Name>HDP2EN</Name>
+											<Description>Hide protection second area enable</Description>
+											<BitOffset>0x1F</BitOffset>
+											<BitWidth>0x1</BitWidth>
+											<Access>RW</Access>
+											<Values>
+												<Val value="0x0">No HDP area 2</Val>
+												<Val value="0x1">HDP second area is enabled</Val>
+											</Values>
 									<DefaultVal>0x0</DefaultVal>
 								</Bit>
-								</AssignedBits>
+							</AssignedBits>
 						</Field>
 					</Category>
-					</Bank>
+				</Bank>
 					<Bank interface="JTAG_SWD">
 							<Parameters address="0x40022068" name="Bank 2" size="0x8"/>
-							<Category>
-								<Name>Write Protection 2</Name>
-							<Field>
+					<Category>
+						<Name>Write Protection 2</Name>
+						<Field>
 								<Parameters address="0x40022068" name="WRP2AR" size="0x4"/>
-								<AssignedBits>
-								<Bit>
+							<AssignedBits>
+									<Bit>
 									<Name>WRP2A_PSTRT</Name>
 									<Description>Bank 2 WPR first area &quot;A&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
-									<DefaultVal>0x7F</DefaultVal>
+									<DefaultVal>0xFF</DefaultVal>
 								</Bit>
 								<Bit>
-									<Name>WRP2A_PEND</Name>
-									<Description>Bank 2 WPR first area &quot;A&quot; end page</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x7</BitWidth>
-									<Access>RW</Access>
+											<Name>WRP2A_PEND</Name>
+											<Description>Bank 2 WPR first area &quot;A&quot; end page</Description>
+											<BitOffset>0x10</BitOffset>
+											<BitWidth>0x8</BitWidth>
+											<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
 									<DefaultVal>0x0</DefaultVal>
-								</Bit>
+										</Bit>
 								<Bit>
 									<Name>UNLOCK_2A</Name>
 									<Description>Bank 2 WPR first area A unlock</Description>
@@ -595,7 +598,7 @@
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
-								</AssignedBits>
+									</AssignedBits>
 								</Field>
 								<Field>
 									<Parameters address="0x4002206C" name="WRP2BR" size="0x4"/>
@@ -604,16 +607,16 @@
 											<Name>WRP2B_PSTRT</Name>
 											<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
 											<BitOffset>0x0</BitOffset>
-											<BitWidth>0x7</BitWidth>
+											<BitWidth>0x8</BitWidth>
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08100000"/>
-											<DefaultVal>0x7F</DefaultVal>
+											<DefaultVal>0xFF</DefaultVal>
 										</Bit>
 										<Bit>
 											<Name>WRP2B_PEND</Name>
 											<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
 											<BitOffset>0x10</BitOffset>
-											<BitWidth>0x7</BitWidth>
+											<BitWidth>0x8</BitWidth>
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08100000"/>
 											<DefaultVal>0x0</DefaultVal>
@@ -629,70 +632,70 @@
 										<Val value="0x1">WRP2B start and end pages unlocked</Val>
 									</Values>
 									<DefaultVal>0x1</DefaultVal>
-								</Bit>
-									</AssignedBits>
-								</Field>
-							</Category>
-							<Category> 
-								<Name>OEM Keys</Name>
-								<Field>
-									<Parameters address="0x40022070" name="OEM1KEYR1" size="0x4"/>
-									<AssignedBits>
-									<Bit>
-										<Name>OEM1KEYR1</Name>
-										<Description>OEM1 least significant bytes key</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="1" offset="0x0"/>
-										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 									</AssignedBits>
 								</Field>
-								<Field>
-									<Parameters address="0x40022074" name="OEM1KEYR2" size="0x4"/>
-									<AssignedBits>
-									<Bit>
-										<Name>OEM1KEYR2</Name>
-										<Description>OEM1 most significant bytes key</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="1" offset="0x0"/>
-										 <DefaultVal>0x0</DefaultVal>
-									</Bit>
-									</AssignedBits>
-								</Field>
-								<Field>
-									<Parameters address="0x40022078" name="OEM2KEYR1" size="0x4"/>
-									<AssignedBits>
-									<Bit>
-										<Name>OEM2KEYR1</Name>
-										<Description>OEM2 least significant bytes key</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="1" offset="0x0"/>
-										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-									</AssignedBits>
-								</Field>
-								<Field>
-									<Parameters address="0x4002207C" name="OEM2KEYR2" size="0x4"/>
-									<AssignedBits>
-									<Bit>
-										<Name>OEM2KEYR2</Name>
-										<Description>OEM2 most significant bytes key</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="1" offset="0x0"/>
-										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-									</AssignedBits>
-								</Field>
-							</Category>
-					</Bank>
+						</Category>	
+				<Category>
+				<Name>OEM Keys</Name>
+				<Field>
+					<Parameters address="0x40022070" name="OEM1KEYR1" size="0x4"/>
+					<AssignedBits>
+					<Bit>
+						<Name>OEM1KEYR1</Name>
+						<Description>OEM1 least significant bytes key</Description>
+						<BitOffset>0x0</BitOffset>
+						<BitWidth>0x20</BitWidth>
+						<Access>RW</Access>
+						<Equation multiplier="0x1" offset="0x00000000"/>
+						<DefaultVal>0x0</DefaultVal>
+					</Bit>
+					</AssignedBits>
+				</Field>
+				<Field>
+					<Parameters address="0x40022074" name="OEM1KEYR2" size="0x4"/>
+					<AssignedBits>
+					<Bit>
+						<Name>OEM1KEYR2</Name>
+						<Description>OEM1 most significant bytes key</Description>
+						<BitOffset>0x0</BitOffset>
+						<BitWidth>0x20</BitWidth>
+						<Access>RW</Access>
+						<Equation multiplier="0x1" offset="0x00000000"/>
+						<DefaultVal>0x0</DefaultVal>
+					</Bit>
+					</AssignedBits>
+				</Field>
+						<Field>
+							<Parameters address="0x40022078" name="OEM2KEYR1" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM2KEYR1</Name>
+								<Description>OEM2 least significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0x1" offset="0x00000000"/>
+								<DefaultVal>0x0</DefaultVal>
+							</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x4002207C" name="OEM2KEYR2" size="0x4"/>
+							<AssignedBits>
+							<Bit>
+								<Name>OEM2KEYR2</Name>
+								<Description>OEM2 most significant bytes key</Description>
+								<BitOffset>0x0</BitOffset>
+								<BitWidth>0x20</BitWidth>
+								<Access>RW</Access>
+								<Equation multiplier="0x1" offset="0x00000000"/>
+								<DefaultVal>0x0</DefaultVal>
+							</Bit>
+							</AssignedBits>
+						</Field>
+						</Category>		
+				</Bank>
 				</Configuration>
 			</Peripheral>
 		</Peripherals>
