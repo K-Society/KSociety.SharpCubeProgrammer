@@ -741,39 +741,6 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
-        //#region [WriteMemoryBySector]
-
-        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySector32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySector64(uint address, IntPtr data, uint size);
-
-        //private static int WriteMemoryBySectorNative(uint address, IntPtr data, uint size)
-        //{
-        //    return !Environment.Is64BitProcess
-        //        ? WriteMemoryBySector32(address, data, size)
-        //        : WriteMemoryBySector64(address, data, size);
-        //}
-
-        //internal static int WriteMemoryBySector(uint address, IntPtr data, uint size)
-        //{
-        //    try
-        //    {
-        //        return WriteMemoryBySectorNative(address, data, size);
-        //    }
-        //    catch (DllNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-        //    }
-        //    catch (EntryPointNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-        //    }
-        //}
-
-        //#endregion
-
         #region [WriteMemoryAndVerify]
 
         [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -806,39 +773,6 @@ namespace SharpCubeProgrammer.Native
         }
 
         #endregion
-
-        //#region [WriteMemoryBySectorAndVerify]
-
-        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySectorAndVerify32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySectorAndVerify64(uint address, IntPtr data, uint size);
-
-        //private static int WriteMemoryBySectorAndVerifyNative(uint address, IntPtr data, uint size)
-        //{
-        //    return !Environment.Is64BitProcess
-        //        ? WriteMemoryBySectorAndVerify32(address, data, size)
-        //        : WriteMemoryBySectorAndVerify64(address, data, size);
-        //}
-
-        //internal static int WriteMemoryBySectorAndVerify(uint address, IntPtr data, uint size)
-        //{
-        //    try
-        //    {
-        //        return WriteMemoryBySectorAndVerifyNative(address, data, size);
-        //    }
-        //    catch (DllNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-        //    }
-        //    catch (EntryPointNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-        //    }
-        //}
-
-        //#endregion
 
         #region [EditSector]
 
