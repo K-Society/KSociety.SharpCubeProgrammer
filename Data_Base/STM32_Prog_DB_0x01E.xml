@@ -5,7 +5,7 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M0</CPU>
-		<Name>STM32WB07</Name>
+		<Name>STM32WB07_06</Name>
 		<Series>STM32WB07</Series>
 		<Description>ARM 32-bit Cortex-M0 based device</Description>
 		<Configurations>

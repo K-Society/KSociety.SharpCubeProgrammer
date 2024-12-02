@@ -450,8 +450,9 @@
 									<Name>SEC_SIZE1</Name>
 									<Description>sets the number of pages used in the bank 1 securable area</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>BOOT_LOCK</Name>
@@ -775,8 +776,9 @@
 									<Name>SEC_SIZE1</Name>
 									<Description>sets the number of pages used in the bank 1 securable area</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x7</BitWidth>
 									<Access>RW</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 								<Bit>
 									<Name>BOOT_LOCK</Name>

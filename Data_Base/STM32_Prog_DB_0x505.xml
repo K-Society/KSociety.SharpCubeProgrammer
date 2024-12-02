@@ -5,7 +5,7 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MPU</Type>
 		<CPU>Cortex-A35</CPU>
-		<Name>STM32MP25xx</Name>
+		<Name>STM32MP23xx/25xx</Name>
 		<Series>STM32MP</Series>
 		<Description>ARM 64-bit Cortex-A35 based device</Description>
 		<!-- Gonfigurations' List -->

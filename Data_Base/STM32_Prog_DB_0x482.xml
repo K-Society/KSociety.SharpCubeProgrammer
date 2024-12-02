@@ -246,7 +246,7 @@
 				<Description>The Data EEPROM memory block. It contains user data.</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<Configuration config="14,18,20">
+				<Configuration config="12,14,18,20">
 					<Parameters address="0x08000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -346,7 +346,7 @@
 				<Access>RW</Access>
 				<Configuration config="1,11,12,13,16,17">
 				<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022040" name="Bank 1" size="0x24"/>
+						<Parameters address="0x40022040" name="Bank 1" size="0x30"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -647,6 +647,7 @@
 							</Field>
 					</Category>
 					<Category>
+					
 							<Name>Write Protection 1</Name>
 						<Field>
 								<Parameters address="0x40022058" name="FLASH_WRP1AR" size="0x4"/>
@@ -713,10 +714,7 @@
 							</AssignedBits>
 						</Field>
 					</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-							<Parameters address="0x40022068" name="Bank 2" size="0x8"/>
-							<Category>
+					<Category>
 								<Name>Write Protection 2</Name>
 							<Field>
 									<Parameters address="0x40022068" name="FLASH_WRP2AR" size="0x4"/>
@@ -729,7 +727,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08100000"/>
 								</Bit>
-									<Bit config="13,17">
+									<Bit config="13,17,12,16">
 									<Name>WRP2A_PSTRT</Name>
 									<Description>Bank 2 WPR first area &quot;A&quot; start page</Description>
 									<BitOffset>0x0</BitOffset>
@@ -745,7 +743,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08100000"/>
 										</Bit>
-										<Bit config="13,17">
+										<Bit config="13,17,12,16">
 											<Name>WRP2A_PEND</Name>
 											<Description>Bank 2 WPR first area &quot;A&quot; end page</Description>
 											<BitOffset>0x10</BitOffset>
@@ -753,7 +751,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08080000"/>
 										</Bit>
-								<Bit config="1,11,13,17">
+								<Bit config="1,11,13,17,12,16">
 									<Name>UNLOCK_2A</Name>
 									<Description>Bank 2 WPR first area A unlock</Description>
 									<BitOffset>0x1F</BitOffset>
@@ -777,7 +775,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08100000"/>
 										</Bit>
-										<Bit config="13,17">
+										<Bit config="13,17,12,16">
 											<Name>WRP2B_PSTRT</Name>
 											<Description>Bank 2 WPR first area &quot;B&quot; start page</Description>
 											<BitOffset>0x0</BitOffset>
@@ -793,7 +791,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08100000"/>
 										</Bit>
-										<Bit config="13,17">
+										<Bit config="13,17,12,16">
 											<Name>WRP2B_PEND</Name>
 											<Description>Bank 2 WPR first area &quot;B&quot; end page</Description>
 											<BitOffset>0x10</BitOffset>
@@ -801,7 +799,7 @@
 											<Access>RW</Access>
 											<Equation multiplier="0x2000" offset="0x08080000"/>
 										</Bit>
-									<Bit config="1,11,13,17">
+									<Bit config="1,11,13,17,12,16">
 									<Name>UNLOCK_2B</Name>
 									<Description>Bank 2 WPR first area B unlock</Description>
 									<BitOffset>0x1F</BitOffset>
@@ -819,7 +817,7 @@
 				</Configuration>
 				<Configuration config="3,14,15">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022040" name="Bank 1" size="0x20"/>
+						<Parameters address="0x50022040" name="Bank 1" size="0x30"/>
 						<Category>
 							<Name>Read Out Protection</Name>
 							<Field>
@@ -1264,9 +1262,6 @@
 							</AssignedBits>
 						</Field>
 					</Category>
-				</Bank>
-				<Bank interface="JTAG_SWD">
-					<Parameters address="0x50022060" name="Bank 2" size="0x8"/>
 					<Category>
 					<Name>Secure Area 2</Name>
 						<Field>
@@ -1331,9 +1326,6 @@
 							</AssignedBits>
 						</Field>
 					</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-					<Parameters address="0x50022068" name="Bank 3" size="0x8"/>
 					<Category>
 						<Name>Write Protection 2</Name>
 						<Field>
@@ -1437,7 +1429,7 @@
 			</Configuration>
 			<Configuration config="5,18,19">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022040" name="Bank 1" size="0x20"/>
+						<Parameters address="0x40022040" name="Bank 1" size="0x30"/>
 						<Category>
 							<Name>Read Out Protection</Name>
 							<Field>
@@ -1915,10 +1907,7 @@
 							</AssignedBits>
 						</Field>
 					</Category>
-				</Bank>
-				<Bank interface="JTAG_SWD">
-					<Parameters address="0x40022060" name="Bank 2" size="0x8"/>
-					<Category>
+				<Category>
 					<Name>Secure Area 2</Name>
 						<Field>
 							<Parameters address="0x40022060" name="FLASH_SECWM2R1" size="0x4"/>
@@ -1982,9 +1971,6 @@
 									</AssignedBits>
 						</Field>
 					</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-					<Parameters address="0x40022068" name="Bank 3" size="0x8"/>
 					<Category>
 						<Name>Write Protection 2</Name>
 						<Field>
@@ -2235,21 +2221,10 @@
 											  <Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit>
-									<Name>DB256</Name>
-									<Description>Dual-Bank on 256 Kb Flash memory devices</Description>
-									<BitOffset>0x15</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">256Kb single Flash: contiguous address in bank1</Val>
-										<Val value="0x1">256Kb dual-bank Flash with contiguous addresses</Val>
-									</Values>
-								</Bit>
 								<Bit config="20,21,22,23">
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
-									<BitOffset>0x16</BitOffset>
+									<BitOffset>0x15</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>

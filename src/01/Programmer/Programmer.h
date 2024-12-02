@@ -62,11 +62,7 @@ extern "C" PROGRAMMER_API int WriteMemory(unsigned int address, char* data, unsi
 
 extern "C" PROGRAMMER_API int WriteMemoryAutoFill(unsigned int address, char* data, unsigned int size);
 
-//extern "C" PROGRAMMER_API int WriteMemoryBySector(unsigned int address, char* data, unsigned int size);
-
 extern "C" PROGRAMMER_API int WriteMemoryAndVerify(unsigned int address, char* data, unsigned int size);
-
-//extern "C" PROGRAMMER_API int WriteMemoryBySectorAndVerify(unsigned int address, char* data, unsigned int size);
 
 extern "C" PROGRAMMER_API int EditSector(unsigned int address, char* data, unsigned int size);
 

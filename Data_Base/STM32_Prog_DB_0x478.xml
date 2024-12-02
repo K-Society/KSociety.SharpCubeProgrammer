@@ -8,6 +8,8 @@
 		<Name>STM32H533/523</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
+		<Boolean name="nonCrypto" address="0x40022428" mask="0x00000010" value="0x00000010" />
+
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
@@ -609,6 +611,7 @@
 										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
+										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -625,6 +628,7 @@
 										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
+										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -777,17 +781,6 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM3_ECC</Name>
-										<Description>ECC in SRAM3 region configuration bit</Description>
-										<BitOffset>0x5</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>R</Access>
-										<Values>
-											<Val value="0x0">SRAM3 ECC check enabled </Val>
-											<Val value="0x1">SRAM3 ECC check disabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
 										<Name>BKPRAM_ECC</Name>
 										<Description>ECC in BKPRAM region configuration bit</Description>
 										<BitOffset>0x4</BitOffset>
@@ -845,17 +838,6 @@
 										<Values>
 											<Val value="0x0">SRAM2 ECC check enabled </Val>
 											<Val value="0x1">SRAM2 ECC check disabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>SRAM3_ECC</Name>
-										<Description>ECC in SRAM3 region configuration bit</Description>
-										<BitOffset>0x5</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>W</Access>
-										<Values>
-											<Val value="0x0">SRAM3 ECC check enabled </Val>
-											<Val value="0x1">SRAM3 ECC check disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1653,6 +1635,7 @@
 										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
+										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1669,6 +1652,7 @@
 										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
+										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1821,17 +1805,6 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM3_ECC</Name>
-										<Description>ECC in SRAM3 region configuration bit</Description>
-										<BitOffset>0x5</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>R</Access>
-										<Values>
-											<Val value="0x0">SRAM3 ECC check enabled </Val>
-											<Val value="0x1">SRAM3 ECC check disabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
 										<Name>BKPRAM_ECC</Name>
 										<Description>ECC in BKPRAM region configuration bit</Description>
 										<BitOffset>0x4</BitOffset>
@@ -1889,17 +1862,6 @@
 										<Values>
 											<Val value="0x0">SRAM2 ECC check enabled </Val>
 											<Val value="0x1">SRAM2 ECC check disabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>SRAM3_ECC</Name>
-										<Description>ECC in SRAM3 region configuration bit</Description>
-										<BitOffset>0x5</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>W</Access>
-										<Values>
-											<Val value="0x0">SRAM3 ECC check enabled </Val>
-											<Val value="0x1">SRAM3 ECC check disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -2696,6 +2658,7 @@
 									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
+									<Condition>nonCrypto</Condition>
 									<Access>R</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2712,6 +2675,7 @@
 									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
+									<Condition>nonCrypto</Condition>
 									<Access>W</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2861,17 +2825,6 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>SRAM3_ECC</Name>
-									<Description>ECC in SRAM3 region configuration bit</Description>
-									<BitOffset>0x5</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>R</Access>
-									<Values>
-										<Val value="0x0">SRAM3 ECC check enabled </Val>
-										<Val value="0x1">SRAM3 ECC check disabled</Val>
-									</Values>
-								</Bit>
-								<Bit>
 									<Name>BKPRAM_ECC</Name>
 									<Description>ECC in BKPRAM region configuration bit</Description>
 									<BitOffset>0x4</BitOffset>
@@ -2929,17 +2882,6 @@
 									<Values>
 										<Val value="0x0">SRAM2 ECC check enabled </Val>
 										<Val value="0x1">SRAM2 ECC check disabled</Val>
-									</Values>
-								</Bit>
-								<Bit>
-									<Name>SRAM3_ECC</Name>
-									<Description>ECC in SRAM3 region configuration bit</Description>
-									<BitOffset>0x5</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
-									<Values>
-										<Val value="0x0">SRAM3 ECC check enabled </Val>
-										<Val value="0x1">SRAM3 ECC check disabled</Val>
 									</Values>
 								</Bit>
 								<Bit>

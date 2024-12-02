@@ -115,7 +115,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08100000" name="sector65280" occurrence="0x100" size="0x1000"/>
+							<Parameters address="0x08100000" name="sector256" occurrence="0x100" size="0x1000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -127,7 +127,7 @@
 					<Alignment>0x8</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x1000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -144,13 +144,13 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08080000" name="sector65280" occurrence="0x80" size="0x1000"/>
+							<Parameters address="0x08080000" name="sector128" occurrence="0x80" size="0x1000"/>
 						</Field>
 					</Bank>
 				</Configuration>
-				<!-- 512MB Single Bank -->
+				<!-- 512KB Single Bank -->
 				<Configuration config="4">
-					<Parameters address="0x08000000" name=" 512 Mbyte Embedded Flash" size="0x80000"/>
+					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Alignment>0x8</Alignment>
@@ -160,9 +160,9 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<!-- 512MB dual Bank -->
+				<!-- 512KB dual Bank -->
 				<Configuration config="5">
-					<Parameters address="0x08000000" name=" 512 Mbyte Embedded Flash" size="0x80000"/>
+					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Dual</Organization>
 					<Alignment>0x8</Alignment>
@@ -173,7 +173,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08040000" name="sector0" occurrence="0x40" size="0x1000"/>
+							<Parameters address="0x08040000" name="sector64" occurrence="0x40" size="0x1000"/>
 						</Field>
 					</Bank>
 				</Configuration>

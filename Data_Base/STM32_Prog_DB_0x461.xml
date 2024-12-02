@@ -105,7 +105,7 @@
 				<DBGMCU_CR address="0xE0042004" mask="0x007"/>
 				<DBGMCU_APB1_FZ address="0xE0042008" mask="0x1800"/>
 				<!-- 1MB dual Bank -->
-				<Configuration config="0">
+				<Configuration config="0,5,6">
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -122,7 +122,7 @@
 					</Bank>
 				</Configuration>
 				<!-- 512KB dual Bank -->
-				<Configuration config="1,5">
+				<Configuration config="1">
 					<Parameters address="0x08000000" name=" 512 KBbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -139,7 +139,7 @@
 					</Bank>
 				</Configuration>
 				<!-- 512KB Single Bank -->
-				<Configuration config="2,6">
+				<Configuration config="2">
 					<Parameters address="0x08000000" name=" 512 KBbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Single</Organization>

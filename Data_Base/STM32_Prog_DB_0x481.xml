@@ -421,7 +421,7 @@
 										<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<!--<Bit>
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
@@ -431,7 +431,7 @@
 										<Val value="0x0">Single bank Flash with contiguous address in bank 1</Val>
 										<Val value="0x1">Dual-bank Flash with contiguous addresses</Val>
 									</Values>
-								</Bit>
+								</Bit>-->
 								<Bit>
 									<Name>BKPRAM_ECC</Name>
 									<Description>SRAM2 parity check enable</Description>
@@ -927,7 +927,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<!--<Bit>
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -937,7 +937,7 @@
 											<Val value="0x0">Single bank mode with 128 bits data read width</Val>
 											<Val value="0x1">Dual bank mode with 64 bits data</Val>
 										</Values>
-									</Bit>
+									</Bit>-->
 									<Bit>
 										<Name>SRAM2_PE</Name>
 										<Description>SRAM2 parity check enable</Description>
@@ -1601,7 +1601,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<!--<Bit>
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -1611,7 +1611,7 @@
 											<Val value="0x0">Single bank mode with 128 bits data read width</Val>
 											<Val value="0x1">Dual bank mode with 64 bits data</Val>
 										</Values>
-									</Bit>
+									</Bit>-->
 									<Bit>
 										<Name>SRAM2_PE</Name>
 										<Description>SRAM2 parity check enable</Description>
@@ -2305,7 +2305,7 @@
 										<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<!--<Bit>
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
@@ -2315,7 +2315,7 @@
 										<Val value="0x0">Single bank Flash with contiguous address in bank 1</Val>
 										<Val value="0x1">Dual-bank Flash with contiguous addresses</Val>
 									</Values>
-								</Bit>
+								</Bit>-->
 								<Bit>
 									<Name>BKPRAM_ECC</Name>
 									<Description>SRAM2 parity check enable</Description>
@@ -2578,7 +2578,7 @@
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
-									<Name>UNLOCK1A</Name>
+									<Name>UNLOCK_1A</Name>
 									<Description>Bank 1 WPR first area A unlock</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>

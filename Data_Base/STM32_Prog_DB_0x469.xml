@@ -5,7 +5,7 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M4</CPU>
-		<Name>STM32G47x/G48x</Name>
+		<Name>STM32G47x/G48x/G414</Name>
 		<Series>STM32G4</Series>
 		<Description>Category 3 devices, ARM 32-bit Cortex-M4 based device</Description>
 		<Configurations>
@@ -72,6 +72,13 @@
 					<FLASHSIZE reference="0x1"> <ReadRegister address="0x1FFF75E0" mask="0x000FFF" value="0x80"/> </FLASHSIZE>
 				</Configuration>
 				
+				<Configuration number="0x7">	<!-- single Bank when FlashSize not accessible-->
+					<DBANK reference="0x0"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x0"/> </DBANK>
+				</Configuration>
+				<Configuration number="0x8">	<!-- Dual Bank when FlashSize not accessible-->
+					<DBANK reference="0x1"> <ReadRegister address="0x1FFF7800" mask="0x400000" value="0x400000"/> </DBANK>
+				</Configuration>
+
 				<Configuration number="0x2">	
 					<dummy> <ReadRegister address="0x20000000" mask="0" value="0"/> </dummy>
 				</Configuration>
@@ -111,7 +118,7 @@
 				<DBGMCU_APB1_FZ address="0xE0042008" mask="0x1800"/>
 				<RCC_APB1ENR address="0x40021058" mask="0x00000800"/>
 				<!-- 512KB single Bank -->
-				<Configuration config="0">  
+				<Configuration config="0,7">
 					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -123,7 +130,7 @@
 					</Bank>
 				</Configuration>
 				<!-- 512KB dual Bank -->
-				<Configuration config="1,2">
+				<Configuration config="1,2,8">
 					<Parameters address="0x08000000" name=" 512 Kbyte Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -135,7 +142,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08040000" name="sector65280" occurrence="0x80" size="0x800"/>
+							<Parameters address="0x08040000" name="sector128" occurrence="0x80" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -165,7 +172,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08020000" name="sector65280" occurrence="0x40" size="0x800"/>
+							<Parameters address="0x08020000" name="sector64" occurrence="0x40" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -195,7 +202,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08010000" name="sector65280" occurrence="0x20" size="0x800"/>
+							<Parameters address="0x08010000" name="sector32" occurrence="0x20" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -530,8 +537,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
-										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+										<Val value="0x0">PCROP area is not erased when the RDP level is decreased from Level 1 to  Level 0</Val>
+										<Val value="0x1">PCROP area is erased when the RDP level is decreased from Level 1 to Level 0 (full mass erase)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1024,7 +1031,7 @@
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>PCROP1_STRT</Name>
 									<Description>Flash Bank 1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1032,7 +1039,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x10" offset="0x08000000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>PCROP1_STRT</Name>
 									<Description>Flash Bank 1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1045,7 +1052,7 @@
 						<Field>
 							<Parameters address="0x1FFF7810" name="FLASH_PCROP1ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>PCROP1_END</Name>
 									<Description>Flash Bank 1 PCROP End address(excluded). Deactivation of PCROP can be done by enbaling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1053,7 +1060,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x10" offset="0x08000008"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>PCROP1_END</Name>
 									<Description>Flash Bank 1 PCROP End address(excluded). Deactivation of PCROP can be done by enbaling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1068,8 +1075,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
-										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+										<Val value="0x0">PCROP area is not erased when the RDP level is decreased from Level 1 to  Level 0</Val>
+										<Val value="0x1">PCROP area is erased when the RDP level is decreased from Level 1 to Level 0 (full mass erase)</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -1080,7 +1087,7 @@
 						<Field>
 							<Parameters address="0x1FFF7818" name="FLASH_WRP1AR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP1A_STRT</Name>
 									<Description>The address of the first page of the Bank 1 WRP first area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1088,7 +1095,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP1A_END</Name>
 									<Description>The address of the last page of the Bank 1 WRP first area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1096,7 +1103,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP1A_STRT</Name>
 									<Description>The address of the first page of the Bank 1 WRP first area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1104,7 +1111,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP1A_END</Name>
 									<Description>The address of the last page of the Bank 1 WRP first area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1117,7 +1124,7 @@
 						<Field>
 							<Parameters address="0x1FFF7820" name="FLASH_WRP1BR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP1B_STRT</Name>
 									<Description>The address of the first page of the Bank 1 WRP second area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1125,7 +1132,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP1B_END</Name>
 									<Description>The address of the last page of the Bank 1 WRP second area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1133,7 +1140,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08000000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP1B_STRT</Name>
 									<Description>The address of the first page of the Bank 1 WRP second area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1141,7 +1148,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP1B_END</Name>
 									<Description>The address of the last page of the Bank 1 WRP second area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1160,7 +1167,7 @@
 						<Field>
 							<Parameters address="0x1FFFF808" name="FLASH_PCROP2SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>PCROP2_STRT</Name>
 									<Description>Flash Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1168,7 +1175,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x10" offset="0x08080000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>PCROP2_STRT</Name>
 									<Description>Flash Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1181,7 +1188,7 @@
 						<Field>
 							<Parameters address="0x1FFFF810" name="FLASH_PCROP2ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>PCROP2_END</Name>
 									<Description>Flash Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enbaling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1189,7 +1196,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x10" offset="0x08080008"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>PCROP2_END</Name>
 									<Description>Flash Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enbaling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1205,7 +1212,7 @@
 						<Field>
 							<Parameters address="0x1FFFF818" name="FLASH_WRP2AR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP2A_STRT</Name>
 									<Description>The address of first page of the Bank 2 WRP first area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1213,7 +1220,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP2A_END</Name>
 									<Description>The address of last page of the Bank 2 WRP first area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1221,7 +1228,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP2A_STRT</Name>
 									<Description>The address of first page of the Bank 2 WRP first area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1229,7 +1236,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08080000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP2A_END</Name>
 									<Description>The address of last page of the Bank 2 WRP first area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1242,7 +1249,7 @@
 						<Field>
 							<Parameters address="0x1FFFF820" name="FLASH_WRP2BR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP2B_STRT</Name>
 									<Description>The address of first page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1250,7 +1257,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="0,3,5">
+								<Bit config="0,3,5,7">
 									<Name>WRP2B_END</Name>
 									<Description>The address of last page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1258,7 +1265,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08080000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP2B_STRT</Name>
 									<Description>The address of first page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1266,7 +1273,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x1000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="1,2,4,6">
+								<Bit config="1,2,4,6,8">
 									<Name>WRP2B_END</Name>
 									<Description>The address of last page of the Bank 2 WRP second area</Description>
 									<BitOffset>0x10</BitOffset>

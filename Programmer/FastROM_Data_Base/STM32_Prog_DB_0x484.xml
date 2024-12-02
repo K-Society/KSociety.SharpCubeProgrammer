@@ -265,7 +265,7 @@
 											<Val value="0x0">SRAM3 ECC check enabled </Val>
 											<Val value="0x1">SRAM3 ECC check disabled</Val>
 										</Values>
-										<DefaultVal>0x0</DefaultVal>
+										<DefaultVal>0x1</DefaultVal>
 									</Bit>
 									<Bit>
 										<Name>BKPRAM_ECC</Name>
@@ -350,7 +350,7 @@
 											<Val value="0xC3">The BOOT_UBE, SWAP_BANK and SECBOOTADD can still be modified following their individual rules.</Val>
 											<Val value="0xB4">The BOOT_UBE and SECBOOTADD are frozen. SWAP_BANK can only be modified with TZEN set to 0xC3 (disabled).</Val>
 										</Values>
-										<DefaultVal>0x0</DefaultVal>
+										<DefaultVal>0xC3</DefaultVal>
 									</Bit>
 									<Bit>
 										<Name>SECBOOTADD</Name>
@@ -378,7 +378,7 @@
 										<BitWidth>0x7</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
-										<DefaultVal>0x0</DefaultVal>
+										<DefaultVal>0x7f</DefaultVal>
 									</Bit>
 									<Bit>
 										<Name>SECWM1_END</Name>
@@ -387,7 +387,7 @@
 										<BitWidth>0x7</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
-										<DefaultVal>0x7f</DefaultVal>
+										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -424,7 +424,7 @@
 										<BitWidth>0x7</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
-										<DefaultVal>0x0</DefaultVal>
+										<DefaultVal>0x7f</DefaultVal>
 									</Bit>
 									<Bit> 
 										<Name>SECWM2_END</Name>
@@ -433,7 +433,7 @@
 										<BitWidth>0x7</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x08100000"/>
-										<DefaultVal>0x7f</DefaultVal>
+										<DefaultVal>0x0</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>

@@ -4,6 +4,7 @@ namespace SharpCubeProgrammer.Native
 {
     using System;
     using System.Runtime.InteropServices;
+    using System.Text;
     using Enum;
     using Struct;
 
@@ -318,12 +319,12 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectDfuBootloader]
 
         [DllImport(ProgrammerDll32, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectDfuBootloader32(string usbIndex);
+        private static extern int ConnectDfuBootloader32(IntPtr usbIndex);
 
         [DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectDfuBootloader64(string usbIndex);
+        private static extern int ConnectDfuBootloader64(IntPtr usbIndex);
 
-        private static int ConnectDfuBootloaderNative(string usbIndex)
+        private static int ConnectDfuBootloaderNative(IntPtr usbIndex)
         {
             return !Environment.Is64BitProcess
                 ? ConnectDfuBootloader32(usbIndex)
@@ -332,9 +333,20 @@ namespace SharpCubeProgrammer.Native
 
         internal static int ConnectDfuBootloader(string usbIndex)
         {
+            var usbIndexPtr = IntPtr.Zero;
+
             try
             {
-                return ConnectDfuBootloaderNative(usbIndex);
+                usbIndexPtr = Marshal.StringToHGlobalAnsi(usbIndex);
+                return ConnectDfuBootloaderNative(usbIndexPtr);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -343,6 +355,10 @@ namespace SharpCubeProgrammer.Native
             catch (EntryPointNotFoundException ex)
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(usbIndexPtr);
             }
         }
 
@@ -725,39 +741,6 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
-        //#region [WriteMemoryBySector]
-
-        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySector32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySector64(uint address, IntPtr data, uint size);
-
-        //private static int WriteMemoryBySectorNative(uint address, IntPtr data, uint size)
-        //{
-        //    return !Environment.Is64BitProcess
-        //        ? WriteMemoryBySector32(address, data, size)
-        //        : WriteMemoryBySector64(address, data, size);
-        //}
-
-        //internal static int WriteMemoryBySector(uint address, IntPtr data, uint size)
-        //{
-        //    try
-        //    {
-        //        return WriteMemoryBySectorNative(address, data, size);
-        //    }
-        //    catch (DllNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-        //    }
-        //    catch (EntryPointNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-        //    }
-        //}
-
-        //#endregion
-
         #region [WriteMemoryAndVerify]
 
         [DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
@@ -790,39 +773,6 @@ namespace SharpCubeProgrammer.Native
         }
 
         #endregion
-
-        //#region [WriteMemoryBySectorAndVerify]
-
-        //[DllImport(ProgrammerDll32, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySectorAndVerify32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryBySectorAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryBySectorAndVerify64(uint address, IntPtr data, uint size);
-
-        //private static int WriteMemoryBySectorAndVerifyNative(uint address, IntPtr data, uint size)
-        //{
-        //    return !Environment.Is64BitProcess
-        //        ? WriteMemoryBySectorAndVerify32(address, data, size)
-        //        : WriteMemoryBySectorAndVerify64(address, data, size);
-        //}
-
-        //internal static int WriteMemoryBySectorAndVerify(uint address, IntPtr data, uint size)
-        //{
-        //    try
-        //    {
-        //        return WriteMemoryBySectorAndVerifyNative(address, data, size);
-        //    }
-        //    catch (DllNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-        //    }
-        //    catch (EntryPointNotFoundException ex)
-        //    {
-        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-        //    }
-        //}
-
-        //#endregion
 
         #region [EditSector]
 
@@ -926,12 +876,12 @@ namespace SharpCubeProgrammer.Native
         #region [MassErase]
 
         [DllImport(ProgrammerDll32, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int MassErase32(string sFlashMemName);
+        private static extern int MassErase32(IntPtr sFlashMemName);
 
         [DllImport(ProgrammerDll64, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int MassErase64(string sFlashMemName);
+        private static extern int MassErase64(IntPtr sFlashMemName);
 
-        private static int MassEraseNative(string sFlashMemName)
+        private static int MassEraseNative(IntPtr sFlashMemName)
         {
             return !Environment.Is64BitProcess
                 ? MassErase32(sFlashMemName)
@@ -940,9 +890,20 @@ namespace SharpCubeProgrammer.Native
 
         internal static int MassErase(string sFlashMemName)
         {
+            var sFlashMemNamePtr = IntPtr.Zero;
+
             try
             {
-                return MassEraseNative(sFlashMemName);
+                sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
+                return MassEraseNative(sFlashMemNamePtr);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -951,6 +912,10 @@ namespace SharpCubeProgrammer.Native
             catch (EntryPointNotFoundException ex)
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(sFlashMemNamePtr);
             }
         }
 
@@ -959,12 +924,12 @@ namespace SharpCubeProgrammer.Native
         #region [SectorErase]
 
         [DllImport(ProgrammerDll32, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SectorErase32(uint[] sectors, uint sectorNbr, string sFlashMemName);
+        private static extern int SectorErase32(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName);
 
         [DllImport(ProgrammerDll64, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SectorErase64(uint[] sectors, uint sectorNbr, string sFlashMemName);
+        private static extern int SectorErase64(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName);
 
-        private static int SectorEraseNative(uint[] sectors, uint sectorNbr, string sFlashMemName)
+        private static int SectorEraseNative(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName)
         {
             return !Environment.Is64BitProcess
                 ? SectorErase32(sectors, sectorNbr, sFlashMemName)
@@ -973,9 +938,20 @@ namespace SharpCubeProgrammer.Native
 
         internal static int SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName)
         {
+            var sFlashMemNamePtr = IntPtr.Zero;
+
             try
             {
-                return SectorEraseNative(sectors, sectorNbr, sFlashMemName);
+                sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
+                return SectorEraseNative(sectors, sectorNbr, sFlashMemNamePtr);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -984,6 +960,10 @@ namespace SharpCubeProgrammer.Native
             catch (EntryPointNotFoundException ex)
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(sFlashMemNamePtr);
             }
         }
 
@@ -1469,12 +1449,12 @@ namespace SharpCubeProgrammer.Native
         #region [AutomaticMode]
 
         [DllImport(ProgrammerDll32, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void AutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run);
+        private static extern void AutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run);
 
         [DllImport(ProgrammerDll64, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void AutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run);
+        private static extern void AutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run);
 
-        private static void AutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run)
+        private static void AutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run)
         {
             if (!Environment.Is64BitProcess)
             {
@@ -1488,9 +1468,19 @@ namespace SharpCubeProgrammer.Native
 
         internal static void AutomaticMode(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run)
         {
+            var obCommandPtr = IntPtr.Zero;
             try
             {
-                AutomaticModeNative(filePath, address, skipErase, verify, isMassErase, obCommand, run);
+                obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
+                AutomaticModeNative(filePath, address, skipErase, verify, isMassErase, obCommandPtr, run);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -1500,6 +1490,10 @@ namespace SharpCubeProgrammer.Native
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
             }
+            finally
+            {
+                Marshal.FreeHGlobal(obCommandPtr);
+            }
         }
 
         #endregion
@@ -1507,12 +1501,12 @@ namespace SharpCubeProgrammer.Native
         #region [SerialNumberingAutomaticMode]
 
         [DllImport(ProgrammerDll32, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SerialNumberingAutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
+        private static extern void SerialNumberingAutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
 
         [DllImport(ProgrammerDll64, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SerialNumberingAutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
+        private static extern void SerialNumberingAutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
 
-        private static void SerialNumberingAutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
+        private static void SerialNumberingAutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
         {
             if (!Environment.Is64BitProcess)
             {
@@ -1526,9 +1520,20 @@ namespace SharpCubeProgrammer.Native
 
         internal static void SerialNumberingAutomaticMode(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
         {
+            var obCommandPtr = IntPtr.Zero;
+
             try
             {
-                SerialNumberingAutomaticModeNative(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+                obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
+                SerialNumberingAutomaticModeNative(filePath, address, skipErase, verify, isMassErase, obCommandPtr, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -1537,6 +1542,10 @@ namespace SharpCubeProgrammer.Native
             catch (EntryPointNotFoundException ex)
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(obCommandPtr);
             }
         }
 
@@ -1582,13 +1591,13 @@ namespace SharpCubeProgrammer.Native
         #region [SendOptionBytesCmd]
 
         [DllImport(ProgrammerDll32, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SendOptionBytesCmd32(string command);
+        private static extern int SendOptionBytesCmd32(IntPtr command);
 
         [DllImport(ProgrammerDll64, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SendOptionBytesCmd64(string command);
+        private static extern int SendOptionBytesCmd64(IntPtr command);
 
-        private static int SendOptionBytesCmdNative(string command)
-        {
+        private static int SendOptionBytesCmdNative(IntPtr command)
+        { 
             return !Environment.Is64BitProcess
                 ? SendOptionBytesCmd32(command)
                 : SendOptionBytesCmd64(command);
@@ -1596,9 +1605,20 @@ namespace SharpCubeProgrammer.Native
 
         internal static int SendOptionBytesCmd(string command)
         {
+            var commandPtr = IntPtr.Zero;
+
             try
             {
-                return SendOptionBytesCmdNative(command);
+                commandPtr = Marshal.StringToHGlobalAnsi(command);
+                return SendOptionBytesCmdNative(commandPtr);
+            }
+            catch (OutOfMemoryException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer out of memory exception.", ex);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer argument out of range exception.", ex);
             }
             catch (DllNotFoundException ex)
             {
@@ -1607,6 +1627,10 @@ namespace SharpCubeProgrammer.Native
             catch (EntryPointNotFoundException ex)
             {
                 throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(commandPtr);
             }
         }
 
