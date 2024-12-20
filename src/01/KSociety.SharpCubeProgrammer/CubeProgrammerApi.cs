@@ -31,6 +31,8 @@ namespace SharpCubeProgrammer
         private const int DisposedFlag = 1;
         private int _isDisposed;
 
+        private static DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
+
         #region [Constructor]
 
         public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger = default)
@@ -418,22 +420,21 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
         {
-            var callbacksHandle = new DisplayCallBacks
-            {
-                InitProgressBar = initProgressBar,
-                LogMessage = messageReceived,
-                LoadBar = progressBarUpdate
-            };
+            DisplayCallBacks.InitProgressBar = initProgressBar;
+            DisplayCallBacks.LogMessage = messageReceived;
+            DisplayCallBacks.LoadBar = progressBarUpdate;
+            Native.ProgrammerApi.SetDisplayCallbacks(DisplayCallBacks);
 
-            Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
-
-            return callbacksHandle;
+            return DisplayCallBacks;
         }
 
         /// <inheritdoc />
-        public void SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
+        public DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
         {
-            Native.ProgrammerApi.SetDisplayCallbacks(callbacksHandle);
+            DisplayCallBacks = callbacksHandle;
+            Native.ProgrammerApi.SetDisplayCallbacks(DisplayCallBacks);
+
+            return DisplayCallBacks;
         }
 
         /// <inheritdoc />
@@ -549,33 +550,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        //public CubeProgrammerError WriteMemoryBySector(string address, byte[] data)
-        //{
-        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
-        //    {
-        //        var uintAddress = this.HexConverterToUint(address);
-
-        //        try
-        //        {
-        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-        //            gch.Free();
-        //            result = this.CheckResult(writeMemoryResult);
-
-        //            return result;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            this._logger?.LogError(ex, "WriteMemoryBySector: ");
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
-        /// <inheritdoc />
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -601,33 +575,6 @@ namespace SharpCubeProgrammer
 
             return result;
         }
-
-        /// <inheritdoc />
-        //public CubeProgrammerError WriteMemoryBySectorAndVerify(string address, byte[] data)
-        //{
-        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
-        //    {
-        //        var uintAddress = this.HexConverterToUint(address);
-
-        //        try
-        //        {
-        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySectorAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-        //            gch.Free();
-        //            result = this.CheckResult(writeMemoryResult);
-
-        //            return result;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            this._logger?.LogError(ex, "WriteMemoryBySectorAndVerify: ");
-        //        }
-        //    }
-
-        //    return result;
-        //}
 
         /// <inheritdoc />
         public CubeProgrammerError EditSector(string address, byte[] data)

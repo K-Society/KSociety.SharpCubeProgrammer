@@ -83,21 +83,21 @@ namespace Programming
                 //var bu = CubeProgrammerApi.InitOptionBytesInterface();
                 #region [File Open Testing]
 
-                //var file = System.IO.File.ReadAllBytes(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
+                var file = System.IO.File.ReadAllBytes(@"..\..\..\..\..\Test\BIN_32001506_REU_04800004.bin");
                 //var filePointer = CubeProgrammerApi.FileOpen(@"..\..\..\..\..\Test\BIN_32001505_CEU_02000005.bin");
                 //var buffer = new byte[65537];
-                var buffer = new byte[88996];//2048
+                //var buffer = new byte[88996];//2048
                 //var buffer = new byte[89000];//2048
 
-                for (int i = 0; i < 88064; i++)
-                {
-                    buffer[i] = 0xDD;
-                }
+                //for (int i = 0; i < 88064; i++)
+                //{
+                //    buffer[i] = 0xDD;
+                //}
 
-                for (int i = 88064; i < 88996; i++)
-                {
-                    buffer[i] = 0x05;
-                }
+                //for (int i = 88064; i < 88996; i++)
+                //{
+                //    buffer[i] = 0x05;
+                //}
 
                 //var buffer = new byte[932];
                 //for (int i = 0; i < 932; i++)
@@ -108,7 +108,8 @@ namespace Programming
                 //if (filePointer != IntPtr.Zero)
                 //{
                 //CubeProgrammerApi.MassErase();
-                var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08000400", buffer);
+                //var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08000400", buffer);
+                var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08036000", file);
                 //var verify = CubeProgrammerApi.WriteMemoryAndVerify("0x08015800", buffer);
 
                 if (verify.Equals(CubeProgrammerError.CubeprogrammerNoError))

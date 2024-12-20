@@ -2,12 +2,13 @@
 
 namespace SharpCubeProgrammer.Struct
 {
+    using System;
     using System.Runtime.InteropServices;
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
     public delegate void InitProgressBar();
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
     public delegate void LogMessageReceived(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
