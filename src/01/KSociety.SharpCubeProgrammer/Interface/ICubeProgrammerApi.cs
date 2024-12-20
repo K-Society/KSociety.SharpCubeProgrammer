@@ -112,7 +112,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to choose your custom display.
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
-        void SetDisplayCallbacks(DisplayCallBacks callbacksHandle);
+        DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle);
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.
