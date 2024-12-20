@@ -152,22 +152,12 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data);
 
         /// <summary>
-        /// This routine allows to write memory data on the user interface with the configuration already initialized.
-        /// </summary>
-        //CubeProgrammerError WriteMemoryBySector(string address, byte[] data);
-
-        /// <summary>
         /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
         /// Inside it uses the WriteMemoryAutoFill function.
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
         CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data);
-
-        /// <summary>
-        /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
-        /// </summary>
-        //CubeProgrammerError WriteMemoryBySectorAndVerify(string address, byte[] data);
 
         /// <summary>
         /// This routine allows to write sector data on the user interface with the configuration already initialized.

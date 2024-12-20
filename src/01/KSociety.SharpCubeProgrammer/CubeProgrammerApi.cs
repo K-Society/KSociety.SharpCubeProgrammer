@@ -549,33 +549,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        //public CubeProgrammerError WriteMemoryBySector(string address, byte[] data)
-        //{
-        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
-        //    {
-        //        var uintAddress = this.HexConverterToUint(address);
-
-        //        try
-        //        {
-        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-        //            gch.Free();
-        //            result = this.CheckResult(writeMemoryResult);
-
-        //            return result;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            this._logger?.LogError(ex, "WriteMemoryBySector: ");
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
-        /// <inheritdoc />
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -601,33 +574,6 @@ namespace SharpCubeProgrammer
 
             return result;
         }
-
-        /// <inheritdoc />
-        //public CubeProgrammerError WriteMemoryBySectorAndVerify(string address, byte[] data)
-        //{
-        //    var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-        //    if (!String.IsNullOrEmpty(address) && data.Length > 0)
-        //    {
-        //        var uintAddress = this.HexConverterToUint(address);
-
-        //        try
-        //        {
-        //            var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-        //            var writeMemoryResult = Native.ProgrammerApi.WriteMemoryBySectorAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-        //            gch.Free();
-        //            result = this.CheckResult(writeMemoryResult);
-
-        //            return result;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            this._logger?.LogError(ex, "WriteMemoryBySectorAndVerify: ");
-        //        }
-        //    }
-
-        //    return result;
-        //}
 
         /// <inheritdoc />
         public CubeProgrammerError EditSector(string address, byte[] data)
