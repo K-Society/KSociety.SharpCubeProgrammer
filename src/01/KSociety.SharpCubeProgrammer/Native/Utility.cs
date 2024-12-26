@@ -12,6 +12,15 @@ namespace SharpCubeProgrammer.Native
         /// </summary>
         private const string KernelLibName = "kernel32.dll";
 
+
+        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern IntPtr AddDllDirectory(string lpPathName);
+
+        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool SetDllDirectoryW(string lpPathName);
+
+        private const uint LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400;
+
         /// <summary>
         /// Loads the specified module into the address space of the calling process.
         /// The specified module may cause other modules to be loaded.
@@ -43,11 +52,51 @@ namespace SharpCubeProgrammer.Native
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool FreeLibrary(IntPtr hModule);
 
-        internal static SafeLibraryHandle LoadNativeLibrary(string lpFileName, IntPtr hFile, int dwFlags)
+        internal static bool AddNativeDllDirectory(string lpPathName)
         {
             try
             {
+                var result = AddDllDirectory(lpPathName);
+                if (result == IntPtr.Zero)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        internal static bool SetNativeDllDirectory(string lpPathName)
+        {
+            try
+            {
+                return SetDllDirectoryW(lpPathName);
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        internal static SafeLibraryHandle LoadNativeLibrary(string lpFileName, IntPtr hFile, int dwFlags)
+        //internal static SafeLibraryHandle LoadNativeLibrary(string lpFileName)
+        {
+            try
+            {
+                
                  return LoadLibraryEx(lpFileName, hFile, dwFlags);
+                 //return LoadLibraryEx(lpFileName, IntPtr.Zero, 0);
             }
             catch (DllNotFoundException ex)
             {

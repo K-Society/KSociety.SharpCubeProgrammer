@@ -64,27 +64,27 @@ namespace SharpCubeProgrammer
                 foreach (var file in files)
                 {
                     this._logger?.LogInformation(file);
-                //    if (!this._libraryHandleDictionary.ContainsKey(file))
-                //    {
-                //        var handle = Native.Utility.LoadNativeLibrary(file, IntPtr.Zero, 0);
-                //        if (handle.IsInvalid)
-                //        {
-                //            var error = Marshal.GetLastWin32Error();
-                //            handle = null;
-                //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, file, Environment.Is64BitProcess ? "x64" : "x86", error);
-                //        }
-                //        else
-                //        {
-                //            this._logger?.LogInformation("Loading {0} - {1} library.", file, Environment.Is64BitProcess ? "x64" : "x86");
-                //            this._libraryHandleDictionary.Add(file, handle);
-                //        }   
-                //    }
+                    //    if (!this._libraryHandleDictionary.ContainsKey(file))
+                    //    {
+                    //        var handle = Native.Utility.LoadNativeLibrary(file, IntPtr.Zero, 0);
+                    //        if (handle.IsInvalid)
+                    //        {
+                    //            var error = Marshal.GetLastWin32Error();
+                    //            handle = null;
+                    //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, file, Environment.Is64BitProcess ? "x64" : "x86", error);
+                    //        }
+                    //        else
+                    //        {
+                    //            this._logger?.LogInformation("Loading {0} - {1} library.", file, Environment.Is64BitProcess ? "x64" : "x86");
+                    //            this._libraryHandleDictionary.Add(file, handle);
+                    //        }   
+                    //    }
                 }
 
 
                 if (this._handleSTLinkDriver == null)
                 {
-                    this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                    this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0x00000000); //, IntPtr.Zero, Native.Utility.LOAD_LIBRARY_SEARCH_USER_DIRS);
 
                     if (this._handleSTLinkDriver.IsInvalid)
                     {
@@ -97,10 +97,16 @@ namespace SharpCubeProgrammer
                         this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
                     }
                 }
+            }
 
+            lock (this._syncRoot)
+            {
+
+                var result = Native.Utility.SetNativeDllDirectory(target);
                 if (this._handleProgrammer == null)
                 {
-                    this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0);
+                    //this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000008);
+                    this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000000);
 
                     if (this._handleProgrammer.IsInvalid)
                     {
