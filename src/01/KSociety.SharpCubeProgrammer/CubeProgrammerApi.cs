@@ -26,6 +26,8 @@ namespace SharpCubeProgrammer
         private readonly object _syncRoot = new object();
 
         private Native.SafeLibraryHandle _handleSTLinkDriver;
+        private Native.SafeLibraryHandle _handleProgrammer;
+        //private readonly Dictionary<string, Native.SafeLibraryHandle> _libraryHandleDictionary;
         private readonly ILogger<CubeProgrammerApi> _logger;
 
         private const int DisposedFlag = 1;
@@ -43,6 +45,7 @@ namespace SharpCubeProgrammer
             }
 
             this._logger = logger;
+            //this._libraryHandleDictionary = new Dictionary<string, Native.SafeLibraryHandle>();
             this.Init();
         }
 
@@ -53,27 +56,65 @@ namespace SharpCubeProgrammer
             var currentDirectory = GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
 
-            if (this._handleSTLinkDriver == null)
+            var files = Directory.GetFiles(target, "*.dll");
+            //if (this._handleSTLinkDriver == null)
+            //{
+            lock (this._syncRoot)
             {
-                lock (this._syncRoot)
+                foreach (var file in files)
                 {
-                    if (this._handleSTLinkDriver == null)
-                    {
-                        this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+                    this._logger?.LogInformation(file);
+                //    if (!this._libraryHandleDictionary.ContainsKey(file))
+                //    {
+                //        var handle = Native.Utility.LoadNativeLibrary(file, IntPtr.Zero, 0);
+                //        if (handle.IsInvalid)
+                //        {
+                //            var error = Marshal.GetLastWin32Error();
+                //            handle = null;
+                //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, file, Environment.Is64BitProcess ? "x64" : "x86", error);
+                //        }
+                //        else
+                //        {
+                //            this._logger?.LogInformation("Loading {0} - {1} library.", file, Environment.Is64BitProcess ? "x64" : "x86");
+                //            this._libraryHandleDictionary.Add(file, handle);
+                //        }   
+                //    }
+                }
 
-                        if (this._handleSTLinkDriver.IsInvalid)
-                        {
-                            var error = Marshal.GetLastWin32Error();
-                            this._handleSTLinkDriver = null;
-                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                        }
-                        else
-                        {
-                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                        }
+
+                if (this._handleSTLinkDriver == null)
+                {
+                    this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
+
+                    if (this._handleSTLinkDriver.IsInvalid)
+                    {
+                        var error = Marshal.GetLastWin32Error();
+                        this._handleSTLinkDriver = null;
+                        this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                    }
+                    else
+                    {
+                        this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                    }
+                }
+
+                if (this._handleProgrammer == null)
+                {
+                    this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0);
+
+                    if (this._handleProgrammer.IsInvalid)
+                    {
+                        var error = Marshal.GetLastWin32Error();
+                        this._handleProgrammer = null;
+                        this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                    }
+                    else
+                    {
+                        this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
                     }
                 }
             }
+            //}
         }
 
         private static string GetAssemblyDirectory()
@@ -1668,6 +1709,17 @@ namespace SharpCubeProgrammer
             // Free any unmanaged objects here.
             this._handleSTLinkDriver?.Dispose();
             this._handleSTLinkDriver = null;
+
+            this._handleProgrammer?.Dispose();
+            this._handleProgrammer = null;
+            //if (this._libraryHandleDictionary.Count != 0)
+            //{
+            //    foreach (var libraryHandle in this._libraryHandleDictionary)
+            //    {
+            //        libraryHandle.Value.ReleaseHandle();
+            //        libraryHandle.Value = null;
+            //    }
+            //}
         }
 
         /// <summary>

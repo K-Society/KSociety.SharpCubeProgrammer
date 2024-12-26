@@ -4,7 +4,6 @@ namespace SharpCubeProgrammer.Native
 {
     using System;
     using System.Runtime.InteropServices;
-    using System.Text;
     using Enum;
     using Struct;
 
