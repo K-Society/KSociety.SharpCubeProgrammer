@@ -75,7 +75,7 @@ namespace SharpCubeProgrammer
                             out IntPtr handle))
                         {
                             var error = Marshal.GetLastWin32Error();
-                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {3} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {2} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                             this._handleSTLinkDriver = null;
                         }
                         else
@@ -107,7 +107,7 @@ namespace SharpCubeProgrammer
                         if (this._handleSTLinkDriver.IsInvalid)
                         {
                             int error = Marshal.GetLastWin32Error();
-                            this._logger?.LogError("Loading {0} {1} library error: {3} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._logger?.LogError("Loading {0} {1} library error: {2} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                             this._handleSTLinkDriver = null;
                         }
                         else
@@ -139,7 +139,7 @@ namespace SharpCubeProgrammer
                             out IntPtr handle))
                         {
                             var error = Marshal.GetLastWin32Error();
-                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {3} !", target, Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {2} !", target, Environment.Is64BitProcess ? "x64" : "x86", error);
                             this._handleProgrammer = null;
                         }
                         else
@@ -167,24 +167,27 @@ namespace SharpCubeProgrammer
 
                             var result = Native.Utility.SetDllDirectoryW(target);
 
-                            if (!result)
+                            if (result)
+                            {
+                                this._handleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
+
+                                if (this._handleProgrammer.IsInvalid)
+                                {
+                                    int error = Marshal.GetLastWin32Error();
+                                    this._logger?.LogError("Loading {0} {1} library error: {2} !", target + @"\Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                                    this._handleProgrammer = null;
+                                }
+                                else
+                                {
+                                    this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                                }
+                            }
+                            else
                             {
                                 int error = Marshal.GetLastWin32Error();
+                                this._logger?.LogError("SetDllDirectory {0} error: {1} !", target, error);
                             }
-                        }
-
-                        this._handleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
-
-                        if (this._handleProgrammer.IsInvalid)
-                        {
-                            int error = Marshal.GetLastWin32Error();
-                            this._logger?.LogError("Loading {0} {1} library error: {3} !", target + @"\Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                            this._handleProgrammer = null;
-                        }
-                        else
-                        {
-                            this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                        }
+                        }                      
 #endif
                     }
                 }
