@@ -12,6 +12,8 @@ namespace SharpCubeProgrammer.Native
     /// </summary>
     internal static class Utility
     {
+        internal const int LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008;
+
         /// <summary>
         /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
         /// </summary>

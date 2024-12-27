@@ -94,7 +94,7 @@ namespace SharpCubeProgrammer
                             hasKB2533623 = Native.Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
                         }
 
-                        int dwFlags = 0;
+                        var dwFlags = 0;
 
                         if (hasKB2533623)
                         {
@@ -106,7 +106,7 @@ namespace SharpCubeProgrammer
 
                         if (this._handleSTLinkDriver.IsInvalid)
                         {
-                            int error = Marshal.GetLastWin32Error();
+                            var error = Marshal.GetLastWin32Error();
                             this._logger?.LogError("Loading {0} {1} library error: {2} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                             this._handleSTLinkDriver = null;
                         }
@@ -158,22 +158,22 @@ namespace SharpCubeProgrammer
                             hasKB2533623 = Native.Utility.GetProcAddress(hModule, "SetDllDirectoryW") != IntPtr.Zero;
                         }
 
-                        int dwFlags = 0;
+                        var dwFlags = 0;
 
                         if (hasKB2533623)
                         {
-                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_USER_DIRS in dwFlags
-                            //dwFlags = Native.Utility.LOAD_LIBRARY_SEARCH_USER_DIRS;
+                            // If KB2533623 is installed then specify the more secure LOAD_WITH_ALTERED_SEARCH_PATH in dwFlags
+                            dwFlags = Native.Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
 
-                            var result = Native.Utility.SetDllDirectoryW(target);
+                            //var result = Native.Utility.SetDllDirectoryW(target);
 
-                            if (result)
-                            {
+                            //if (result)
+                            //{
                                 this._handleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
 
                                 if (this._handleProgrammer.IsInvalid)
                                 {
-                                    int error = Marshal.GetLastWin32Error();
+                                    var error = Marshal.GetLastWin32Error();
                                     this._logger?.LogError("Loading {0} {1} library error: {2} !", target + @"\Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
                                     this._handleProgrammer = null;
                                 }
@@ -181,12 +181,12 @@ namespace SharpCubeProgrammer
                                 {
                                     this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
                                 }
-                            }
-                            else
-                            {
-                                int error = Marshal.GetLastWin32Error();
-                                this._logger?.LogError("SetDllDirectory {0} error: {1} !", target, error);
-                            }
+                            //}
+                            //else
+                            //{
+                            //    var error = Marshal.GetLastWin32Error();
+                            //    this._logger?.LogError("SetDllDirectory {0} error: {1} !", target, error);
+                            //}
                         }                      
 #endif
                     }
