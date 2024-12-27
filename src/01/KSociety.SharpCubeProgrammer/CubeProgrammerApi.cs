@@ -148,22 +148,14 @@ namespace SharpCubeProgrammer
                             this._logger?.LogInformation("Loading with NativeLibrary {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
                         }
 #else
-                        // Check if the local machine has KB2533623 installed in order
-                        // to use the more secure flags when calling LoadLibraryEx
-                        bool hasKB2533623;
+                        
 
-                        using (var hModule = Native.Utility.LoadLibraryEx(Native.Utility.KernelLibName, IntPtr.Zero, 0))
-                        {
-                            // If the AddDllDirectory function is found then the flags are supported
-                            hasKB2533623 = Native.Utility.GetProcAddress(hModule, "SetDllDirectoryW") != IntPtr.Zero;
-                        }
+                        //var dwFlags = 0;
 
-                        var dwFlags = 0;
-
-                        if (hasKB2533623)
-                        {
+                        //if (hasKB2533623)
+                        //{
                             // If KB2533623 is installed then specify the more secure LOAD_WITH_ALTERED_SEARCH_PATH in dwFlags
-                            dwFlags = Native.Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
+                            var dwFlags = Native.Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
 
                             //var result = Native.Utility.SetDllDirectoryW(target);
 
@@ -187,7 +179,7 @@ namespace SharpCubeProgrammer
                             //    var error = Marshal.GetLastWin32Error();
                             //    this._logger?.LogError("SetDllDirectory {0} error: {1} !", target, error);
                             //}
-                        }                      
+                        //}                      
 #endif
                     }
                 }
