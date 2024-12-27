@@ -27,6 +27,8 @@ namespace SharpCubeProgrammer
 
         private Native.SafeLibraryHandle _handleSTLinkDriver;
         private Native.SafeLibraryHandle _handleProgrammer;
+        //private IntPtr _handleSTLinkDriver;
+        //private IntPtr _handleProgrammer;
         //private readonly Dictionary<string, Native.SafeLibraryHandle> _libraryHandleDictionary;
         private readonly ILogger<CubeProgrammerApi> _logger;
 
@@ -46,82 +48,244 @@ namespace SharpCubeProgrammer
 
             this._logger = logger;
             //this._libraryHandleDictionary = new Dictionary<string, Native.SafeLibraryHandle>();
-            this.Init();
+            
+            this.LoadStLinkDriver();
+            this.LoadProgrammer();
+
         }
 
         #endregion
 
-        private void Init()
+        private void LoadStLinkDriver()
         {
             var currentDirectory = GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
 
-            var files = Directory.GetFiles(target, "*.dll");
-            //if (this._handleSTLinkDriver == null)
-            //{
-            lock (this._syncRoot)
+            if (this._handleSTLinkDriver == null)
             {
-                foreach (var file in files)
+                lock (this._syncRoot)
                 {
-                    this._logger?.LogInformation(file);
-                    //    if (!this._libraryHandleDictionary.ContainsKey(file))
-                    //    {
-                    //        var handle = Native.Utility.LoadNativeLibrary(file, IntPtr.Zero, 0);
-                    //        if (handle.IsInvalid)
-                    //        {
-                    //            var error = Marshal.GetLastWin32Error();
-                    //            handle = null;
-                    //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, file, Environment.Is64BitProcess ? "x64" : "x86", error);
-                    //        }
-                    //        else
-                    //        {
-                    //            this._logger?.LogInformation("Loading {0} - {1} library.", file, Environment.Is64BitProcess ? "x64" : "x86");
-                    //            this._libraryHandleDictionary.Add(file, handle);
-                    //        }   
-                    //    }
-                }
-
-
-                if (this._handleSTLinkDriver == null)
-                {
-                    this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0x00000000); //, IntPtr.Zero, Native.Utility.LOAD_LIBRARY_SEARCH_USER_DIRS);
-
-                    if (this._handleSTLinkDriver.IsInvalid)
+                    if (this._handleSTLinkDriver == null)
                     {
-                        var error = Marshal.GetLastWin32Error();
-                        this._handleSTLinkDriver = null;
-                        this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                    }
-                    else
-                    {
-                        this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+#if NET
+                        if (!NativeLibrary.TryLoad(
+                            target + @"\STLinkUSBDriver.dll",
+                            typeof(CubeProgrammerApi).Assembly,
+                            DllImportSearchPath.UserDirectories,
+                            out IntPtr handle))
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {3} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._handleSTLinkDriver = null;
+                        }
+                        else
+                        {
+                            this._handleSTLinkDriver = new Native.SafeLibraryHandle(handle);
+                            this._logger?.LogInformation("Loading with NativeLibrary {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+#else
+                        // Check if the local machine has KB2533623 installed in order
+                        // to use the more secure flags when calling LoadLibraryEx
+                        bool hasKB2533623;
+
+                        using (var hModule = Native.Utility.LoadLibraryEx(Native.Utility.KernelLibName, IntPtr.Zero, 0))
+                        {
+                            // If the AddDllDirectory function is found then the flags are supported
+                            hasKB2533623 = Native.Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
+                        }
+
+                        int dwFlags = 0;
+
+                        if (hasKB2533623)
+                        {
+                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags
+                            dwFlags = Native.Utility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
+                        }
+
+                        this._handleSTLinkDriver = Native.Utility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
+
+                        if (this._handleSTLinkDriver.IsInvalid)
+                        {
+                            int error = Marshal.GetLastWin32Error();
+                            this._logger?.LogError("Loading {0} {1} library error: {3} !", target + @"\STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._handleSTLinkDriver = null;
+                        }
+                        else
+                        {
+                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+#endif
                     }
                 }
             }
-
-            lock (this._syncRoot)
-            {
-
-                var result = Native.Utility.SetNativeDllDirectory(target);
-                if (this._handleProgrammer == null)
-                {
-                    //this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000008);
-                    this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000000);
-
-                    if (this._handleProgrammer.IsInvalid)
-                    {
-                        var error = Marshal.GetLastWin32Error();
-                        this._handleProgrammer = null;
-                        this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                    }
-                    else
-                    {
-                        this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                    }
-                }
-            }
-            //}
         }
+
+        private void LoadProgrammer()
+        {
+            var currentDirectory = GetAssemblyDirectory();
+            var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+
+            if (this._handleProgrammer == null)
+            {
+                lock (this._syncRoot)
+                {
+                    if (this._handleProgrammer == null)
+                    {
+#if NET
+                        if (!NativeLibrary.TryLoad(
+                            target + @"\Programmer.dll",
+                            typeof(CubeProgrammerApi).Assembly,
+                            DllImportSearchPath.UserDirectories,
+                            out IntPtr handle))
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            this._logger?.LogError("Loading with NativeLibrary {0} {1} library error: {3} !", target, Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._handleProgrammer = null;
+                        }
+                        else
+                        {
+                            this._handleProgrammer = new Native.SafeLibraryHandle(handle);
+                            this._logger?.LogInformation("Loading with NativeLibrary {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+#else
+                        // Check if the local machine has KB2533623 installed in order
+                        // to use the more secure flags when calling LoadLibraryEx
+                        bool hasKB2533623;
+
+                        using (var hModule = Native.Utility.LoadLibraryEx(Native.Utility.KernelLibName, IntPtr.Zero, 0))
+                        {
+                            // If the AddDllDirectory function is found then the flags are supported
+                            hasKB2533623 = Native.Utility.GetProcAddress(hModule, "SetDllDirectoryW") != IntPtr.Zero;
+                        }
+
+                        int dwFlags = 0;
+
+                        if (hasKB2533623)
+                        {
+                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_USER_DIRS in dwFlags
+                            //dwFlags = Native.Utility.LOAD_LIBRARY_SEARCH_USER_DIRS;
+
+                            var result = Native.Utility.SetDllDirectoryW(target);
+
+                            if (!result)
+                            {
+                                int error = Marshal.GetLastWin32Error();
+                            }
+                        }
+
+                        this._handleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
+
+                        if (this._handleProgrammer.IsInvalid)
+                        {
+                            int error = Marshal.GetLastWin32Error();
+                            this._logger?.LogError("Loading {0} {1} library error: {3} !", target + @"\Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+                            this._handleProgrammer = null;
+                        }
+                        else
+                        {
+                            this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+                        }
+#endif
+                    }
+                }
+            }
+        }
+
+        //private void Init()
+        //{
+        //    var currentDirectory = GetAssemblyDirectory();
+        //    var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+
+        //    //var files = Directory.GetFiles(target, "*.dll");
+        //    //if (this._handleSTLinkDriver == null)
+        //    //{
+        //    lock (this._syncRoot)
+        //    {
+        //        //foreach (var file in files)
+        //        //{
+        //        //    this._logger?.LogInformation(file);
+        //        //    //    if (!this._libraryHandleDictionary.ContainsKey(file))
+        //        //    //    {
+        //        //    //        var handle = Native.Utility.LoadNativeLibrary(file, IntPtr.Zero, 0);
+        //        //    //        if (handle.IsInvalid)
+        //        //    //        {
+        //        //    //            var error = Marshal.GetLastWin32Error();
+        //        //    //            handle = null;
+        //        //    //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, file, Environment.Is64BitProcess ? "x64" : "x86", error);
+        //        //    //        }
+        //        //    //        else
+        //        //    //        {
+        //        //    //            this._logger?.LogInformation("Loading {0} - {1} library.", file, Environment.Is64BitProcess ? "x64" : "x86");
+        //        //    //            this._libraryHandleDictionary.Add(file, handle);
+        //        //    //        }   
+        //        //    //    }
+        //        //}
+
+        //        //if (this._handleSTLinkDriver == null)
+        //        //{
+        //        //this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0x00000000); //, IntPtr.Zero, Native.Utility.LOAD_LIBRARY_SEARCH_USER_DIRS);
+        //        this._handleSTLinkDriver = Native.Utility.LoadNativePackagedLibrary(target + @"\STLinkUSBDriver.dll");
+
+        //        //NativeLibrary.TryLoad();
+        //        if (this._handleSTLinkDriver.IsInvalid)
+        //        {
+        //            var error = Marshal.GetLastWin32Error();
+        //            this._handleSTLinkDriver = null;
+        //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+        //        }
+        //        else
+        //        {
+        //            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+        //        }
+
+        //        //if (this._handleSTLinkDriver == IntPtr.Zero)
+        //        //{
+        //        //    var error = Marshal.GetLastWin32Error();
+        //        //    this._handleSTLinkDriver = IntPtr.Zero;
+        //        //    this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+        //        //}
+        //        //else
+        //        //{
+        //        //    this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
+        //        //}
+        //        //}
+        //    }
+
+        //    lock (this._syncRoot)
+        //    {
+
+        //        //var result = Native.Utility.SetNativeDllDirectory(target);
+        //        //if (this._handleProgrammer == null)
+        //        //{
+        //            //this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000008);
+        //            //this._handleProgrammer = Native.Utility.LoadNativeLibrary(target + @"\Programmer.dll", IntPtr.Zero, 0x00000000);
+        //            this._handleProgrammer = Native.Utility.LoadNativePackagedLibrary(target + @"\Programmer.dll");
+
+        //        if (this._handleProgrammer.IsInvalid)
+        //        {
+        //            var error = Marshal.GetLastWin32Error();
+        //            this._handleProgrammer = null;
+        //            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+        //        }
+        //        else
+        //        {
+        //            this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+        //        }
+
+        //        //if (this._handleProgrammer == IntPtr.Zero)
+        //        //{
+        //        //    var error = Marshal.GetLastWin32Error();
+        //        //    this._handleProgrammer = IntPtr.Zero;
+        //        //    this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
+        //        //}
+        //        //else
+        //        //{
+        //        //    this._logger?.LogInformation("Loading {0} - {1} library.", "Programmer.dll", Environment.Is64BitProcess ? "x64" : "x86");
+        //        //}
+        //        //}
+        //    }
+        //    //}
+        //}
 
         private static string GetAssemblyDirectory()
         {
@@ -1718,6 +1882,13 @@ namespace SharpCubeProgrammer
 
             this._handleProgrammer?.Dispose();
             this._handleProgrammer = null;
+
+            //this._handleSTLinkDriver?.Dispose();
+            //this._handleSTLinkDriver = IntPtr.Zero;
+
+            //this._handleProgrammer?.Dispose();
+            //this._handleProgrammer = IntPtr.Zero;
+
             //if (this._libraryHandleDictionary.Count != 0)
             //{
             //    foreach (var libraryHandle in this._libraryHandleDictionary)

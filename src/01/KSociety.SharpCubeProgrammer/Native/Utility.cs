@@ -1,25 +1,76 @@
-// Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
+//// Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
+
+#if NETSTANDARD
 
 namespace SharpCubeProgrammer.Native
 {
-    using System;
     using System.Runtime.InteropServices;
+    using System;
 
+    /// <summary>
+    /// A class containing native P/Invoke methods.  This class cannot be inherited.
+    /// </summary>
     internal static class Utility
     {
         /// <summary>
+        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
+        /// </summary>
+        /// <remarks>
+        /// Only supported on Windows Vista, 7, Server 2008 and Server 2008 R2 with KB2533623.
+        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
+        /// </remarks>
+        internal const int LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200;
+
+        /// <summary>
+        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
+        /// </summary>
+        /// <remarks>
+        /// Only supported on Windows Vista, 7, Server 2008 and Server 2008 R2 with KB2533623.
+        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
+        /// </remarks>
+        internal const int LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400;
+
+        /// <summary>
+        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
+        /// </summary>
+        /// <remarks>
+        /// Only supported on Windows Vista, 7, Server 2008 and Server 2008 R2 with KB2533623.
+        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
+        /// </remarks>
+        internal const int LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000;        
+
+        /// <summary>
         /// The name of the Windows Kernel library.
         /// </summary>
-        private const string KernelLibName = "kernel32.dll";
+        internal const string KernelLibName = "kernel32.dll";
 
+        /// <summary>
+        /// Frees a specified library.
+        /// </summary>
+        /// <param name="hModule">The handle to the module to free.</param>
+        /// <returns>Whether the library was successfully unloaded.</returns>
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+        [DllImport(KernelLibName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool FreeLibrary(IntPtr hModule);
 
-        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern IntPtr AddDllDirectory(string lpPathName);
-
-        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern bool SetDllDirectoryW(string lpPathName);
-
-        private const uint LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400;
+        /// <summary>
+        /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
+        /// </summary>
+        /// <param name="hModule">A handle to the DLL module that contains the function or variable. </param>
+        /// <param name="lpProcName">The function or variable name, or the function's ordinal value.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is the address of the exported function or variable.
+        /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
+        /// </returns>
+        /// <remarks>
+        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress</c>.
+        /// </remarks>
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+        [DllImport(KernelLibName, BestFitMapping = false, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true)]
+        internal static extern IntPtr GetProcAddress(
+            SafeLibraryHandle hModule,
+            [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
 
         /// <summary>
         /// Loads the specified module into the address space of the calling process.
@@ -33,95 +84,20 @@ namespace SharpCubeProgrammer.Native
         /// If the function fails, the return value is <see langword="null"/>.
         /// </returns>
         /// <remarks>
-        /// See <c>https://docs.microsoft.com/en-gb/windows/desktop/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
+        /// See <c>https://docs.microsoft.com/windows/desktop/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
         /// </remarks>
         [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
         [DllImport(KernelLibName, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = true)]
-        private static extern SafeLibraryHandle LoadLibraryEx(
+        internal static extern SafeLibraryHandle LoadLibraryEx(
             [MarshalAs(UnmanagedType.LPStr)] string lpFileName,
             IntPtr hFile,
             int dwFlags);
 
-        /// <summary>
-        /// Frees a specified library.
-        /// </summary>
-        /// <param name="hModule">The handle to the module to free.</param>
-        /// <returns>Whether the library was successfully unloaded.</returns>
-        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
-        [DllImport(KernelLibName)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool FreeLibrary(IntPtr hModule);
+        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern IntPtr AddDllDirectory(string newDirectory);
 
-        internal static bool AddNativeDllDirectory(string lpPathName)
-        {
-            try
-            {
-                var result = AddDllDirectory(lpPathName);
-                if (result == IntPtr.Zero)
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
-
-        internal static bool SetNativeDllDirectory(string lpPathName)
-        {
-            try
-            {
-                return SetDllDirectoryW(lpPathName);
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
-
-        internal static SafeLibraryHandle LoadNativeLibrary(string lpFileName, IntPtr hFile, int dwFlags)
-        //internal static SafeLibraryHandle LoadNativeLibrary(string lpFileName)
-        {
-            try
-            {
-                
-                 return LoadLibraryEx(lpFileName, hFile, dwFlags);
-                 //return LoadLibraryEx(lpFileName, IntPtr.Zero, 0);
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
-
-        internal static bool FreeNativeLibrary(IntPtr hModule)
-        {
-            try
-            {
-                return FreeLibrary(hModule);
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
+        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool SetDllDirectoryW(string lpPathName);
     }
 }
+#endif
