@@ -9,25 +9,18 @@ namespace SharpCubeProgrammer.Native
 
     internal static class ProgrammerApi
     {
-        //private const string ProgrammerDll32 = @".\dll\x86\Programmer.dll";
-        //private const string ProgrammerDll64 = @".\dll\x64\Programmer.dll";
-
         private const string ProgrammerDll = @"Programmer.dll";
-        //private const string ProgrammerDll64 = @"Programmer.dll";
 
         #region [STLINK]
 
         #region [TryConnectStLink]
 
         [DllImport(ProgrammerDll, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int TryConnectStLink32(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "TryConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int TryConnectStLink64(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+        private static extern int TryConnectStLinkC(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
 
         private static int TryConnectStLinkNative(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
         {
-            return TryConnectStLink32(stLinkProbeIndex, shared, debugConnectMode);
+            return TryConnectStLinkC(stLinkProbeIndex, shared, debugConnectMode);
         }
 
         internal static int TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
@@ -51,14 +44,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetStLinkList]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int GetStLinkList32(ref IntPtr stLinkList, int shared);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetStLinkList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int GetStLinkList64(ref IntPtr stLinkList, int shared);
+        private static extern int GetStLinkListC(ref IntPtr stLinkList, int shared);
 
         private static int GetStLinkListNative(ref IntPtr stLinkList, int shared)
         {
-            return GetStLinkList32(ref stLinkList, shared);
+            return GetStLinkListC(ref stLinkList, shared);
         }
 
         internal static int GetStLinkList(ref IntPtr stLinkList, int shared)
@@ -82,14 +72,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetStLinkEnumerationList]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetStLinkEnumerationList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int GetStLinkEnumerationList32(ref IntPtr stLinkList, int shared);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetStLinkEnumerationList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int GetStLinkEnumerationList64(ref IntPtr stLinkList, int shared);
+        private static extern int GetStLinkEnumerationListC(ref IntPtr stLinkList, int shared);
 
         private static int GetStLinkEnumerationListNative(ref IntPtr stLinkList, int shared)
         {
-            return GetStLinkEnumerationList32(ref stLinkList, shared);
+            return GetStLinkEnumerationListC(ref stLinkList, shared);
         }
 
         internal static int GetStLinkEnumerationList(ref IntPtr stLinkList, int shared)
@@ -113,14 +100,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectStLink]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectStLink32(DebugConnectParameters debugParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectStLink", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int ConnectStLink64(DebugConnectParameters debugParameters);
+        private static extern int ConnectStLinkC(DebugConnectParameters debugParameters);
 
         private static int ConnectStLinkNative(DebugConnectParameters debugParameters)
         {
-            return ConnectStLink32(debugParameters);
+            return ConnectStLinkC(debugParameters);
         }
 
         internal static int ConnectStLink(DebugConnectParameters debugParameters)
@@ -144,14 +128,11 @@ namespace SharpCubeProgrammer.Native
         #region [Reset]
 
         [DllImport(ProgrammerDll, EntryPoint = "Reset", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int Reset32([MarshalAs(UnmanagedType.U4)] DebugResetMode rstMode);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "Reset", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int Reset64([MarshalAs(UnmanagedType.U4)] DebugResetMode rstMode);
+        private static extern int ResetC([MarshalAs(UnmanagedType.U4)] DebugResetMode rstMode);
 
         private static int ResetNative(DebugResetMode rstMode)
         {
-            return Reset32(rstMode);
+            return ResetC(rstMode);
         }
 
         internal static int Reset(DebugResetMode rstMode)
@@ -179,14 +160,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetUsartList]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetUsartList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUsartList32(ref IntPtr usartList);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetUsartList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetUsartList64(ref IntPtr usartList);
+        private static extern int GetUsartListC(ref IntPtr usartList);
 
         private static int GetUsartListNative(ref IntPtr usartList)
         {
-            return GetUsartList32(ref usartList);
+            return GetUsartListC(ref usartList);
         }
 
         internal static int GetUsartList(ref IntPtr usartList)
@@ -210,14 +188,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectUsartBootloader]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectUsartBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectUsartBootloader32(UsartConnectParameters usartParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectUsartBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int ConnectUsartBootloader64(UsartConnectParameters usartParameters);
+        private static extern int ConnectUsartBootloaderC(UsartConnectParameters usartParameters);
 
         private static int ConnectUsartBootloaderNative(UsartConnectParameters usartParameters)
         {
-            return ConnectUsartBootloader32(usartParameters);
+            return ConnectUsartBootloaderC(usartParameters);
         }
 
         internal static int ConnectUsartBootloader(UsartConnectParameters usartParameters)
@@ -241,14 +216,11 @@ namespace SharpCubeProgrammer.Native
         #region [SendByteUart]
 
         [DllImport(ProgrammerDll, EntryPoint = "SendByteUart", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int SendByteUart32(int bytes);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SendByteUart", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int SendByteUart64(int bytes);
+        private static extern int SendByteUartC(int bytes);
 
         private static int SendByteUartNative(int bytes)
         {
-            return SendByteUart32(bytes);
+            return SendByteUartC(bytes);
         }
 
         internal static int SendByteUart(int bytes)
@@ -272,14 +244,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetDfuDeviceList]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetDfuDeviceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetDfuDeviceList32(ref IntPtr dfuList, int iPID, int iVID);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetDfuDeviceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetDfuDeviceList64(ref IntPtr dfuList, int iPID, int iVID);
+        private static extern int GetDfuDeviceListC(ref IntPtr dfuList, int iPID, int iVID);
 
         private static int GetDfuDeviceListNative(ref IntPtr dfuList, int iPID, int iVID)
         {
-            return GetDfuDeviceList32(ref dfuList, iPID, iVID);
+            return GetDfuDeviceListC(ref dfuList, iPID, iVID);
         }
 
         internal static int GetDfuDeviceList(ref IntPtr dfuList, int iPID, int iVID)
@@ -303,14 +272,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectDfuBootloader]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ConnectDfuBootloader32(IntPtr usbIndex);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int ConnectDfuBootloader64(IntPtr usbIndex);
+        private static extern int ConnectDfuBootloaderC(IntPtr usbIndex);
 
         private static int ConnectDfuBootloaderNative(IntPtr usbIndex)
         {
-            return ConnectDfuBootloader32(usbIndex);
+            return ConnectDfuBootloaderC(usbIndex);
         }
 
         internal static int ConnectDfuBootloader(string usbIndex)
@@ -349,14 +315,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectDfuBootloader2]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectDfuBootloader2", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectDfuBootloader232(DfuConnectParameters dfuParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectDfuBootloader2", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ConnectDfuBootloader264(DfuConnectParameters dfuParameters);
+        private static extern int ConnectDfuBootloader2C(DfuConnectParameters dfuParameters);
 
         private static int ConnectDfuBootloader2Native(DfuConnectParameters dfuParameters)
         {
-            return ConnectDfuBootloader232(dfuParameters);
+            return ConnectDfuBootloader2C(dfuParameters);
         }
 
         internal static int ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
@@ -380,14 +343,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectSpiBootloader]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectSpiBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectSpiBootloader32(SpiConnectParameters spiParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectSpiBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ConnectSpiBootloader64(SpiConnectParameters spiParameters);
+        private static extern int ConnectSpiBootloaderC(SpiConnectParameters spiParameters);
 
         private static int ConnectSpiBootloaderNative(SpiConnectParameters spiParameters)
         {
-            return ConnectSpiBootloader32(spiParameters);
+            return ConnectSpiBootloaderC(spiParameters);
         }
 
         internal static int ConnectSpiBootloader(SpiConnectParameters spiParameters)
@@ -411,14 +371,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectCanBootloader]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectCanBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectCanBootloader32(CanConnectParameters canParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectCanBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ConnectCanBootloader64(CanConnectParameters canParameters);
+        private static extern int ConnectCanBootloaderC(CanConnectParameters canParameters);
 
         private static int ConnectCanBootloaderNative(CanConnectParameters canParameters)
         {
-            return ConnectCanBootloader32(canParameters);
+            return ConnectCanBootloaderC(canParameters);
         }
 
         internal static int ConnectCanBootloader(CanConnectParameters canParameters)
@@ -442,14 +399,11 @@ namespace SharpCubeProgrammer.Native
         #region [ConnectI2cBootloader]
 
         [DllImport(ProgrammerDll, EntryPoint = "ConnectI2cBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ConnectI2cBootloader32(I2CConnectParameters i2cParameters);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ConnectI2cBootloader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ConnectI2cBootloader64(I2CConnectParameters i2cParameters);
+        private static extern int ConnectI2cBootloaderC(I2CConnectParameters i2cParameters);
 
         private static int ConnectI2cBootloaderNative(I2CConnectParameters i2cParameters)
         {
-            return ConnectI2cBootloader32(i2cParameters);
+            return ConnectI2cBootloaderC(i2cParameters);
         }
 
         internal static int ConnectI2cBootloader(I2CConnectParameters i2cParameters)
@@ -477,14 +431,11 @@ namespace SharpCubeProgrammer.Native
         #region [SetDisplayCallbacks]
 
         [DllImport(ProgrammerDll, EntryPoint = "SetDisplayCallbacks", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void SetDisplayCallbacks32(DisplayCallBacks c);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SetDisplayCallbacks", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void SetDisplayCallbacks64(DisplayCallBacks c);
+        private static extern void SetDisplayCallbacksC(DisplayCallBacks c);
 
         private static void SetDisplayCallbacksNative(DisplayCallBacks c)
         {
-            SetDisplayCallbacks32(c);
+            SetDisplayCallbacksC(c);
         }
 
         internal static void SetDisplayCallbacks(DisplayCallBacks c)
@@ -508,14 +459,11 @@ namespace SharpCubeProgrammer.Native
         #region [SetVerbosityLevel]
 
         [DllImport(ProgrammerDll, EntryPoint = "SetVerbosityLevel", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void SetVerbosityLevel32(int level);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SetVerbosityLevel", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void SetVerbosityLevel64(int level);
+        private static extern void SetVerbosityLevelC(int level);
 
         private static void SetVerbosityLevelNative(int level)
         {
-            SetVerbosityLevel32(level);
+            SetVerbosityLevelC(level);
         }
 
         internal static void SetVerbosityLevel(int level)
@@ -539,14 +487,11 @@ namespace SharpCubeProgrammer.Native
         #region [CheckDeviceConnection]
 
         [DllImport(ProgrammerDll, EntryPoint = "CheckDeviceConnection", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern bool CheckDeviceConnection32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "CheckDeviceConnection", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern bool CheckDeviceConnection64();
+        private static extern bool CheckDeviceConnectionC();
 
         private static bool CheckDeviceConnectionNative()
         {
-            return CheckDeviceConnection32();
+            return CheckDeviceConnectionC();
         }
 
         internal static bool CheckDeviceConnection()
@@ -570,14 +515,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetDeviceGeneralInf]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr GetDeviceGeneralInf32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern IntPtr GetDeviceGeneralInf64();
+        private static extern IntPtr GetDeviceGeneralInfC();
 
         private static IntPtr GetDeviceGeneralInfNative()
         {
-            return GetDeviceGeneralInf32();
+            return GetDeviceGeneralInfC();
         }
 
         internal static IntPtr GetDeviceGeneralInf()
@@ -601,14 +543,11 @@ namespace SharpCubeProgrammer.Native
         #region [ReadMemory]
 
         [DllImport(ProgrammerDll, EntryPoint = "ReadMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ReadMemory32(uint address, ref IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ReadMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ReadMemory64(uint address, ref IntPtr data, uint size);
+        private static extern int ReadMemoryC(uint address, ref IntPtr data, uint size);
 
         private static int ReadMemoryNative(uint address, ref IntPtr data, uint size)
         {
-            return ReadMemory32(address, ref data, size);
+            return ReadMemoryC(address, ref data, size);
         }
 
         internal static int ReadMemory(uint address, ref IntPtr data, uint size)
@@ -632,14 +571,11 @@ namespace SharpCubeProgrammer.Native
         #region [WriteMemory]
 
         [DllImport(ProgrammerDll, EntryPoint = "WriteMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int WriteMemory32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemory64(uint address, IntPtr data, uint size);
+        private static extern int WriteMemoryC(uint address, IntPtr data, uint size);
 
         private static int WriteMemoryNative(uint address, IntPtr data, uint size)
         {
-            return WriteMemory32(address, data, size);
+            return WriteMemoryC(address, data, size);
         }
 
         internal static int WriteMemory(uint address, IntPtr data, uint size)
@@ -663,14 +599,11 @@ namespace SharpCubeProgrammer.Native
         #region [WriteMemoryAutoFill]
 
         [DllImport(ProgrammerDll, EntryPoint = "WriteMemoryAutoFill", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int WriteMemoryAutoFill32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryAutoFill", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryAutoFill64(uint address, IntPtr data, uint size);
+        private static extern int WriteMemoryAutoFillC(uint address, IntPtr data, uint size);
 
         private static int WriteMemoryAutoFillNative(uint address, IntPtr data, uint size)
         {
-            return WriteMemoryAutoFill32(address, data, size);
+            return WriteMemoryAutoFillC(address, data, size);
         }
 
         internal static int WriteMemoryAutoFill(uint address, IntPtr data, uint size)
@@ -694,14 +627,11 @@ namespace SharpCubeProgrammer.Native
         #region [WriteMemoryAndVerify]
 
         [DllImport(ProgrammerDll, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int WriteMemoryAndVerify32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteMemoryAndVerify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int WriteMemoryAndVerify64(uint address, IntPtr data, uint size);
+        private static extern int WriteMemoryAndVerifyC(uint address, IntPtr data, uint size);
 
         private static int WriteMemoryAndVerifyNative(uint address, IntPtr data, uint size)
         {
-            return WriteMemoryAndVerify32(address, data, size);
+            return WriteMemoryAndVerifyC(address, data, size);
         }
 
         internal static int WriteMemoryAndVerify(uint address, IntPtr data, uint size)
@@ -725,14 +655,11 @@ namespace SharpCubeProgrammer.Native
         #region [EditSector]
 
         [DllImport(ProgrammerDll, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int EditSector32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "EditSector", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int EditSector64(uint address, IntPtr data, uint size);
+        private static extern int EditSectorC(uint address, IntPtr data, uint size);
 
         private static int EditSectorNative(uint address, IntPtr data, uint size)
         {
-            return EditSector32(address, data, size);
+            return EditSectorC(address, data, size);
         }
 
         internal static int EditSector(uint address, IntPtr data, uint size)
@@ -756,14 +683,11 @@ namespace SharpCubeProgrammer.Native
         #region [DownloadFile]
 
         [DllImport(ProgrammerDll, EntryPoint = "DownloadFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int DownloadFile32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "DownloadFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int DownloadFile64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
+        private static extern int DownloadFileC([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
 
         private static int DownloadFileNative(string filePath, uint address, uint skipErase, uint verify, string binPath)
         {
-            return DownloadFile32(filePath, address, skipErase, verify, binPath);
+            return DownloadFileC(filePath, address, skipErase, verify, binPath);
         }
 
         internal static int DownloadFile(string filePath, uint address, uint skipErase, uint verify, string binPath)
@@ -787,14 +711,11 @@ namespace SharpCubeProgrammer.Native
         #region [Execute]
 
         [DllImport(ProgrammerDll, EntryPoint = "Execute", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int Execute32(uint address);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "Execute", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int Execute64(uint address);
+        private static extern int ExecuteC(uint address);
 
         private static int ExecuteNative(uint address)
         {
-            return Execute32(address);
+            return ExecuteC(address);
         }
 
         internal static int Execute(uint address)
@@ -818,14 +739,11 @@ namespace SharpCubeProgrammer.Native
         #region [MassErase]
 
         [DllImport(ProgrammerDll, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int MassErase32(IntPtr sFlashMemName);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "MassErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int MassErase64(IntPtr sFlashMemName);
+        private static extern int MassEraseC(IntPtr sFlashMemName);
 
         private static int MassEraseNative(IntPtr sFlashMemName)
         {
-            return MassErase32(sFlashMemName);
+            return MassEraseC(sFlashMemName);
         }
 
         internal static int MassErase(string sFlashMemName)
@@ -864,14 +782,11 @@ namespace SharpCubeProgrammer.Native
         #region [SectorErase]
 
         [DllImport(ProgrammerDll, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SectorErase32(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SectorErase", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int SectorErase64(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName);
+        private static extern int SectorEraseC(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName);
 
         private static int SectorEraseNative(uint[] sectors, uint sectorNbr, IntPtr sFlashMemName)
         {
-            return SectorErase32(sectors, sectorNbr, sFlashMemName);
+            return SectorEraseC(sectors, sectorNbr, sFlashMemName);
         }
 
         internal static int SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName)
@@ -910,14 +825,11 @@ namespace SharpCubeProgrammer.Native
         #region [ReadUnprotect]
 
         [DllImport(ProgrammerDll, EntryPoint = "ReadUnprotect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ReadUnprotect32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ReadUnprotect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ReadUnprotect64();
+        private static extern int ReadUnprotectC();
 
         private static int ReadUnprotectNative()
         {
-            return ReadUnprotect32();
+            return ReadUnprotectC();
         }
 
         internal static int ReadUnprotect()
@@ -941,14 +853,11 @@ namespace SharpCubeProgrammer.Native
         #region [TzenRegression]
 
         [DllImport(ProgrammerDll, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int TzenRegression32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "TzenRegression", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int TzenRegression64();
+        private static extern int TzenRegressionC();
 
         private static int TzenRegressionNative()
         {
-            return TzenRegression32();
+            return TzenRegressionC();
         }
 
         internal static int TzenRegression()
@@ -972,14 +881,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetTargetInterfaceType]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetTargetInterfaceType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetTargetInterfaceType32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetTargetInterfaceType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetTargetInterfaceType64();
+        private static extern int GetTargetInterfaceTypeC();
 
         private static int GetTargetInterfaceTypeNative()
         {
-            return GetTargetInterfaceType32();
+            return GetTargetInterfaceTypeC();
         }
 
         internal static int GetTargetInterfaceType()
@@ -1003,14 +909,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetCancelPointer]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetCancelPointer32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetCancelPointer", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetCancelPointer64();
+        private static extern int GetCancelPointerC();
 
         private static int GetCancelPointerNative()
         {
-            return GetCancelPointer32();
+            return GetCancelPointerC();
         }
 
         internal static int GetCancelPointer()
@@ -1034,14 +937,11 @@ namespace SharpCubeProgrammer.Native
         #region [FileOpen]
 
         [DllImport(ProgrammerDll, EntryPoint = "FileOpen", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern IntPtr FileOpen32([MarshalAs(UnmanagedType.LPWStr)] string filePath);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FileOpen", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern IntPtr FileOpen64([MarshalAs(UnmanagedType.LPWStr)] string filePath);
+        private static extern IntPtr FileOpenC([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
         private static IntPtr FileOpenNative(string filePath)
         {
-            return FileOpen32(filePath);
+            return FileOpenC(filePath);
         }
 
         internal static IntPtr FileOpen(string filePath)
@@ -1065,14 +965,11 @@ namespace SharpCubeProgrammer.Native
         #region [FreeFileData]
 
         [DllImport(ProgrammerDll, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void FreeFileData32(IntPtr data);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FreeFileData", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void FreeFileData64(IntPtr data);
+        private static extern void FreeFileDataC(IntPtr data);
 
         private static void FreeFileDataNative(IntPtr data)
         {
-            FreeFileData32(data);
+            FreeFileDataC(data);
         }
 
         internal static void FreeFileData(IntPtr data)
@@ -1096,14 +993,11 @@ namespace SharpCubeProgrammer.Native
         #region [FreeLibraryMemory]
 
         [DllImport(ProgrammerDll, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void FreeLibraryMemory32(IntPtr ptr);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FreeLibraryMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void FreeLibraryMemory64(IntPtr ptr);
+        private static extern void FreeLibraryMemoryC(IntPtr ptr);
 
         private static void FreeLibraryMemoryNative(IntPtr ptr)
         {
-            FreeLibraryMemory32(ptr);
+            FreeLibraryMemoryC(ptr);
         }
 
         internal static void FreeLibraryMemory(IntPtr ptr)
@@ -1127,14 +1021,11 @@ namespace SharpCubeProgrammer.Native
         #region [Verify]
 
         [DllImport(ProgrammerDll, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int Verify32(IntPtr fileData, uint address);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "Verify", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int Verify64(IntPtr fileData, uint address);
+        private static extern int VerifyC(IntPtr fileData, uint address);
 
         private static int VerifyNative(IntPtr fileData, uint address)
         {
-            return Verify32(fileData, address);
+            return VerifyC(fileData, address);
         }
 
         internal static int Verify(IntPtr fileData, uint address)
@@ -1158,14 +1049,11 @@ namespace SharpCubeProgrammer.Native
         #region [VerifyMemory]
 
         [DllImport(ProgrammerDll, EntryPoint = "VerifyMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int VerifyMemory32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "VerifyMemory", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int VerifyMemory64(uint address, IntPtr data, uint size);
+        private static extern int VerifyMemoryC(uint address, IntPtr data, uint size);
 
         private static int VerifyMemoryNative(uint address, IntPtr data, uint size)
         {
-            return VerifyMemory32(address, data, size);
+            return VerifyMemoryC(address, data, size);
         }
 
         internal static int VerifyMemory(uint address, IntPtr data, uint size)
@@ -1189,14 +1077,11 @@ namespace SharpCubeProgrammer.Native
         #region [VerifyMemoryBySegment]
 
         [DllImport(ProgrammerDll, EntryPoint = "VerifyMemoryBySegment", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int VerifyMemoryBySegment32(uint address, IntPtr data, uint size);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "VerifyMemoryBySegment", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int VerifyMemoryBySegment64(uint address, IntPtr data, uint size);
+        private static extern int VerifyMemoryBySegmentC(uint address, IntPtr data, uint size);
 
         private static int VerifyMemoryBySegmentNative(uint address, IntPtr data, uint size)
         {
-            return VerifyMemoryBySegment32(address, data, size);
+            return VerifyMemoryBySegmentC(address, data, size);
         }
 
         internal static int VerifyMemoryBySegment(uint address, IntPtr data, uint size)
@@ -1220,14 +1105,11 @@ namespace SharpCubeProgrammer.Native
         #region [SaveFileToFile]
 
         [DllImport(ProgrammerDll, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SaveFileToFile32(IntPtr fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SaveFileToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int SaveFileToFile64(IntPtr fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
+        private static extern int SaveFileToFileC(IntPtr fileData, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         private static int SaveFileToFileNative(IntPtr fileData, string sFileName)
         {
-            return SaveFileToFile32(fileData, sFileName);
+            return SaveFileToFileC(fileData, sFileName);
         }
 
         internal static int SaveFileToFile(IntPtr fileData, string sFileName)
@@ -1251,14 +1133,11 @@ namespace SharpCubeProgrammer.Native
         #region [SaveMemoryToFile]
 
         [DllImport(ProgrammerDll, EntryPoint = "SaveMemoryToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SaveMemoryToFile32(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SaveMemoryToFile", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int SaveMemoryToFile64(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
+        private static extern int SaveMemoryToFileC(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         private static int SaveMemoryToFileNative(int address, int size, string sFileName)
         {
-            return SaveMemoryToFile32(address, size, sFileName);
+            return SaveMemoryToFileC(address, size, sFileName);
         }
 
         internal static int SaveMemoryToFile(int address, int size, string sFileName)
@@ -1282,14 +1161,11 @@ namespace SharpCubeProgrammer.Native
         #region [Disconnect]
 
         [DllImport(ProgrammerDll, EntryPoint = "Disconnect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int Disconnect32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "Disconnect", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int Disconnect64();
+        private static extern int DisconnectC();
 
         private static int DisconnectNative()
         {
-            return Disconnect32();
+            return DisconnectC();
         }
 
         internal static int Disconnect()
@@ -1313,14 +1189,11 @@ namespace SharpCubeProgrammer.Native
         #region [DeleteInterfaceList]
 
         [DllImport(ProgrammerDll, EntryPoint = "DeleteInterfaceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void DeleteInterfaceList32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "DeleteInterfaceList", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void DeleteInterfaceList64();
+        private static extern void DeleteInterfaceListC();
 
         private static void DeleteInterfaceListNative()
         {
-            DeleteInterfaceList32();
+            DeleteInterfaceListC();
         }
 
         internal static void DeleteInterfaceList()
@@ -1344,14 +1217,11 @@ namespace SharpCubeProgrammer.Native
         #region [AutomaticMode]
 
         [DllImport(ProgrammerDll, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void AutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "AutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void AutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run);
+        private static extern void AutomaticModeC([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run);
 
         private static void AutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run)
         {
-            AutomaticMode32(filePath, address, skipErase, verify, isMassErase, obCommand, run);
+            AutomaticModeC(filePath, address, skipErase, verify, isMassErase, obCommand, run);
         }
 
         internal static void AutomaticMode(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run)
@@ -1389,14 +1259,11 @@ namespace SharpCubeProgrammer.Native
         #region [SerialNumberingAutomaticMode]
 
         [DllImport(ProgrammerDll, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SerialNumberingAutomaticMode32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SerialNumberingAutomaticMode", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void SerialNumberingAutomaticMode64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
+        private static extern void SerialNumberingAutomaticModeC([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData);
 
         private static void SerialNumberingAutomaticModeNative(string filePath, uint address, uint skipErase, uint verify, int isMassErase, IntPtr obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
         {
-            SerialNumberingAutomaticMode32(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+            SerialNumberingAutomaticModeC(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
         }
 
         internal static void SerialNumberingAutomaticMode(string filePath, uint address, uint skipErase, uint verify, int isMassErase, string obCommand, int run, int enableSerialNumbering, int serialAddress, int serialSize, string serialInitialData)
@@ -1435,14 +1302,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetStorageStructure]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetStorageStructure", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetStorageStructure32(ref IntPtr deviceStorageStruct);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetStorageStructure", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetStorageStructure64(ref IntPtr deviceStorageStruct);
+        private static extern int GetStorageStructureC(ref IntPtr deviceStorageStruct);
 
         private static int GetStorageStructureNative(ref IntPtr deviceStorageStruct)
         {
-            return GetStorageStructure32(ref deviceStorageStruct);
+            return GetStorageStructureC(ref deviceStorageStruct);
         }
 
         internal static int GetStorageStructure(ref IntPtr deviceStorageStruct)
@@ -1470,14 +1334,11 @@ namespace SharpCubeProgrammer.Native
         #region [SendOptionBytesCmd]
 
         [DllImport(ProgrammerDll, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int SendOptionBytesCmd32(IntPtr command);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SendOptionBytesCmd", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int SendOptionBytesCmd64(IntPtr command);
+        private static extern int SendOptionBytesCmdC(IntPtr command);
 
         private static int SendOptionBytesCmdNative(IntPtr command)
         { 
-            return SendOptionBytesCmd32(command);
+            return SendOptionBytesCmdC(command);
         }
 
         internal static int SendOptionBytesCmd(string command)
@@ -1516,14 +1377,11 @@ namespace SharpCubeProgrammer.Native
         #region [InitOptionBytesInterface]
 
         [DllImport(ProgrammerDll, EntryPoint = "InitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr InitOptionBytesInterface32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "InitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern IntPtr InitOptionBytesInterface64();
+        private static extern IntPtr InitOptionBytesInterfaceC();
 
         private static IntPtr InitOptionBytesInterfaceNative()
         {
-            return InitOptionBytesInterface32();
+            return InitOptionBytesInterfaceC();
         }
 
         internal static IntPtr InitOptionBytesInterface()
@@ -1547,14 +1405,11 @@ namespace SharpCubeProgrammer.Native
         #region [FastRomInitOptionBytesInterface]
 
         [DllImport(ProgrammerDll, EntryPoint = "FastRomInitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr FastRomInitOptionBytesInterface32(ushort deviceId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FastRomInitOptionBytesInterface", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern IntPtr FastRomInitOptionBytesInterface64(ushort deviceId);
+        private static extern IntPtr FastRomInitOptionBytesInterfaceC(ushort deviceId);
 
         private static IntPtr FastRomInitOptionBytesInterfaceNative(ushort deviceId)
         {
-            return FastRomInitOptionBytesInterface32(deviceId);
+            return FastRomInitOptionBytesInterfaceC(deviceId);
         }
 
         internal static IntPtr FastRomInitOptionBytesInterface(ushort deviceId)
@@ -1578,14 +1433,11 @@ namespace SharpCubeProgrammer.Native
         #region [ObDisplay]
 
         [DllImport(ProgrammerDll, EntryPoint = "ObDisplay", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int ObDisplay32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ObDisplay", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int ObDisplay64();
+        private static extern int ObDisplayC();
 
         private static int ObDisplayNative()
         {
-            return ObDisplay32();
+            return ObDisplayC();
         }
 
         internal static int ObDisplay()
@@ -1613,14 +1465,11 @@ namespace SharpCubeProgrammer.Native
         #region [SetLoadersPath]
 
         [DllImport(ProgrammerDll, EntryPoint = "SetLoadersPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SetLoadersPath32(string path);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SetLoadersPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void SetLoadersPath64(string path);
+        private static extern void SetLoadersPathC(string path);
 
         private static void SetLoadersPathNative(string path)
         {
-            SetLoadersPath32(path);
+            SetLoadersPathC(path);
         }
 
         internal static void SetLoadersPath(string path)
@@ -1644,14 +1493,11 @@ namespace SharpCubeProgrammer.Native
         #region [SetExternalLoaderPath]
 
         [DllImport(ProgrammerDll, EntryPoint = "SetExternalLoaderPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SetExternalLoaderPath32(string path, ref IntPtr externalLoaderInfo);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderPath", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void SetExternalLoaderPath64(string path, ref IntPtr externalLoaderInfo);
+        private static extern void SetExternalLoaderPathC(string path, ref IntPtr externalLoaderInfo);
 
         private static void SetExternalLoaderPathNative(string path, ref IntPtr externalLoaderInfo)
         {
-            SetExternalLoaderPath32(path, ref externalLoaderInfo);
+            SetExternalLoaderPathC(path, ref externalLoaderInfo);
         }
 
         internal static void SetExternalLoaderPath(string path, ref IntPtr externalLoaderInfo)
@@ -1675,14 +1521,11 @@ namespace SharpCubeProgrammer.Native
         #region [SetExternalLoaderOBL]
 
         [DllImport(ProgrammerDll, EntryPoint = "SetExternalLoaderOBL", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void SetExternalLoaderOBL32(string path, ref IntPtr externalLoaderInfo);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "SetExternalLoaderOBL", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void SetExternalLoaderOBL64(string path, ref IntPtr externalLoaderInfo);
+        private static extern void SetExternalLoaderOBLC(string path, ref IntPtr externalLoaderInfo);
 
         private static void SetExternalLoaderOBLNative(string path, ref IntPtr externalLoaderInfo)
         {
-            SetExternalLoaderOBL32(path, ref externalLoaderInfo);
+            SetExternalLoaderOBLC(path, ref externalLoaderInfo);
         }
 
         internal static void SetExternalLoaderOBL(string path, ref IntPtr externalLoaderInfo)
@@ -1706,14 +1549,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetExternalLoaders]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetExternalLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int GetExternalLoaders32(string path, ref IntPtr externalStorageNfo);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetExternalLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int GetExternalLoaders64(string path, ref IntPtr externalStorageNfo);
+        private static extern int GetExternalLoadersC(string path, ref IntPtr externalStorageNfo);
 
         private static int GetExternalLoadersNative(string path, ref IntPtr externalStorageNfo)
         {
-            return GetExternalLoaders32(path, ref externalStorageNfo);
+            return GetExternalLoadersC(path, ref externalStorageNfo);
         }
 
         internal static int GetExternalLoaders(string path, ref IntPtr externalStorageNfo)
@@ -1737,14 +1577,11 @@ namespace SharpCubeProgrammer.Native
         #region [RemoveExternalLoader]
 
         [DllImport(ProgrammerDll, EntryPoint = "RemoveExternalLoader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern void RemoveExternalLoader32(string path);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "RemoveExternalLoader", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern void RemoveExternalLoader64(string path);
+        private static extern void RemoveExternalLoaderC(string path);
 
         private static void RemoveExternalLoaderNative(string path)
         {
-            RemoveExternalLoader32(path);
+            RemoveExternalLoaderC(path);
         }
 
         internal static void RemoveExternalLoader(string path)
@@ -1768,14 +1605,11 @@ namespace SharpCubeProgrammer.Native
         #region [DeleteLoaders]
 
         [DllImport(ProgrammerDll, EntryPoint = "DeleteLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern void DeleteLoaders32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "DeleteLoaders", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern void DeleteLoaders64();
+        private static extern void DeleteLoadersC();
 
         private static void DeleteLoadersNative()
         {
-            DeleteLoaders32();
+            DeleteLoadersC();
         }
 
         internal static void DeleteLoaders()
@@ -1798,19 +1632,16 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
-        #region [STM32WB specific]
+        #region [STMCWB specific]
 
         #region [GetUID64]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetUID64", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int GetUID6432(ref IntPtr data);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetUID64", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int GetUID6464(ref IntPtr data);
+        private static extern int GetUID64C(ref IntPtr data);
 
         private static int GetUID64Native(ref IntPtr data)
         {
-            return GetUID6432(ref data);
+            return GetUID64C(ref data);
         }
 
         internal static int GetUID64(ref IntPtr data)
@@ -1834,14 +1665,11 @@ namespace SharpCubeProgrammer.Native
         #region [FirmwareDelete]
 
         [DllImport(ProgrammerDll, EntryPoint = "FirmwareDelete", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int FirmwareDelete32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FirmwareDelete", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int FirmwareDelete64();
+        private static extern int FirmwareDeleteC();
 
         private static int FirmwareDeleteNative()
         {
-            return FirmwareDelete32();
+            return FirmwareDeleteC();
         }
 
         internal static int FirmwareDelete()
@@ -1865,14 +1693,11 @@ namespace SharpCubeProgrammer.Native
         #region [FirmwareUpgrade]
 
         [DllImport(ProgrammerDll, EntryPoint = "FirmwareUpgrade", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int FirmwareUpgrade32([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "FirmwareUpgrade", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int FirmwareUpgrade64([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
+        private static extern int FirmwareUpgradeC([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
 
         private static int FirmwareUpgradeNative(string filePath, uint address, uint firstInstall, uint startStack, uint verify)
         {
-            return FirmwareUpgrade32(filePath, address, firstInstall, startStack, verify);
+            return FirmwareUpgradeC(filePath, address, firstInstall, startStack, verify);
         }
 
         internal static int FirmwareUpgrade(string filePath, uint address, uint firstInstall, uint startStack, uint verify)
@@ -1896,14 +1721,11 @@ namespace SharpCubeProgrammer.Native
         #region [StartWirelessStack]
 
         [DllImport(ProgrammerDll, EntryPoint = "StartWirelessStack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int StartWirelessStack32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "StartWirelessStack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int StartWirelessStack64();
+        private static extern int StartWirelessStackC();
 
         private static int StartWirelessStackNative()
         {
-            return StartWirelessStack32();
+            return StartWirelessStackC();
         }
 
         internal static int StartWirelessStack()
@@ -1927,14 +1749,11 @@ namespace SharpCubeProgrammer.Native
         #region [UpdateAuthKey]
 
         [DllImport(ProgrammerDll, EntryPoint = "UpdateAuthKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int UpdateAuthKey32([MarshalAs(UnmanagedType.LPWStr)] string filePath);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "UpdateAuthKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int UpdateAuthKey64([MarshalAs(UnmanagedType.LPWStr)] string filePath);
+        private static extern int UpdateAuthKeyC([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
         private static int UpdateAuthKeyNative(string filePath)
         {
-            return UpdateAuthKey32(filePath);
+            return UpdateAuthKeyC(filePath);
         }
 
         internal static int UpdateAuthKey(string filePath)
@@ -1958,14 +1777,11 @@ namespace SharpCubeProgrammer.Native
         #region [AuthKeyLock]
 
         [DllImport(ProgrammerDll, EntryPoint = "AuthKeyLock", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int AuthKeyLock32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "AuthKeyLock", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int AuthKeyLock64();
+        private static extern int AuthKeyLockC();
 
         private static int AuthKeyLockNative()
         {
-            return AuthKeyLock32();
+            return AuthKeyLockC();
         }
 
         internal static int AuthKeyLock()
@@ -1989,14 +1805,11 @@ namespace SharpCubeProgrammer.Native
         #region [WriteUserKey]
 
         [DllImport(ProgrammerDll, EntryPoint = "WriteUserKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int WriteUserKey32([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "WriteUserKey", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int WriteUserKey64([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
+        private static extern int WriteUserKeyC([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
 
         private static int WriteUserKeyNative(string filePath, byte keyType)
         {
-            return WriteUserKey32(filePath, keyType);
+            return WriteUserKeyC(filePath, keyType);
         }
 
         internal static int WriteUserKey(string filePath, byte keyType)
@@ -2020,14 +1833,11 @@ namespace SharpCubeProgrammer.Native
         #region [AntiRollBack]
 
         [DllImport(ProgrammerDll, EntryPoint = "AntiRollBack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int AntiRollBack32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "AntiRollBack", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int AntiRollBack64();
+        private static extern int AntiRollBackC();
 
         private static int AntiRollBackNative()
         {
-            return AntiRollBack32();
+            return AntiRollBackC();
         }
 
         internal static int AntiRollBack()
@@ -2051,14 +1861,11 @@ namespace SharpCubeProgrammer.Native
         #region [StartFus]
 
         [DllImport(ProgrammerDll, EntryPoint = "StartFus", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int StartFus32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "StartFus", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int StartFus64();
+        private static extern int StartFusC();
 
         private static int StartFusNative()
         {
-            return StartFus32();
+            return StartFusC();
         }
 
         internal static int StartFus()
@@ -2082,14 +1889,11 @@ namespace SharpCubeProgrammer.Native
         #region [UnlockChip]
 
         [DllImport(ProgrammerDll, EntryPoint = "UnlockChip", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern int UnlockChip32();
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "UnlockChip", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern int UnlockChip64();
+        private static extern int UnlockChipC();
 
         private static int UnlockChipNative()
         {
-            return UnlockChip32();
+            return UnlockChipC();
         }
 
         internal static int UnlockChip()
@@ -2112,19 +1916,16 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
-        #region [STM32MP specific functions]
+        #region [STMCMP specific functions]
 
         #region [ProgramSsp]
 
         [DllImport(ProgrammerDll, EntryPoint = "ProgramSsp", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int ProgramSsp32([MarshalAs(UnmanagedType.LPWStr)] string sspFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string tfaFile, int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "ProgramSsp", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int ProgramSsp64([MarshalAs(UnmanagedType.LPWStr)] string sspFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string tfaFile, int hsmSlotId);
+        private static extern int ProgramSspC([MarshalAs(UnmanagedType.LPWStr)] string sspFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string tfaFile, int hsmSlotId);
 
         private static int ProgramSspNative(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
         {
-            return ProgramSsp32(sspFile, licenseFile, tfaFile, hsmSlotId);
+            return ProgramSspC(sspFile, licenseFile, tfaFile, hsmSlotId);
         }
 
         internal static int ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
@@ -2147,19 +1948,16 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
-        #region [STM32 HSM specific functions]
+        #region [STMC HSM specific functions]
 
         #region [GetHsmFirmwareID]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmFirmwareID", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern string GetHsmFirmwareID32(int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmFirmwareID", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern string GetHsmFirmwareID64(int hsmSlotId);
+        private static extern string GetHsmFirmwareIDC(int hsmSlotId);
 
         private static string GetHsmFirmwareIDNative(int hsmSlotId)
         {
-            return GetHsmFirmwareID32(hsmSlotId);
+            return GetHsmFirmwareIDC(hsmSlotId);
         }
 
         internal static string GetHsmFirmwareID(int hsmSlotId)
@@ -2183,14 +1981,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetHsmCounter]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmCounter", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern ulong GetHsmCounter32(int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmCounter", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        //private static extern ulong GetHsmCounter64(int hsmSlotId);
+        private static extern ulong GetHsmCounterC(int hsmSlotId);
 
         private static ulong GetHsmCounterNative(int hsmSlotId)
         {
-            return GetHsmCounter32(hsmSlotId);
+            return GetHsmCounterC(hsmSlotId);
         }
 
         internal static ulong GetHsmCounter(int hsmSlotId)
@@ -2214,14 +2009,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetHsmState]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmState", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern string GetHsmState32(int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmState", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern string GetHsmState64(int hsmSlotId);
+        private static extern string GetHsmStateC(int hsmSlotId);
 
         private static string GetHsmStateNative(int hsmSlotId)
         {
-            return GetHsmState32(hsmSlotId);
+            return GetHsmStateC(hsmSlotId);
         }
 
         internal static string GetHsmState(int hsmSlotId)
@@ -2245,14 +2037,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetHsmVersion]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern string GetHsmVersion32(int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern string GetHsmVersion64(int hsmSlotId);
+        private static extern string GetHsmVersionC(int hsmSlotId);
 
         private static string GetHsmVersionNative(int hsmSlotId)
         {
-            return GetHsmVersion32(hsmSlotId);
+            return GetHsmVersionC(hsmSlotId);
         }
 
         internal static string GetHsmVersion(int hsmSlotId)
@@ -2276,14 +2065,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetHsmType]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern string GetHsmType32(int hsmSlotId);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmType", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern string GetHsmType64(int hsmSlotId);
+        private static extern string GetHsmTypeC(int hsmSlotId);
 
         private static string GetHsmTypeNative(int hsmSlotId)
         {
-            return GetHsmType32(hsmSlotId);
+            return GetHsmTypeC(hsmSlotId);
         }
 
         internal static string GetHsmType(int hsmSlotId)
@@ -2307,14 +2093,11 @@ namespace SharpCubeProgrammer.Native
         #region [GetHsmLicense]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetHsmLicense", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern int GetHsmLicense32(int hsmSlotId, [MarshalAs(UnmanagedType.LPWStr)] string outLicensePath);
-
-        //[DllImport(ProgrammerDll64, EntryPoint = "GetHsmLicense", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        //private static extern int GetHsmLicense64(int hsmSlotId, [MarshalAs(UnmanagedType.LPWStr)] string outLicensePath);
+        private static extern int GetHsmLicenseC(int hsmSlotId, [MarshalAs(UnmanagedType.LPWStr)] string outLicensePath);
 
         private static int GetHsmLicenseNative(int hsmSlotId, string outLicensePath)
         {
-            return GetHsmLicense32(hsmSlotId, outLicensePath);
+            return GetHsmLicenseC(hsmSlotId, outLicensePath);
         }
 
         internal static int GetHsmLicense(int hsmSlotId, string outLicensePath)
