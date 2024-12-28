@@ -3,13 +3,174 @@
 namespace SharpCubeProgrammer.Native
 {
     using System;
+    using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using Enum;
     using Struct;
 
     internal static class ProgrammerApi
     {
+        /// <summary>
+        /// Synchronization object to protect loading the native library and its functions. This field is read-only.
+        /// </summary>
+        private static readonly object SyncRoot = new object();
+
+        internal static SafeLibraryHandle HandleSTLinkDriver;
+        internal static SafeLibraryHandle HandleProgrammer;
+
+        internal static DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
+
         private const string ProgrammerDll = @"Programmer.dll";
+
+        internal static bool EnsureNativeLibraryLoaded()
+        {
+            if (HandleSTLinkDriver == null || HandleProgrammer == null)
+            {
+                var currentDirectory = GetAssemblyDirectory();
+                var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+
+                try
+                { 
+                    var stLinkDriverResult = LoadStLinkDriver(target);
+
+                    if (stLinkDriverResult != null)
+                    {
+                        var programmerResult = LoadProgrammer(target);
+
+                        if (programmerResult != null)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }catch(Exception ex)
+                {
+                    throw new Exception("K-Society CubeProgrammer native library loading error!", ex);
+                }
+            }
+
+            return true;
+        }
+
+        private static SafeLibraryHandle LoadStLinkDriver(string target)
+        {
+            if (HandleSTLinkDriver == null)
+            {
+                lock (SyncRoot)
+                {
+                    if (HandleSTLinkDriver == null)
+                    {
+#if NET
+                        if (!NativeLibrary.TryLoad(
+                            target + @"\STLinkUSBDriver.dll",
+                            typeof(CubeProgrammerApi).Assembly,
+                            DllImportSearchPath.UserDirectories,
+                            out IntPtr handle))
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            HandleSTLinkDriver = null;
+
+                            throw new Exception("K-Society CubeProgrammer StLinkDriver loading error: " + error);
+                        }
+                        else
+                        {
+                            HandleSTLinkDriver = new Native.SafeLibraryHandle(handle);
+                        }
+#else
+                        // Check if the local machine has KB2533623 installed in order
+                        // to use the more secure flags when calling LoadLibraryEx
+                        bool hasKB2533623;
+
+                        using (var hModule = Native.Utility.LoadLibraryEx(Native.Utility.KernelLibName, IntPtr.Zero, 0))
+                        {
+                            // If the AddDllDirectory function is found then the flags are supported
+                            hasKB2533623 = Native.Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
+                        }
+
+                        var dwFlags = 0;
+
+                        if (hasKB2533623)
+                        {
+                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags
+                            dwFlags = Native.Utility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
+                        }
+
+                        HandleSTLinkDriver = Native.Utility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
+
+                        if (HandleSTLinkDriver.IsInvalid)
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            HandleSTLinkDriver = null;
+
+                            throw new Exception("K-Society CubeProgrammer StLinkDriver loading error: " + error);
+                        }
+#endif
+                    }
+                }
+            }
+
+            return HandleSTLinkDriver;
+        }
+
+        private static SafeLibraryHandle LoadProgrammer(string target)
+        {
+            if (HandleProgrammer == null)
+            {
+                lock (SyncRoot)
+                {
+                    if (HandleProgrammer == null)
+                    {
+#if NET
+                        if (!NativeLibrary.TryLoad(
+                            target + @"\Programmer.dll",
+                            typeof(CubeProgrammerApi).Assembly,
+                            DllImportSearchPath.UserDirectories,
+                            out IntPtr handle))
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            HandleProgrammer = null;
+
+                            throw new Exception("K-Society CubeProgrammer Programmer loading error: " + error);
+                        }
+                        else
+                        {
+                            HandleProgrammer = new Native.SafeLibraryHandle(handle);
+                        }
+#else                   
+                        var dwFlags = Native.Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
+
+                        HandleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
+
+                        if (HandleProgrammer.IsInvalid)
+                        {
+                            var error = Marshal.GetLastWin32Error();
+                            HandleProgrammer = null;
+
+                            throw new Exception("K-Society CubeProgrammer Programmer loading error: " + error);
+                        }
+#endif
+                    }
+                }
+            }
+
+            return HandleProgrammer;
+        }
+
+        private static string GetAssemblyDirectory()
+        {
+            var codeBase = Assembly.GetExecutingAssembly().Location;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
+        }
 
         #region [STLINK]
 
