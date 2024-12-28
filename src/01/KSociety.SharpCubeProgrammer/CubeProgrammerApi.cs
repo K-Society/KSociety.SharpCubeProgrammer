@@ -7,7 +7,6 @@ namespace SharpCubeProgrammer
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
-    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -20,18 +19,10 @@ namespace SharpCubeProgrammer
 
     public class CubeProgrammerApi : ICubeProgrammerApi
     {
-        /// <summary>
-        /// Synchronization object to protect loading the native library and its functions. This field is read-only.
-        /// </summary>
-        private readonly object _syncRoot = new object();
-
-        private Native.SafeLibraryHandle _handleSTLinkDriver;
         private readonly ILogger<CubeProgrammerApi> _logger;
 
         private const int DisposedFlag = 1;
         private int _isDisposed;
-
-        private static DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
 
         #region [Constructor]
 
@@ -43,46 +34,9 @@ namespace SharpCubeProgrammer
             }
 
             this._logger = logger;
-            this.Init();
         }
 
         #endregion
-
-        private void Init()
-        {
-            var currentDirectory = GetAssemblyDirectory();
-            var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
-
-            if (this._handleSTLinkDriver == null)
-            {
-                lock (this._syncRoot)
-                {
-                    if (this._handleSTLinkDriver == null)
-                    {
-                        this._handleSTLinkDriver = Native.Utility.LoadNativeLibrary(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, 0);
-
-                        if (this._handleSTLinkDriver.IsInvalid)
-                        {
-                            var error = Marshal.GetLastWin32Error();
-                            this._handleSTLinkDriver = null;
-                            this._logger?.LogError("Loading {0} {1} - {2} library error: {3} !", target, "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86", error);
-                        }
-                        else
-                        {
-                            this._logger?.LogInformation("Loading {0} - {1} library.", "STLinkUSBDriver.dll", Environment.Is64BitProcess ? "x64" : "x86");
-                        }
-                    }
-                }
-            }
-        }
-
-        private static string GetAssemblyDirectory()
-        {
-            var codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
-            var path = Uri.UnescapeDataString(uri.Path);
-            return Path.GetDirectoryName(path);
-        }
 
         #region [ST-LINK]
 
@@ -95,9 +49,12 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var connectStLinkResult = Native.ProgrammerApi.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode);
 
-                output = this.CheckResult(connectStLinkResult);
+                    output = this.CheckResult(connectStLinkResult);
+                }
             }
             catch (Exception ex)
             {
@@ -115,20 +72,23 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
-                var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
-                if (listPtr != IntPtr.Zero)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DebugConnectParameters>();
+                    var numberOfItems = Native.ProgrammerApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        }
                     }
-                }
-                else
-                {
-                    this._logger?.LogWarning("GetStLinkList IntPtr: {0}!", "Zero");
+                    else
+                    {
+                        this._logger?.LogWarning("GetStLinkList IntPtr: {0}!", "Zero");
+                    }
                 }
             }
             catch (Exception ex)
@@ -147,20 +107,23 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
-                var numberOfItems = Native.ProgrammerApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
-                if (listPtr != IntPtr.Zero)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DebugConnectParameters>();
+                    var numberOfItems = Native.ProgrammerApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        }
                     }
-                }
-                else
-                {
-                    this._logger?.LogWarning("GetStLinkEnumerationList IntPtr: {0}!", "Zero");
+                    else
+                    {
+                        this._logger?.LogWarning("GetStLinkEnumerationList IntPtr: {0}!", "Zero");
+                    }
                 }
             }
             catch (Exception ex)
@@ -178,9 +141,12 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var connectStLinkResult = Native.ProgrammerApi.ConnectStLink(debugConnectParameters);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var connectStLinkResult = Native.ProgrammerApi.ConnectStLink(debugConnectParameters);
 
-                output = this.CheckResult(connectStLinkResult);
+                    output = this.CheckResult(connectStLinkResult);
+                }
             }
             catch (Exception ex)
             {
@@ -193,8 +159,20 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError Reset(DebugResetMode rstMode)
         {
-            var resetResult = Native.ProgrammerApi.Reset(rstMode);
-            var output = this.CheckResult(resetResult);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
+            try
+            {
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var resetResult = Native.ProgrammerApi.Reset(rstMode);
+                    output = this.CheckResult(resetResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger?.LogError(ex, "ConnectStLink: ");
+            }
             return output;
         }
 
@@ -211,22 +189,25 @@ namespace SharpCubeProgrammer
             var parametersList = new List<UsartConnectParameters>();
             try
             {
-                var numberOfItems = Native.ProgrammerApi.GetUsartList(ref listPtr);
-                if (numberOfItems > 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    if (listPtr != IntPtr.Zero)
+                    var numberOfItems = Native.ProgrammerApi.GetUsartList(ref listPtr);
+                    if (numberOfItems > 0)
                     {
-                        var size = Marshal.SizeOf<UsartConnectParameters>();
-                        for (var i = 0; i < numberOfItems; i++)
+                        if (listPtr != IntPtr.Zero)
                         {
-                            var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
-                            parametersList.Add(currentItem);
-                            Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                            var size = Marshal.SizeOf<UsartConnectParameters>();
+                            for (var i = 0; i < numberOfItems; i++)
+                            {
+                                var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
+                                parametersList.Add(currentItem);
+                                Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                            }
                         }
-                    }
-                    else
-                    {
-                        this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                        else
+                        {
+                            this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                        }
                     }
                 }
             }
@@ -244,9 +225,12 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var connectUsartResult = Native.ProgrammerApi.ConnectUsartBootloader(usartConnectParameters);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var connectUsartResult = Native.ProgrammerApi.ConnectUsartBootloader(usartConnectParameters);
 
-                output = this.CheckResult(connectUsartResult);
+                    output = this.CheckResult(connectUsartResult);
+                }
             }
             catch (Exception ex)
             {
@@ -262,9 +246,12 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectUsartResult = Native.ProgrammerApi.SendByteUart(bytes);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var connectUsartResult = Native.ProgrammerApi.SendByteUart(bytes);
 
-                output = this.CheckResult(connectUsartResult);
+                    output = this.CheckResult(connectUsartResult);
+                }
             }
             catch (Exception ex)
             {
@@ -281,20 +268,23 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var size = Marshal.SizeOf<DfuDeviceInfo>();
-                numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var size = Marshal.SizeOf<DfuDeviceInfo>();
+                    numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
 
-                if (listPtr != IntPtr.Zero)
-                {
-                    for (var i = 0; i < numberOfItems; i++)
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
-                        dfuDeviceList.Add(currentItem);
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
+                            dfuDeviceList.Add(currentItem);
+                        }
                     }
-                }
-                else
-                {
-                    this._logger?.LogWarning("GetDfuDeviceList IntPtr: {0}!", "Zero");
+                    else
+                    {
+                        this._logger?.LogWarning("GetDfuDeviceList IntPtr: {0}!", "Zero");
+                    }
                 }
             }
             catch (Exception ex)
@@ -311,13 +301,16 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectDfuBootloaderResult = Native.ProgrammerApi.ConnectDfuBootloader(usbIndex);
-                if (connectDfuBootloaderResult != 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    this.Disconnect();
-                }
+                    var connectDfuBootloaderResult = Native.ProgrammerApi.ConnectDfuBootloader(usbIndex);
+                    if (connectDfuBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = this.CheckResult(connectDfuBootloaderResult);
+                    output = this.CheckResult(connectDfuBootloaderResult);
+                }
             }
             catch (Exception ex)
             {
@@ -333,13 +326,16 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectDfuBootloader2Result = Native.ProgrammerApi.ConnectDfuBootloader2(dfuParameters);
-                if (connectDfuBootloader2Result != 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    this.Disconnect();
-                }
+                    var connectDfuBootloader2Result = Native.ProgrammerApi.ConnectDfuBootloader2(dfuParameters);
+                    if (connectDfuBootloader2Result != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = this.CheckResult(connectDfuBootloader2Result);
+                    output = this.CheckResult(connectDfuBootloader2Result);
+                }
             }
             catch (Exception ex)
             {
@@ -354,13 +350,16 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectSpiBootloaderResult = Native.ProgrammerApi.ConnectSpiBootloader(spiParameters);
-                if (connectSpiBootloaderResult != 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    this.Disconnect();
-                }
+                    var connectSpiBootloaderResult = Native.ProgrammerApi.ConnectSpiBootloader(spiParameters);
+                    if (connectSpiBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = this.CheckResult(connectSpiBootloaderResult);
+                    output = this.CheckResult(connectSpiBootloaderResult);
+                }
             }
             catch (Exception ex)
             {
@@ -375,13 +374,16 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectCanBootloaderResult = Native.ProgrammerApi.ConnectCanBootloader(canParameters);
-                if (connectCanBootloaderResult != 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    this.Disconnect();
-                }
+                    var connectCanBootloaderResult = Native.ProgrammerApi.ConnectCanBootloader(canParameters);
+                    if (connectCanBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = this.CheckResult(connectCanBootloaderResult);
+                    output = this.CheckResult(connectCanBootloaderResult);
+                }
             }
             catch (Exception ex)
             {
@@ -396,13 +398,16 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var connectI2CBootloaderResult = Native.ProgrammerApi.ConnectI2cBootloader(i2CParameters);
-                if (connectI2CBootloaderResult != 0)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    this.Disconnect();
-                }
+                    var connectI2CBootloaderResult = Native.ProgrammerApi.ConnectI2cBootloader(i2CParameters);
+                    if (connectI2CBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = this.CheckResult(connectI2CBootloaderResult);
+                    output = this.CheckResult(connectI2CBootloaderResult);
+                }
             }
             catch (Exception ex)
             {
@@ -420,45 +425,62 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
         {
-            DisplayCallBacks.InitProgressBar = initProgressBar;
-            DisplayCallBacks.LogMessage = messageReceived;
-            DisplayCallBacks.LoadBar = progressBarUpdate;
-            Native.ProgrammerApi.SetDisplayCallbacks(DisplayCallBacks);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.DisplayCallBacks.InitProgressBar = initProgressBar;
+                Native.ProgrammerApi.DisplayCallBacks.LogMessage = messageReceived;
+                Native.ProgrammerApi.DisplayCallBacks.LoadBar = progressBarUpdate;
+                Native.ProgrammerApi.SetDisplayCallbacks(Native.ProgrammerApi.DisplayCallBacks);
+            }
 
-            return DisplayCallBacks;
+            return Native.ProgrammerApi.DisplayCallBacks;
         }
 
         /// <inheritdoc />
         public DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
         {
-            DisplayCallBacks = callbacksHandle;
-            Native.ProgrammerApi.SetDisplayCallbacks(DisplayCallBacks);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.DisplayCallBacks = callbacksHandle;
+                Native.ProgrammerApi.SetDisplayCallbacks(Native.ProgrammerApi.DisplayCallBacks);
+            }
 
-            return DisplayCallBacks;
+            return Native.ProgrammerApi.DisplayCallBacks;
         }
 
         /// <inheritdoc />
         public void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
         {
-            Native.ProgrammerApi.SetVerbosityLevel((int)level);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.SetVerbosityLevel((int)level);
+            }
         }
 
         /// <inheritdoc />
         public bool CheckDeviceConnection()
         {
-            var checkDeviceConnectionResult = Native.ProgrammerApi.CheckDeviceConnection();
-            return checkDeviceConnectionResult;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var checkDeviceConnectionResult = Native.ProgrammerApi.CheckDeviceConnection();
+                return checkDeviceConnectionResult;
+            }
+
+            return false;
         }
 
         /// <inheritdoc />
         public GeneralInf? GetDeviceGeneralInf()
         {
             GeneralInf? generalInf = null;
-            var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
-
+            
             try
             {
-                generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
+                    generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
+                }
             }
             catch (Exception ex)
             {
@@ -477,14 +499,17 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var bufferPtr = IntPtr.Zero;
-                var readMemoryResult =
-                    Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
-                result = this.CheckResult(readMemoryResult);
-                if (bufferPtr != IntPtr.Zero)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    Marshal.Copy(bufferPtr, buffer, 0, byteSize);
-                    this.FreeLibraryMemory(bufferPtr);
+                    var bufferPtr = IntPtr.Zero;
+                    var readMemoryResult =
+                        Native.ProgrammerApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
+                    result = this.CheckResult(readMemoryResult);
+                    if (bufferPtr != IntPtr.Zero)
+                    {
+                        Marshal.Copy(bufferPtr, buffer, 0, byteSize);
+                        this.FreeLibraryMemory(bufferPtr);
+                    }
                 }
             }
             catch (Exception ex)
@@ -506,12 +531,15 @@ namespace SharpCubeProgrammer
 
                 try
                 {
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                    gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                    {
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = Native.ProgrammerApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                        gch.Free();
+                        result = this.CheckResult(writeMemoryResult);
 
-                    return result;
+                        return result;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -533,12 +561,15 @@ namespace SharpCubeProgrammer
 
                 try
                 {
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAutoFill(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                    gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                    {
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAutoFill(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                        gch.Free();
+                        result = this.CheckResult(writeMemoryResult);
 
-                    return result;
+                        return result;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -560,12 +591,15 @@ namespace SharpCubeProgrammer
 
                 try
                 {
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                    gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                    {
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = Native.ProgrammerApi.WriteMemoryAndVerify(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                        gch.Free();
+                        result = this.CheckResult(writeMemoryResult);
 
-                    return result;
+                        return result;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -585,14 +619,16 @@ namespace SharpCubeProgrammer
             {
                 var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var writeMemoryResult = Native.ProgrammerApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                gch.Free();
-                result = this.CheckResult(writeMemoryResult);
+                    var writeMemoryResult = Native.ProgrammerApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(writeMemoryResult);
 
-
-                return result;
+                    return result;
+                }
             }
 
             return result;
@@ -627,14 +663,17 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var downloadFileResult = Native.ProgrammerApi.DownloadFile(
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var downloadFileResult = Native.ProgrammerApi.DownloadFile(
                     filePathAdapted,
                     uintAddress,
                     skipErase,
                     verify,
                     binPathAdapted
-                );
-                output = this.CheckResult(downloadFileResult);
+                    );
+                    output = this.CheckResult(downloadFileResult);
+                }
             }
             catch (Exception ex)
             {
@@ -651,10 +690,13 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var uintAddress = this.HexConverterToUint(address);
-                var executeResult = Native.ProgrammerApi.Execute(uintAddress);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var uintAddress = this.HexConverterToUint(address);
+                    var executeResult = Native.ProgrammerApi.Execute(uintAddress);
 
-                output = this.CheckResult(executeResult);
+                    output = this.CheckResult(executeResult);
+                }
             }
             catch (Exception ex)
             {
@@ -667,8 +709,12 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError MassErase(string sFlashMemName = "")
         {
-            var massEraseResult = Native.ProgrammerApi.MassErase(sFlashMemName);
-            var output = this.CheckResult(massEraseResult);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var massEraseResult = Native.ProgrammerApi.MassErase(sFlashMemName);
+                output = this.CheckResult(massEraseResult);
+            }
 
             return output;
         }
@@ -676,8 +722,12 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName = "")
         {
-            var sectorEraseResult = Native.ProgrammerApi.SectorErase(sectors, sectorNbr, sFlashMemName);
-            var output = this.CheckResult(sectorEraseResult);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var sectorEraseResult = Native.ProgrammerApi.SectorErase(sectors, sectorNbr, sFlashMemName);
+                output = this.CheckResult(sectorEraseResult);
+            }
 
             return output;
         }
@@ -685,8 +735,12 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ReadUnprotect()
         {
-            var result = Native.ProgrammerApi.ReadUnprotect();
-            var output = this.CheckResult(result);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var result = Native.ProgrammerApi.ReadUnprotect();
+                output = this.CheckResult(result);
+            }
 
             return output;
         }
@@ -694,8 +748,12 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError TzenRegression()
         {
-            var result = Native.ProgrammerApi.TzenRegression();
-            var output = this.CheckResult(result);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var result = Native.ProgrammerApi.TzenRegression();
+                output = this.CheckResult(result);
+            }
 
             return output;
         }
@@ -703,20 +761,30 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public TargetInterfaceType? GetTargetInterfaceType()
         {
-            var result = Native.ProgrammerApi.GetTargetInterfaceType();
-
-            if (result == -1)
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                return null;
+                var result = Native.ProgrammerApi.GetTargetInterfaceType();
+
+                if (result == -1)
+                {
+                    return null;
+                }
+
+                return (TargetInterfaceType)result;
             }
 
-            return (TargetInterfaceType)result;
+            return null;
         }
 
         /// <inheritdoc />
         public int GetCancelPointer()
         {
-            return Native.ProgrammerApi.GetCancelPointer();
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetCancelPointer();
+            }
+
+            return 0;
         }
 
         /// <inheritdoc />
@@ -727,37 +795,40 @@ namespace SharpCubeProgrammer
             if (!String.IsNullOrEmpty(filePath))
             {
                 var filePathAdapted = filePath.Replace(@"\", "/");
-
-                var filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
+                var filePointer = IntPtr.Zero;
                 try
                 {
-                    if (!filePointer.Equals(IntPtr.Zero))
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                     {
-                        var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                        deviceSegmentData.Type = fileData.Type;
-                        deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
-                        deviceSegmentData.segments = new List<DeviceSegmentDataC>();
-
-                        if (fileData.segments != IntPtr.Zero)
+                        filePointer = Native.ProgrammerApi.FileOpen(filePathAdapted);
+                        if (!filePointer.Equals(IntPtr.Zero))
                         {
-                            for (var i = 0; i < fileData.segmentsNbr; i++)
+                            var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
+                            deviceSegmentData.Type = fileData.Type;
+                            deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
+                            deviceSegmentData.segments = new List<DeviceSegmentDataC>();
+
+                            if (fileData.segments != IntPtr.Zero)
                             {
-                                var deviceSegment = new DeviceSegmentDataC();
-                                var segment =
-                                    Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
-                                deviceSegment.address = segment.address;
-                                deviceSegment.size = segment.size;
-                                if (segment.data != IntPtr.Zero)
+                                for (var i = 0; i < fileData.segmentsNbr; i++)
                                 {
-                                    deviceSegment.data = new byte[segment.size];
-                                    Marshal.Copy(segment.data, deviceSegment.data, 0, segment.size);
+                                    var deviceSegment = new DeviceSegmentDataC();
+                                    var segment =
+                                        Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
+                                    deviceSegment.address = segment.address;
+                                    deviceSegment.size = segment.size;
+                                    if (segment.data != IntPtr.Zero)
+                                    {
+                                        deviceSegment.data = new byte[segment.size];
+                                        Marshal.Copy(segment.data, deviceSegment.data, 0, segment.size);
+                                    }
+
+                                    deviceSegmentData.segments.Add(deviceSegment);
                                 }
-
-                                deviceSegmentData.segments.Add(deviceSegment);
                             }
-                        }
 
-                        return deviceSegmentData;
+                            return deviceSegmentData;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -782,9 +853,12 @@ namespace SharpCubeProgrammer
             {
                 try
                 {
-                    var filePathAdapted = filePath.Replace(@"\", "/");
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                    {
+                        var filePathAdapted = filePath.Replace(@"\", "/");
 
-                    return Native.ProgrammerApi.FileOpen(filePathAdapted);
+                        return Native.ProgrammerApi.FileOpen(filePathAdapted);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -797,28 +871,38 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void FreeFileData(IntPtr data)
         {
-            if (data != IntPtr.Zero)
-            { 
-                Native.ProgrammerApi.FreeFileData(data);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                if (data != IntPtr.Zero)
+                {
+                    Native.ProgrammerApi.FreeFileData(data);
+                }
             }
         }
 
         /// <inheritdoc />
         public void FreeLibraryMemory(IntPtr ptr)
         {
-            if (ptr != IntPtr.Zero)
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                Native.ProgrammerApi.FreeLibraryMemory(ptr);
+                if (ptr != IntPtr.Zero)
+                {
+                    Native.ProgrammerApi.FreeLibraryMemory(ptr);
+                }
             }
         }
 
         /// <inheritdoc />
         public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
-            var uintAddress = this.HexConverterToUint(address);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var uintAddress = this.HexConverterToUint(address);
 
-            var verifyResult = Native.ProgrammerApi.Verify(fileData, uintAddress);
-            var output = this.CheckResult(verifyResult);
+                var verifyResult = Native.ProgrammerApi.Verify(fileData, uintAddress);
+                output = this.CheckResult(verifyResult);
+            }
 
             return output;
         }
@@ -827,19 +911,21 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError VerifyMemory(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                var uintAddress = this.HexConverterToUint(address);
+                if (!String.IsNullOrEmpty(address) && data.Length > 0)
+                {
+                    var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var verifyMemoryResult =
-                    Native.ProgrammerApi.VerifyMemory(uintAddress, gch.AddrOfPinnedObject(), (uint) data.Length);
-                gch.Free();
-                result = this.CheckResult(verifyMemoryResult);
+                    var verifyMemoryResult =
+                        Native.ProgrammerApi.VerifyMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(verifyMemoryResult);
 
-                return result;
+                    return result;
+                }
             }
 
             return result;
@@ -849,19 +935,21 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                var uintAddress = this.HexConverterToUint(address);
+                if (!String.IsNullOrEmpty(address) && data.Length > 0)
+                {
+                    var uintAddress = this.HexConverterToUint(address);
 
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var verifyMemoryResult =
-                    Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                gch.Free();
-                result = this.CheckResult(verifyMemoryResult);
+                    var verifyMemoryResult =
+                        Native.ProgrammerApi.VerifyMemoryBySegment(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    gch.Free();
+                    result = this.CheckResult(verifyMemoryResult);
 
-                return result;
+                    return result;
+                }
             }
 
             return result;
@@ -880,8 +968,11 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var saveFileToFileResult = Native.ProgrammerApi.SaveFileToFile(fileData, sFileNameAdapted);
-                output = this.CheckResult(saveFileToFileResult);
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var saveFileToFileResult = Native.ProgrammerApi.SaveFileToFile(fileData, sFileNameAdapted);
+                    output = this.CheckResult(saveFileToFileResult);
+                }
             }
             catch (Exception ex)
             {
@@ -906,10 +997,13 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var saveMemoryToFileResult =
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var saveMemoryToFileResult =
                     Native.ProgrammerApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
 
-                output = this.CheckResult(saveMemoryToFileResult);
+                    output = this.CheckResult(saveMemoryToFileResult);
+                }
             }
             catch (Exception ex)
             {
@@ -922,30 +1016,40 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError Disconnect()
         {
-            var result = Native.ProgrammerApi.Disconnect();
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
 
-            var output = this.CheckResult(result);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var result = Native.ProgrammerApi.Disconnect();
 
+                output = this.CheckResult(result);
+            }
             return output;
         }
 
         /// <inheritdoc />
         public void DeleteInterfaceList()
         {
-            Native.ProgrammerApi.DeleteInterfaceList();
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.DeleteInterfaceList();
+            }
         }
 
         /// <inheritdoc />
         public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            if (!String.IsNullOrEmpty(filePath))
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                var filePathAdapted = filePath.Replace(@"\", "/");
-                if (!String.IsNullOrEmpty(address))
+                if (!String.IsNullOrEmpty(filePath))
                 {
-                    var uintAddress = this.HexConverterToUint(address);
+                    var filePathAdapted = filePath.Replace(@"\", "/");
+                    if (!String.IsNullOrEmpty(address))
+                    {
+                        var uintAddress = this.HexConverterToUint(address);
 
-                    Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                        Native.ProgrammerApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run);
+                    }
                 }
             }
         }
@@ -953,14 +1057,17 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "")
         {
-            if (!String.IsNullOrEmpty(filePath))
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                var filePathAdapted = filePath.Replace(@"\", "/");
-                if (!String.IsNullOrEmpty(address))
+                if (!String.IsNullOrEmpty(filePath))
                 {
-                    var uintAddress = this.HexConverterToUint(address);
+                    var filePathAdapted = filePath.Replace(@"\", "/");
+                    if (!String.IsNullOrEmpty(address))
+                    {
+                        var uintAddress = this.HexConverterToUint(address);
 
-                    Native.ProgrammerApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+                        Native.ProgrammerApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+                    }
                 }
             }
         }
@@ -976,53 +1083,57 @@ namespace SharpCubeProgrammer
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var result = Native.ProgrammerApi.GetStorageStructure(ref storageStructurePtr);
-
-                output = this.CheckResult(result);
-
-                if (output.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    if (storageStructurePtr != IntPtr.Zero)
+                    var result = Native.ProgrammerApi.GetStorageStructure(ref storageStructurePtr);
+
+                    output = this.CheckResult(result);
+
+                    if (output.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
-                        var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
-
-                        deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
-                        var deviceBankList = new List<DeviceDeviceBank>();
-                        for (var i = 0; i < storageStructure.BanksNumber; i++)
+                        if (storageStructurePtr != IntPtr.Zero)
                         {
+                            var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
 
-                            if (storageStructure.Banks != IntPtr.Zero)
+                            deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
+                            var deviceBankList = new List<DeviceDeviceBank>();
+                            for (var i = 0; i < storageStructure.BanksNumber; i++)
                             {
-                                var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
-                                var bankSectorList = new List<BankSector>();
-                                if (deviceBank.Sectors != IntPtr.Zero)
+
+                                if (storageStructure.Banks != IntPtr.Zero)
                                 {
-                                    for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
+                                    var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
+                                    var bankSectorList = new List<BankSector>();
+                                    if (deviceBank.Sectors != IntPtr.Zero)
                                     {
-                                        var bankSector =
-                                            Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
-                                                                               (ii * bankSectorSize));
+                                        for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
+                                        {
+                                            var bankSector =
+                                                Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
+                                                                                   (ii * bankSectorSize));
 
-                                        bankSectorList.Add(bankSector);
+                                            bankSectorList.Add(bankSector);
 
-                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
-                                                                             (ii * bankSectorSize));
+                                            Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
+                                                                                 (ii * bankSectorSize));
+                                        }
                                     }
+
+                                    var deviceDeviceBank = new DeviceDeviceBank
+                                    {
+                                        SectorsNumber = deviceBank.SectorsNumber,
+                                        Sectors = bankSectorList
+                                    };
+
+                                    deviceBankList.Add(deviceDeviceBank);
+
+                                    Marshal.DestroyStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
                                 }
-
-                                var deviceDeviceBank = new DeviceDeviceBank
-                                {
-                                    SectorsNumber = deviceBank.SectorsNumber, Sectors = bankSectorList
-                                };
-
-                                deviceBankList.Add(deviceDeviceBank);
-
-                                Marshal.DestroyStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
                             }
-                        }
 
-                        deviceStorageStructure.Banks = deviceBankList;
-                        Marshal.DestroyStructure<StorageStructure>(storageStructurePtr);
+                            deviceStorageStructure.Banks = deviceBankList;
+                            Marshal.DestroyStructure<StorageStructure>(storageStructurePtr);
+                        }
                     }
                 }
             }
@@ -1043,25 +1154,39 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError SendOptionBytesCmd(string command)
         {
-            var result = Native.ProgrammerApi.SendOptionBytesCmd(command);
-            var output = this.CheckResult(result);
+            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var result = Native.ProgrammerApi.SendOptionBytesCmd(command);
+                output = this.CheckResult(result);
+            }
             return output;
         }
 
         /// <inheritdoc />
         public DevicePeripheralC? InitOptionBytesInterface()
         {
-            var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var pointer = Native.ProgrammerApi.InitOptionBytesInterface();
 
-            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+                return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            }
+
+            return null;
         }
 
         /// <inheritdoc />
         public DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
-            var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var pointer = Native.ProgrammerApi.FastRomInitOptionBytesInterface(deviceId);
 
-            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+                return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            }
+
+            return null;
         }
 
         private DevicePeripheralC? DevicePeripheralCHandler(IntPtr pointer)
@@ -1070,102 +1195,105 @@ namespace SharpCubeProgrammer
 
             try
             {
-                PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
-
-                var bankCList = new List<DeviceBankC>();
-                for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    if (peripheralC.Value.Banks != IntPtr.Zero)
+                    PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
+
+                    var bankCList = new List<DeviceBankC>();
+                    for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
                     {
-                        var bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks + (i * pointerSize));
-                        var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
-
-                        if (bankCItem.Categories != IntPtr.Zero)
+                        if (peripheralC.Value.Banks != IntPtr.Zero)
                         {
-                            var categoryCList = new List<DeviceCategoryC>();
-                            for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
-                            {
-                                var categoryCItemPointer =
-                                    Marshal.ReadIntPtr(bankCItem.Categories + (ii * pointerSize));
-                                var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
+                            var bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks + (i * pointerSize));
+                            var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
 
-                                if (categoryCItem.Bits != IntPtr.Zero)
+                            if (bankCItem.Categories != IntPtr.Zero)
+                            {
+                                var categoryCList = new List<DeviceCategoryC>();
+                                for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
                                 {
-                                    var bitCList = new List<DeviceBitC>();
-                                    for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
-                                    {
-                                        var bitCItemPointer =
-                                            Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
-                                        var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+                                    var categoryCItemPointer =
+                                        Marshal.ReadIntPtr(bankCItem.Categories + (ii * pointerSize));
+                                    var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
 
-                                        if (bitCItem.Values != IntPtr.Zero)
+                                    if (categoryCItem.Bits != IntPtr.Zero)
+                                    {
+                                        var bitCList = new List<DeviceBitC>();
+                                        for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
                                         {
-                                            var bitValueCList = new List<BitValueC>();
-                                            for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
-                                            {
-                                                var bitValueCItemPointer =
-                                                    Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
-                                                var bitValueCItem =
-                                                    Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
-                                                bitValueCList.Add(bitValueCItem);
+                                            var bitCItemPointer =
+                                                Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
+                                            var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
 
-                                                Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                            if (bitCItem.Values != IntPtr.Zero)
+                                            {
+                                                var bitValueCList = new List<BitValueC>();
+                                                for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
+                                                {
+                                                    var bitValueCItemPointer =
+                                                        Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
+                                                    var bitValueCItem =
+                                                        Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
+                                                    bitValueCList.Add(bitValueCItem);
+
+                                                    Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                                }
+
+                                                var deviceBitC = new DeviceBitC
+                                                {
+                                                    Name = bitCItem.Name,
+                                                    Description = bitCItem.Description,
+                                                    WordOffset = bitCItem.WordOffset,
+                                                    BitOffset = bitCItem.BitOffset,
+                                                    BitWidth = bitCItem.BitWidth,
+                                                    Access = bitCItem.Access,
+                                                    ValuesNbr = bitCItem.ValuesNbr,
+                                                    Values = bitValueCList,
+                                                    Equation = bitCItem.Equation,
+                                                    Reference = bitCItem.Reference,
+                                                    BitValue = bitCItem.BitValue
+                                                };
+                                                bitCList.Add(deviceBitC);
+
+                                                Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                             }
-
-                                            var deviceBitC = new DeviceBitC
-                                            {
-                                                Name = bitCItem.Name,
-                                                Description = bitCItem.Description,
-                                                WordOffset = bitCItem.WordOffset,
-                                                BitOffset = bitCItem.BitOffset,
-                                                BitWidth = bitCItem.BitWidth,
-                                                Access = bitCItem.Access,
-                                                ValuesNbr = bitCItem.ValuesNbr,
-                                                Values = bitValueCList,
-                                                Equation = bitCItem.Equation,
-                                                Reference = bitCItem.Reference,
-                                                BitValue = bitCItem.BitValue
-                                            };
-                                            bitCList.Add(deviceBitC);
-
-                                            Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                         }
+
+                                        var deviceCategoryC = new DeviceCategoryC
+                                        {
+                                            Name = categoryCItem.Name,
+                                            BitsNbr = categoryCItem.BitsNbr,
+                                            Bits = bitCList
+                                        };
+                                        categoryCList.Add(deviceCategoryC);
+                                        Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
                                     }
-
-                                    var deviceCategoryC = new DeviceCategoryC
-                                    {
-                                        Name = categoryCItem.Name,
-                                        BitsNbr = categoryCItem.BitsNbr,
-                                        Bits = bitCList
-                                    };
-                                    categoryCList.Add(deviceCategoryC);
-                                    Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
                                 }
-                            }
 
-                            var deviceBankC = new DeviceBankC
-                            {
-                                Size = bankCItem.Size,
-                                Address = bankCItem.Address,
-                                Access = bankCItem.Access,
-                                CategoriesNbr = bankCItem.CategoriesNbr,
-                                Categories = categoryCList
-                            };
-                            bankCList.Add(deviceBankC);
-                            Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                                var deviceBankC = new DeviceBankC
+                                {
+                                    Size = bankCItem.Size,
+                                    Address = bankCItem.Address,
+                                    Access = bankCItem.Access,
+                                    CategoriesNbr = bankCItem.CategoriesNbr,
+                                    Categories = categoryCList
+                                };
+                                bankCList.Add(deviceBankC);
+                                Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                            }
                         }
                     }
+
+                    var devicePeripheralC = new DevicePeripheralC
+                    {
+                        Name = peripheralC.Value.Name,
+                        Description = peripheralC.Value.Description,
+                        BanksNbr = peripheralC.Value.BanksNbr,
+                        Banks = bankCList
+                    };
+
+                    return devicePeripheralC;
                 }
-
-                var devicePeripheralC = new DevicePeripheralC
-                {
-                    Name = peripheralC.Value.Name,
-                    Description = peripheralC.Value.Description,
-                    BanksNbr = peripheralC.Value.BanksNbr,
-                    Banks = bankCList
-                };
-
-                return devicePeripheralC;
             }
             catch (Exception ex)
             {
@@ -1182,13 +1310,16 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ObDisplay()
         {
-            this._logger?.LogTrace("ObDisplay.");
+            //this._logger?.LogTrace("ObDisplay.");
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {
-                var obDisplayResult = Native.ProgrammerApi.ObDisplay();
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                {
+                    var obDisplayResult = Native.ProgrammerApi.ObDisplay();
 
-                output = this.CheckResult(obDisplayResult);
+                    output = this.CheckResult(obDisplayResult);
+                }
             }
             catch (Exception ex)
             {
@@ -1207,8 +1338,11 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void SetLoadersPath(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            Native.ProgrammerApi.SetLoadersPath(pathAdapted);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var pathAdapted = path.Replace(@"\", "/");
+                Native.ProgrammerApi.SetLoadersPath(pathAdapted);
+            }
         }
 
         /// <inheritdoc />
@@ -1221,31 +1355,34 @@ namespace SharpCubeProgrammer
 
             try
             {
-                Native.ProgrammerApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
-                if (externalLoaderPtr != IntPtr.Zero)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
-
-                    output.filePath = externalLoaderStructure.filePath;
-                    output.deviceName = externalLoaderStructure.deviceName;
-                    output.deviceType = externalLoaderStructure.deviceType;
-                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                    output.deviceSize = externalLoaderStructure.deviceSize;
-                    output.pageSize = externalLoaderStructure.pageSize;
-                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
-
-                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                    Native.ProgrammerApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
+                    if (externalLoaderPtr != IntPtr.Zero)
                     {
-                        var deviceSectorList = new List<DeviceSector>();
-                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                        output.filePath = externalLoaderStructure.filePath;
+                        output.deviceName = externalLoaderStructure.deviceName;
+                        output.deviceType = externalLoaderStructure.deviceType;
+                        output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
+                        output.deviceSize = externalLoaderStructure.deviceSize;
+                        output.pageSize = externalLoaderStructure.pageSize;
+                        output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+
+                        if (externalLoaderStructure.sectors != IntPtr.Zero)
                         {
-                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
-                            deviceSectorList.Add(deviceSectorItem);
+                            var deviceSectorList = new List<DeviceSector>();
+                            for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                            {
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                                deviceSectorList.Add(deviceSectorItem);
+                            }
+
+                            output.sectors = deviceSectorList;
+
+                            return output;
                         }
-
-                        output.sectors = deviceSectorList;
-
-                        return output;
                     }
                 }
             }
@@ -1267,31 +1404,34 @@ namespace SharpCubeProgrammer
 
             try
             {
-                Native.ProgrammerApi.SetExternalLoaderOBL(pathAdapted, ref externalLoaderPtr);
-                if (externalLoaderPtr != IntPtr.Zero)
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
-
-                    output.filePath = externalLoaderStructure.filePath;
-                    output.deviceName = externalLoaderStructure.deviceName;
-                    output.deviceType = externalLoaderStructure.deviceType;
-                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                    output.deviceSize = externalLoaderStructure.deviceSize;
-                    output.pageSize = externalLoaderStructure.pageSize;
-                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
-
-                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                    Native.ProgrammerApi.SetExternalLoaderOBL(pathAdapted, ref externalLoaderPtr);
+                    if (externalLoaderPtr != IntPtr.Zero)
                     {
-                        var deviceSectorList = new List<DeviceSector>();
-                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                        output.filePath = externalLoaderStructure.filePath;
+                        output.deviceName = externalLoaderStructure.deviceName;
+                        output.deviceType = externalLoaderStructure.deviceType;
+                        output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
+                        output.deviceSize = externalLoaderStructure.deviceSize;
+                        output.pageSize = externalLoaderStructure.pageSize;
+                        output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+
+                        if (externalLoaderStructure.sectors != IntPtr.Zero)
                         {
-                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
-                            deviceSectorList.Add(deviceSectorItem);
+                            var deviceSectorList = new List<DeviceSector>();
+                            for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                            {
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                                deviceSectorList.Add(deviceSectorItem);
+                            }
+
+                            output.sectors = deviceSectorList;
+
+                            return output;
                         }
-
-                        output.sectors = deviceSectorList;
-
-                        return output;
                     }
                 }
             }
@@ -1314,49 +1454,52 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var result = Native.ProgrammerApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
-                if (result.Equals(0))
+                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
-                    var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
-
-                    output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
-
-                    if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
+                    var result = Native.ProgrammerApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
+                    if (result.Equals(0))
                     {
-                        for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                        var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
+                        var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+
+                        output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
+
+                        if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                         {
-                            var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
-
-                            var deviceExternalLoader = new DeviceExternalLoader
+                            for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
                             {
-                                filePath = externalLoaderStructure.filePath,
-                                deviceName = externalLoaderStructure.deviceName,
-                                deviceType = externalLoaderStructure.deviceType,
-                                deviceStartAddress = externalLoaderStructure.deviceStartAddress,
-                                deviceSize = externalLoaderStructure.deviceSize,
-                                pageSize = externalLoaderStructure.pageSize,
-                                sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
-                            };
+                                var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
 
-                            if (externalLoaderStructure.sectors != IntPtr.Zero)
-                            {
-                                var deviceSectorList = new List<DeviceSector>();
-                                for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                var deviceExternalLoader = new DeviceExternalLoader
                                 {
-                                    var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
-                                    deviceSectorList.Add(deviceSectorItem);
+                                    filePath = externalLoaderStructure.filePath,
+                                    deviceName = externalLoaderStructure.deviceName,
+                                    deviceType = externalLoaderStructure.deviceType,
+                                    deviceStartAddress = externalLoaderStructure.deviceStartAddress,
+                                    deviceSize = externalLoaderStructure.deviceSize,
+                                    pageSize = externalLoaderStructure.pageSize,
+                                    sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
+                                };
+
+                                if (externalLoaderStructure.sectors != IntPtr.Zero)
+                                {
+                                    var deviceSectorList = new List<DeviceSector>();
+                                    for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                    {
+                                        var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
+                                        deviceSectorList.Add(deviceSectorItem);
+                                    }
+
+                                    deviceExternalLoader.sectors = deviceSectorList;
                                 }
 
-                                deviceExternalLoader.sectors = deviceSectorList;
+                                externalLoaderList.Add(deviceExternalLoader);
                             }
 
-                            externalLoaderList.Add(deviceExternalLoader);
+                            output.ExternalLoader = externalLoaderList;
+
+                            return output;
                         }
-
-                        output.ExternalLoader = externalLoaderList;
-
-                        return output;
                     }
                 }
             }
@@ -1371,14 +1514,20 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public void RemoveExternalLoader(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            Native.ProgrammerApi.RemoveExternalLoader(pathAdapted);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var pathAdapted = path.Replace(@"\", "/");
+                Native.ProgrammerApi.RemoveExternalLoader(pathAdapted);
+            }
         }
 
         /// <inheritdoc />
         public void DeleteLoaders()
         {
-            Native.ProgrammerApi.DeleteLoaders();
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.DeleteLoaders();
+            }
         }
 
         #endregion
@@ -1394,13 +1543,17 @@ namespace SharpCubeProgrammer
         {
             var buffer = new byte[8];
             var bufferPtr = new IntPtr();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
 
-            var getUID64Result = Native.ProgrammerApi.GetUID64(ref bufferPtr );
-
-            var result = this.CheckResult(getUID64Result);
-            if (result.Equals(CubeProgrammerError.CubeprogrammerNoError) && bufferPtr != IntPtr.Zero)
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
-                Marshal.Copy(bufferPtr, buffer, 0, 8);
+                var getUID64Result = Native.ProgrammerApi.GetUID64(ref bufferPtr);
+
+                result = this.CheckResult(getUID64Result);
+                if (result.Equals(CubeProgrammerError.CubeprogrammerNoError) && bufferPtr != IntPtr.Zero)
+                {
+                    Marshal.Copy(bufferPtr, buffer, 0, 8);
+                }
             }
 
             return (result, buffer);
@@ -1409,9 +1562,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError FirmwareDelete()
         {
-            var firmwareDeleteResult = Native.ProgrammerApi.FirmwareDelete();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var firmwareDeleteResult = Native.ProgrammerApi.FirmwareDelete();
 
-            var result = this.CheckResult(firmwareDeleteResult);
+                result = this.CheckResult(firmwareDeleteResult);
+            }
 
             return result;
         }
@@ -1421,11 +1578,14 @@ namespace SharpCubeProgrammer
         {
             var uintAddress = this.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-
-            var firmwareUpgradeResult =
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var firmwareUpgradeResult =
                 Native.ProgrammerApi.FirmwareUpgrade(filePathAdapted, uintAddress, firstInstall, startStack, verify);
 
-            var result = this.CheckResult(firmwareUpgradeResult);
+                result = this.CheckResult(firmwareUpgradeResult);
+            }
 
             return result;
         }
@@ -1433,9 +1593,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError StartWirelessStack()
         {
-            var startWirelessStackResult = Native.ProgrammerApi.StartWirelessStack();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var startWirelessStackResult = Native.ProgrammerApi.StartWirelessStack();
 
-            var result = this.CheckResult(startWirelessStackResult);
+                result = this.CheckResult(startWirelessStackResult);
+            }
 
             return result;
         }
@@ -1443,9 +1607,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError UpdateAuthKey(string filePath)
         {
-            var updateAuthKeyResult = Native.ProgrammerApi.UpdateAuthKey(filePath);
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var updateAuthKeyResult = Native.ProgrammerApi.UpdateAuthKey(filePath);
 
-            var result = this.CheckResult(updateAuthKeyResult);
+                result = this.CheckResult(updateAuthKeyResult);
+            }
 
             return result;
         }
@@ -1453,9 +1621,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError AuthKeyLock()
         {
-            var authKeyLockResult = Native.ProgrammerApi.AuthKeyLock();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var authKeyLockResult = Native.ProgrammerApi.AuthKeyLock();
 
-            var result = this.CheckResult(authKeyLockResult);
+                result = this.CheckResult(authKeyLockResult);
+            }
 
             return result;
         }
@@ -1463,11 +1635,15 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError WriteUserKey(string filePath, byte keyType)
         {
-            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
 
-            var writeUserKeyResult = Native.ProgrammerApi.WriteUserKey(filePathAdapted, keyType);
+                var writeUserKeyResult = Native.ProgrammerApi.WriteUserKey(filePathAdapted, keyType);
 
-            var result = this.CheckResult(writeUserKeyResult);
+                result = this.CheckResult(writeUserKeyResult);
+            }
 
             return result;
         }
@@ -1475,9 +1651,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError AntiRollBack()
         {
-            var antiRollBackResult = Native.ProgrammerApi.AntiRollBack();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var antiRollBackResult = Native.ProgrammerApi.AntiRollBack();
 
-            var result = this.CheckResult(antiRollBackResult);
+                result = this.CheckResult(antiRollBackResult);
+            }
 
             return result;
         }
@@ -1485,9 +1665,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError StartFus()
         {
-            var startFusResult = Native.ProgrammerApi.StartFus();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var startFusResult = Native.ProgrammerApi.StartFus();
 
-            var result = this.CheckResult(startFusResult);
+                result = this.CheckResult(startFusResult);
+            }
 
             return result;
         }
@@ -1495,9 +1679,13 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError UnlockChip()
         {
-            var unlockChipResult = Native.ProgrammerApi.UnlockChip();
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var unlockChipResult = Native.ProgrammerApi.UnlockChip();
 
-            var result = this.CheckResult(unlockChipResult);
+                result = this.CheckResult(unlockChipResult);
+            }
 
             return result;
         }
@@ -1509,12 +1697,16 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
         {
-            var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
-            var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace(@"\", "/");
-            var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
-            var programSspResult = Native.ProgrammerApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
+                var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace(@"\", "/");
+                var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
+                var programSspResult = Native.ProgrammerApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
 
-            var result = this.CheckResult(programSspResult);
+                result = this.CheckResult(programSspResult);
+            }
 
             return result;
         }
@@ -1526,40 +1718,65 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public string GetHsmFirmwareID(int hsmSlotId)
         {
-            return Native.ProgrammerApi.GetHsmFirmwareID(hsmSlotId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetHsmFirmwareID(hsmSlotId);
+            }
+
+            return String.Empty;
         }
 
         /// <inheritdoc />
         public ulong GetHsmCounter(int hsmSlotId)
         {
-            return Native.ProgrammerApi.GetHsmCounter(hsmSlotId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetHsmCounter(hsmSlotId);
+            }
+            return 0UL;
         }
 
         /// <inheritdoc />
         public string GetHsmState(int hsmSlotId)
         {
-            return Native.ProgrammerApi.GetHsmState(hsmSlotId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetHsmState(hsmSlotId);
+            }
+            return String.Empty;
         }
 
         /// <inheritdoc />
         public string GetHsmVersion(int hsmSlotId)
         {
-            return Native.ProgrammerApi.GetHsmVersion(hsmSlotId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetHsmVersion(hsmSlotId);
+            }
+            return String.Empty;
         }
 
         /// <inheritdoc />
         public string GetHsmType(int hsmSlotId)
         {
-            return Native.ProgrammerApi.GetHsmType(hsmSlotId);
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.GetHsmType(hsmSlotId);
+            }
+            return String.Empty;
         }
 
         /// <inheritdoc />
         public CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath)
         {
-            var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
-            var getHsmLicenseResult = Native.ProgrammerApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
+            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
+                var getHsmLicenseResult = Native.ProgrammerApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
 
-            var result = this.CheckResult(getHsmLicenseResult);
+                result = this.CheckResult(getHsmLicenseResult);
+            }
 
             return result;
         }
@@ -1666,8 +1883,17 @@ namespace SharpCubeProgrammer
             }
 
             // Free any unmanaged objects here.
-            this._handleSTLinkDriver?.Dispose();
-            this._handleSTLinkDriver = null;
+            if (Native.ProgrammerApi.HandleProgrammer != null)
+            {
+                Native.ProgrammerApi.HandleProgrammer?.Dispose();
+                Native.ProgrammerApi.HandleProgrammer = null;
+            }
+
+            if (Native.ProgrammerApi.HandleSTLinkDriver != null)
+            {
+                Native.ProgrammerApi.HandleSTLinkDriver?.Dispose();
+                Native.ProgrammerApi.HandleSTLinkDriver = null;
+            }
         }
 
         /// <summary>

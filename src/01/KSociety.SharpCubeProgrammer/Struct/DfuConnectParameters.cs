@@ -8,10 +8,13 @@ namespace SharpCubeProgrammer.Struct
     public struct DfuConnectParameters
     {
         public string usb_index;
-        public string rdu;
 
         /// <summary>
         /// Request a read unprotect: value in {0,1}.
+        /// </summary>
+        public string rdu;
+
+        /// <summary>
         /// Request a TZEN regression: value in {0,1}.
         /// </summary>
         public string tzenreg;
