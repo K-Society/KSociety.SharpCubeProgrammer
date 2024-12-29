@@ -1310,7 +1310,6 @@ namespace SharpCubeProgrammer
         /// <inheritdoc />
         public CubeProgrammerError ObDisplay()
         {
-            //this._logger?.LogTrace("ObDisplay.");
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
             {

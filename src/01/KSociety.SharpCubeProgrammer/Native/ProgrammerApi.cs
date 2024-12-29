@@ -89,21 +89,21 @@ namespace SharpCubeProgrammer.Native
                         // to use the more secure flags when calling LoadLibraryEx
                         bool hasKB2533623;
 
-                        using (var hModule = Native.Utility.LoadLibraryEx(Native.Utility.KernelLibName, IntPtr.Zero, 0))
+                        using (var hModule = Utility.LoadLibraryEx(Utility.KernelLibName, IntPtr.Zero, 0))
                         {
-                            // If the AddDllDirectory function is found then the flags are supported
-                            hasKB2533623 = Native.Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
+                            // If the AddDllDirectory function is found then the flags are supported.
+                            hasKB2533623 = Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
                         }
 
                         var dwFlags = 0;
 
                         if (hasKB2533623)
                         {
-                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags
-                            dwFlags = Native.Utility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
+                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags.
+                            dwFlags = Utility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
                         }
 
-                        HandleSTLinkDriver = Native.Utility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
+                        HandleSTLinkDriver = Utility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
 
                         if (HandleSTLinkDriver.IsInvalid)
                         {
@@ -145,9 +145,9 @@ namespace SharpCubeProgrammer.Native
                             HandleProgrammer = new Native.SafeLibraryHandle(handle);
                         }
 #else                   
-                        var dwFlags = Native.Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
+                        var dwFlags = Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
 
-                        HandleProgrammer = Native.Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
+                        HandleProgrammer = Utility.LoadLibraryEx(target + @"\Programmer.dll", IntPtr.Zero, dwFlags);
 
                         if (HandleProgrammer.IsInvalid)
                         {
