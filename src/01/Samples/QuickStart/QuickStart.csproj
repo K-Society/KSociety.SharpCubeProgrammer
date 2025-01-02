@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj" />
+    <PackageReference Include="KSociety.SharpCubeProgrammer" Version="0.4.23" />
   </ItemGroup>
 
 </Project>

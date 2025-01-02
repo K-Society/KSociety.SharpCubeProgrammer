@@ -2,40 +2,6 @@
 <!-- Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' ">
-    <Content Include="$(MSBuildThisFileDirectory)native\x86\Programmer\*.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x86\%(FileName)%(Extension)</Link>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\Programmer\version">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x86\version</Link>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\x86\STLinkUSBDriver.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x86\STLinkUSBDriver.dll</Link>
-      <Visible>false</Visible>
-    </Content>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' ">
-    <Content Include="$(MSBuildThisFileDirectory)native\x64\Programmer\*.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x64\%(FileName)%(Extension)</Link>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\Programmer\version">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x64\version</Link>
-      <Visible>false</Visible>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)native\x64\STLinkUSBDriver.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>dll\x64\STLinkUSBDriver.dll</Link>
-      <Visible>false</Visible>
-    </Content>
-  </ItemGroup>
   <ItemGroup>
     <None Update="@(None)">
       <Visible Condition="'%(NuGetItemType)' == 'None' and '%(NuGetPackageId)' == 'KSociety.SharpCubeProgrammer'">False</Visible>
