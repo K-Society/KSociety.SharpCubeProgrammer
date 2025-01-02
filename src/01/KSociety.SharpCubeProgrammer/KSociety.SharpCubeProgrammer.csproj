@@ -23,25 +23,19 @@
   </ItemGroup>-->
 
   <ItemGroup>
-    <None Include="..\..\..\build\Programmer\bin\x64\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\build\Programmer\bin\x64\$(Configuration)\*.dll" Pack="true" PackagePath="runtimes\win-x64\native" Visible="false">
        
     </None>
-    <None Include="..\..\..\build\Programmer\bin\Win32\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\build\Programmer\bin\Win32\$(Configuration)\*.dll" Pack="true" PackagePath="runtimes\win-x86\native" Visible="false">
        
     </None>
-    <None Include="..\..\..\Programmer\version" Pack="true" PackagePath="build\native\Programmer" Visible="false" Link="dll\version" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\version" Pack="true" PackagePath="runtimes\any\any" Visible="false">
        
     </None>
-    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
-
-    </None>
-    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="runtimes\win-x64\native" Visible="false">
        
     </None>
-    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
-       
-    </None>
-    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x86" Visible="false" Link="dll\x86\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="runtimes\win-x86\native" Visible="false">
        
     </None>
     <None Include="..\..\..\Data_Base\*.*" Pack="true" PackagePath="contentFiles\any\any\st\Data_Base" Visible="false" Link="st\Data_Base\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
