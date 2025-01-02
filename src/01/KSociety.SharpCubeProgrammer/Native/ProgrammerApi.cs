@@ -25,37 +25,37 @@ namespace SharpCubeProgrammer.Native
 
         internal static bool EnsureNativeLibraryLoaded()
         {
-            if (HandleSTLinkDriver == null || HandleProgrammer == null)
-            {
-                var currentDirectory = GetAssemblyDirectory();
-                var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+            //if (HandleSTLinkDriver == null || HandleProgrammer == null)
+            //{
+            //    var currentDirectory = GetAssemblyDirectory();
+            //    var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
 
-                try
-                { 
-                    var stLinkDriverResult = LoadStLinkDriver(target);
+            //    try
+            //    { 
+            //        var stLinkDriverResult = LoadStLinkDriver(target);
 
-                    if (stLinkDriverResult != null)
-                    {
-                        var programmerResult = LoadProgrammer(target);
+            //        if (stLinkDriverResult != null)
+            //        {
+            //            var programmerResult = LoadProgrammer(target);
 
-                        if (programmerResult != null)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }catch(Exception ex)
-                {
-                    throw new Exception("K-Society CubeProgrammer native library loading error!", ex);
-                }
-            }
+            //            if (programmerResult != null)
+            //            {
+            //                return true;
+            //            }
+            //            else
+            //            {
+            //                return false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }catch(Exception ex)
+            //    {
+            //        throw new Exception("K-Society CubeProgrammer native library loading error!", ex);
+            //    }
+            //}
 
             return true;
         }

@@ -9,7 +9,7 @@
     <RootNamespace>SharpCubeProgrammer</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Content Include="BuildMultiTargeting\KSociety.SharpCubeProgrammer.props">
       <PackagePath>buildMultiTargeting</PackagePath>
       <Pack>true</Pack>
@@ -20,7 +20,7 @@
     </Content>
     <Content Include="Build\KSociety.SharpCubeProgrammer.targets" Pack="true" PackagePath="build" />
     <Content Include="Build\KSociety.SharpCubeProgrammer.props" Pack="true" PackagePath="build" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <None Include="..\..\..\build\Programmer\bin\x64\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
