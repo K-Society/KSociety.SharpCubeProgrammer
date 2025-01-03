@@ -33,7 +33,7 @@ namespace QuickStart
 
             #endregion
 
-            var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
+            var stLinkList = cubeProgrammerApi.GetStLinkList();
             if (stLinkList.Any())
             {
                 var stLink = stLinkList.First();
