@@ -4,25 +4,27 @@ namespace SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
     using DeviceDataStructure;
     using Enum;
     using Struct;
 
-    public interface ICubeProgrammerApi : IDisposable
+    public interface ICubeProgrammerApiAsync : IAsyncDisposable
     {
 
         #region [STLINK]
 
         //STLINK module groups debug ports JTAG/SWD functions together.
 
-        CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+        ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s).
         /// </summary>
         /// <param name="shared"></param>
         /// <returns></returns>
-        IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false);
+        ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s) without connecting and intruse the target.

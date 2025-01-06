@@ -17,7 +17,7 @@ namespace SharpCubeProgrammer
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
 
-    public class CubeProgrammerApi : ICubeProgrammerApi
+    public class CubeProgrammerApi : ICubeProgrammerApi, ICubeProgrammerApiAsync
     {
         private readonly ILogger<CubeProgrammerApi> _logger;
 
@@ -64,6 +64,11 @@ namespace SharpCubeProgrammer
             return output;
         }
 
+        public async ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => this.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode), cancellationToken).ConfigureAwait(false);
+        }
+
         /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
@@ -97,6 +102,11 @@ namespace SharpCubeProgrammer
             }
 
             return parametersList;
+        }
+
+        public async ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => this.GetStLinkList(shared), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
