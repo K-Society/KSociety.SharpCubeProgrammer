@@ -36,6 +36,8 @@ You need to use _PackageReference_, otherwise some contents will not be copied t
 
 ## Currently supported features
 
+All functions also exist in an asynchronous version.
+
 ## STLINK functions
 - GetStLinkList
 - GetStLinkEnumerationList
@@ -158,6 +160,12 @@ cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerV
 
 ```csharp
 var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
+```
+
+or
+
+```csharp
+var stLinkList = await cubeProgrammerApi.GetStLinkEnumerationListAsync();
 ```
 
 - Connect:
