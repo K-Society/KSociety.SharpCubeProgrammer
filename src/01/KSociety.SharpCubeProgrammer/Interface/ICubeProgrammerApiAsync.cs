@@ -255,7 +255,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        ValueTask<CubeProgrammerError> SaveFileToFile(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> SaveFileToFileAsync(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.

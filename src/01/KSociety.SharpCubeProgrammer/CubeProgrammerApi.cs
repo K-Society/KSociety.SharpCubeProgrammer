@@ -7,10 +7,7 @@ namespace SharpCubeProgrammer
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
-    using System.IO.Compression;
-    using System.Net;
     using System.Runtime.InteropServices;
-    using System.Security.Cryptography;
     using System.Threading;
     using System.Threading.Tasks;
     using DeviceDataStructure;
@@ -1180,7 +1177,7 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        public async ValueTask<CubeProgrammerError> SaveFileToFile(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> SaveFileToFileAsync(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.SaveFileToFile(fileData, sFileName), cancellationToken).ConfigureAwait(false);
         }
