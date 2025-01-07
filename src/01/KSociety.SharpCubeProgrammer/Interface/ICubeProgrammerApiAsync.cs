@@ -4,43 +4,45 @@ namespace SharpCubeProgrammer.Interface
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
     using DeviceDataStructure;
     using Enum;
     using Struct;
 
-    public interface ICubeProgrammerApi : IDisposable
+    public interface ICubeProgrammerApiAsync : IAsyncDisposable
     {
 
         #region [STLINK]
 
         //STLINK module groups debug ports JTAG/SWD functions together.
 
-        CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+        ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s).
         /// </summary>
         /// <param name="shared"></param>
         /// <returns></returns>
-        IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false);
+        ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get ST-LINK connected probe(s) without connecting and intruse the target.
         /// </summary>
         /// <param name="shared"></param>
         /// <returns></returns>
-        IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false);
+        ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkEnumerationListAsync(bool shared = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through SWD or JTAG interfaces.
         /// </summary>
         /// <param name="debugConnectParameters"></param>
-        CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters);
+        ValueTask<CubeProgrammerError> ConnectStLinkAsync(DebugConnectParameters debugConnectParameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine used to apply a target reset, use only with ST-LINK!.
         /// </summary>
-        CubeProgrammerError Reset(DebugResetMode rstMode);
+        ValueTask<CubeProgrammerError> ResetAsync(DebugResetMode rstMode, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -51,47 +53,47 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected serial ports.
         /// </summary>
-        IEnumerable<UsartConnectParameters> GetUsartList();
+        ValueTask<IEnumerable<UsartConnectParameters>> GetUsartListAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through USART interface.
         /// </summary>
-        CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters);
+        ValueTask<CubeProgrammerError> ConnectUsartBootloaderAsync(UsartConnectParameters usartConnectParameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to send a single byte through the USART interface.
         /// </summary>
-        CubeProgrammerError SendByteUart(int bytes);
+        ValueTask<CubeProgrammerError> SendByteUartAsync(int bytes, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get connected DFU devices.
         /// </summary>
-        int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList);
+        ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start a simple connection through USB DFU interface.
         /// </summary>
-        CubeProgrammerError ConnectDfuBootloader(string usbIndex);
+        ValueTask<CubeProgrammerError> ConnectDfuBootloaderAsync(string usbIndex, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through USB DFU interface.
         /// </summary>
-        CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
+        ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(DfuConnectParameters dfuParameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through SPI interface.
         /// </summary>
-        CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);
+        ValueTask<CubeProgrammerError> ConnectSpiBootloaderAsync(SpiConnectParameters spiParameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through CAN interface.
         /// </summary>
-        CubeProgrammerError ConnectCanBootloader(CanConnectParameters canParameters);
+        ValueTask<CubeProgrammerError> ConnectCanBootloaderAsync(CanConnectParameters canParameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters);
+        ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -106,42 +108,42 @@ namespace SharpCubeProgrammer.Interface
         /// <param name="messageReceived"></param>
         /// <param name="progressBarUpdate"></param>
         /// <returns></returns>
-        DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate);
+        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to choose your custom display.
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
-        DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle);
+        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.
         /// </summary>
         /// <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
-        void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
+        ValueTask SetVerbosityLevelAsync(CubeProgrammerVerbosityLevel level, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to check connection status [maintained or lost].
         /// </summary>
         /// <returns></returns>
-        bool CheckDeviceConnection();
+        ValueTask<bool> CheckDeviceConnectionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get general device information.
         /// </summary>
-        GeneralInf? GetDeviceGeneralInf();
+        ValueTask<GeneralInf?> GetDeviceGeneralInfAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to receive memory data on the used interface with the configuration already initialized.
         /// </summary>
-        (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize);
+        ValueTask<(CubeProgrammerError, byte[])> ReadMemoryAsync(string address, int byteSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write memory data on the user interface with the configuration already initialized.
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
-        CubeProgrammerError WriteMemory(string address, byte[] data);
+        ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write memory data on the user interface with the configuration already initialized.
@@ -149,7 +151,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
-        CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data);
+        ValueTask<CubeProgrammerError> WriteMemoryAutoFillAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
@@ -157,7 +159,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
-        CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data);
+        ValueTask<CubeProgrammerError> WriteMemoryAndVerifyAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write sector data on the user interface with the configuration already initialized.
@@ -167,113 +169,113 @@ namespace SharpCubeProgrammer.Interface
         /// <returns>CubeprogrammerNoError if the writing operation correctly finished, otherwise an error occurred.</returns>
         /// <remarks>Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.</remarks>
         /// <remarks>Data size should not exceed sector size.</remarks>
-        CubeProgrammerError EditSector(string address, byte[] data);
+        ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U);
+        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to run the application.
         /// </summary>
-        CubeProgrammerError Execute(string address = "0x08000000");
+        ValueTask<CubeProgrammerError> ExecuteAsync(string address = "0x08000000", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to erase the whole Flash memory.
         /// </summary>
-        CubeProgrammerError MassErase(string sFlashMemName = "");
+        ValueTask<CubeProgrammerError> MassEraseAsync(string sFlashMemName = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to erase specific sectors of the Flash memory.
         /// </summary>
-        CubeProgrammerError SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName = "");
+        ValueTask<CubeProgrammerError> SectorEraseAsync(uint[] sectors, uint sectorNbr, string sFlashMemName = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to disable the readout protection.
         /// If the memory is not protected, a message appears to indicate that the device is not
         /// under Readout protection and the command has no effects.
         /// </summary>
-        CubeProgrammerError ReadUnprotect();
+        ValueTask<CubeProgrammerError> ReadUnprotectAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows the TZEN Option Byte regression.
         /// </summary>
         /// <returns>CubeprogrammerNoError if the disabling correctly accomplished, otherwise an error occurred.</returns>
         /// <remarks>Depending on the device used, this routine take a specific time.</remarks>
-        CubeProgrammerError TzenRegression();
+        ValueTask<CubeProgrammerError> TzenRegressionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to know the interface what is in use.
         /// </summary>
-        TargetInterfaceType? GetTargetInterfaceType();
+        ValueTask<TargetInterfaceType?> GetTargetInterfaceTypeAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to drop the current read/write operation.
         /// </summary>
-        int GetCancelPointer();
+        ValueTask<int> GetCancelPointerAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to open and get data from any supported file extension.
         /// </summary>
-        DeviceFileDataC? FileOpen(string filePath);
+        ValueTask<DeviceFileDataC?> FileOpenAsync(string filePath, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to open and get pointer from any supported file extension.
         /// </summary>
-        IntPtr FileOpenAsPointer(string filePath);
+        ValueTask<IntPtr> FileOpenAsPointerAsync(string filePath, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to clean up the handled file data.
         /// </summary>
-        void FreeFileData(IntPtr data);
+        ValueTask FreeFileDataAsync(IntPtr data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to free a specific memory region, typically used after readMemory().
         /// </summary>
         /// <param name="ptr">The input pointer address.</param>
-        void FreeLibraryMemory(IntPtr ptr);
+        ValueTask FreeLibraryMemoryAsync(IntPtr ptr, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to verify if the indicated file data is identical to Flash memory content.
         /// </summary>
-        CubeProgrammerError Verify(IntPtr fileData, string address);
+        ValueTask<CubeProgrammerError> VerifyAsync(IntPtr fileData, string address, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
         /// </summary>
-        CubeProgrammerError VerifyMemory(string address, byte[] data);
+        ValueTask<CubeProgrammerError> VerifyMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
         /// </summary>
-        CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data);
+        ValueTask<CubeProgrammerError> VerifyMemoryBySegmentAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to save the data file content to another file.
         /// </summary>
-        CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName);
+        ValueTask<CubeProgrammerError> SaveFileToFileAsync(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to save Flash memory content to file.
         /// </summary>
-        CubeProgrammerError SaveMemoryToFile(string address, string size, string fileName);
+        ValueTask<CubeProgrammerError> SaveMemoryToFileAsync(string address, string size, string fileName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to clean up and disconnect the current connected target.
         /// </summary>
-        CubeProgrammerError Disconnect();
+        ValueTask<CubeProgrammerError> DisconnectAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to clear the list of each created interface.
         /// </summary>
-        void DeleteInterfaceList();
+        ValueTask DeleteInterfaceListAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
         /// </summary>
-        void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1);
+        ValueTask AutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
@@ -290,12 +292,12 @@ namespace SharpCubeProgrammer.Interface
         /// <param name="serialAddress">The address where the inital data and the subsequent increments will be made.</param>
         /// <param name="serialSize">Size for the serial numbering.</param>
         /// <param name="serialInitialData">Intial data used for the serial numbering that will be incremented.</param>
-        void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "");
+        ValueTask SerialNumberingAutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get Flash storage information.
         /// </summary>
-        (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure();
+        ValueTask<(CubeProgrammerError, DeviceStorageStructure)> GetStorageStructureAsync(CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -307,22 +309,22 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows program the given Option Byte.
         /// The option bytes are configured by the end user depending on the application requirements.
         /// </summary>
-        CubeProgrammerError SendOptionBytesCmd(string command);
+        ValueTask<CubeProgrammerError> SendOptionBytesCmdAsync(string command, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        DevicePeripheralC? InitOptionBytesInterface();
+        ValueTask<DevicePeripheralC?> InitOptionBytesInterfaceAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get option bytes values of the connected target.
         /// </summary>
-        DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId);
+        ValueTask<DevicePeripheralC?> FastRomInitOptionBytesInterfaceAsync(ushort deviceId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to display the Option bytes.
         /// </summary>
-        CubeProgrammerError ObDisplay();
+        ValueTask<CubeProgrammerError> ObDisplayAsync(CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -334,34 +336,34 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to specify the location of Flash Loader.
         /// </summary>
         /// <param name="path">Indicates the full path of the considered folder.</param>
-        void SetLoadersPath(string path);
+        ValueTask SetLoadersPathAsync(string path, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to specify the path of the external Loaders to be loaded.
         /// </summary>
         /// <param name="path"></param>
-        DeviceExternalLoader? SetExternalLoaderPath(string path);
+        ValueTask<DeviceExternalLoader?> SetExternalLoaderPathAsync(string path, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to specify the path of the external Loaders to be loaded via OBL interfaces.
         /// </summary>
         /// <param name="path">Indicates the full path of the folder containing external Loaders.</param>
-        DeviceExternalLoader? SetExternalLoaderOBL(string path);
+        ValueTask<DeviceExternalLoader?> SetExternalLoaderOBLAsync(string path, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get available external Loaders in th mentioned path.
         /// </summary>
-        DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer");
+        ValueTask<DeviceExternalStorageInfo?> GetExternalLoadersAsync(string path = @".\st\Programmer", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to unload an external Loaders.
         /// </summary>
-        void RemoveExternalLoader(string path);
+        ValueTask RemoveExternalLoaderAsync(string path, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to delete all target Flash Loaders.
         /// </summary>
-        void DeleteLoaders();
+        ValueTask DeleteLoadersAsync(CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -374,53 +376,53 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to read the device unique identifier.
         /// </summary>
-        (CubeProgrammerError, byte[]) GetUID64();
+        ValueTask<(CubeProgrammerError, byte[])> GetUID64Async(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to erase the BLE stack firmware.
         /// </summary>
-        CubeProgrammerError FirmwareDelete();
+        ValueTask<CubeProgrammerError> FirmwareDeleteAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to make upgrade of BLE stack firmware or FUS firmware.
         /// </summary>
-        CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify);
+        ValueTask<CubeProgrammerError> FirmwareUpgradeAsync(string filePath, string address, uint firstInstall, uint startStack, uint verify, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        CubeProgrammerError StartWirelessStack();
+        ValueTask<CubeProgrammerError> StartWirelessStackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        CubeProgrammerError UpdateAuthKey(string filePath);
+        ValueTask<CubeProgrammerError> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to lock the authentication key and once locked, it is no longer possible to change it.
         /// </summary>
-        CubeProgrammerError AuthKeyLock();
+        ValueTask<CubeProgrammerError> AuthKeyLockAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write a customized user key.
         /// </summary>
-        CubeProgrammerError WriteUserKey(string filePath, byte keyType);
+        ValueTask<CubeProgrammerError> WriteUserKeyAsync(string filePath, byte keyType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to activate the AntiRollBack.
         /// </summary>
-        CubeProgrammerError AntiRollBack();
+        ValueTask<CubeProgrammerError> AntiRollBackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start and establish a communication with the FUS operator.
         /// </summary>
-        CubeProgrammerError StartFus();
+        ValueTask<CubeProgrammerError> StartFusAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to set default option Bytes.
         /// </summary>
         /// <returns></returns>
-        CubeProgrammerError UnlockChip();
+        ValueTask<CubeProgrammerError> UnlockChipAsync(CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -437,7 +439,7 @@ namespace SharpCubeProgrammer.Interface
         /// <param name="tfaFile">Indicates the full path of the tfa-ssp file.</param>
         /// <param name="hsmSlotId">Indicates the HSM slot ID.</param>
         /// <returns>0 if the SSP was finished successfully, otherwise an error occurred.</returns>
-        CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId);
+        ValueTask<CubeProgrammerError> ProgramSspAsync(string sspFile, string licenseFile, string tfaFile, int hsmSlotId, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -450,35 +452,35 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <returns>string that contains the HSM Firmware Identifier.</returns>
-        string GetHsmFirmwareID(int hsmSlotId);
+        ValueTask<string> GetHsmFirmwareIDAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine aims to get the current HSM counter.
         /// </summary>
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <returns>Counter value</returns>
-        ulong GetHsmCounter(int hsmSlotId);
+        ValueTask<ulong> GetHsmCounterAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine aims to get the HSM State.
         /// </summary>
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <returns>string with possible values: ST_STATE , OEM_STATE, OPERATIONAL_STATE , UNKNOWN_STATE</returns>
-        string GetHsmState(int hsmSlotId);
+        ValueTask<string> GetHsmStateAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine aims to get the HSM version.
         /// </summary>
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <returns>string with possible values: 1 , 2</returns>
-        string GetHsmVersion(int hsmSlotId);
+        ValueTask<string> GetHsmVersionAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine aims to get the HSM type.
         /// </summary>
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <returns>string with possible values: SFI. SMU. SSP...</returns>
-        string GetHsmType(int hsmSlotId);
+        ValueTask<string> GetHsmTypeAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine aims to get and save the HSM license into a binary file.
@@ -487,7 +489,7 @@ namespace SharpCubeProgrammer.Interface
         /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
         /// <param name="outLicensePath">Path of the output binary file.</param>
         /// <returns>0 if the operation was finished successfully, otherwise an error occurred.</returns>
-        CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath);
+        ValueTask<CubeProgrammerError> GetHsmLicenseAsync(int hsmSlotId, string outLicensePath, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -498,28 +500,28 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        uint HexConverterToUint(string hex);
+        ValueTask<uint> HexConverterToUintAsync(string hex, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// HexConverterToInt
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        int HexConverterToInt(string hex);
+        ValueTask<int> HexConverterToIntAsync(string hex, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// HexConverterToString
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        string HexConverterToString(uint hex);
+        ValueTask<string> HexConverterToStringAsync(uint hex, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// HexConverterToString
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        string HexConverterToString(int hex);
+        ValueTask<string> HexConverterToStringAsync(int hex, CancellationToken cancellationToken = default);
 
         #endregion
 

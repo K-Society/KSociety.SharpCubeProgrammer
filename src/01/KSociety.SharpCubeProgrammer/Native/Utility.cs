@@ -12,25 +12,13 @@ namespace SharpCubeProgrammer.Native
     /// </summary>
     internal static class Utility
     {
+        /// <summary>
+        /// If this value is used and lpFileName specifies an absolute path, the system uses the alternate file search strategy discussed in the Remarks section to find associated executable modules that the specified module causes to be loaded.
+        /// </summary>
+        /// <remarks>
+        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
+        /// </remarks>
         internal const int LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008;
-
-        /// <summary>
-        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
-        /// </summary>
-        /// <remarks>
-        /// Only supported on Windows Vista, 7, Server 2008 and Server 2008 R2 with KB2533623.
-        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
-        /// </remarks>
-        internal const int LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200;
-
-        /// <summary>
-        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
-        /// </summary>
-        /// <remarks>
-        /// Only supported on Windows Vista, 7, Server 2008 and Server 2008 R2 with KB2533623.
-        /// See <c>https://learn.microsoft.com/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa</c>.
-        /// </remarks>
-        internal const int LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400;
 
         /// <summary>
         /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
@@ -94,12 +82,6 @@ namespace SharpCubeProgrammer.Native
             [MarshalAs(UnmanagedType.LPStr)] string lpFileName,
             IntPtr hFile,
             int dwFlags);
-
-        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern IntPtr AddDllDirectory(string newDirectory);
-
-        [DllImport(KernelLibName, CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool SetDllDirectoryW(string lpPathName);
     }
 }
 #endif

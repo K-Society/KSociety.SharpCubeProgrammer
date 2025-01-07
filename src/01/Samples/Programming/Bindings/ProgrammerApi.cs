@@ -10,7 +10,7 @@ namespace Programming.Bindings
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().SingleInstance();
+            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().As<ICubeProgrammerApiAsync>().SingleInstance();
         }
     }
 }
