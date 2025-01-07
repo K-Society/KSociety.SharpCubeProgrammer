@@ -2146,6 +2146,7 @@ namespace SharpCubeProgrammer
             {
                 return Native.ProgrammerApi.GetHsmCounter(hsmSlotId);
             }
+
             return 0UL;
         }
 
@@ -2162,6 +2163,7 @@ namespace SharpCubeProgrammer
             {
                 return Native.ProgrammerApi.GetHsmState(hsmSlotId);
             }
+
             return String.Empty;
         }
 
@@ -2178,6 +2180,7 @@ namespace SharpCubeProgrammer
             {
                 return Native.ProgrammerApi.GetHsmVersion(hsmSlotId);
             }
+
             return String.Empty;
         }
 
@@ -2194,6 +2197,7 @@ namespace SharpCubeProgrammer
             {
                 return Native.ProgrammerApi.GetHsmType(hsmSlotId);
             }
+
             return String.Empty;
         }
 
