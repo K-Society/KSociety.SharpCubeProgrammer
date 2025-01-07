@@ -199,7 +199,7 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        public async ValueTask<CubeProgrammerError> Reset(DebugResetMode rstMode, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> ResetAsync(DebugResetMode rstMode, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.Reset(rstMode), cancellationToken).ConfigureAwait(false);
         }

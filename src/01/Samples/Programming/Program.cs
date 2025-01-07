@@ -18,6 +18,7 @@ namespace Programming
         private static IConfigurationRoot? Configuration;
         private static ILogger<Program>? Logger;
         private static ICubeProgrammerApi? CubeProgrammerApi;
+        private static ICubeProgrammerApiAsync? CubeProgrammerApiAsync;
 
         private static void Main(string[] args)
         {
@@ -33,6 +34,7 @@ namespace Programming
             Logger.LogDebug("Resolve ICubeProgrammerApi...");
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
+            CubeProgrammerApiAsync = container.Resolve<ICubeProgrammerApiAsync>();
 
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();

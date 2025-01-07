@@ -42,7 +42,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine used to apply a target reset, use only with ST-LINK!.
         /// </summary>
-        ValueTask<CubeProgrammerError> Reset(DebugResetMode rstMode, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> ResetAsync(DebugResetMode rstMode, CancellationToken cancellationToken = default);
 
         #endregion
 
