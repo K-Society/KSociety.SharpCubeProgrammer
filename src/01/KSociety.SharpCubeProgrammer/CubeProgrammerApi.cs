@@ -448,7 +448,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
+        public void SetVerbosityLevel(VerbosityLevel level)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {

@@ -118,7 +118,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to choose the verbosity level for display.
         /// </summary>
         /// <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
-        void SetVerbosityLevel(CubeProgrammerVerbosityLevel level);
+        void SetVerbosityLevel(VerbosityLevel level);
 
         /// <summary>
         /// This routine allows to check connection status [maintained or lost].

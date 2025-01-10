@@ -127,7 +127,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask SetVerbosityLevelAsync(CubeProgrammerVerbosityLevel level, CancellationToken cancellationToken = default)
+        public async ValueTask SetVerbosityLevelAsync(VerbosityLevel level, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => this.SetVerbosityLevel(level), cancellationToken).ConfigureAwait(false);
         }
