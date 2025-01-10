@@ -1,6 +1,8 @@
 #include "pch.h"
 #include <stdexcept>
 
+unsigned int verbosityLevel;
+
 /* -------------------------------------------------------------------------------------------- */
 /*                              STLINK functions                                                */
 /* -------------------------------------------------------------------------------------------- */
@@ -182,7 +184,8 @@ void SetDisplayCallbacks(displayCallBacks c)
 
 void SetVerbosityLevel(int level)
 {
-	setVerbosityLevel(level);
+    verbosityLevel = level;
+	setVerbosityLevel(verbosityLevel);
 	return;
 }
 
