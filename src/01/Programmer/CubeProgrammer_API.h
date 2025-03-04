@@ -281,6 +281,7 @@ typedef struct usartConnectParameters
     usartFlowControl flowControl;   /**< Flow control: value in usartFlowControl. */
     int statusRTS;                  /**< RTS: Value in {0,1}. */
     int statusDTR;                  /**< DTR: Value in {0,1}. */
+    int DelayRtsDtr;                /**  Manage the delay timing of the Pulse. */
     unsigned char noinitBits;       /**< Set No Init bits: value in {0,1}. */
     char rdu;                       /**< request a read unprotect: value in {0,1}.*/
     char tzenreg;                       /**< request a TZEN regression: value in {0,1}.*/

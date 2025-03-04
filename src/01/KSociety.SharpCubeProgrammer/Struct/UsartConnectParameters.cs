@@ -50,6 +50,11 @@ namespace SharpCubeProgrammer.Struct
         public int statusDTR;
 
         /// <summary>
+        /// Manage the delay timing of the Pulse.
+        /// </summary>
+        public int DelayRtsDtr;
+
+        /// <summary>
         /// Set No Init bits: value in {0,1}.
         /// </summary>
         public byte noinitBits;

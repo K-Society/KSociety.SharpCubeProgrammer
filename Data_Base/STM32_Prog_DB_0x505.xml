@@ -254,14 +254,14 @@
 					<Category>
 						<Name>OTP8</Name>
 							<Field>
-								<Parameters address="0x48" name="Reserved by ST" size="0x8"/>
+								<Parameters address="0x48" name="OTP_CID_PROV" size="0x8"/>
 								<AssignedBits>
 									<Bit>
 										<Name>Data8</Name>
 										<Description>Data</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x20</BitWidth>
-										<Access>R</Access>
+										<Access>RW</Access>
 									</Bit>
 									<Bit>
 										<Name>Status8</Name>

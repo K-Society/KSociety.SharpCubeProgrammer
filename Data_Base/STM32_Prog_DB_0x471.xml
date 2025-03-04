@@ -13,22 +13,22 @@
 			<Interface name="JTAG_SWD">
 				<!-- 1M Single Bank-->
 				<Configuration number="0x2">
-					<DB1M reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DB1M>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DBANK>
 					<flashSize> <ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x400"/> </flashSize>
 				</Configuration>
 				<!-- 1M Dual Bank-->
 				<Configuration number="0x3">
-					<DB1M reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DB1M>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DBANK>
 					<flashSize> <ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x400"/> </flashSize>
 				</Configuration>
 				<!-- 512K Single Bank-->
 				<Configuration number="0x4">
-					<DB1M reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DB1M>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DBANK>
 					<flashSize><ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x200"/> </flashSize>
 				</Configuration>
 				<!-- 512K Dual Bank-->
 				<Configuration number="0x5">
-					<DB1M reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DB1M>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DBANK>
 					<flashSize><ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x200"/> </flashSize>
 				</Configuration>
 				<Configuration number="0xA">
@@ -38,10 +38,10 @@
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
 				<Configuration number="0x2">
-					<DB1M reference="0x0"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x0"/> </DB1M>
+					<DBANK reference="0x0"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x0"/> </DBANK>
 				</Configuration>
 				<Configuration number="0x3">
-					<DB1M reference="0x1"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x200000"/> </DB1M>
+					<DBANK reference="0x1"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x200000"/> </DBANK>
 				</Configuration>
 				<Configuration number="0xA">
 					<dummy> <ReadRegister address="0x1FF00000" mask="0" value="0"/> </dummy>
@@ -328,14 +328,14 @@
 									</Values>
 								</Bit>
 								<Bit config="2,3,4,5,10">
-									<Name>DB1M</Name>
+									<Name>DBANK</Name>
 									<Description>Dual-Bank on 1 MB Flash or 512 KB Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">1 MB or 512 Kb single Flash: contiguous address in bank1</Val>
-										<Val value="0x1">1 MB or 512 Kb dual-bank Flash with contiguous addresses. When DB1M is set, a hard Fault is generated when the requested address goes over 1 MB or 512 Kb.</Val>
+										<Val value="0x1">1 MB or 512 Kb dual-bank Flash with contiguous addresses. When DBANK is set, a hard Fault is generated when the requested address goes over 1 MB or 512 Kb.</Val>
 									</Values>
 								</Bit>
 								<Bit>
@@ -946,14 +946,14 @@
 									</Values>
 								</Bit>
 								<Bit config="2,3,4,5,10">
-									<Name>DB1M</Name>
+									<Name>DBANK</Name>
 									<Description>Dual-Bank on 1 MB Flash or 512 KB Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">1 MB or 512 Kb single Flash: contiguous address in bank1</Val>
-										<Val value="0x1">1 MB or 512 Kb dual-bank Flash with contiguous addresses. When DB1M is set, a hard Fault is generated when the requested address goes over 1 MB or 512 Kb.</Val>
+										<Val value="0x1">1 MB or 512 Kb dual-bank Flash with contiguous addresses. When DBANK is set, a hard Fault is generated when the requested address goes over 1 MB or 512 Kb.</Val>
 									</Values>
 								</Bit>
 								<Bit>

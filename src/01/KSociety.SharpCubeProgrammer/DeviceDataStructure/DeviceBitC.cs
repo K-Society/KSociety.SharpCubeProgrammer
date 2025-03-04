@@ -21,5 +21,6 @@ namespace SharpCubeProgrammer.DeviceDataStructure
         public BitCoefficientC Equation;
         public string Reference;
         public uint BitValue;
+        public uint ValLine;
     }
 }

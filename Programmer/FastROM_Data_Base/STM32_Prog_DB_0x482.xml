@@ -127,7 +127,7 @@
 									<DefaultVal>0x1</DefaultVal>
 								</Bit>
 								<Bit>
-									<Name>SRAM134_RST</Name>
+									<Name>SRAM_RST</Name>
 									<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
