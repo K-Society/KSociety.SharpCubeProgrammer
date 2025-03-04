@@ -29,7 +29,7 @@ namespace QuickStart
 
             cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-            cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+            cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel0);
 
             #endregion
 
@@ -142,9 +142,15 @@ namespace QuickStart
                     break;
 
                 case MessageType.Verbosity1:
+                    Console.WriteLine("Verbosity1 Message: {0}", message);
+                    break;
+
                 case MessageType.Verbosity2:
+                    Console.WriteLine("Verbosity2 Message: {0}", message);
+                    break;
+
                 case MessageType.Verbosity3:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.WriteLine("Verbosity3 Message: {0}", message);
                     break;
 
                 case MessageType.GreenInfoNoPopup:

@@ -103,6 +103,7 @@ typedef struct bit_C
     bitCoefficient_C equation;      /**< Bits equation, #BitCoefficient_C. */
     unsigned char* reference;
     unsigned int bitValue;
+    unsigned int valLine;
 }bit_C;
 
 

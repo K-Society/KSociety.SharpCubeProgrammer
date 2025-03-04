@@ -330,7 +330,7 @@
 					<Parameters address="0x0BFA0000" name=" 512 Bytes Data OTP" size="0x200"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x10</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x0BFA0000" name="OTP" occurrence="0x1" size="0x200"/>
@@ -439,7 +439,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>SRAM134_RST</Name>
+									<Name>SRAM_RST</Name>
 									<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -911,7 +911,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM134_RST</Name>
+										<Name>SRAM_RST</Name>
 										<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
 										<BitOffset>0xF</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -1523,7 +1523,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM134_RST</Name>
+										<Name>SRAM_RST</Name>
 										<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
 										<BitOffset>0xF</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -2167,6 +2167,17 @@
 									</Values>
 								</Bit>
 								<Bit>
+									<Name>SRAM_RST</Name>
+									<Description>SRAM1, SRAM3 and SRAM4 erase upon system reset</Description>
+									<BitOffset>0xF</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">SRAM1, SRAM3 and SRAM4 erased when a system reset occurs</Val>
+										<Val value="0x1">SRAM1, SRAM3 and SRAM4 not erased when a system reset occurs</Val>
+									</Values>
+								</Bit>
+								<Bit>
 									<Name>IWDG_SW</Name>
 									<Description/>
 									<BitOffset>0x10</BitOffset>
@@ -2307,6 +2318,28 @@
 									<Values>
 										<Val value="0x0">USB power delivery dead-battery enabled/ TDI pull-up deactivated</Val>
 										<Val value="0x1">USB power delivery dead-battery disabled/ TDI pull-up activated</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>IO_VDD_HSLV</Name>
+									<Description>High-speed IO at low VDD voltage configuration bit</Description>
+									<BitOffset>0x1D</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">High-speed IO at low VDD voltage feature disabled (VDD can exceed 2.5 V)</Val>
+										<Val value="0x1">High-speed IO at low VDD voltage feature enabled (VDD remains below 2.5 V)</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>IO_VDDIO2_HSLV</Name>
+									<Description>High-speed IO at low VDDIO2 voltage configuration bit</Description>
+									<BitOffset>0x1E</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">High-speed IO at low VDDIO2 voltage feature disabled (VDDIO2 can exceed 2.5 V)</Val>
+										<Val value="0x1">High-speed IO at low VDDIO2 voltage feature enabled (VDDIO2 remains below 2.5 V)</Val>
 									</Values>
 								</Bit>
 								</AssignedBits>

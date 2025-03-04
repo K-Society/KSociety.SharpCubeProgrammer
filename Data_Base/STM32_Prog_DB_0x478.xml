@@ -8,7 +8,6 @@
 		<Name>STM32H533/523</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
-		<Boolean name="nonCrypto" address="0x40022428" mask="0x00000010" value="0x00000010" />
 
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
@@ -608,10 +607,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -625,10 +623,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1632,10 +1629,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1649,10 +1645,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2655,10 +2650,9 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Condition>nonCrypto</Condition>
 									<Access>R</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2672,10 +2666,9 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H52x.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Condition>nonCrypto</Condition>
 									<Access>W</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>

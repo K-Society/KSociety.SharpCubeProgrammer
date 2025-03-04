@@ -8,7 +8,6 @@
 		<Name>STM32H56x/573</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
-		<Boolean name="nonCrypto" address="0x40022428" mask="0x00000010" value="0x00000010" />
 
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
@@ -137,22 +136,22 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<Configuration config="0,3,16,19,15">
-					<Parameters address="0x20003000" name="SRAM" size="0x10000"/>
+					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20003000" name="SRAM" occurrence="0x1" size="0x10000"/>
+							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x10000"/>
 						</Field>
 					</Bank>
 				</Configuration>
 				<Configuration config="1,2,4,9,10,5,6,7,8, 17,18,20,25,26,21,22,23,24,11,12,13,14">
-					<Parameters address="0x20003000" name="SRAM" size="0x10000"/>
+					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20004000" name="SRAM" occurrence="0x1" size="0x10000"/>
+							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x10000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -598,10 +597,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -615,10 +613,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1644,10 +1641,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>R</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -1661,10 +1657,9 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
-										<Condition>nonCrypto</Condition>
 										<Access>W</Access>
 										<Values>
 											<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2689,10 +2684,9 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Condition>nonCrypto</Condition>
 									<Access>R</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
@@ -2706,10 +2700,9 @@
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.Warning: Do not modify BOOT_UBE on H56x.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Condition>nonCrypto</Condition>
 									<Access>W</Access>
 									<Values>
 										<Val value="0xB4">OEM-iRoT (user flash) selected</Val>
