@@ -437,7 +437,7 @@
 								</Bit>
 								<Bit>
 									<Name>PROT_AREA_END</Name>
-									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address.</Description>
+									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address. In addition, program the PCROP area end and start addresses so that the difference is negative, PROT_AREA_END lower than PROT_AREA_START</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0xC</BitWidth>
 									<Access>R</Access>
@@ -469,7 +469,7 @@
 								</Bit>
 								<Bit>
 									<Name>PROT_AREA_END</Name>
-									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address</Description>
+									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address. In addition, program the PCROP area end and start addresses so that the difference is negative, PROT_AREA_END lower than PROT_AREA_START</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0xC</BitWidth>
 									<Access>W</Access>

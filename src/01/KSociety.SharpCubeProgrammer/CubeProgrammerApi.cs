@@ -9,7 +9,6 @@ namespace SharpCubeProgrammer
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading;
-    using System.Threading.Tasks;
     using DeviceDataStructure;
     using Enum;
     using Interface;
@@ -17,7 +16,7 @@ namespace SharpCubeProgrammer
     using Microsoft.Extensions.Logging.Abstractions;
     using Struct;
 
-    public class CubeProgrammerApi : ICubeProgrammerApi, ICubeProgrammerApiAsync
+    public partial class CubeProgrammerApi : ICubeProgrammerApi
     {
         private readonly ILogger<CubeProgrammerApi> _logger;
 
@@ -65,12 +64,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.TryConnectStLink(stLinkProbeIndex, shared, debugConnectMode), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
             var listPtr = new IntPtr();
@@ -103,12 +96,6 @@ namespace SharpCubeProgrammer
             }
 
             return parametersList;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetStLinkList(shared), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -147,12 +134,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkEnumerationListAsync(bool shared = false, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetStLinkEnumerationList(shared), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -175,12 +156,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectStLinkAsync(DebugConnectParameters debugConnectParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectStLink(debugConnectParameters), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError Reset(DebugResetMode rstMode)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -198,12 +173,6 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "ConnectStLink: ");
             }
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ResetAsync(DebugResetMode rstMode, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.Reset(rstMode), cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -249,12 +218,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<IEnumerable<UsartConnectParameters>> GetUsartListAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetUsartList(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -277,12 +240,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectUsartBootloaderAsync(UsartConnectParameters usartConnectParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectUsartBootloader(usartConnectParameters), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError SendByteUart(int bytes)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -300,12 +257,6 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "SendByteUart: ");
             }
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SendByteUartAsync(int bytes, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SendByteUart(bytes), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -344,12 +295,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetDfuDeviceList(ref dfuDeviceList), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -372,12 +317,6 @@ namespace SharpCubeProgrammer
             }
 
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectDfuBootloaderAsync(string usbIndex, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectDfuBootloader(usbIndex), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -405,12 +344,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(DfuConnectParameters dfuParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectDfuBootloader2(dfuParameters), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -432,12 +365,6 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "ConnectSpiBootloader: ");
             }
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectSpiBootloaderAsync(SpiConnectParameters spiParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectSpiBootloader(spiParameters), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -465,12 +392,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectCanBootloaderAsync(CanConnectParameters canParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectCanBootloader(canParameters), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -494,12 +415,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ConnectI2CBootloader(i2CParameters), cancellationToken).ConfigureAwait(false);
-        }
-
         #endregion
 
         #region [General purposes]
@@ -521,12 +436,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SetDisplayCallbacks(initProgressBar, messageReceived, progressBarUpdate), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -539,24 +448,12 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SetDisplayCallbacks(callbacksHandle), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
-        public void SetVerbosityLevel(CubeProgrammerVerbosityLevel level)
+        public void SetVerbosityLevel(VerbosityLevel level)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
                 Native.ProgrammerApi.SetVerbosityLevel((int)level);
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask SetVerbosityLevelAsync(CubeProgrammerVerbosityLevel level, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.SetVerbosityLevel(level), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -569,12 +466,6 @@ namespace SharpCubeProgrammer
             }
 
             return false;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<bool> CheckDeviceConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.CheckDeviceConnection(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -596,12 +487,6 @@ namespace SharpCubeProgrammer
             }
 
             return generalInf;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<GeneralInf?> GetDeviceGeneralInfAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetDeviceGeneralInf(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -635,12 +520,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<(CubeProgrammerError, byte[])> ReadMemoryAsync(string address, int byteSize, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ReadMemory(address, byteSize), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError WriteMemory(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -668,12 +547,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.WriteMemory(address, data), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -707,12 +580,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> WriteMemoryAutoFillAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.WriteMemoryAutoFill(address, data), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -743,12 +610,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> WriteMemoryAndVerifyAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.WriteMemoryAndVerify(address, data), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError EditSector(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -770,12 +631,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.EditSector(address, data), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -828,12 +683,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError Execute(string address = "0x08000000")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -857,12 +706,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ExecuteAsync(string address = "0x08000000", CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.Execute(address), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError MassErase(string sFlashMemName = "")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -873,12 +716,6 @@ namespace SharpCubeProgrammer
             }
 
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> MassEraseAsync(string sFlashMemName = "", CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.MassErase(sFlashMemName), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -895,12 +732,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SectorEraseAsync(uint[] sectors, uint sectorNbr, string sFlashMemName = "", CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SectorErase(sectors, sectorNbr, sFlashMemName), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError ReadUnprotect()
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -914,12 +745,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ReadUnprotectAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ReadUnprotect(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError TzenRegression()
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -930,12 +755,6 @@ namespace SharpCubeProgrammer
             }
 
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> TzenRegressionAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.TzenRegression(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -957,12 +776,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<TargetInterfaceType?> GetTargetInterfaceTypeAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetTargetInterfaceType(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public int GetCancelPointer()
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -971,12 +784,6 @@ namespace SharpCubeProgrammer
             }
 
             return 0;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<int> GetCancelPointerAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetCancelPointer(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1039,12 +846,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DeviceFileDataC?> FileOpenAsync(string filePath, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.FileOpen(filePath), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public IntPtr FileOpenAsPointer(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))
@@ -1067,12 +868,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<IntPtr> FileOpenAsPointerAsync(string filePath, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.FileOpenAsPointer(filePath), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void FreeFileData(IntPtr data)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -1082,12 +877,6 @@ namespace SharpCubeProgrammer
                     Native.ProgrammerApi.FreeFileData(data);
                 }
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask FreeFileDataAsync(IntPtr data, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.FreeFileData(data), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1103,12 +892,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask FreeLibraryMemoryAsync(IntPtr ptr, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.FreeLibraryMemory(ptr), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1121,12 +904,6 @@ namespace SharpCubeProgrammer
             }
 
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> VerifyAsync(IntPtr fileData, string address, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.Verify(fileData, address), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1154,12 +931,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> VerifyMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.VerifyMemory(address, data), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1181,12 +952,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> VerifyMemoryBySegmentAsync(string address, byte[] data, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.VerifyMemoryBySegment(address, data), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1214,12 +979,6 @@ namespace SharpCubeProgrammer
             }
 
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SaveFileToFileAsync(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SaveFileToFile(fileData, sFileName), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1254,12 +1013,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SaveMemoryToFileAsync(string address, string size, string fileName, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SaveMemoryToFile(address, size, fileName), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError Disconnect()
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1274,24 +1027,12 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> DisconnectAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.Disconnect(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void DeleteInterfaceList()
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
                 Native.ProgrammerApi.DeleteInterfaceList();
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask DeleteInterfaceListAsync(CancellationToken cancellationToken = default)
-        {
-             await Task.Run(() => this.DeleteInterfaceList(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1313,12 +1054,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask AutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.AutomaticMode(filePath, address, skipErase, verify, isMassErase, obCommand, run), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "")
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -1334,12 +1069,6 @@ namespace SharpCubeProgrammer
                     }
                 }
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask SerialNumberingAutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "", CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.SerialNumberingAutomaticMode(filePath, address, skipErase, verify, isMassErase, obCommand, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1415,12 +1144,6 @@ namespace SharpCubeProgrammer
             return (output, deviceStorageStructure);
         }
 
-        /// <inheritdoc />
-        public async ValueTask<(CubeProgrammerError, DeviceStorageStructure)> GetStorageStructureAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetStorageStructure(), cancellationToken).ConfigureAwait(false);
-        }
-
         #endregion
 
         #region [Option Bytes]
@@ -1440,12 +1163,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SendOptionBytesCmdAsync(string command, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SendOptionBytesCmd(command), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public DevicePeripheralC? InitOptionBytesInterface()
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -1459,12 +1176,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DevicePeripheralC?> InitOptionBytesInterfaceAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.InitOptionBytesInterface(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -1475,12 +1186,6 @@ namespace SharpCubeProgrammer
             }
 
             return null;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<DevicePeripheralC?> FastRomInitOptionBytesInterfaceAsync(ushort deviceId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.FastRomInitOptionBytesInterface(deviceId), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1602,11 +1307,6 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        //private async ValueTask<DevicePeripheralC?> DevicePeripheralCHandlerAsync(IntPtr pointer, CancellationToken cancellationToken = default)
-        //{
-        //    return await Task.Run(() => this.DevicePeripheralCHandler(pointer), cancellationToken).ConfigureAwait(false);
-        //}
-
         /// <inheritdoc />
         public CubeProgrammerError ObDisplay()
         {
@@ -1628,12 +1328,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ObDisplayAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ObDisplay(), cancellationToken).ConfigureAwait(false);
-        }
-
         #endregion
 
         #region [Loaders]
@@ -1648,12 +1342,6 @@ namespace SharpCubeProgrammer
                 var pathAdapted = path.Replace(@"\", "/");
                 Native.ProgrammerApi.SetLoadersPath(pathAdapted);
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask SetLoadersPathAsync(string path, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.SetLoadersPath(path), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1706,12 +1394,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DeviceExternalLoader?> SetExternalLoaderPathAsync(string path, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SetExternalLoaderPath(path), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public DeviceExternalLoader? SetExternalLoaderOBL(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
@@ -1758,12 +1440,6 @@ namespace SharpCubeProgrammer
             }
 
             return null;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<DeviceExternalLoader?> SetExternalLoaderOBLAsync(string path, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.SetExternalLoaderOBL(path), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1835,12 +1511,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DeviceExternalStorageInfo?> GetExternalLoadersAsync(string path = @".\st\Programmer", CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetExternalLoaders(path), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void RemoveExternalLoader(string path)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -1851,24 +1521,12 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask RemoveExternalLoaderAsync(string path, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.RemoveExternalLoader(path), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void DeleteLoaders()
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
             {
                 Native.ProgrammerApi.DeleteLoaders();
             }
-        }
-
-        /// <inheritdoc />
-        public async ValueTask DeleteLoadersAsync(CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => this.DeleteLoaders(), cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -1901,12 +1559,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<(CubeProgrammerError, byte[])> GetUID64Async(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetUID64(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError FirmwareDelete()
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1918,12 +1570,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> FirmwareDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.FirmwareDelete(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1944,12 +1590,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> FirmwareUpgradeAsync(string filePath, string address, uint firstInstall, uint startStack, uint verify, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.FirmwareUpgrade(filePath, address, firstInstall, startStack, verify), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError StartWirelessStack()
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1961,12 +1601,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> StartWirelessStackAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.StartWirelessStack(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -1984,12 +1618,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.UpdateAuthKey(filePath), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError AuthKeyLock()
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -2001,12 +1629,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> AuthKeyLockAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.AuthKeyLock(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -2026,12 +1648,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> WriteUserKeyAsync(string filePath, byte keyType, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.WriteUserKey(filePath, keyType), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError AntiRollBack()
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -2043,12 +1659,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> AntiRollBackAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.AntiRollBack(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -2066,12 +1676,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> StartFusAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.StartFus(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public CubeProgrammerError UnlockChip()
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -2083,12 +1687,6 @@ namespace SharpCubeProgrammer
             }
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> UnlockChipAsync(CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.UnlockChip(), cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -2112,12 +1710,6 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ProgramSspAsync(string sspFile, string licenseFile, string tfaFile, int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.ProgramSsp(sspFile, licenseFile, tfaFile, hsmSlotId), cancellationToken).ConfigureAwait(false);
-        }
-
         #endregion
 
         #region [STM32 HSM specific functions]
@@ -2134,12 +1726,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<string> GetHsmFirmwareIDAsync(int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmFirmwareID(hsmSlotId), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public ulong GetHsmCounter(int hsmSlotId)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -2148,12 +1734,6 @@ namespace SharpCubeProgrammer
             }
 
             return 0UL;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<ulong> GetHsmCounterAsync(int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmCounter(hsmSlotId), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -2168,12 +1748,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<string> GetHsmStateAsync(int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmState(hsmSlotId), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public string GetHsmVersion(int hsmSlotId)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -2185,12 +1759,6 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<string> GetHsmVersionAsync(int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmVersion(hsmSlotId), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public string GetHsmType(int hsmSlotId)
         {
             if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
@@ -2199,12 +1767,6 @@ namespace SharpCubeProgrammer
             }
 
             return String.Empty;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<string> GetHsmTypeAsync(int hsmSlotId, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmType(hsmSlotId), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -2222,12 +1784,6 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> GetHsmLicenseAsync(int hsmSlotId, string outLicensePath, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.GetHsmLicense(hsmSlotId, outLicensePath), cancellationToken).ConfigureAwait(false);
-        }
-
         #endregion
 
         #region [Util]
@@ -2242,24 +1798,12 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<uint> HexConverterToUintAsync(string hex, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.HexConverterToUint(hex), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public int HexConverterToInt(string hex)
         {
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
             var parseResult = Int32.TryParse(StringFilter(hex), NumberStyles.HexNumber, formatProvider, out var result);
 
             return parseResult ? result : 0;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<int> HexConverterToIntAsync(string hex, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.HexConverterToInt(hex), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -2270,22 +1814,10 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<string> HexConverterToStringAsync(uint hex, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.HexConverterToString(hex), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public string HexConverterToString(int hex)
         {
             var output = "0x" + hex.ToString("X");
             return output;
-        }
-
-        /// <inheritdoc />
-        public async ValueTask<string> HexConverterToStringAsync(int hex, CancellationToken cancellationToken = default)
-        {
-            return await Task.Run(() => this.HexConverterToString(hex), cancellationToken).ConfigureAwait(false);
         }
 
         private static string StringFilter(string hex)
@@ -2377,39 +1909,6 @@ namespace SharpCubeProgrammer
                 Interlocked.MemoryBarrier();
                 return this._isDisposed == DisposedFlag;
             }
-        }
-
-        /// <inheritdoc/>
-        [SuppressMessage(
-            "Usage",
-            "CA1816:Dispose methods should call SuppressFinalize",
-            Justification = "DisposeAsync should also call SuppressFinalize (see various .NET internal implementations).")]
-        public ValueTask DisposeAsync()
-        {
-            // Still need to check if we've already disposed; can't do both.
-            var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
-            if (wasDisposed != DisposedFlag)
-            {
-                GC.SuppressFinalize(this);
-
-                // Always true, but means we get the similar syntax as Dispose,
-                // and separates the two overloads.
-                return this.DisposeAsync(true);
-            }
-
-            return default;
-        }
-
-        /// <summary>
-        ///  Releases unmanaged and - optionally - managed resources, asynchronously.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected ValueTask DisposeAsync(bool disposing)
-        {
-            // Default implementation does a synchronous dispose.
-            this.Dispose(disposing);
-
-            return default;
         }
 
         #endregion

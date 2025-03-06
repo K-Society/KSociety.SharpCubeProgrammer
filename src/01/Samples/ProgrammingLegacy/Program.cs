@@ -126,7 +126,6 @@ namespace ProgrammingLegacy
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new Bindings.Log());
-            //builder.RegisterModule(new KSociety.Wmi.Bindings.Wmi());
             builder.RegisterModule(new Bindings.ProgrammerApi());
             return builder.Build();
         }

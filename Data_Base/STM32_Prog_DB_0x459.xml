@@ -44,7 +44,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<FlashSize address="0x1FFF777C" default="0x10000"/>
-				<BootloaderVersion address="0x1FFF17FE"/>
+				<BootloaderVersion address="0x1FFF37FE"/>
 				<!--DBGMCU_CR address="0xF0001004" mask="0x06"/--> 
                 <!--DBGMCU_APB1_FZ address="0xF0001008" mask="0x1800"/--> 
 				<!-- 256KB  -->
@@ -116,15 +116,25 @@
 								<Bit>
 									<Name>BOR_LEV</Name>
 									<Description>This bitfield contains the VDD supply level threshold that activates/releases the reset</Description>
-									<BitOffset>0x8</BitOffset>
-									<BitWidth>0x3</BitWidth>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR level 0, reset level threshold around 1.7 V</Val>
-										<Val value="0x1">BOR level 1, reset level threshold around 2.0 V</Val>
-										<Val value="0x2">BOR level 2, reset level threshold around 2.2 V</Val>
-										<Val value="0x3">BOR level 3, reset level threshold around 2.5 V</Val>
-										<Val value="0x4">BOR level 4, reset level threshold around 2.8 V</Val>
+										<Val value="0x0">BOR level 0, reset level threshold around 2.0 V</Val>
+										<Val value="0x1">BOR level 1, reset level threshold around 2.2 V</Val>
+										<Val value="0x2">BOR level 2, reset level threshold around 2.5 V</Val>
+										<Val value="0x3">BOR level 3, reset level threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description>BOR enable/disable</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">BOR disabled</Val>
+										<Val value="0x1">BOR enabled</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -421,15 +431,25 @@
 								<Bit>
 									<Name>BOR_LEV</Name>
 									<Description>This bitfield contains the VDD supply level threshold that activates/releases the reset</Description>
-									<BitOffset>0x8</BitOffset>
-									<BitWidth>0x3</BitWidth>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR level 0, reset level threshold around 1.7 V</Val>
-										<Val value="0x1">BOR level 1, reset level threshold around 2.0 V</Val>
-										<Val value="0x2">BOR level 2, reset level threshold around 2.2 V</Val>
-										<Val value="0x3">BOR level 3, reset level threshold around 2.5 V</Val>
-										<Val value="0x4">BOR level 4, reset level threshold around 2.8 V</Val>
+										<Val value="0x0">BOR level 0, reset level threshold around 2.0 V</Val>
+										<Val value="0x1">BOR level 1, reset level threshold around 2.2 V</Val>
+										<Val value="0x2">BOR level 2, reset level threshold around 2.5 V</Val>
+										<Val value="0x3">BOR level 3, reset level threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description>BOR enable/disable</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">BOR disabled</Val>
+										<Val value="0x1">BOR enabled</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>

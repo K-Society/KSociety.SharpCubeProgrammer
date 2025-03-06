@@ -44,7 +44,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<FlashSize address="0x1FFF75A0" default="0x40000"/>
-				<BootloaderVersion address="0x1FFF17FE"/>
+				<BootloaderVersion address="0x1FFF3FFE"/>
 				<!-- 256KB  -->
 				<Configuration>
 					<Parameters address="0x08000000" name=" 256 KB Embedded Flash" size="0x40000"/>
@@ -322,6 +322,20 @@
 									<Values>
 										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
 										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>FDCAN1_CKSEL_BL</Name>
+									<Description/>
+									<BitOffset>0x1E</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">FDCAN with Default HSI: The SW BL will use HSI->Bus clock for FDCAN configured to 24Mhz</Val>
+										<Val value="0x1">FDCAN with HSE 12 MHz: The SW BL will use HSE 12MHz as direct source clock of FDCAN</Val>
+										<Val value="0x2">FDCAN with HSE 24 MHz: The SW BL will use HSE 24MHz as direct source clock of FDCAN</Val>
+										<Val value="0x3">FDCAN with HSE 48 MHz:  SW BL will use HSE 48MHz as direct source clock of FDCAN</Val>
+										
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -716,7 +730,20 @@
 										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
 										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
 									</Values>
-
+								</Bit>
+								<Bit>
+									<Name>FDCAN1_CKSEL_BL</Name>
+									<Description/>
+									<BitOffset>0x1E</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>RW</Access>
+									<Values>
+										<Val value="0x0">FDCAN with Default HSI: The SW BL will use HSI->Bus clock for FDCAN configured to 24Mhz</Val>
+										<Val value="0x1">FDCAN with HSE 12 MHz: The SW BL will use HSE 12MHz as direct source clock of FDCAN</Val>
+										<Val value="0x2">FDCAN with HSE 24 MHz: The SW BL will use HSE 24MHz as direct source clock of FDCAN</Val>
+										<Val value="0x3">FDCAN with HSE 48 MHz:  SW BL will use HSE 48MHz as direct source clock of FDCAN</Val>
+										
+									</Values>
 								</Bit>
 							</AssignedBits>
 						</Field>
