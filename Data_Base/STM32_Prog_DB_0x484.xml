@@ -369,7 +369,7 @@
 				<Access>RW</Access>
 				<Configuration config="0,5,6,8,4,9,10,16,21,22,24,20,25,26,11,12,13">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x40022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
@@ -743,7 +743,7 @@
 						<Category>
 							<Name>User Configuration 2</Name>
 							<Field>
-								<Parameters address="0x40022070" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x40022070" name="FLASH_OPTSR2_CUR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -754,6 +754,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>R</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -814,7 +825,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x40022074" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x40022074" name="FLASH_OPTSR2_PRG" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -825,6 +836,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>W</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1413,7 +1435,7 @@
 				</Configuration>
 				<Configuration config="1,17">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x50022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
@@ -1787,7 +1809,7 @@
 						<Category>
 							<Name>User Configuration 2</Name>
 							<Field>
-								<Parameters address="0x50022070" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x50022070" name="FLASH_OPTSR2_CUR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -1798,6 +1820,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>R</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1858,7 +1891,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022074" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x50022074" name="FLASH_OPTSR2_PRG" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -1869,6 +1902,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>W</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -2841,6 +2885,17 @@
 									</Values>
 								</Bit>
 								<Bit>
+									<Name>USBPD_DIS</Name>
+									<Description>USB power delivery configuration option bit</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">Enabled</Val>
+										<Val value="0x1">Disabled</Val>
+									</Values>
+								</Bit>
+								<Bit>
 									<Name>SRAM2_ECC</Name>
 									<Description>ECC in SRAM2 region configuration bit</Description>
 									<BitOffset>0x6</BitOffset>
@@ -2909,6 +2964,17 @@
 									<Values>
 										<Val value="0xC3">Trust zone disabled</Val>
 										<Val value="0xB4">Trust zone enabled</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>USBPD_DIS</Name>
+									<Description>USB power delivery configuration option bit</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Values>
+										<Val value="0x0">Enabled</Val>
+										<Val value="0x1">Disabled</Val>
 									</Values>
 								</Bit>
 								<Bit>

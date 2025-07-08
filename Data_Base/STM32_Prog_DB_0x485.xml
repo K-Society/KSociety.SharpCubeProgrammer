@@ -109,7 +109,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>PRODUCT_STATE</Name>
-									<Description>Virtual Product State</Description>
+									<Description>Virtual Product State &#xA;Note: By opening the Option Byte Panel, the Product State autoamtically Calls the RSS to get its current State,&#xA;which causes the CPU to point to RSS instead of running application.&#xA;-----------------------------------------------------------------------------------------------------------------------------</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>

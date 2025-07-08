@@ -169,7 +169,7 @@
 				<Access>RW</Access>
 				<Configuration config="0,4">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x40022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
@@ -911,7 +911,7 @@
 				</Configuration>
 				<Configuration config="1">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x50022050" name="Bank 1" size="0x8"/>
 						<Category>
 						<Name>Product state</Name>
 						<Field>

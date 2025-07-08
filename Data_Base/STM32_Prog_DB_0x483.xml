@@ -41,6 +41,21 @@
 					</SecurityEx>
 					<flashSize> <ReadRegister address="0x1FF1E880" mask="0x00000FFF" value="0x200"/> </flashSize>
 				</Configuration>
+				<!-- 128kB Single Bank -->
+				<Configuration number="0x6"> <!-- Security extension available -->
+					<SecurityEx>
+						<WriteRegister address="0x580244F4" value="0x2"/>
+						<ReadRegister address="0x58000528" mask="0x1" value="0x0"/>
+					</SecurityEx>
+					<flashSize> <ReadRegister address="0x1FF1E880" mask="0x00000FFF" value="0x80"/> </flashSize>
+				</Configuration>
+				<Configuration number="0x7"> <!-- Security extension not available -->
+					<SecurityEx>
+						<WriteRegister address="0x580244F4" value="0x2"/>
+						<ReadRegister address="0x58000528" mask="0x1" value="0x1"/>
+					</SecurityEx>
+					<flashSize> <ReadRegister address="0x1FF1E880" mask="0x00000FFF" value="0x80"/> </flashSize>
+				</Configuration>
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
@@ -51,6 +66,10 @@
 				<!-- 512kB Single Bank -->
 				<Configuration number="0x5"> <!-- Security extension available -->
 					<flashSize> <ReadRegister address="0x1FF1E880" mask="0x00000FFF" value="0x200"/> </flashSize>
+				</Configuration>
+				<!-- 128kB Single Bank -->
+				<Configuration number="0x9"> <!-- Security extension available -->
+					<flashSize> <ReadRegister address="0x1FF1E880" mask="0x00000FFF" value="0x80"/> </flashSize>
 				</Configuration>
 				<!-- Dummy  Config -->
 				<Configuration number="0x8"> <!-- dummy always true, security extension is checked using dedicated cmd -->
@@ -111,6 +130,18 @@
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x4" size="0x20000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<!-- 128kB Single Bank -->
+				<Configuration config="6,7,9">
+					<Parameters address="0x08000000" name="512 KBytes Single Bank Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x20</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x0" size="0x20000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -270,17 +301,6 @@
 										<Val value="0x1">Independent watchdog is running in STANDBY mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0">
-									<Name>SECURITY</Name>
-									<Description/>
-									<BitOffset>0x15</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>R</Access>
-									<Values>
-										<Val value="0x0">Security feature disabled</Val>
-										<Val value="0x1">Security feature enabled</Val>
-									</Values>
-								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
@@ -291,7 +311,7 @@
 									<Description/>
 									<BitOffset>0x4</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is controlled by hardware</Val>
 										<Val value="0x1">Independent watchdog is controlled by software</Val>
@@ -302,7 +322,7 @@
 									<Description/>
 									<BitOffset>0x6</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">STOP mode on Domain 1 is entering with reset</Val>
 										<Val value="0x1">STOP mode on Domain 1 is entering without reset</Val>
@@ -313,7 +333,7 @@
 									<Description/>
 									<BitOffset>0x7</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">STANDBY mode on Domain 1 is entering with reset</Val>
 										<Val value="0x1">STANDBY mode on Domain 1 is entering without reset</Val>
@@ -324,7 +344,7 @@
 									<Description/>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">Product working in the full voltage range, I/O speed optimization at low-voltage disabled</Val>
 										<Val value="0x1">Product operating below 2.5 V, I/O speed optimization at low-voltage feature allowed</Val>
@@ -335,7 +355,7 @@
 									<Description/>
 									<BitOffset>0x11</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is freezed in STOP mode</Val>
 										<Val value="0x1">Independent watchdog is running in STOP mode</Val>
@@ -346,32 +366,21 @@
 									<Description/>
 									<BitOffset>0x12</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is freezed in STANDBY mode</Val>
 										<Val value="0x1">Independent watchdog is running in STANDBY mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0">
+								<Bit config="0,2,6,4,5,9,8">
 									<Name>SECURITY</Name>
 									<Description/>
 									<BitOffset>0x15</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0x0">Security feature disabled</Val>
 										<Val value="0x1">Security feature enabled</Val>
-									</Values>
-								</Bit>
-								<Bit config="0,1">
-									<Name>SWAP_BANK_OPT</Name>
-									<Description/>
-									<BitOffset>0x1F</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
-									<Values>
-										<Val value="0x0">after boot loading, no swap for user sectors</Val>
-										<Val value="0x1">after boot loading, user sectors swapped</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -437,7 +446,7 @@
 								</Bit>
 								<Bit>
 									<Name>PROT_AREA_END</Name>
-									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address. In addition, program the PCROP area end and start addresses so that the difference is negative, PROT_AREA_END lower than PROT_AREA_START</Description>
+									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting PROT_AREA_END lower than PROT_AREA_START</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0xC</BitWidth>
 									<Access>R</Access>
@@ -469,7 +478,7 @@
 								</Bit>
 								<Bit>
 									<Name>PROT_AREA_END</Name>
-									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting end address greater than start address. In addition, program the PCROP area end and start addresses so that the difference is negative, PROT_AREA_END lower than PROT_AREA_START</Description>
+									<Description>Flash Bank PCROP End address (excluded). Deactivation of PCROP can be done by enbaling DMEP bit and changing RDP from level 1 to level 0 while putting PROT_AREA_END lower than PROT_AREA_START</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0xC</BitWidth>
 									<Access>W</Access>

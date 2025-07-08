@@ -37,7 +37,7 @@
 					<ValueLine> <ReadRegister address="0x1FFF77DD" mask="0xFF" value="0x31"/> </ValueLine>
 					<ValueLine> <ReadRegister address="0x1FFF75E0" mask="0xFF" value="0x40"/> </ValueLine>
 				</Configuration>
-				<!-- 64KB just for G031-->
+				<!-- 16KB just for G031-->
 				<Configuration number="0x6">
 					<ValueLine> <ReadRegister address="0x1FFF77DD" mask="0xFF" value="0x31"/> </ValueLine>
 					<ValueLine> <ReadRegister address="0x1FFF75E0" mask="0xFF" value="0x10"/> </ValueLine>
@@ -104,7 +104,7 @@
 					<Description>The Flash memory interface manages CPU AHB I-Code and D-Code accesses to the Flash memory. It implements the erase and program Flash memory operations and the read and write protection mechanisms</Description>
 					<ErasedValue>0xFF</ErasedValue>
 					<Access>RWE</Access>
-					<FlashSize address="0x1FFF75E0" default="0x4000"/>
+					<FlashSize address="0x1FFF75E0" default="0x10000"/>
 					<BootloaderVersion address="0x1FFF1FFE"/>
 					<!-- 64 KB Single Bank -->
 					<Configuration config="3,4,5">
@@ -233,7 +233,7 @@
 						<Field>
 							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BOR_EN</Name>
 									<Description/>
 									<BitOffset>0x8</BitOffset>
@@ -244,7 +244,7 @@
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BORF_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0xB</BitOffset>
@@ -257,7 +257,7 @@
 										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BORR_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0x9</BitOffset>
@@ -300,7 +300,7 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>nRST_SHDW</Name>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -429,7 +429,7 @@
 						<Field>
 							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1A_STRT</Name>
 									<Description>Flash Area A in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -442,7 +442,7 @@
 						<Field>
 							<Parameters address="0x40022028" name="FLASH_PCROP1ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1A_END</Name>
 									<Description>Flash Area A in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -450,7 +450,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP_RDP</Name>
 									<Description/>
 									<BitOffset>0x1F</BitOffset>
@@ -466,7 +466,7 @@
 						<Field>
 							<Parameters address="0x40022044" name="FLASH_PCROP2ASR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2A_STRT</Name>
 									<Description>Flash Area A in Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -479,7 +479,7 @@
 						<Field>
 							<Parameters address="0x40022048" name="FLASH_PCROP2AER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2A_END</Name>
 									<Description>Flash Area A in Bank 2 PCROP end address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -492,7 +492,7 @@
 						<Field>
 							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_STRT</Name>
 									<Description>Flash Area B in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -505,7 +505,7 @@
 						<Field>
 							<Parameters address="0x40022038" name="FLASH_PCROP1BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -518,7 +518,7 @@
 						<Field>
 							<Parameters address="0x40022054" name="FLASH_PCROP2BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2B_STRT</Name>
 									<Description>Flash Area B in Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -531,7 +531,7 @@
 						<Field>
 							<Parameters address="0x40022058" name="FLASH_PCROP2BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2B_END</Name>
 									<Description>Flash Area B in Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -638,7 +638,7 @@
 						<Field>
 							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BOOT_LOCK</Name>
 									<Description>used to force boot from user area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -649,7 +649,7 @@
 										<Val value="0x1">Boot forced from Main Flash memory</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
 									<BitOffset>0x0</BitOffset>
@@ -657,7 +657,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>SEC_SIZE2</Name>
 									<Description>Securable memory area size, Bank 2</Description>
 									<BitOffset>0x0</BitOffset>
@@ -697,7 +697,7 @@
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BOR_EN</Name>
 									<Description/>
 									<BitOffset>0x8</BitOffset>
@@ -708,7 +708,7 @@
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BORF_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0xB</BitOffset>
@@ -721,7 +721,7 @@
 										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BORR_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0x9</BitOffset>
@@ -764,7 +764,7 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>nRST_SHDW</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
@@ -895,7 +895,7 @@
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1A_STRT</Name>
 									<Description>Flash Area A PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -908,7 +908,7 @@
 						<Field>
 							<Parameters address="0x1FFF7810" name="FLASH_PCROP1ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1A_END</Name>
 									<Description>Flash Area A PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -916,7 +916,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP_RDP</Name>
 									<Description/>
 									<BitOffset>0x1F</BitOffset>
@@ -932,7 +932,7 @@
 						<Field>
 							<Parameters address="0x1FFF7838" name="FLASH_PCROP2ASR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2A_STRT</Name>
 									<Description>Flash Area A in Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -945,7 +945,7 @@
 						<Field>
 							<Parameters address="0x1FFF7840" name="FLASH_PCROP2AER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2A_END</Name>
 									<Description>Flash Area A in Bank 2 PCROP end address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -958,7 +958,7 @@
 						<Field>
 							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_STRT</Name>
 									<Description>Flash Area B in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -971,7 +971,7 @@
 						<Field>
 							<Parameters address="0x1FFF7830" name="FLASH_PCROP1BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -984,7 +984,7 @@
 						<Field>
 							<Parameters address="0x1FFF7858" name="FLASH_PCROP2BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2B_STRT</Name>
 									<Description>Flash Area B in Bank 2 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
@@ -997,7 +997,7 @@
 						<Field>
 							<Parameters address="0x1FFF7860" name="FLASH_PCROP2BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>PCROP2B_END</Name>
 									<Description>Flash Area B in Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1103,7 +1103,7 @@
 						<Field>
 							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>BOOT_LOCK</Name>
 									<Description>used to force boot from user area</Description>
 									<BitOffset>0x10</BitOffset>
@@ -1114,7 +1114,7 @@
 										<Val value="0x1">Boot forced from Main Flash memory</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
 									<BitOffset>0x0</BitOffset>
@@ -1122,7 +1122,7 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="0,2,3,5">
+								<Bit config="0,2,3,5,6">
 									<Name>SEC_SIZE2</Name>
 									<Description>Securable memory area size, Bank 2</Description>
 									<BitOffset>0x0</BitOffset>
