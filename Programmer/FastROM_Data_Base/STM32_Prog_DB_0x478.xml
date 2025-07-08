@@ -346,7 +346,7 @@
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x18</BitWidth>
 									<Access>RW</Access>
-									<DefaultVal>0x0</DefaultVal>
+									<DefaultVal>0xC0000</DefaultVal>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -366,7 +366,7 @@
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
-									<DefaultVal>0x1f</DefaultVal>
+									<DefaultVal>0x0</DefaultVal>
 								</Bit>
 								<Bit>
 									<Name>SECWM1_END</Name>
@@ -375,7 +375,7 @@
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
-									<DefaultVal>0x0</DefaultVal>
+									<DefaultVal>0x1f</DefaultVal>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -412,7 +412,7 @@
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08040000"/>
-									<DefaultVal>0x1f</DefaultVal>
+									<DefaultVal>0x0</DefaultVal>
 								</Bit>
 								<Bit> 
 									<Name>SECWM2_END</Name>
@@ -421,7 +421,7 @@
 									<BitWidth>0x5</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x2000" offset="0x08040000"/>
-									<DefaultVal>0x0</DefaultVal>
+									<DefaultVal>0x1f</DefaultVal>
 								</Bit>
 							</AssignedBits>
 						</Field>

@@ -11,58 +11,129 @@
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
+				<Configuration number="0xC">	<!-- 512K Single Bank non secure -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
+				</Configuration>
+				<Configuration number="0xD">	<!-- 512K Dual Bank non secure -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<TZEN reference="0x2"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
+				</Configuration>
+				<Configuration number="0xE">	<!-- 512K Single Bank secure + RDP=0xAA -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x000000AA"/> </RDP>
+				</Configuration>
+				<Configuration number="0xF">	<!-- 512K Dual Bank secure + RDP=0xAA -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x000000AA"/> </RDP>
+				</Configuration>
+				<Configuration number="0x10">	<!-- 512K Single Bank secure  + RDP=0x55 -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x00000055"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x11">	<!-- 512K Dual Bank secure + RDP=0x55 -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x00000055"/> </RDP>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x12">	<!-- 512K Single Bank secure -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x13">	<!-- 512K Dual Bank secure -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
 				<Configuration number="0x0">	<!-- Single Bank non secure -->
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x1">	<!-- Dual Bank non secure -->
+				<Configuration number="0x1">	<!-- 1M Dual Bank non secure -->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x2">	<!-- Single Bank secure + RDP=0xAA -->
+				<Configuration number="0x2">	<!-- 1M Single Bank secure + RDP=0xAA -->
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x000000AA"/> </RDP>
 				</Configuration>
-				<Configuration number="0x3">	<!-- Dual Bank secure + RDP=0xAA -->
+				<Configuration number="0x3">	<!-- 1M Dual Bank secure + RDP=0xAA -->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x000000AA"/> </RDP>
 				</Configuration>
-				<Configuration number="0xA">	<!-- Single Bank secure  + RDP=0x55 -->
+				<Configuration number="0xA">	<!-- 1M Single Bank secure  + RDP=0x55 -->
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x00000055"/> </RDP>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0xB">	<!-- Dual Bank secure + RDP=0x55 -->
+				<Configuration number="0xB">	<!-- 1M Dual Bank secure + RDP=0x55 -->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<RDP reference="0x1"> <ReadRegister address="0x40022040" mask="0x000000FF" value="0x00000055"/> </RDP>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x4">	<!-- Single Bank secure -->
+				<Configuration number="0x4">	<!-- 1M Single Bank secure -->
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x5">	<!-- Dual Bank secure -->
+				<Configuration number="0x5">	<!-- 1M Dual Bank secure -->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
 			</Interface>
+			
+
+
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
-				<Configuration number="0x6">	<!-- Single Bank secure-->
+				<Configuration number="0x14">	<!-- 512K Single Bank secure-->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x7">	<!-- Dual Bank seure-->
+				<Configuration number="0x15">	<!-- 512K Dual Bank seure-->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x8">	<!-- Single Bank non secure-->
+				<Configuration number="0x16">	<!-- 512K Single Bank non secure-->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
 					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
-				<Configuration number="0x9">	<!-- Dual Bank non secure-->
+				<Configuration number="0x17">	<!-- 512K Dual Bank non secure-->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x0BFA07A0" mask="0x0000FFFF" value="0x200"/> </FLASHSIZE>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
+				</Configuration>
+			
+			
+			
+				<Configuration number="0x6">	<!--1M Single Bank secure-->
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x7">	<!-- 1M Dual Bank seure-->
+					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
+					<TZEN reference="0x1"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x80000000"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x8">	<!-- 1M Single Bank non secure-->
+					<DBANK reference="0x0"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x0"/> </DBANK>
+					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
+				</Configuration>
+				<Configuration number="0x9">	<!-- 1M Dual Bank non secure-->
 					<DBANK reference="0x1"> <ReadRegister address="0x40022040" mask="0x00200000" value="0x00200000"/> </DBANK>
 					<TZEN reference="0x0"> <ReadRegister address="0x40022040" mask="0x80000000" value="0x0"/> </TZEN>
 				</Configuration>
@@ -79,23 +150,23 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<!-- 96 KB -->
-				<Configuration config="0,1,6,7,8,9,10,11">
-					<Parameters address="0x20000000" name="SRAM" size="0x30000"/>
+				<Configuration config="0,12,1,13,6,20,7,21,8,22,9,23,10,16,11,17">
+					<Parameters address="0x20004000" name="SRAM" size="0x3c000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x30000"/>
+							<Parameters address="0x20004000" name="SRAM" occurrence="0x1" size="0x3c000"/>
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="2,3,4,5">
-					<Parameters address="0x30000000" name="SRAM" size="0x40000"/>
+				<Configuration config="2,14,3,15,4,18,5,19">
+					<Parameters address="0x30004000" name="SRAM" size="3C000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x30000000" name="SRAM" occurrence="0x1" size="0x40000"/>
+							<Parameters address="0x30004000" name="SRAM" occurrence="0x1" size="3C000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -107,11 +178,11 @@
 				<Description>The Flash memory interface manages CPU AHB I-Code and D-Code accesses to the Flash memory. It implements the erase and program Flash memory operations and the read and write protection mechanisms</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<FlashSize address="0x0BFA0764" default="0x100000"/>
+				<FlashSize address="0x0BFA07A0" default="0x100000"/>
 				<BootloaderVersion address="0x0BF98FFE"/>
 				<DBGMCU_CR address="0xE0044004" mask="0x06"/>
 				<DBGMCU_APB1_FZ address="0xE0044008" mask="0x1800"/> 
-				<Configuration config="0,6,10"> <!-- Single Bank -->
+				<Configuration config="0,6,10"> <!-- 1M Single Bank -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -122,7 +193,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,7,11"> <!-- dual Bank -->
+				<Configuration config="1,7,11"> <!-- 1M dual Bank -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -138,7 +209,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="2,4,8"> <!-- Single Bank secure -->
+				<Configuration config="2,4,8"> <!-- 1M Single Bank secure -->
 					<Parameters address="0x0C000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -149,7 +220,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="3,5,9"> <!-- dual Bank secure -->
+				<Configuration config="3,5,9"> <!-- 1M dual Bank secure -->
 					<Parameters address="0x0c000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -165,7 +236,66 @@
 						</Field>
 					</Bank>
 				</Configuration>
+			
+				
+				
+				<Configuration config="12,22"> <!-- 512K Single Bank -->
+					<Parameters address="0x08000000" name=" 512K Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x1000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="13,23"> <!-- 512K dual Bank -->
+					<Parameters address="0x08000000" name=" 512K Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x1000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08040000" name="sector64" occurrence="0x40" size="0x1000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				
+				<Configuration config="14,16,18,20"> <!-- 512KSingle Bank secure -->
+					<Parameters address="0x0C000000" name=" 512K Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x0c000000" name="sector0" occurrence="0x80" size="0x1000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="15,17,19,21"> <!-- 512K dual Bank secure -->
+					<Parameters address="0x0c000000" name=" 512K Embedded Flash" size="0x80000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x0c000000" name="sector0" occurrence="0x40" size="0x1000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x0C040000" name="sector64" occurrence="0x40" size="0x1000"/>
+						</Field>
+					</Bank>
+				</Configuration>
 			</Peripheral>
+			
 			<!-- Data EEPROM -->
 			<Peripheral>
 				<Name>Data EEPROM</Name>
@@ -173,7 +303,7 @@
 				<Description>The Data EEPROM memory block. It contains user data.</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<Configuration config="2,4,7,9,10">
+				<Configuration config="2,14,4,18,7,21,9,23,10,16">
 					<Parameters address="0x08000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -184,7 +314,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="3,5,6,8,11">
+				<Configuration config="3,15,5,19,6,20,8,22,11,17">
 					<Parameters address="0x08000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -201,7 +331,7 @@
 					</Bank>
 				</Configuration>
 				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
-				<Configuration config="1">
+				<Configuration config="1,13,12">
 					<Parameters address="0x0C000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -212,7 +342,7 @@
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
-						<Field>s
+						<Field>
 							<Parameters address="0x0C080000" name="sector128" occurrence="0x80" size="0x1000"/>
 						</Field>
 					</Bank>
@@ -244,7 +374,7 @@
 				<Type>Configuration</Type>
 				<Description/>
 				<Access>RW</Access>
-				<Configuration config="0,1,10,11,4,5">
+				<Configuration config="0,12,1,13,10,16,11,17,4,18,5,19">
 					<Bank interface="JTAG_SWD"> <!--   Bank 1: address="0x40022040" name="Bank 1" size="0x20" -->
 						<Parameters address="0x40022040" name="Bank 1" size="0x20"/>
 						<Category>
@@ -252,7 +382,7 @@
 							<Field>
 								<Parameters address="0x40022040" name="FLASH_OPTR" size="0x4"/>
 								<AssignedBits>
-									<Bit config="0,1,10,11">
+									<Bit config="0,12,1,13,10,16,11,17">
 										<Name>RDP</Name>
 										<Description>Read protection option byte. The read protection is used to protect the software code stored in Flash memory.</Description>
 										<BitOffset>0x0</BitOffset>
@@ -264,7 +394,7 @@
 											<Val value="0xCC">Level 2, chip protection</Val>
 										</Values>
 									</Bit>
-									<Bit config="4,5">
+									<Bit config="4,18,5,19">
 										<Name>RDP</Name>
 										<Description>Read protection option byte. The read protection is used to protect the software code stored in Flash memory.</Description>
 										<BitOffset>0x0</BitOffset>
@@ -812,7 +942,7 @@
 						</Category>
 					</Bank>
 				</Configuration>
-				<Configuration config="2,3">
+				<Configuration config="2,14,3,15">
 					<Bank interface="JTAG_SWD"> <!--   Bank 1: address="0x50022040" name="Bank 1" size="0x28" -->
 						<Parameters address="0x50022040" name="Bank 1" size="0x20"/>
 						<Category>

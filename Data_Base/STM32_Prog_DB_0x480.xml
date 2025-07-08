@@ -82,7 +82,7 @@
 					<Parameters address="0x08000000" name="2 MBytes Dual Bank Embedded Flash" size="0x200000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x20</Alignment>
+					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
@@ -99,7 +99,7 @@
 					<Parameters address="0x08000000" name="1 MBytes Dual Bank Embedded Flash" size="0x200000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x20</Alignment>
+					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
@@ -124,7 +124,7 @@
 					<Parameters address="0x08FFF000" name=" 1 KBytes Data OTP" size="0x400"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x20</Alignment>
+					<Alignment>0x2</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x08FFF000" name="OTP" occurrence="0x1" size="0x400"/>

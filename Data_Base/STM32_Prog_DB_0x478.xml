@@ -379,7 +379,7 @@
 				<Access>RW</Access>
 				<Configuration config="0,5,6,8,4,9,10,16,21,24,20,25,26,11,12,13,14">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x40022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
@@ -1401,7 +1401,7 @@
 				</Configuration>
 				<Configuration config="1,17">
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x50022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
