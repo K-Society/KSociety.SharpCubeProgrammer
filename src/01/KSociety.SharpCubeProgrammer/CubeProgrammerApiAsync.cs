@@ -498,6 +498,35 @@ namespace SharpCubeProgrammer
 
         #endregion
 
+        #region [EXTENDED]
+
+        //public string VersionAPI()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.VersionAPI();
+        //    }
+
+        //    return String.Empty;
+        //}
+
+        public async void HaltAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Halt(), cancellationToken).ConfigureAwait(false);
+        }
+
+        public async void RunAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Run(), cancellationToken).ConfigureAwait(false);
+        }
+
+        public async void StepAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Step(), cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region [Util]
 
         /// <inheritdoc />
