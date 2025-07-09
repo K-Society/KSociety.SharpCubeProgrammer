@@ -194,6 +194,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CubeProgrammer_API_Extended.h" />
     <ClInclude Include="DeviceDataStructure.h" />
     <ClInclude Include="CubeProgrammer_API.h" />
     <ClInclude Include="framework.h" />
