@@ -191,3 +191,5 @@ extern "C" PROGRAMMER_API int GetHsmLicense(int hsmSlotId, const wchar_t* outLic
 extern "C" PROGRAMMER_API void CpuHalt();
 
 extern "C" PROGRAMMER_API void CpuRun();
+
+extern "C" PROGRAMMER_API void CpuStep();

@@ -1814,6 +1814,14 @@ namespace SharpCubeProgrammer
             }
         }
 
+        public void Step()
+        {
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                Native.ProgrammerApi.CpuStep();
+            }
+        }
+
         #endregion
 
         #region [Util]
