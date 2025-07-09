@@ -1997,6 +1997,29 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [CpuStep]
+
+        [DllImport(ProgrammerDll, EntryPoint = "CpuStep", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void CpuStepC();
+
+        internal static void CpuStep()
+        {
+            try
+            {
+                CpuStepC();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
         #endregion
 
     }

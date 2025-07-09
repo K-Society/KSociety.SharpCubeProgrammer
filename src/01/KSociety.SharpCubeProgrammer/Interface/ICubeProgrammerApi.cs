@@ -499,6 +499,8 @@ namespace SharpCubeProgrammer.Interface
 
         void Run();
 
+        void Step();
+
         #endregion
 
         #region [Util]

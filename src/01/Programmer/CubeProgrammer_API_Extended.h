@@ -20,6 +20,8 @@ extern "C" {
 
     void Run();
 
+    void Step();
+
 #ifdef __cplusplus
 }
 #endif

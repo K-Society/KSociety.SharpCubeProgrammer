@@ -735,3 +735,8 @@ void CpuRun()
 {
     Run();
 }
+
+void CpuStep()
+{
+    Step();
+}
