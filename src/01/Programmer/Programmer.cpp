@@ -192,7 +192,8 @@ bool CheckDeviceConnection()
 	{
 		int result = checkDeviceConnection();
 		bool output = false;
-		if (result == 1) {
+		if (result == 1)
+        {
 			output = true;
 		}
 		return output;

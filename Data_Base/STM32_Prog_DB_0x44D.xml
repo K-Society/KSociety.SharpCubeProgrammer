@@ -78,6 +78,25 @@
 					</Bank>
 				</Configuration>
 			</Peripheral>
+			<!-- Mirror Option Bytes -->
+			<Peripheral>
+				<Name>MirrorOptionBytes</Name>
+				<Type>Storage</Type>
+				<Description>Mirror Option Bytes contains the extra area.</Description>
+				<ErasedValue>0xFF</ErasedValue>
+				<Access>RW</Access>
+				<Configuration>
+					<Parameters address="0x1FFF7800" name=" 116 Bytes Data MirrorOptionBytes" size="0x74"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x4</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x1FFF7800" name="Bank 1" occurrence="0x1" size="0x74"/>
+						</Field>
+					</Bank>
+				</Configuration>
+			</Peripheral>			
 			<!-- Option Bytes -->
 			<Peripheral>
 				<Name>Option Bytes</Name>
@@ -129,10 +148,10 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR falling level 1 with threshold around 2.1 V</Val>
-										<Val value="0x1">BOR falling level 2 with threshold around 2.3 V</Val>
-										<Val value="0x2">BOR falling level 3 with threshold around 2.6 V</Val>
-										<Val value="0x3">BOR falling level 4 with threshold around 2.9 V</Val>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
 									</Values>
 								</Bit>
 								<Bit>
@@ -142,10 +161,10 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR rising level 1 with threshold around 2.0 V</Val>
-										<Val value="0x1">BOR rising level 2 with threshold around 2.2 V</Val>
-										<Val value="0x2">BOR rising level 3 with threshold around 2.5 V</Val>
-										<Val value="0x3">BOR rising level 4 with threshold around 2.8 V</Val>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
@@ -531,10 +550,10 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR falling level 1 with threshold around 2.1 V</Val>
-										<Val value="0x1">BOR falling level 2 with threshold around 2.3 V</Val>
-										<Val value="0x2">BOR falling level 3 with threshold around 2.6 V</Val>
-										<Val value="0x3">BOR falling level 4 with threshold around 2.9 V</Val>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
 									</Values>
 								</Bit>
 								<Bit>
@@ -545,10 +564,10 @@
 									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">BOR rising level 1 with threshold around 2.0 V</Val>
-										<Val value="0x1">BOR rising level 2 with threshold around 2.2 V</Val>
-										<Val value="0x2">BOR rising level 3 with threshold around 2.5 V</Val>
-										<Val value="0x3">BOR rising level 4 with threshold around 2.8 V</Val>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
 							</AssignedBits>
