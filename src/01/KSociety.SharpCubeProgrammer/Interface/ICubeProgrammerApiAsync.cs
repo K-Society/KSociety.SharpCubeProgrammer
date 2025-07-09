@@ -493,6 +493,16 @@ namespace SharpCubeProgrammer.Interface
 
         #endregion
 
+        //#region [EXTENDED]
+
+        ////string VersionAPI();
+
+        //void HaltAsync();
+
+        //void RunAsync();
+
+        //#endregion
+
         #region [Util]
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Programming
 
             CubeProgrammerApi = container.Resolve<ICubeProgrammerApi>();
             CubeProgrammerApiAsync = container.Resolve<ICubeProgrammerApiAsync>();
-
+            //var cubeProgrammerApiVersion = CubeProgrammerApi.VersionAPI();
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
 
@@ -208,6 +208,8 @@ namespace Programming
                 if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
+                    CubeProgrammerApi.Halt();
+                    CubeProgrammerApi.Run();
                     if (generalInfo != null)
                     {
                         Logger.LogInformation("INFO: \n" +

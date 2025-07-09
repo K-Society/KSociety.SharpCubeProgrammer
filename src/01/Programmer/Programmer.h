@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CubeProgrammer_API.h"
+#include "CubeProgrammer_API_Extended.h"
 
 #ifdef PROGRAMMER_EXPORTS
 #define PROGRAMMER_API __declspec(dllexport)
@@ -181,3 +182,12 @@ extern "C" PROGRAMMER_API const char* GetHsmVersion(int hsmSlotId);
 extern "C" PROGRAMMER_API const char* GetHsmType(int hsmSlotId);
 
 extern "C" PROGRAMMER_API int GetHsmLicense(int hsmSlotId, const wchar_t* outLicensePath);
+
+/* -------------------------------------------------------------------------------------------- */
+/*                              EXTENDED                                                        */
+/* -------------------------------------------------------------------------------------------- */
+
+//extern "C" PROGRAMMER_API const char* VersionAPI();
+extern "C" PROGRAMMER_API void CpuHalt();
+
+extern "C" PROGRAMMER_API void CpuRun();
