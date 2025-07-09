@@ -5,6 +5,7 @@ namespace SharpCubeProgrammer
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO.Compression;
     using System.Threading;
     using System.Threading.Tasks;
     using SharpCubeProgrammer.DeviceDataStructure;
@@ -494,6 +495,35 @@ namespace SharpCubeProgrammer
         public async ValueTask<CubeProgrammerError> GetHsmLicenseAsync(int hsmSlotId, string outLicensePath, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.GetHsmLicense(hsmSlotId, outLicensePath), cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region [EXTENDED]
+
+        //public string VersionAPI()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.VersionAPI();
+        //    }
+
+        //    return String.Empty;
+        //}
+
+        public async void HaltAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Halt(), cancellationToken).ConfigureAwait(false);
+        }
+
+        public async void RunAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Run(), cancellationToken).ConfigureAwait(false);
+        }
+
+        public async void StepAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => this.Step(), cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

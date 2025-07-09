@@ -493,15 +493,17 @@ namespace SharpCubeProgrammer.Interface
 
         #endregion
 
-        //#region [EXTENDED]
+        #region [EXTENDED]
 
         ////string VersionAPI();
 
-        //void HaltAsync();
+        void HaltAsync(CancellationToken cancellationToken = default);
 
-        //void RunAsync();
+        void RunAsync(CancellationToken cancellationToken = default);
 
-        //#endregion
+        void StepAsync(CancellationToken cancellationToken = default);
+
+        #endregion
 
         #region [Util]
 
