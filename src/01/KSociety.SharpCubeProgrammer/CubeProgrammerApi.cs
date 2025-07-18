@@ -1788,15 +1788,15 @@ namespace SharpCubeProgrammer
 
         #region [EXTENDED]
 
-        //public string VersionAPI()
-        //{
-        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
-        //    {
-        //        return Native.ProgrammerApi.VersionAPI();
-        //    }
+        public string VersionAPI()
+        {
+            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+            {
+                return Native.ProgrammerApi.VersionAPI();
+            }
 
-        //    return String.Empty;
-        //}
+            return String.Empty;
+        }
 
         public void Halt()
         {

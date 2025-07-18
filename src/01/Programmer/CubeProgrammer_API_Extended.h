@@ -14,7 +14,7 @@ extern "C" {
 # define CP_EXPORTS
 #endif
 
-    //const char* versionAPI();
+    const char* versionAPI();
 
     void Halt();
 

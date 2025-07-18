@@ -39,6 +39,8 @@ namespace Programming
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
 
+            var result12 = CubeProgrammerApi.VersionAPI();
+
             //#region [Log Testing]
 
             //var displayCallBacks = new DisplayCallBacks

@@ -10,6 +10,7 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 #include "Programmer.h"
+#include "ProgrammerExtended.h"
 #include <string>
 #include <tchar.h>
 #include <stdio.h>
