@@ -200,6 +200,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Programmer.h" />
+    <ClInclude Include="ProgrammerExtended.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -210,6 +211,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Programmer.cpp" />
+    <ClCompile Include="ProgrammerExtended.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

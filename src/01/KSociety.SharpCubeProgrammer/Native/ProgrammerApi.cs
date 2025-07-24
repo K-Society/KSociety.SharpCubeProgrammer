@@ -1930,24 +1930,24 @@ namespace SharpCubeProgrammer.Native
 
         #region [VersionAPI]
 
-        [DllImport(ProgrammerDll, EntryPoint = "VersionAPI", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-        private static extern string VersionAPIC();
+        //[DllImport(ProgrammerDll, EntryPoint = "VersionAPI", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        //private static extern string VersionAPIC();
 
-        internal static string VersionAPI()
-        {
-            try
-            {
-                return VersionAPIC();
-            }
-            catch (DllNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
-            }
-            catch (EntryPointNotFoundException ex)
-            {
-                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
-            }
-        }
+        //internal static string VersionAPI()
+        //{
+        //    try
+        //    {
+        //        return VersionAPIC();
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
 
         #endregion
 

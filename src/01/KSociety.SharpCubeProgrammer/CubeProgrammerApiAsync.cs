@@ -500,7 +500,7 @@ namespace SharpCubeProgrammer
 
         #region [EXTENDED]
 
-        //public string VersionAPI()
+        //public string VersionAPIAsync()
         //{
         //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
         //    {
