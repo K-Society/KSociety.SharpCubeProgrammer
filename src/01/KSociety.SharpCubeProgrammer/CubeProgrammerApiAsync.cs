@@ -500,15 +500,15 @@ namespace SharpCubeProgrammer
 
         #region [EXTENDED]
 
-        public string VersionAPIAsync()
-        {
-            if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
-            {
-                return Native.ProgrammerApi.VersionAPI();
-            }
+        //public string VersionAPIAsync()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.VersionAPI();
+        //    }
 
-            return String.Empty;
-        }
+        //    return String.Empty;
+        //}
 
         public async void HaltAsync(CancellationToken cancellationToken = default)
         {

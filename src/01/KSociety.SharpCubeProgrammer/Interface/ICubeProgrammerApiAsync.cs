@@ -495,7 +495,7 @@ namespace SharpCubeProgrammer.Interface
 
         #region [EXTENDED]
 
-        string VersionAPIAsync();
+        //string VersionAPIAsync();
 
         void HaltAsync(CancellationToken cancellationToken = default);
 

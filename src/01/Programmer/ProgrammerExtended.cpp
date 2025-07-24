@@ -5,10 +5,10 @@
 /*                              EXTENDED                                                        */
 /* -------------------------------------------------------------------------------------------- */
 
-const char* VersionAPI()
-{
-    return versionAPI();
-}
+//const char* VersionAPI()
+//{
+//    return versionAPI();
+//}
 
 void CpuHalt()
 {

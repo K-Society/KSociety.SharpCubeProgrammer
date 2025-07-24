@@ -493,7 +493,7 @@ namespace SharpCubeProgrammer.Interface
 
         #region [EXTENDED]
 
-        string VersionAPI();
+        //string VersionAPI();
 
         void Halt();
 

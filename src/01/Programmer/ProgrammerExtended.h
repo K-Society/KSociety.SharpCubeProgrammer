@@ -12,7 +12,7 @@
 /*                              EXTENDED                                                        */
 /* -------------------------------------------------------------------------------------------- */
 
-extern "C" PROGRAMMER_API_EXTENDED const char* VersionAPI();
+//extern "C" PROGRAMMER_API_EXTENDED const char* VersionAPI();
 
 extern "C" PROGRAMMER_API_EXTENDED void CpuHalt();
 
