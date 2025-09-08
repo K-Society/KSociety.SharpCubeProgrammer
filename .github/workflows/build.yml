@@ -41,7 +41,7 @@ jobs:
         run: ./build.cmd
           
       - name: Bump version and push tag
-        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master') || (github.ref == 'refs/heads/develop')
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.2       
         with:
