@@ -12,11 +12,11 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Request a read unprotect: value in {0,1}.
         /// </summary>
-        public string rdu;
+        public byte rdu;
 
         /// <summary>
         /// Request a TZEN regression: value in {0,1}.
         /// </summary>
-        public string tzenreg;
+        public byte tzenreg;
     }
 }
