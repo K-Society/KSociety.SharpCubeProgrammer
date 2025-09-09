@@ -1926,5 +1926,101 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [EXTENDED]
+
+        #region [VersionAPI]
+
+        //[DllImport(ProgrammerDll, EntryPoint = "VersionAPI", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        //private static extern string VersionAPIC();
+
+        //internal static string VersionAPI()
+        //{
+        //    try
+        //    {
+        //        return VersionAPIC();
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
+
+        #endregion
+
+        #region [CpuHalt]
+
+        [DllImport(ProgrammerDll, EntryPoint = "CpuHalt", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void CpuHaltC();
+
+        internal static void CpuHalt()
+        {
+            try
+            {
+                CpuHaltC();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [CpuRun]
+
+        [DllImport(ProgrammerDll, EntryPoint = "CpuRun", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void CpuRunC();
+
+        internal static void CpuRun()
+        {
+            try
+            {
+                CpuRunC();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #region [CpuStep]
+
+        [DllImport(ProgrammerDll, EntryPoint = "CpuStep", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        private static extern void CpuStepC();
+
+        internal static void CpuStep()
+        {
+            try
+            {
+                CpuStepC();
+            }
+            catch (DllNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+            }
+            catch (EntryPointNotFoundException ex)
+            {
+                throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
     }
 }

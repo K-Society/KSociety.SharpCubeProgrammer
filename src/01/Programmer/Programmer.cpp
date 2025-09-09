@@ -716,3 +716,4 @@ int GetHsmLicense(int hsmSlotId, const wchar_t* outLicensePath)
 {
     return getHsmLicense(hsmSlotId, outLicensePath);
 }
+

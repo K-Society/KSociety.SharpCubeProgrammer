@@ -491,6 +491,18 @@ namespace SharpCubeProgrammer.Interface
 
         #endregion
 
+        #region [EXTENDED]
+
+        //string VersionAPI();
+
+        void Halt();
+
+        void Run();
+
+        void Step();
+
+        #endregion
+
         #region [Util]
 
         /// <summary>
