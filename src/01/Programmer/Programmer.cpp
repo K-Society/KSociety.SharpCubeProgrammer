@@ -417,8 +417,7 @@ int ReadUnprotect()
 
 int TzenRegression()
 {
-	//return tzenRegression();
-    return -99;
+	return tzenRegression();
 }
 
 int GetTargetInterfaceType()
