@@ -39,7 +39,7 @@ namespace Programming
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
 
-            var result12 = CubeProgrammerApi.VersionAPI();
+            //var result12 = CubeProgrammerApi.VersionAPI();
 
             //#region [Log Testing]
 
