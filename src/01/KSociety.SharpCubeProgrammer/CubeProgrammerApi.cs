@@ -1822,6 +1822,16 @@ namespace SharpCubeProgrammer
             }
         }
 
+        //public string WindowsVersion()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.WindowsVersion();
+        //    }
+
+        //    return String.Empty;
+        //}
+
         #endregion
 
         #region [Util]

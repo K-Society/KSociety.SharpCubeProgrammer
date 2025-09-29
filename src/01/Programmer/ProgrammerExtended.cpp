@@ -24,3 +24,8 @@ void CpuStep()
 {
     Step();
 }
+
+//char* WindowsVersion()
+//{
+//    return windows_version();
+//}

@@ -9,11 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.4.0" />
-    <PackageReference Include="KSociety.SharpCubeProgrammer" Version="0.6.23" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

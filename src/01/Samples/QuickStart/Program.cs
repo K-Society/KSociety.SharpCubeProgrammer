@@ -11,7 +11,7 @@ namespace QuickStart
 
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
 

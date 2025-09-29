@@ -76,6 +76,8 @@ namespace Programming
 
             //#endregion
 
+            var test = CubeProgrammerApi.WindowsVersion();
+
             #region [TryConnectStLink]
 
             //var uartList = CubeProgrammerApi.GetUsartList();

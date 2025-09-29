@@ -2020,6 +2020,30 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        //#region [WindowsVersion]
+
+        //[DllImport(ProgrammerDll, EntryPoint = "WindowsVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        //private static extern string WindowsVersionC();
+
+        //internal static string WindowsVersion()
+        //{
+        //    try
+        //    {
+
+        //        return WindowsVersionC();
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
+
+        //#endregion
+
         #endregion
 
     }

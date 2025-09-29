@@ -22,6 +22,8 @@ extern "C" {
 
     void Step();
 
+    //char* windows_version();
+
 #ifdef __cplusplus
 }
 #endif

@@ -19,3 +19,5 @@ extern "C" PROGRAMMER_API_EXTENDED void CpuHalt();
 extern "C" PROGRAMMER_API_EXTENDED void CpuRun();
 
 extern "C" PROGRAMMER_API_EXTENDED void CpuStep();
+
+//extern "C" PROGRAMMER_API_EXTENDED char* WindowsVersion();
