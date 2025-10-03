@@ -209,21 +209,16 @@ bool CheckDeviceConnection()
 	}
 }
 
-generalInf* GetDeviceGeneralInf()
+generalInf GetDeviceGeneralInf()
 {
-	try
-	{
-		return getDeviceGeneralInf();
-	}
-	catch (std::exception& ex)
-	{
-		ex;
-		return NULL;
-	}
-	catch (...)
-	{
-		return NULL;
-	}
+    struct generalInf output = {};
+    struct generalInf* deviceInfo = nullptr;
+    deviceInfo = getDeviceGeneralInf();
+    if (deviceInfo != nullptr)
+    {
+        output = *deviceInfo;
+    }
+    return output;
 }
 
 int ReadMemory(unsigned int address, unsigned char** data, unsigned int size)

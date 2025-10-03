@@ -7,6 +7,9 @@ namespace SharpCubeProgrammer.Struct
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DfuConnectParameters
     {
+        /// <summary>
+        /// Indicates the index of DFU ports already connected.
+        /// </summary>
         public string usb_index;
 
         /// <summary>

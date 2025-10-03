@@ -47,6 +47,8 @@ namespace KSociety.Test
         {
             try
             {
+                var test = this._cubeProgrammerApi.WindowsVersion();
+
                 var stLinkList = this._cubeProgrammerApi.GetStLinkList();
 
                 if (!stLinkList.Any())

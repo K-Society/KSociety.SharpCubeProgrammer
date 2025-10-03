@@ -54,7 +54,7 @@ extern "C" PROGRAMMER_API void SetVerbosityLevel(int level);
 
 extern "C" PROGRAMMER_API bool CheckDeviceConnection();
 
-extern "C" PROGRAMMER_API generalInf* GetDeviceGeneralInf();
+extern "C" PROGRAMMER_API generalInf GetDeviceGeneralInf();
 
 extern "C" PROGRAMMER_API int ReadMemory(unsigned int address, unsigned char** data, unsigned int size);
 

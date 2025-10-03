@@ -591,9 +591,9 @@ namespace SharpCubeProgrammer.Native
         #region [GetDeviceGeneralInf]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr GetDeviceGeneralInfC();
+        private static extern GeneralInf GetDeviceGeneralInfC();
 
-        internal static IntPtr GetDeviceGeneralInf()
+        internal static GeneralInf GetDeviceGeneralInf()
         {
             try
             {
@@ -2019,6 +2019,30 @@ namespace SharpCubeProgrammer.Native
         }
 
         #endregion
+
+        //#region [WindowsVersion]
+
+        //[DllImport(ProgrammerDll, EntryPoint = "WindowsVersion", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
+        //private static extern string WindowsVersionC();
+
+        //internal static string WindowsVersion()
+        //{
+        //    try
+        //    {
+
+        //        return WindowsVersionC();
+        //    }
+        //    catch (DllNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer implementation not found.", ex);
+        //    }
+        //    catch (EntryPointNotFoundException ex)
+        //    {
+        //        throw new Exception("K-Society CubeProgrammer operation not found.", ex);
+        //    }
+        //}
+
+        //#endregion
 
         #endregion
 

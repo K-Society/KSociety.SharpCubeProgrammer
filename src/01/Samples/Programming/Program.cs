@@ -3,6 +3,7 @@
 namespace Programming
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ namespace Programming
     using Serilog;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Struct;
 
     internal class Program
     {
@@ -39,23 +41,73 @@ namespace Programming
             Console.WriteLine("Press a button to continue.");
             Console.ReadLine();
 
-            var result12 = CubeProgrammerApi.VersionAPI();
 
-            //#region [Log Testing]
+            //var result12 = CubeProgrammerApi.VersionAPI();
 
-            //var displayCallBacks = new DisplayCallBacks
-            //{
-            //    InitProgressBar = InitProgressBar,
-            //    LogMessage = ReceiveMessage,
-            //    LoadBar = ProgressBarUpdate
-            //};
+            #region [Log Testing]
 
-            //CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
+            var displayCallBacks = new DisplayCallBacks
+            {
+                InitProgressBar = InitProgressBar,
+                LogMessage = ReceiveMessage,
+                LoadBar = ProgressBarUpdate
+            };
 
-            ////CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
-            //CubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+            CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-            //#endregion
+            //CubeProgrammerApi.SetDisplayCallbacks(InitProgressBar, ReceiveMessage, ProgressBarUpdate);
+            CubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel3);
+
+            #endregion
+
+            var dfuList = new List<SharpCubeProgrammer.Struct.DfuDeviceInfo>();
+            var resultDfuList = CubeProgrammerApi.GetDfuDeviceList(ref dfuList);
+
+
+            if (resultDfuList > 0)
+            {
+                var dfuConnect = CubeProgrammerApi.ConnectDfuBootloader(dfuList.First().UsbIndex);
+
+                if (dfuConnect.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                {
+                    var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
+
+                    if (generalInfo != null)
+                    {
+                        Logger.LogInformation("INFO: \n" +
+                                              "Board: {0} \n" +
+                                              "Bootloader Version: {1} \n" +
+                                              "Cpu: {2} \n" +
+                                              "Description: {3} \n" +
+                                              "DeviceId: {4} \n" +
+                                              "FlashSize: {5} \n" +
+                                              "RevisionId: {6} \n" +
+                                              "Name: {7} \n" +
+                                              "Series: {8} \n" +
+                                              "Type: {9}",
+                            generalInfo.Value.Board,
+                            generalInfo.Value.BootloaderVersion,
+                            generalInfo.Value.Cpu,
+                            generalInfo.Value.Description,
+                            generalInfo.Value.DeviceId,
+                            generalInfo.Value.FlashSize,
+                            generalInfo.Value.RevisionId,
+                            generalInfo.Value.Name,
+                            generalInfo.Value.Series,
+                            generalInfo.Value.Type);
+                    }
+                    //var dfuMassErase = CubeProgrammerApi.MassErase();
+
+                    //if (dfuMassErase.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    //{
+                    //    ;
+                    //}
+                }
+            }
+            else
+            {
+                ;
+            }
 
             //#region [External Loader Testing]
 
@@ -75,6 +127,8 @@ namespace Programming
             //}
 
             //#endregion
+
+            //var test = CubeProgrammerApi.WindowsVersion();
 
             #region [TryConnectStLink]
 

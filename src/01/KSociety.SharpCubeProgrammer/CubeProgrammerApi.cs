@@ -260,7 +260,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList)
+        public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483)
         {
             var numberOfItems = 0;
             var listPtr = new IntPtr();
@@ -270,7 +270,7 @@ namespace SharpCubeProgrammer
                 if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
                     var size = Marshal.SizeOf<DfuDeviceInfo>();
-                    numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, 0xdf11, 0x0483);
+                    numberOfItems = Native.ProgrammerApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
 
                     if (listPtr != IntPtr.Zero)
                     {
@@ -477,8 +477,7 @@ namespace SharpCubeProgrammer
             {
                 if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
-                    generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
+                    generalInf = Native.ProgrammerApi.GetDeviceGeneralInf();
                 }
             }
             catch (Exception ex)
@@ -1821,6 +1820,16 @@ namespace SharpCubeProgrammer
                 Native.ProgrammerApi.CpuStep();
             }
         }
+
+        //public string WindowsVersion()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.WindowsVersion();
+        //    }
+
+        //    return String.Empty;
+        //}
 
         #endregion
 

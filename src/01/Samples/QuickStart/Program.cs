@@ -11,7 +11,7 @@ namespace QuickStart
 
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
 
@@ -101,7 +101,7 @@ namespace QuickStart
             {
                 Console.WriteLine("No ST-Link found!");
             }
-            cubeProgrammerApi.DeleteInterfaceList();
+
             cubeProgrammerApi.Dispose();
             Console.WriteLine("Press a button to exit.");
             Console.ReadLine();
