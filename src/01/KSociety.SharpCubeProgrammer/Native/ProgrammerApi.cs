@@ -591,9 +591,9 @@ namespace SharpCubeProgrammer.Native
         #region [GetDeviceGeneralInf]
 
         [DllImport(ProgrammerDll, EntryPoint = "GetDeviceGeneralInf", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static extern IntPtr GetDeviceGeneralInfC();
+        private static extern GeneralInf GetDeviceGeneralInfC();
 
-        internal static IntPtr GetDeviceGeneralInf()
+        internal static GeneralInf GetDeviceGeneralInf()
         {
             try
             {

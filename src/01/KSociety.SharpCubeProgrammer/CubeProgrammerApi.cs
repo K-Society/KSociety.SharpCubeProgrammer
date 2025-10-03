@@ -477,8 +477,7 @@ namespace SharpCubeProgrammer
             {
                 if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
-                    generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
+                    generalInf = Native.ProgrammerApi.GetDeviceGeneralInf();
                 }
             }
             catch (Exception ex)
