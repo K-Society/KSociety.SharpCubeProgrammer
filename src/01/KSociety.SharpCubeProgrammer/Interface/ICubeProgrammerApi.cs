@@ -501,6 +501,8 @@ namespace SharpCubeProgrammer.Interface
 
         void Step();
 
+        //string WindowsVersion();
+
         #endregion
 
         #region [Util]

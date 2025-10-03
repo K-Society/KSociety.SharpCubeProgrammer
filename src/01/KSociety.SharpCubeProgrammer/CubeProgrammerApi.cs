@@ -477,8 +477,7 @@ namespace SharpCubeProgrammer
             {
                 if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                 {
-                    var pointer = Native.ProgrammerApi.GetDeviceGeneralInf();
-                    generalInf = Marshal.PtrToStructure<GeneralInf>(pointer);
+                    generalInf = Native.ProgrammerApi.GetDeviceGeneralInf();
                 }
             }
             catch (Exception ex)
@@ -1821,6 +1820,16 @@ namespace SharpCubeProgrammer
                 Native.ProgrammerApi.CpuStep();
             }
         }
+
+        //public string WindowsVersion()
+        //{
+        //    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+        //    {
+        //        return Native.ProgrammerApi.WindowsVersion();
+        //    }
+
+        //    return String.Empty;
+        //}
 
         #endregion
 
