@@ -68,7 +68,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected DFU devices.
         /// </summary>
-        ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, CancellationToken cancellationToken = default);
+        ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start a simple connection through USB DFU interface.
