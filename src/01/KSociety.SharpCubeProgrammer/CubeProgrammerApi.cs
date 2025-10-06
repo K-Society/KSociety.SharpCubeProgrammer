@@ -323,17 +323,25 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
+
             try
             {
-                if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
+                if ((dfuParameters.rdu == 0x00 || dfuParameters.rdu == 0x01) && (dfuParameters.tzenreg == 0x00 || dfuParameters.tzenreg == 0x01))
                 {
-                    var connectDfuBootloader2Result = Native.ProgrammerApi.ConnectDfuBootloader2(dfuParameters);
-                    if (connectDfuBootloader2Result != 0)
+                    if (Native.ProgrammerApi.EnsureNativeLibraryLoaded())
                     {
-                        this.Disconnect();
-                    }
+                        var connectDfuBootloader2Result = Native.ProgrammerApi.ConnectDfuBootloader2(dfuParameters);
+                        if (connectDfuBootloader2Result != 0)
+                        {
+                            this.Disconnect();
+                        }
 
-                    output = this.CheckResult(connectDfuBootloader2Result);
+                        output = this.CheckResult(connectDfuBootloader2Result);
+                    }
+                }
+                else
+                {
+                    this._logger?.LogWarning("ConnectDfuBootloader2 parameters rdu or tzenreg not valid!");
                 }
             }
             catch (Exception ex)
@@ -341,6 +349,19 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "ConnectDfuBootloader2: ");
             }
             return output;
+        }
+
+        /// <inheritdoc />
+        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg)
+        {
+            var dfuParameters = new DfuConnectParameters
+            {
+                usb_index = usbIndex,
+                rdu = rdu,
+                tzenreg = tzenreg
+            };
+
+            return this.ConnectDfuBootloader2(dfuParameters);
         }
 
         /// <inheritdoc />
