@@ -97,11 +97,6 @@ namespace SharpCubeProgrammer.Enum
         /// <summary>
         /// Other error.
         /// </summary>
-        CubeprogrammerErrorOther = -99,
-
-        /// <summary>
-        /// Device Not Connected.
-        /// </summary>
-        CubeprogrammerErrorDeviceNotConnected = -545,
+        CubeprogrammerErrorOther = -99
     }
 }
