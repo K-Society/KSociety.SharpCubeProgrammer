@@ -10,7 +10,7 @@ namespace SharpCubeProgrammer.Struct
     /// </summary>
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct DebugConnectParameters //: ICloneable
+    public struct DebugConnectParameters
     {
         /// <summary>
         /// Select the type of debug interface #debugPort.
@@ -97,10 +97,5 @@ namespace SharpCubeProgrammer.Struct
         /// Select speed flashing of Cortex M33 series.
         /// </summary>
         public int Speed;
-
-        //public object Clone()
-        //{
-        //    return this.MemberwiseClone();
-        //}
     }
 }
