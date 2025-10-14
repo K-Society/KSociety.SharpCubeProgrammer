@@ -1058,8 +1058,7 @@ namespace SharpCubeProgrammer
 
                     var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
                     this._programmerInstanceApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run);
-
-                    //Marshal.FreeHGlobal(obCommandPtr);
+                    Marshal.FreeHGlobal(obCommandPtr);
                 }
             }
         }
@@ -1075,8 +1074,7 @@ namespace SharpCubeProgrammer
                     var uintAddress = this.HexConverterToUint(address);
                     var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
                     this._programmerInstanceApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
-
-                    //Marshal.FreeHGlobal(obCommandPtr);
+                    Marshal.FreeHGlobal(obCommandPtr);
                 }
             }
         }

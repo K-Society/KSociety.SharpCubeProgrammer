@@ -418,15 +418,30 @@ namespace SharpCubeProgrammer.Native
 
         internal int ConnectDfuBootloader(string usbIndex)
         {
-            var usbIndexPtr = Marshal.StringToHGlobalAnsi(usbIndex);
-            if (usbIndexPtr != IntPtr.Zero)
+            var usbIndexPtr = IntPtr.Zero;
+            try
             {
-                return this.EnsureFunctionAndInvoke(
-                    "connectDfuBootloader",
-                    ref this._connectDfuBootloader,
-                    (function) => function(usbIndexPtr));
+                usbIndexPtr = Marshal.StringToHGlobalAnsi(usbIndex);
+                if (usbIndexPtr != IntPtr.Zero)
+                {
+                    var result = this.EnsureFunctionAndInvoke(
+                        "connectDfuBootloader",
+                        ref this._connectDfuBootloader,
+                        (function) => function(usbIndexPtr));
+
+                    Marshal.FreeHGlobal(usbIndexPtr);
+
+                    return result;
+                }
             }
-            //Marshal.FreeHGlobal(usbIndexPtr);
+            catch
+            {
+                // Nothing to do
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(usbIndexPtr);
+            }
             return -99;
         }
 
@@ -544,34 +559,57 @@ namespace SharpCubeProgrammer.Native
 
         internal int MassErase(string sFlashMemName)
         {
-            var sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
+            var sFlashMemNamePtr = IntPtr.Zero;
 
-            if (sFlashMemNamePtr != IntPtr.Zero)
+            try
             {
-                return this.EnsureFunctionAndInvoke(
-                "massErase",
-                ref this._massErase,
-                (function) => function(sFlashMemNamePtr));
+                sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
+                if (sFlashMemNamePtr != IntPtr.Zero)
+                {
+                    var result = this.EnsureFunctionAndInvoke(
+                    "massErase",
+                    ref this._massErase,
+                    (function) => function(sFlashMemNamePtr));
+                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                    return result;
+                }
+            }catch
+            {
+                // Nothing to do
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(sFlashMemNamePtr);
             }
 
             return -99;
-            //Marshal.FreeHGlobal(sFlashMemNamePtr);
         }
 
         internal int SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName)
         {
-            var sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
-
-            if (sFlashMemNamePtr != IntPtr.Zero)
+            var sFlashMemNamePtr = IntPtr.Zero;
+            try
             {
-                return this.EnsureFunctionAndInvoke(
-                "sectorErase",
-                ref this._sectorErase,
-                (function) => function(sectors, sectorNbr, sFlashMemNamePtr));
+                sFlashMemNamePtr = Marshal.StringToHGlobalAnsi(sFlashMemName);
+                if (sFlashMemNamePtr != IntPtr.Zero)
+                {
+                    var result = this.EnsureFunctionAndInvoke(
+                    "sectorErase",
+                    ref this._sectorErase,
+                    (function) => function(sectors, sectorNbr, sFlashMemNamePtr));
+                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                    return result;
+                }
+            }catch
+            {
+                // Nothing to do
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(sFlashMemNamePtr);
             }
 
             return -99;
-            //Marshal.FreeHGlobal(sFlashMemNamePtr);
         }
 
         internal int ReadUnprotect()
@@ -703,18 +741,29 @@ namespace SharpCubeProgrammer.Native
         #region [Option Bytes functions]
         internal int SendOptionBytesCmd(string command)
         {
-            var commandPtr = Marshal.StringToHGlobalAnsi(command);
-
-            if (commandPtr != IntPtr.Zero)
+            var commandPtr = IntPtr.Zero;
+            try
             {
-                return this.EnsureFunctionAndInvoke(
-                "sendOptionBytesCmd",
-                ref this._sendOptionBytesCmd,
-                (function) => function(commandPtr));
+                commandPtr = Marshal.StringToHGlobalAnsi(command);
+                if (commandPtr != IntPtr.Zero)
+                {
+                    var result = this.EnsureFunctionAndInvoke(
+                    "sendOptionBytesCmd",
+                    ref this._sendOptionBytesCmd,
+                    (function) => function(commandPtr));
+                    Marshal.FreeHGlobal(commandPtr);
+                    return result;
+                }
+            }catch
+            {
+                // Nothing to do
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(commandPtr);
             }
 
             return -99;
-            //Marshal.FreeHGlobal(sFlashMemNamePtr);
         }
 
         internal IntPtr InitOptionBytesInterface()
