@@ -429,8 +429,6 @@ namespace SharpCubeProgrammer.Native
                         ref this._connectDfuBootloader,
                         (function) => function(usbIndexPtr));
 
-                    Marshal.FreeHGlobal(usbIndexPtr);
-
                     return result;
                 }
             }
@@ -570,7 +568,7 @@ namespace SharpCubeProgrammer.Native
                     "massErase",
                     ref this._massErase,
                     (function) => function(sFlashMemNamePtr));
-                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                    
                     return result;
                 }
             }catch
@@ -597,7 +595,7 @@ namespace SharpCubeProgrammer.Native
                     "sectorErase",
                     ref this._sectorErase,
                     (function) => function(sectors, sectorNbr, sFlashMemNamePtr));
-                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                    
                     return result;
                 }
             }catch
@@ -751,7 +749,7 @@ namespace SharpCubeProgrammer.Native
                     "sendOptionBytesCmd",
                     ref this._sendOptionBytesCmd,
                     (function) => function(commandPtr));
-                    Marshal.FreeHGlobal(commandPtr);
+                    
                     return result;
                 }
             }catch
