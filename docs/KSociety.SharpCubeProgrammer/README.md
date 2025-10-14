@@ -126,11 +126,6 @@ All functions also exist in an asynchronous version.
 | Workloads |
 | :-------- |
 | .NET desktop development |
-| Desktop development with C++ |
-
-| Individual components |
-| :-------------------- |
-| MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
 Examples include the [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.

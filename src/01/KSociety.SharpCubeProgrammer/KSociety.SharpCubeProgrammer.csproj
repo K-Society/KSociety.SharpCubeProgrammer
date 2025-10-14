@@ -23,9 +23,6 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU' ">
-    <None Include="..\..\..\build\Programmer\bin\x64\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
-
-    </None>
     <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>
@@ -35,9 +32,6 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU' ">
-    <None Include="..\..\..\build\Programmer\bin\Win32\$(Configuration)\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
-
-    </None>
     <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>

@@ -79,6 +79,11 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
 
         /// <summary>
+        /// This routine allows to start connection to device through USB DFU interface.
+        /// </summary>
+        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg);
+
+        /// <summary>
         /// This routine allows to start connection to device through SPI interface.
         /// </summary>
         CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);

@@ -3,27 +3,12 @@
 namespace SharpCubeProgrammer.Native
 {
     using Microsoft.Win32.SafeHandles;
-#if NET
-    using System;
-    using System.Runtime.InteropServices;    
-#endif
 
     /// <summary>
     /// A class that represents a handle to a library.  This class cannot be inherited.
     /// </summary>
     internal sealed class SafeLibraryHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-#if NET
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SafeLibraryHandle"/> class.
-    /// </summary>
-    /// <param name="handle">The pre-existing handle to use.</param>
-    public SafeLibraryHandle(IntPtr handle)
-        : base(true)
-    {
-            this.SetHandle(handle);
-    }
-#else
         /// <summary>
         /// Initializes a new instance of the <see cref="SafeLibraryHandle"/> class.
         /// </summary>
@@ -31,7 +16,6 @@ namespace SharpCubeProgrammer.Native
             : base(true)
         {
         }
-#endif
 
         /// <summary>
         /// Executes the code required to free the handle.
@@ -43,15 +27,8 @@ namespace SharpCubeProgrammer.Native
         /// Managed Debugging Assistant.
         /// </returns>
         protected override bool ReleaseHandle()
-#if NET
-        {
-            NativeLibrary.Free(this.handle);
-            return true;
-        }
-#else
         {
             return Utility.FreeLibrary(this.handle);
         }
-#endif
     }
 }

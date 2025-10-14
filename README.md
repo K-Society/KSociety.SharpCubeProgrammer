@@ -130,11 +130,6 @@ All functions also exist in an asynchronous version.
 | Workloads |
 | :-------- |
 | .NET desktop development |
-| Desktop development with C++ |
-
-| Individual components |
-| :-------------------- |
-| MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
 
