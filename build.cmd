@@ -1,23 +1,23 @@
 @setlocal
 @pushd %~dp0
 @set _C=Release
-@set _D=x64
+@set _D=AnyCPU
 
 @if "%VCToolsVersion%"=="" call :StartDeveloperCommandPrompt || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:RestorePackagesConfig=true -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:RestorePackagesConfig=true -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:clean || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:clean || exit /b
 
-@set _D=x86
+REM @set _D=x86
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:RestorePackagesConfig=true -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:restore -p:RestorePackagesConfig=true -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
+REM msbuild KSociety.SharpCubeProgrammer.sln -t:build -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 
-@set _D=AnyCPU
+REM @set _D=AnyCPU
 
 msbuild src\01\KSociety.SharpCubeProgrammer\KSociety.SharpCubeProgrammer.csproj -t:restore -p:Configuration=%_C% -p:Platform=%_D% || exit /b
 

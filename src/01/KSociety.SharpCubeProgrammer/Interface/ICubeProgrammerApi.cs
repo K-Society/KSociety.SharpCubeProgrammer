@@ -79,6 +79,11 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
 
         /// <summary>
+        /// This routine allows to start connection to device through USB DFU interface.
+        /// </summary>
+        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg);
+
+        /// <summary>
         /// This routine allows to start connection to device through SPI interface.
         /// </summary>
         CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);
@@ -141,7 +146,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
-        CubeProgrammerError WriteMemory(string address, byte[] data);
+        CubeProgrammerError WriteMemory(string address, byte[] data, int size = 0);
 
         /// <summary>
         /// This routine allows to write memory data on the user interface with the configuration already initialized.

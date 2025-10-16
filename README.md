@@ -11,6 +11,7 @@
 # KSociety.SharpCubeProgrammer
 
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.20.0.
+Emulation of the STM32CubePrgAPI program is available in the examples: [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI).
 
 
 First unofficial and open source C# wrapper.
@@ -130,11 +131,6 @@ All functions also exist in an asynchronous version.
 | Workloads |
 | :-------- |
 | .NET desktop development |
-| Desktop development with C++ |
-
-| Individual components |
-| :-------------------- |
-| MSVC v143 - VS 2022 C++ x64/x86 |
 
 ## Get Started
 
