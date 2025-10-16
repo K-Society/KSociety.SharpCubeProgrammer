@@ -7,7 +7,7 @@
 # KSociety.SharpCubeProgrammer
 
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.20.0.
-Emulation of the STM32CubePrgAPI program is available in the examples: SharpCubePrgAPI.
+Emulation of the STM32CubePrgAPI program is available in the examples: [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI).
 
 
 First unofficial and open source C# wrapper.
