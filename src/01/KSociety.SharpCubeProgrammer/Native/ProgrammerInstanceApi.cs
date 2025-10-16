@@ -334,14 +334,11 @@ namespace SharpCubeProgrammer.Native
 
         internal int GetStLinkList(ref IntPtr stLinkList, int shared)
         {
-            if (stLinkList != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
+            var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
 
-                if (function != null)
-                {
-                    return function(ref stLinkList, shared);
-                }
+            if (function != null)
+            {
+                return function(ref stLinkList, shared);
             }
 
             return -99;
@@ -349,16 +346,13 @@ namespace SharpCubeProgrammer.Native
 
         internal int GetStLinkEnumerationList(ref IntPtr stLinkList, int shared)
         {
-            if (stLinkList != IntPtr.Zero)
+            var function = this.EnsureFunction("getStLinkEnumerationList", ref this._getStLinkEnumerationList);
+
+            if (function != null)
             {
-                var function = this.EnsureFunction("getStLinkEnumerationList", ref this._getStLinkEnumerationList);
-
-                if (function != null)
-                {
-                    return function(ref stLinkList, shared);
-                }
+                return function(ref stLinkList, shared);
             }
-
+            
             return -99;
         }
 
@@ -384,14 +378,11 @@ namespace SharpCubeProgrammer.Native
 
         internal int GetUsartList(ref IntPtr usartList)
         {
-            if (usartList != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("getUsartList", ref this._getUsartList);
+            var function = this.EnsureFunction("getUsartList", ref this._getUsartList);
 
-                if (function != null)
-                {
-                    return function(ref usartList);
-                }
+            if (function != null)
+            {
+                return function(ref usartList);
             }
 
             return -99;
@@ -415,14 +406,11 @@ namespace SharpCubeProgrammer.Native
 
         internal int GetDfuDeviceList(ref IntPtr dfuList, int iPID, int iVID)
         {
-            if (dfuList != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("getDfuDeviceList", ref this._getDfuDeviceList);
+            var function = this.EnsureFunction("getDfuDeviceList", ref this._getDfuDeviceList);
 
-                if (function != null)
-                {
-                    return function(ref dfuList, iPID, iVID);
-                }
+            if (function != null)
+            {
+                return function(ref dfuList, iPID, iVID);
             }
 
             return -99;
@@ -525,14 +513,11 @@ namespace SharpCubeProgrammer.Native
 
         internal int ReadMemory(uint address, ref IntPtr data, uint size)
         {
-            if (data != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("readMemory", ref this._readMemory);
+            var function = this.EnsureFunction("readMemory", ref this._readMemory);
 
-                if (function != null)
-                {
-                    return function(address, ref data, size);
-                }
+            if (function != null)
+            {
+                return function(address, ref data, size);
             }
 
             return -99;
@@ -773,7 +758,7 @@ namespace SharpCubeProgrammer.Native
         {
             var function = this.EnsureFunction("getStorageStructure", ref this._getStorageStructure);
 
-            if (function != null && deviceStorageStruct != IntPtr.Zero)
+            if (function != null)
             {
                 return function(ref deviceStorageStruct);
             }
@@ -849,36 +834,27 @@ namespace SharpCubeProgrammer.Native
 
         internal void SetExternalLoaderPath(string path, ref IntPtr externalLoaderInfo)
         {
-            if (externalLoaderInfo != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("setExternalLoaderPath", ref this._setExternalLoaderPath);
+            var function = this.EnsureFunction("setExternalLoaderPath", ref this._setExternalLoaderPath);
 
-                function?.Invoke(path, ref externalLoaderInfo);
-            }
+            function?.Invoke(path, ref externalLoaderInfo);
         }
 
         internal void SetExternalLoaderOBL(string path, ref IntPtr externalLoaderInfo)
         {
-            if (externalLoaderInfo != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("setExternalLoaderOBL", ref this._setExternalLoaderOBL);
+            var function = this.EnsureFunction("setExternalLoaderOBL", ref this._setExternalLoaderOBL);
 
-                function?.Invoke(path, ref externalLoaderInfo);
-            }
+            function?.Invoke(path, ref externalLoaderInfo);
         }
 
         internal int GetExternalLoaders(string path, ref IntPtr externalStorageNfo)
         {
-            if (externalStorageNfo != IntPtr.Zero)
+            var function = this.EnsureFunction("getExternalLoaders", ref this._getExternalLoaders);
+
+            if (function != null)
             {
-                var function = this.EnsureFunction("getExternalLoaders", ref this._getExternalLoaders);
-
-                if (function != null)
-                {
-                    return function(path, ref externalStorageNfo);
-                }
+                return function(path, ref externalStorageNfo);
             }
-
+            
             return -99;
         }
 
@@ -904,14 +880,11 @@ namespace SharpCubeProgrammer.Native
 
         internal int GetUID64(ref IntPtr data)
         {
-            if (data != IntPtr.Zero)
-            {
-                var function = this.EnsureFunction("getUID64", ref this._getUID64);
+            var function = this.EnsureFunction("getUID64", ref this._getUID64);
 
-                if (function != null)
-                {
-                    return function(ref data);
-                }
+            if (function != null)
+            {
+                return function(ref data);
             }
 
             return -99;
@@ -1219,7 +1192,10 @@ namespace SharpCubeProgrammer.Native
             if (disposing)
             {
                 // Free any other managed objects here.
+                
             }
+
+            this.DeleteInterfaceList();
 
             // Free any unmanaged objects here.
             if (this.HandleProgrammer != null)
@@ -1253,7 +1229,6 @@ namespace SharpCubeProgrammer.Native
 
         ~ProgrammerInstanceApi()
         {
-            this.DeleteInterfaceList();
             this.Dispose(false);
         }
 
