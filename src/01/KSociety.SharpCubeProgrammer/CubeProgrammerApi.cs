@@ -527,18 +527,23 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError WriteMemory(string address, byte[] data)
+        public CubeProgrammerError WriteMemory(string address, byte[] data, int size = 0)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
                 var uintAddress = this.HexConverterToUint(address);
+                var length = data.Length;
+                if (size != 0 && size <= data.Length)
+                {
+                    length = size;
+                }
 
                 try
                 {
                     var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                    var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
                     gch.Free();
                     result = this.CheckResult(writeMemoryResult);
 
@@ -1213,38 +1218,35 @@ namespace SharpCubeProgrammer
                                             Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
                                         var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
 
-                                        if (bitCItem.Values != IntPtr.Zero)
+                                        var bitValueCList = new List<BitValueC>();
+                                        for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
                                         {
-                                            var bitValueCList = new List<BitValueC>();
-                                            for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
-                                            {
-                                                var bitValueCItemPointer =
-                                                    Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
-                                                var bitValueCItem =
-                                                    Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
-                                                bitValueCList.Add(bitValueCItem);
+                                            var bitValueCItemPointer =
+                                                Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
+                                            var bitValueCItem =
+                                                Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
+                                            bitValueCList.Add(bitValueCItem);
 
-                                                Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
-                                            }
-
-                                            var deviceBitC = new DeviceBitC
-                                            {
-                                                Name = bitCItem.Name,
-                                                Description = bitCItem.Description,
-                                                WordOffset = bitCItem.WordOffset,
-                                                BitOffset = bitCItem.BitOffset,
-                                                BitWidth = bitCItem.BitWidth,
-                                                Access = bitCItem.Access,
-                                                ValuesNbr = bitCItem.ValuesNbr,
-                                                Values = bitValueCList,
-                                                Equation = bitCItem.Equation,
-                                                Reference = bitCItem.Reference,
-                                                BitValue = bitCItem.BitValue
-                                            };
-                                            bitCList.Add(deviceBitC);
-
-                                            Marshal.DestroyStructure<BitC>(bitCItemPointer);
+                                            Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
                                         }
+
+                                        var deviceBitC = new DeviceBitC
+                                        {
+                                            Name = bitCItem.Name,
+                                            Description = bitCItem.Description,
+                                            WordOffset = bitCItem.WordOffset,
+                                            BitOffset = bitCItem.BitOffset,
+                                            BitWidth = bitCItem.BitWidth,
+                                            Access = bitCItem.Access,
+                                            ValuesNbr = bitCItem.ValuesNbr,
+                                            Values = bitValueCList,
+                                            Equation = bitCItem.Equation,
+                                            Reference = bitCItem.Reference,
+                                            BitValue = bitCItem.BitValue
+                                        };
+                                        bitCList.Add(deviceBitC);
+
+                                        Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                     }
 
                                     var deviceCategoryC = new DeviceCategoryC

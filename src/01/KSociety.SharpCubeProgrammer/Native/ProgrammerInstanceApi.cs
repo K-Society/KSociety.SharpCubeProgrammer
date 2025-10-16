@@ -352,7 +352,7 @@ namespace SharpCubeProgrammer.Native
             {
                 return function(ref stLinkList, shared);
             }
-
+            
             return -99;
         }
 
@@ -525,18 +525,28 @@ namespace SharpCubeProgrammer.Native
 
         internal int WriteMemory(uint address, IntPtr data, uint size)
         {
-            return this.EnsureFunctionAndInvoke(
+            if (data != IntPtr.Zero)
+            {
+                return this.EnsureFunctionAndInvoke(
                 "writeMemory",
                 ref this._writeMemory,
                 (function) => function(address, data, size));
+            }
+
+            return -99;
         }
 
         internal int EditSector(uint address, IntPtr data, uint size)
         {
-            return this.EnsureFunctionAndInvoke(
-                "editSector",
-                ref this._editSector,
-                (function) => function(address, data, size));
+            if (data != IntPtr.Zero)
+            {
+                return this.EnsureFunctionAndInvoke(
+                    "editSector",
+                    ref this._editSector,
+                    (function) => function(address, data, size));
+            }
+
+            return -99;
         }
 
         internal int DownloadFile(string filePath, uint address, uint skipErase, uint verify, string binPath)
@@ -577,7 +587,10 @@ namespace SharpCubeProgrammer.Native
             }
             finally
             {
-                Marshal.FreeHGlobal(sFlashMemNamePtr);
+                if (sFlashMemNamePtr != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                }
             }
 
             return -99;
@@ -604,7 +617,10 @@ namespace SharpCubeProgrammer.Native
             }
             finally
             {
-                Marshal.FreeHGlobal(sFlashMemNamePtr);
+                if (sFlashMemNamePtr != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(sFlashMemNamePtr);
+                }
             }
 
             return -99;
@@ -652,34 +668,50 @@ namespace SharpCubeProgrammer.Native
 
         internal void FreeFileData(IntPtr data)
         {
-            this.EnsureFunctionAndInvoke(
+            if (data != IntPtr.Zero)
+            {
+                this.EnsureFunctionAndInvoke(
                 "freeFileData",
                 ref this._freeFileData,
                 (function) => function(data));
+            }
         }
 
         internal void FreeLibraryMemory(IntPtr ptr)
         {
-            this.EnsureFunctionAndInvoke(
+            if (ptr != IntPtr.Zero)
+            {
+                this.EnsureFunctionAndInvoke(
                 "freeLibraryMemory",
                 ref this._freeLibraryMemory,
                 (function) => function(ptr));
+            }
         }
 
         internal int Verify(IntPtr fileData, uint address)
         {
-            return this.EnsureFunctionAndInvoke(
+            if (fileData != IntPtr.Zero)
+            {
+                return this.EnsureFunctionAndInvoke(
                 "verify",
                 ref this._verify,
                 (function) => function(fileData, address));
+            }
+
+            return -99;
         }
 
         internal int SaveFileToFile(IntPtr fileData, string sFileName)
         {
-            return this.EnsureFunctionAndInvoke(
-                "saveFileToFile",
-                ref this._saveFileToFile,
-                (function) => function(fileData, sFileName));
+            if (fileData != IntPtr.Zero)
+            {
+                return this.EnsureFunctionAndInvoke(
+                    "saveFileToFile",
+                    ref this._saveFileToFile,
+                    (function) => function(fileData, sFileName));
+            }
+
+            return -99;
         }
 
         internal int SaveMemoryToFile(int address, int size, string sFileName)
@@ -822,7 +854,7 @@ namespace SharpCubeProgrammer.Native
             {
                 return function(path, ref externalStorageNfo);
             }
-
+            
             return -99;
         }
 
@@ -1160,7 +1192,10 @@ namespace SharpCubeProgrammer.Native
             if (disposing)
             {
                 // Free any other managed objects here.
+                
             }
+
+            this.DeleteInterfaceList();
 
             // Free any unmanaged objects here.
             if (this.HandleProgrammer != null)
@@ -1194,7 +1229,6 @@ namespace SharpCubeProgrammer.Native
 
         ~ProgrammerInstanceApi()
         {
-            this.DeleteInterfaceList();
             this.Dispose(false);
         }
 

@@ -157,9 +157,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.WriteMemory(address, data), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.WriteMemory(address, data, size), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

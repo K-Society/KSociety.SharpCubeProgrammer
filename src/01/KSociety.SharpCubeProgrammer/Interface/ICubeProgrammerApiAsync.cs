@@ -148,7 +148,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
-        ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to write memory data on the user interface with the configuration already initialized.
