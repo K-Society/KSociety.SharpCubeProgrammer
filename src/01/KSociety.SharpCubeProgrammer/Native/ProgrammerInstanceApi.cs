@@ -890,7 +890,7 @@ namespace SharpCubeProgrammer.Native
             return -99;
         }
 
-        internal int FirmwareDelete()
+        internal bool FirmwareDelete()
         {
             return this.EnsureFunctionAndInvoke(
                 "firmwareDelete",
@@ -898,7 +898,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function());
         }
 
-        internal int FirmwareUpgrade(string filePath, uint address, uint firstInstall, uint startStack, uint verify)
+        internal bool FirmwareUpgrade(string filePath, uint address, uint firstInstall, uint startStack, uint verify)
         {
             return this.EnsureFunctionAndInvoke(
                 "firmwareUpgrade",
@@ -906,7 +906,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function(filePath, address, firstInstall, startStack, verify));
         }
 
-        internal int StartWirelessStack()
+        internal bool StartWirelessStack()
         {
             return this.EnsureFunctionAndInvoke(
                 "startWirelessStack",
@@ -914,7 +914,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function());
         }
 
-        internal int UpdateAuthKey(string filePath)
+        internal bool UpdateAuthKey(string filePath)
         {
             return this.EnsureFunctionAndInvoke(
                 "updateAuthKey",
@@ -938,7 +938,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function(filePath, keyType));
         }
 
-        internal int AntiRollBack()
+        internal bool AntiRollBack()
         {
             return this.EnsureFunctionAndInvoke(
                 "antiRollBack",
@@ -946,7 +946,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function());
         }
 
-        internal int StartFus()
+        internal bool StartFus()
         {
             return this.EnsureFunctionAndInvoke(
                 "startFus",
@@ -1086,6 +1086,19 @@ namespace SharpCubeProgrammer.Native
             {
                 callback(function);
             }
+        }
+
+        private bool EnsureFunctionAndInvoke<T>(string functionName, ref T function, Func<T, bool> callback)
+            where T : class, Delegate
+        {
+            function = this.EnsureFunction(functionName, ref function);
+
+            if (function != null)
+            {
+                return callback(function);
+            }
+
+            return false;
         }
 
         private int EnsureFunctionAndInvoke<T>(string functionName, ref T function, Func<T, int> callback)

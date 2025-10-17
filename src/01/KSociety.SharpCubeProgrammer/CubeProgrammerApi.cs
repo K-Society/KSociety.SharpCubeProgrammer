@@ -1522,43 +1522,30 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError FirmwareDelete()
+        public bool FirmwareDelete()
         {
-            var firmwareDeleteResult = this._programmerInstanceApi.FirmwareDelete();
-            var result = this.CheckResult(firmwareDeleteResult);
-
-            return result;
+            return this._programmerInstanceApi.FirmwareDelete();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify)
+        public bool FirmwareUpgrade(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify)
         {
             var uintAddress = this.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-            var firmwareUpgradeResult =
-            this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, firstInstall, startStack, verify);
 
-            var result = this.CheckResult(firmwareUpgradeResult);
-
-            return result;
+            return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError StartWirelessStack()
+        public bool StartWirelessStack()
         {
-            var startWirelessStackResult = this._programmerInstanceApi.StartWirelessStack();
-            var result = this.CheckResult(startWirelessStackResult);
-
-            return result;
+            return this._programmerInstanceApi.StartWirelessStack();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError UpdateAuthKey(string filePath)
+        public bool UpdateAuthKey(string filePath)
         {
-            var updateAuthKeyResult = this._programmerInstanceApi.UpdateAuthKey(filePath);
-            var result = this.CheckResult(updateAuthKeyResult);
-
-            return result;
+            return this._programmerInstanceApi.UpdateAuthKey(filePath);
         }
 
         /// <inheritdoc />
@@ -1581,20 +1568,15 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError AntiRollBack()
+        public bool AntiRollBack()
         {
-            var antiRollBackResult = this._programmerInstanceApi.AntiRollBack();
-            var result = this.CheckResult(antiRollBackResult);
-            return result;
+            return this._programmerInstanceApi.AntiRollBack();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError StartFus()
+        public bool StartFus()
         {
-            var startFusResult = this._programmerInstanceApi.StartFus();
-            var result = this.CheckResult(startFusResult);
-
-            return result;
+            return this._programmerInstanceApi.StartFus();
         }
 
         /// <inheritdoc />

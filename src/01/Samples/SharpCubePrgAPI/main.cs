@@ -30,10 +30,11 @@ namespace SharpCubePrgAPI
             cubeProgrammerApi.SetVerbosityLevel(DisplayManager.VerbosityLevel);
 
             #endregion
-
-            var result = Example1.Example(cubeProgrammerApi);
-            result = Example2.Example(cubeProgrammerApi);
-            result = Example3.Example(cubeProgrammerApi);
+            var result = 0;
+            result = Example1.Example(cubeProgrammerApi);
+            //result = Example2.Example(cubeProgrammerApi);
+            //result = Example3.Example(cubeProgrammerApi);
+            //result = ExampleWB.Example(cubeProgrammerApi);
 
             cubeProgrammerApi.Dispose();
 
