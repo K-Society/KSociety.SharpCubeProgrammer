@@ -34,6 +34,8 @@ This has been tested on Windows 10 and Windows 11, you don't need to install STM
 ### KSociety.SharpCubeProgrammer
 STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions are welcome.
 
+![Sample app](docs/Example.gif)
+
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).

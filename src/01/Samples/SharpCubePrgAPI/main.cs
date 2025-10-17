@@ -32,8 +32,8 @@ namespace SharpCubePrgAPI
             #endregion
 
             var result = Example1.Example(cubeProgrammerApi);
-            //var result = Example2.Example(cubeProgrammerApi);
-            //var result = Example3.Example(cubeProgrammerApi);
+            result = Example2.Example(cubeProgrammerApi);
+            result = Example3.Example(cubeProgrammerApi);
 
             cubeProgrammerApi.Dispose();
 

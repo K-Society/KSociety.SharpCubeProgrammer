@@ -13,7 +13,6 @@ namespace SharpCubePrgAPI
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
             DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 1 +++\n\n");
-
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 
@@ -155,7 +154,9 @@ namespace SharpCubePrgAPI
                     DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :" );
                     while (col < 4 && i < size)
                     {
-                        DisplayManager.LogMessage(MessageType.Info, $" 0x{readMemoryFlag.Item2[i].ToString("X") + readMemoryFlag.Item2[i + 1].ToString("X") + readMemoryFlag.Item2[i + 2].ToString("X") + readMemoryFlag.Item2[i + 3].ToString("X")} ");
+                        var buffer = new byte[4];
+                        Array.Copy(readMemoryFlag.Item2, i, buffer, 0, 4);
+                        DisplayManager.LogMessage(MessageType.Info, $" {BitConverter.ToString(buffer.Reverse().ToArray()).Replace("-", String.Empty)} ");
                         col++;
                         i += 4;
                     }
