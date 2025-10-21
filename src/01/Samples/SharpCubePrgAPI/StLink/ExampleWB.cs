@@ -1,18 +1,19 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
     using System;
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
 
-    internal static class Example1
+    internal static class ExampleWB
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 1 +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example STM32WB +++\n\n");
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 
@@ -41,7 +42,7 @@ namespace SharpCubePrgAPI
                 DisplayManager.LogMessage(MessageType.Title, $"\n--------------------- ");
                 DisplayManager.LogMessage(MessageType.Title, $"\n ST-LINK Probe : {index} ");
                 DisplayManager.LogMessage(MessageType.Title, $"\n--------------------- \n\n");
-                
+
                 debugConnectParameters = stLink;
                 debugConnectParameters.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 debugConnectParameters.Shared = 0;
@@ -79,7 +80,7 @@ namespace SharpCubePrgAPI
                 /* Single word edition */
                 var size = 4;
                 var startAddress = "0x08000000";
-                var data = new byte[]{ 0xAA, 0xAA, 0xBB, 0xBB, 0xCC, 0xCC, 0xDD, 0xDD };
+                var data = new byte[] { 0xAA, 0xAA, 0xBB, 0xBB, 0xCC, 0xCC, 0xDD, 0xDD };
                 var writeMemoryFlag = cubeProgrammerApi.WriteMemory(startAddress, data, size);
                 if (writeMemoryFlag != 0)
                 {
@@ -151,7 +152,7 @@ namespace SharpCubePrgAPI
                     col = 0;
                     var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
                     hexAddress += (uint)i;
-                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :" );
+                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :");
                     while (col < 4 && i < size)
                     {
                         var buffer = new byte[4];
@@ -191,6 +192,36 @@ namespace SharpCubePrgAPI
                             }
                         }
                     }
+                }
+
+                var retValstartFus = cubeProgrammerApi.StartFus();
+                if (retValstartFus == false)
+                {
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS failed to be started\n");
+                    return 1;
+                }
+
+                /*Perform Firmware upgrade */
+                var retValueFusUp = cubeProgrammerApi.FirmwareUpgrade(@"..\..\..\..\..\Test\stm32wb5x_BLE_LLD_fw.bin", "0x08065000", WbFunctionArguments.FirstInstallNotActive, WbFunctionArguments.StartStackNotActive, WbFunctionArguments.VerifyFileDownloadFile);
+                if (retValueFusUp == false)
+                {
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS Upgrade failed\n");
+                    return 1;
+                }
+
+                /* Start the FUS */
+                retValstartFus = cubeProgrammerApi.StartFus(); // FIXME PLS : minuscule
+                if (retValstartFus == false)
+                {
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS failed to be started\n");
+                    return 1;
+                }
+                /*Perform Delete Firmware*/
+
+                var retValueFirmDelete = cubeProgrammerApi.FirmwareDelete();
+                if (retValueFirmDelete == false)
+                {
+                    DisplayManager.LogMessage(MessageType.Error, "FW Delete failed\n");
                 }
 
                 /* Apply a System Reset */

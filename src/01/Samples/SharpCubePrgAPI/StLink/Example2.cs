@@ -1,17 +1,19 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
+    using System;
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
 
-    internal static class Example3
+    internal static class Example2
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 3 +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 2 +++\n\n");
 
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
@@ -79,94 +81,49 @@ namespace SharpCubePrgAPI
                     continue;
                 }
 
-                /* Set rdp option byte */
-                var sendOptionBytesCmdFlag = cubeProgrammerApi.SendOptionBytesCmd("-ob rdp=0xbb");
-                if (sendOptionBytesCmdFlag != 0)
+                /* Reading 256 bytes from 0x08000000 */
+                var size = 256;
+                var startAddress = "0x08000000";
+
+                var readMemoryFlag = cubeProgrammerApi.ReadMemory(startAddress, size);
+                if (readMemoryFlag.Item1 != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
                 }
 
-                /* Read Option bytes from target device memory */
-                var ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
-                {
-                    cubeProgrammerApi.Disconnect();
-                    continue;
-                }
+                DisplayManager.LogMessage(MessageType.Normal, "\nReading 32-bit memory content\n");
+                DisplayManager.LogMessage(MessageType.Normal, $"  Size          : {size} Bytes\n");
+                DisplayManager.LogMessage(MessageType.Normal, $"  Address:      : {startAddress}\n");
 
-                var j = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    j++;
+                var i = 0;
+                int col;
 
-                    foreach (var categori in bank.Categories)
+                while (i < size)
+                {
+                    col = 0;
+                    var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
+                    hexAddress += (uint)i;
+                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :");
+                    while (col < 4 && i < size)
                     {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
+                        var buffer = new byte[4];
+                        Array.Copy(readMemoryFlag.Item2, i, buffer, 0, 4);
+                        DisplayManager.LogMessage(MessageType.Info, $" {BitConverter.ToString(buffer.Reverse().ToArray()).Replace("-", String.Empty)} ");
+                        col++;
+                        i += 4;
                     }
                 }
+                DisplayManager.LogMessage(MessageType.Normal, "\n");
 
-                /* Disable readout protection */
-                var readUnprotectFlag = cubeProgrammerApi.ReadUnprotect();
-                if (readUnprotectFlag != 0)
+                /* Run application */
+                var executeFlag = cubeProgrammerApi.Execute("0x08000000");
+                if (executeFlag != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
                 }
-
-                /* Display option bytes */
-                ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
-                {
-                    cubeProgrammerApi.Disconnect();
-                    continue;
-                }
-
-                var jj = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    jj++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
-                }
-
-                /* Apply a System Reset */
-                var resetFlag = cubeProgrammerApi.Reset(DebugResetMode.SoftwareReset);
-                if (resetFlag != 0)
-                {
-                    DisplayManager.LogMessage(MessageType.Error, "\nUnable to reset MCU!\n");
-                    cubeProgrammerApi.Disconnect();
-                    continue;
-                }
-                else
-                {
-                    DisplayManager.LogMessage(MessageType.GreenInfo, "\nSystem Reset is performed\n");
-                }
+                /* The system will lose the connection with bootloader when it is in running mode */
 
                 /* Process successfully Done */
                 cubeProgrammerApi.Disconnect();
