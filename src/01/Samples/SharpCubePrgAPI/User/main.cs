@@ -3,6 +3,7 @@
 namespace SharpCubePrgAPI.User
 {
     using System;
+    using SharpCubePrgAPI.Bootoader;
     using SharpCubePrgAPI.StLink;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
@@ -36,6 +37,7 @@ namespace SharpCubePrgAPI.User
             //result = Example2.Example(cubeProgrammerApi);
             //result = Example3.Example(cubeProgrammerApi);
             //result = ExampleWB.Example(cubeProgrammerApi);
+            //result = UsbExample.Example(cubeProgrammerApi);
 
             cubeProgrammerApi.Dispose();
 

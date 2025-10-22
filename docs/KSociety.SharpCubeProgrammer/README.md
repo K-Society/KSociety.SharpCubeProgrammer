@@ -129,9 +129,14 @@ All functions also exist in an asynchronous version.
 | :-------- |
 | .NET desktop development |
 
-## Get Started
-Examples include the [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
+## Examples
+Examples include:
 
+- [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
+- [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI) emulation of the STM32CubePrgAPI program.
+
+
+## Get Started
 - Creates a new instance of the CharpCubeProgrammer class:
 
 ```csharp
