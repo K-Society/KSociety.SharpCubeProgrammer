@@ -1,19 +1,19 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
     using System;
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
 
-    internal static class Example2
+    internal static class Example1
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 2 +++\n\n");
-
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 1 +++\n\n");
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 
@@ -42,7 +42,7 @@ namespace SharpCubePrgAPI
                 DisplayManager.LogMessage(MessageType.Title, $"\n--------------------- ");
                 DisplayManager.LogMessage(MessageType.Title, $"\n ST-LINK Probe : {index} ");
                 DisplayManager.LogMessage(MessageType.Title, $"\n--------------------- \n\n");
-
+                
                 debugConnectParameters = stLink;
                 debugConnectParameters.ConnectionMode = DebugConnectionMode.UnderResetMode;
                 debugConnectParameters.Shared = 0;
@@ -66,23 +66,30 @@ namespace SharpCubePrgAPI
                 {
                     DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
                     DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Cpu} \n");
+                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
                 }
 
-                /* Download File + verification */
-                const string filePath = @"..\..\..\..\..\Test\data.hex";
-                uint isVerify = 1; //add verification step
-                uint isSkipErase = 0; // no skip erase
-                var downloadFileFlag = cubeProgrammerApi.DownloadFile(filePath, "0x08000000", isSkipErase, isVerify);
-                if (downloadFileFlag != 0)
+                /* Apply mass Erase */
+                var massEraseFlag = cubeProgrammerApi.MassErase();
+                if (massEraseFlag != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
                 }
 
-                /* Reading 256 bytes from 0x08000000 */
-                var size = 256;
+                /* Single word edition */
+                var size = 4;
                 var startAddress = "0x08000000";
+                var data = new byte[]{ 0xAA, 0xAA, 0xBB, 0xBB, 0xCC, 0xCC, 0xDD, 0xDD };
+                var writeMemoryFlag = cubeProgrammerApi.WriteMemory(startAddress, data, size);
+                if (writeMemoryFlag != 0)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    continue;
+                }
+
+                /* Reading 64 bytes from 0x08000000 */
+                size = 64;
 
                 var readMemoryFlag = cubeProgrammerApi.ReadMemory(startAddress, size);
                 if (readMemoryFlag.Item1 != 0)
@@ -109,20 +116,96 @@ namespace SharpCubePrgAPI
                         var buffer = new byte[4];
                         Array.Copy(readMemoryFlag.Item2, i, buffer, 0, 4);
                         DisplayManager.LogMessage(MessageType.Info, $" {BitConverter.ToString(buffer.Reverse().ToArray()).Replace("-", String.Empty)} ");
+
                         col++;
                         i += 4;
                     }
                 }
                 DisplayManager.LogMessage(MessageType.Normal, "\n");
 
-                /* Run application */
-                var executeFlag = cubeProgrammerApi.Execute("0x08000000");
-                if (executeFlag != 0)
+                /* Sector Erase */
+                var sectors = new uint[] { 0, 1, 2, 3 };  // we suppose that we have 4 sectors
+                var sectorEraseFlag = cubeProgrammerApi.SectorErase(sectors, 1); // we will erase just the first sector
+                if (sectorEraseFlag != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
                 }
-                /* The system will lose the connection with bootloader when it is in running mode */
+
+                /* Reading 64 bytes from 0x08000000 */
+                i = 0;
+                size = 64;
+
+                readMemoryFlag = cubeProgrammerApi.ReadMemory(startAddress, size);
+                if (readMemoryFlag.Item1 != 0)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    continue;
+                }
+
+                DisplayManager.LogMessage(MessageType.Normal, "\nReading 32-bit memory content\n");
+                DisplayManager.LogMessage(MessageType.Normal, $"  Size          : {size} Bytes\n");
+                DisplayManager.LogMessage(MessageType.Normal, $"  Address:      : {startAddress}\n");
+
+                while (i < size)
+                {
+                    col = 0;
+                    var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
+                    hexAddress += (uint)i;
+                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :" );
+                    while (col < 4 && i < size)
+                    {
+                        var buffer = new byte[4];
+                        Array.Copy(readMemoryFlag.Item2, i, buffer, 0, 4);
+                        DisplayManager.LogMessage(MessageType.Info, $" {BitConverter.ToString(buffer.Reverse().ToArray()).Replace("-", String.Empty)} ");
+                        col++;
+                        i += 4;
+                    }
+                }
+                DisplayManager.LogMessage(MessageType.Normal, "\n");
+
+                /* Read Option bytes from target device memory */
+                var ob = cubeProgrammerApi.InitOptionBytesInterface();
+                if (ob == null)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    continue;
+                }
+
+                var j = 0;
+                /* Display option bytes */
+                foreach (var bank in ob?.Banks)
+                {
+                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
+                    j++;
+
+                    foreach (var categori in bank.Categories)
+                    {
+                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
+
+                        foreach (var bit in categori.Bits)
+                        {
+                            if (bit.Access == 0 || bit.Access == 2)
+                            {
+                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
+                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
+                            }
+                        }
+                    }
+                }
+
+                /* Apply a System Reset */
+                var resetFlag = cubeProgrammerApi.Reset(DebugResetMode.SoftwareReset);
+                if (resetFlag != 0)
+                {
+                    DisplayManager.LogMessage(MessageType.Error, "\nUnable to reset MCU!\n");
+                    cubeProgrammerApi.Disconnect();
+                    continue;
+                }
+                else
+                {
+                    DisplayManager.LogMessage(MessageType.GreenInfo, "\nSystem Reset is performed\n");
+                }
 
                 /* Process successfully Done */
                 cubeProgrammerApi.Disconnect();

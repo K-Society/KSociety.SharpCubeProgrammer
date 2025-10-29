@@ -13,6 +13,7 @@
 KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.20.0.
 Emulation of the STM32CubePrgAPI program is available in the examples: [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI).
 
+![Sample app](docs/Example.gif)
 
 First unofficial and open source C# wrapper.
 
@@ -132,10 +133,14 @@ All functions also exist in an asynchronous version.
 | :-------- |
 | .NET desktop development |
 
+## Examples
+Examples include:
+
+- [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
+- [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI) emulation of the STM32CubePrgAPI program.
+
+
 ## Get Started
-
-Examples include the [QuickStart](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/QuickStart) project, is a very basic example.
-
 - Creates a new instance of the CharpCubeProgrammer class:
 
 ```csharp

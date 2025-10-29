@@ -386,22 +386,22 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to erase the BLE stack firmware.
         /// </summary>
-        ValueTask<CubeProgrammerError> FirmwareDeleteAsync(CancellationToken cancellationToken = default);
+        ValueTask<bool> FirmwareDeleteAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to make upgrade of BLE stack firmware or FUS firmware.
         /// </summary>
-        ValueTask<CubeProgrammerError> FirmwareUpgradeAsync(string filePath, string address, uint firstInstall, uint startStack, uint verify, CancellationToken cancellationToken = default);
+        ValueTask<bool> FirmwareUpgradeAsync(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        ValueTask<CubeProgrammerError> StartWirelessStackAsync(CancellationToken cancellationToken = default);
+        ValueTask<bool> StartWirelessStackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start the programmed Stack.
         /// </summary>
-        ValueTask<CubeProgrammerError> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default);
+        ValueTask<bool> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to lock the authentication key and once locked, it is no longer possible to change it.
@@ -416,12 +416,12 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to activate the AntiRollBack.
         /// </summary>
-        ValueTask<CubeProgrammerError> AntiRollBackAsync(CancellationToken cancellationToken = default);
+        ValueTask<bool> AntiRollBackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start and establish a communication with the FUS operator.
         /// </summary>
-        ValueTask<CubeProgrammerError> StartFusAsync(CancellationToken cancellationToken = default);
+        ValueTask<bool> StartFusAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to set default option Bytes.

@@ -9,6 +9,6 @@ namespace SharpCubeProgrammer.Enum
         StartStackActive = 1,
         StartStackNotActive = 1,
         VerifyFileDownloadFile = 1,
-        DoNotVerifyDownloadFile = 0,
+        DoNotVerifyDownloadFile = 0
     }
 }

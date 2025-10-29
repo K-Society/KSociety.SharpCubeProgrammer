@@ -399,25 +399,25 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> FirmwareDeleteAsync(CancellationToken cancellationToken = default)
+        public async ValueTask<bool> FirmwareDeleteAsync(CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.FirmwareDelete(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> FirmwareUpgradeAsync(string filePath, string address, uint firstInstall, uint startStack, uint verify, CancellationToken cancellationToken = default)
+        public async ValueTask<bool> FirmwareUpgradeAsync(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.FirmwareUpgrade(filePath, address, firstInstall, startStack, verify), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> StartWirelessStackAsync(CancellationToken cancellationToken = default)
+        public async ValueTask<bool> StartWirelessStackAsync(CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.StartWirelessStack(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default)
+        public async ValueTask<bool> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.UpdateAuthKey(filePath), cancellationToken).ConfigureAwait(false);
         }
@@ -435,13 +435,13 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> AntiRollBackAsync(CancellationToken cancellationToken = default)
+        public async ValueTask<bool> AntiRollBackAsync(CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.AntiRollBack(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> StartFusAsync(CancellationToken cancellationToken = default)
+        public async ValueTask<bool> StartFusAsync(CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.StartFus(), cancellationToken).ConfigureAwait(false);
         }
