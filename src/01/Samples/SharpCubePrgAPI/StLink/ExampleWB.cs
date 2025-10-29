@@ -66,7 +66,7 @@ namespace SharpCubePrgAPI.StLink
                 {
                     DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
                     DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Cpu} \n");
+                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
                 }
 
                 /* Apply mass Erase */
