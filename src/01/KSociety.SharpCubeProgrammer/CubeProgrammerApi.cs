@@ -272,15 +272,14 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483)
+        public IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483)
         {
-            var numberOfItems = 0;
             var listPtr = new IntPtr();
-
+            var dfuDeviceList = new List<DfuDeviceInfo>();
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
-                numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
+                var numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
 
                 if (listPtr != IntPtr.Zero)
                 {
@@ -288,6 +287,7 @@ namespace SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
                         dfuDeviceList.Add(currentItem);
+                        Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
                     }
                 }
                 else
@@ -300,7 +300,7 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "GetDfuDeviceList:");
             }
 
-            return numberOfItems;
+            return dfuDeviceList;
         }
 
         /// <inheritdoc />

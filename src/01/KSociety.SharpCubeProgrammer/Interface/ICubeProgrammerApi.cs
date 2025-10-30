@@ -66,7 +66,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected DFU devices.
         /// </summary>
-        int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483);
+        IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483);
 
         /// <summary>
         /// This routine allows to start a simple connection through USB DFU interface.

@@ -73,9 +73,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default)
+        public async ValueTask<IEnumerable<DfuDeviceInfo>> GetDfuDeviceListAsync(int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.GetDfuDeviceList(ref dfuDeviceList, iPID, iVID), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.GetDfuDeviceList(iPID, iVID), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

@@ -33,11 +33,12 @@ namespace SharpCubePrgAPI.User
 
             #endregion
             var result = 0;
-            result = Example1.Example(cubeProgrammerApi); //Tested
+            //result = Example1.Example(cubeProgrammerApi); //Tested
             //result = Example2.Example(cubeProgrammerApi); //Tested
             //result = Example3.Example(cubeProgrammerApi); //Tested
             //result = ExampleWB.Example(cubeProgrammerApi); //Tested
-            //result = UsbExample.Example(cubeProgrammerApi); //Tested
+            //result = UartExample.Example(cubeProgrammerApi); //Not Tested
+            result = UsbExample.Example(cubeProgrammerApi); //Tested
             //result = HSMExample.Example(cubeProgrammerApi); //Not Tested
 
             cubeProgrammerApi.Dispose();

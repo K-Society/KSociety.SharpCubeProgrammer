@@ -8,37 +8,35 @@ namespace SharpCubePrgAPI.Bootoader
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
 
-    internal static class UsbExample
+    internal static class UartExample
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ USB Bootloader Example +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ UART Bootloader Example +++\n\n");
 
-            var dfuList = cubeProgrammerApi.GetDfuDeviceList(0xDF11, 0x0483);
+            var getUsartList = cubeProgrammerApi.GetUsartList();
 
-            if (!dfuList.Any())
+            if (!getUsartList.Any())
             {
-                DisplayManager.LogMessage(MessageType.Error, "No USB DFU available\n");
+                DisplayManager.LogMessage(MessageType.Error, "NO Serial Port available\n");
                 return 0;
             }
             else
             {
-                DisplayManager.LogMessage(MessageType.Title, "\n------------- USB DFU List --------------\n");
-                var dfuIndex = 0;
-                foreach (var dfu in dfuList)
+                DisplayManager.LogMessage(MessageType.Title, "\n------------- Serial Port List --------------\n");
+                var portIndex = 0;
+                foreach (var port in getUsartList)
                 {
-                    DisplayManager.LogMessage(MessageType.Normal, $"USB Port {dfuIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB index   : {dfu.UsbIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB SN      : {dfu.SerialNumber} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	DFU version : {dfu.DfuVersion} ");
-                    dfuIndex++;
+                    DisplayManager.LogMessage(MessageType.Normal, $"\nPort Name {portIndex} :");
+                    DisplayManager.LogMessage(MessageType.Info, $" {port.portName} ");
+                    portIndex++;
                 }
                 DisplayManager.LogMessage(MessageType.Title, "\n-----------------------------------------\n\n");
             }
 
-            /* Target connect, choose the adequate USB port by indicating its index that is already mentioned in USB DFU List above */
-            var usbConnectFlag = cubeProgrammerApi.ConnectDfuBootloader(dfuList.First().UsbIndex);
-            if (usbConnectFlag != 0)
+            /* Target connect, choose the adequate Serial port by indicating its index that is already mentioned in Serial Port List above */
+            var uartConnectFlag = cubeProgrammerApi.ConnectUsartBootloader(getUsartList.First());
+            if (uartConnectFlag != 0)
             {
                 cubeProgrammerApi.Disconnect();
                 return 0;
