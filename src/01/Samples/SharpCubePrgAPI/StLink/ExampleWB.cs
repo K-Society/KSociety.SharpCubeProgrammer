@@ -1,18 +1,18 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
 
-    internal static class Example3
+    internal static class ExampleWB
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 3 +++\n\n");
-
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ Example STM32WB +++\n\n");
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 
@@ -59,100 +59,90 @@ namespace SharpCubePrgAPI
                     DisplayManager.LogMessage(MessageType.GreenInfo, $"\n--- Device {index} Connected --- \n");
                 }
                 index++;
+
                 /* Display device informations */
-                var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-                if (genInfo != null)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Cpu} \n");
-                }
+                Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
-                /* Download File + verification */
-                const string filePath = @"..\..\..\..\..\Test\data.hex";
-                uint isVerify = 1; //add verification step
-                uint isSkipErase = 0; // no skip erase
-                var downloadFileFlag = cubeProgrammerApi.DownloadFile(filePath, "0x08000000", isSkipErase, isVerify);
-                if (downloadFileFlag != 0)
+                /* Apply mass Erase */
+                var massEraseFlag = cubeProgrammerApi.MassErase();
+                if (massEraseFlag != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
                 }
 
-                /* Set rdp option byte */
-                var sendOptionBytesCmdFlag = cubeProgrammerApi.SendOptionBytesCmd("-ob rdp=0xbb");
-                if (sendOptionBytesCmdFlag != 0)
+                /* Single word edition */
+                var size = 4;
+                var startAddress = "0x08000000";
+                var data = new byte[] { 0xAA, 0xAA, 0xBB, 0xBB, 0xCC, 0xCC, 0xDD, 0xDD };
+                var writeMemoryFlag = cubeProgrammerApi.WriteMemory(startAddress, data, size);
+                if (writeMemoryFlag != 0)
                 {
                     cubeProgrammerApi.Disconnect();
                     continue;
+                }
+
+                /* Reading 64 bytes from 0x08000000 */
+                var readMemoryResult = Shared.ReadMemory(cubeProgrammerApi);
+                if (readMemoryResult == 0)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    return 0;
+                }
+
+                /* Sector Erase */
+                var sectors = new uint[] { 0, 1, 2, 3 };  // we suppose that we have 4 sectors
+                var sectorEraseFlag = cubeProgrammerApi.SectorErase(sectors, 1); // we will erase just the first sector
+                if (sectorEraseFlag != 0)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    continue;
+                }
+
+                /* Reading 64 bytes from 0x08000000 */
+                readMemoryResult = Shared.ReadMemory(cubeProgrammerApi);
+                if (readMemoryResult == 0)
+                {
+                    cubeProgrammerApi.Disconnect();
+                    return 0;
                 }
 
                 /* Read Option bytes from target device memory */
-                var ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
+                var readOptionBytesResult = Shared.ReadOptionBytes(cubeProgrammerApi);
+                if (readOptionBytesResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
+                    return 0;
                 }
 
-                var j = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
+                var retValstartFus = cubeProgrammerApi.StartFus();
+                if (retValstartFus == false)
                 {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    j++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS failed to be started\n");
+                    return 1;
                 }
 
-                /* Disable readout protection */
-                var readUnprotectFlag = cubeProgrammerApi.ReadUnprotect();
-                if (readUnprotectFlag != 0)
+                /*Perform Firmware upgrade */
+                var retValueFusUp = cubeProgrammerApi.FirmwareUpgrade(@"..\..\..\..\..\Test\stm32wb5x_BLE_LLD_fw.bin", "0x08065000", WbFunctionArguments.FirstInstallNotActive, WbFunctionArguments.StartStackNotActive, WbFunctionArguments.VerifyFileDownloadFile);
+                if (retValueFusUp == false)
                 {
-                    cubeProgrammerApi.Disconnect();
-                    continue;
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS Upgrade failed\n");
+                    return 1;
                 }
 
-                /* Display option bytes */
-                ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
+                /* Start the FUS */
+                retValstartFus = cubeProgrammerApi.StartFus(); // FIXME PLS : minuscule
+                if (retValstartFus == false)
                 {
-                    cubeProgrammerApi.Disconnect();
-                    continue;
+                    DisplayManager.LogMessage(MessageType.Error, "\nFUS failed to be started\n");
+                    return 1;
                 }
+                /*Perform Delete Firmware*/
 
-                var jj = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
+                var retValueFirmDelete = cubeProgrammerApi.FirmwareDelete();
+                if (retValueFirmDelete == false)
                 {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    jj++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
+                    DisplayManager.LogMessage(MessageType.Error, "FW Delete failed\n");
                 }
 
                 /* Apply a System Reset */

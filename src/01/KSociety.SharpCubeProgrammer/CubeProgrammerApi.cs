@@ -272,15 +272,14 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483)
+        public IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483)
         {
-            var numberOfItems = 0;
             var listPtr = new IntPtr();
-
+            var dfuDeviceList = new List<DfuDeviceInfo>();
             try
             {
                 var size = Marshal.SizeOf<DfuDeviceInfo>();
-                numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
+                var numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
 
                 if (listPtr != IntPtr.Zero)
                 {
@@ -288,6 +287,7 @@ namespace SharpCubeProgrammer
                     {
                         var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
                         dfuDeviceList.Add(currentItem);
+                        Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
                     }
                 }
                 else
@@ -300,7 +300,7 @@ namespace SharpCubeProgrammer
                 this._logger?.LogError(ex, "GetDfuDeviceList:");
             }
 
-            return numberOfItems;
+            return dfuDeviceList;
         }
 
         /// <inheritdoc />
@@ -410,7 +410,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters)
+        public CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try
@@ -683,46 +683,31 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U)
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
-            var extension = Path.GetExtension(inputFilePath);
-            var binPath = "";
-
-            string filePath;
-            switch (extension)
-            {
-                case ".hex":
-                    filePath = inputFilePath;
-                    break;
-
-                case ".bin":
-                    filePath = inputFilePath;
-                    binPath = inputFilePath;
-                    break;
-
-                default:
-                    return output;
-            }
 
             var uintAddress = this.HexConverterToUint(address);
-            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-            var binPathAdapted = String.IsNullOrEmpty(binPath) ? "" : binPath.Replace(@"\", "/");
+            var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
+            var binPathAdapted = String.IsNullOrEmpty(binFilePath) ? "" : binFilePath.Replace(@"\", "/");
 
-            try
+            if (!String.IsNullOrEmpty(filePathAdapted))
             {
-                var downloadFileResult = this._programmerInstanceApi.DownloadFile(
-                filePathAdapted,
-                uintAddress,
-                skipErase,
-                verify,
-                binPathAdapted
-                );
-                output = this.CheckResult(downloadFileResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "DownloadFile: ");
+                try
+                {
+                    var downloadFileResult = this._programmerInstanceApi.DownloadFile(
+                    filePathAdapted,
+                    uintAddress,
+                    skipErase,
+                    verify,
+                    binPathAdapted
+                    );
+                    output = this.CheckResult(downloadFileResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "DownloadFile: ");
+                }
             }
 
             return output;
@@ -1193,83 +1178,100 @@ namespace SharpCubeProgrammer
                 PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
 
                 var bankCList = new List<DeviceBankC>();
+                var bankCItemPointer = IntPtr.Zero;
                 for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
                 {
                     if (peripheralC.Value.Banks != IntPtr.Zero)
                     {
-                        var bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks + (i * pointerSize));
-                        var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
-
-                        if (bankCItem.Categories != IntPtr.Zero)
+                        bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks, i * pointerSize);
+                        if (bankCItemPointer != IntPtr.Zero)
                         {
-                            var categoryCList = new List<DeviceCategoryC>();
-                            for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
-                            {
-                                var categoryCItemPointer =
-                                    Marshal.ReadIntPtr(bankCItem.Categories + (ii * pointerSize));
-                                var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
+                            var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
 
-                                if (categoryCItem.Bits != IntPtr.Zero)
+                            if (bankCItem.Categories != IntPtr.Zero)
+                            {
+                                var categoryCList = new List<DeviceCategoryC>();
+                                var categoryCItemPointer = IntPtr.Zero;
+                                for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
                                 {
-                                    var bitCList = new List<DeviceBitC>();
-                                    for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
+                                    categoryCItemPointer =
+                                        Marshal.ReadIntPtr(bankCItem.Categories, ii * pointerSize);
+                                    if (categoryCItemPointer != IntPtr.Zero)
                                     {
-                                        var bitCItemPointer =
-                                            Marshal.ReadIntPtr(categoryCItem.Bits + (iii * pointerSize));
-                                        var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+                                        var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
 
-                                        var bitValueCList = new List<BitValueC>();
-                                        for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
+                                        if (categoryCItem.Bits != IntPtr.Zero)
                                         {
-                                            var bitValueCItemPointer =
-                                                Marshal.ReadIntPtr(bitCItem.Values + (iiii * pointerSize));
-                                            var bitValueCItem =
-                                                Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
-                                            bitValueCList.Add(bitValueCItem);
+                                            var bitCList = new List<DeviceBitC>();
+                                            var bitCItemPointer = IntPtr.Zero;
+                                            for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
+                                            {
+                                                bitCItemPointer =
+                                                Marshal.ReadIntPtr(categoryCItem.Bits, iii * pointerSize);
 
-                                            Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                                if (bitCItemPointer != IntPtr.Zero)
+                                                {
+                                                    var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+
+                                                    var bitValueCList = new List<BitValueC>();
+                                                    var bitValueCItemPointer = IntPtr.Zero;
+                                                    for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
+                                                    {
+                                                        bitValueCItemPointer =
+                                                            Marshal.ReadIntPtr(bitCItem.Values, iiii * pointerSize);
+                                                        if (bitValueCItemPointer != IntPtr.Zero)
+                                                        {
+                                                            var bitValueCItem =
+                                                            Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
+                                                            bitValueCList.Add(bitValueCItem);
+
+                                                            Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                                        }
+                                                    }
+
+                                                    var deviceBitC = new DeviceBitC
+                                                    {
+                                                        Name = bitCItem.Name,
+                                                        Description = bitCItem.Description,
+                                                        WordOffset = bitCItem.WordOffset,
+                                                        BitOffset = bitCItem.BitOffset,
+                                                        BitWidth = bitCItem.BitWidth,
+                                                        Access = bitCItem.Access,
+                                                        ValuesNbr = bitCItem.ValuesNbr,
+                                                        Values = bitValueCList,
+                                                        Equation = bitCItem.Equation,
+                                                        Reference = Marshal.PtrToStringAnsi(bitCItem.Reference),
+                                                        BitValue = bitCItem.BitValue
+                                                    };
+                                                    bitCList.Add(deviceBitC);
+
+                                                    Marshal.DestroyStructure<BitC>(bitCItemPointer);
+                                                }
+                                            }
+
+                                            var deviceCategoryC = new DeviceCategoryC
+                                            {
+                                                Name = categoryCItem.Name,
+                                                BitsNbr = categoryCItem.BitsNbr,
+                                                Bits = bitCList
+                                            };
+                                            categoryCList.Add(deviceCategoryC);
+                                            Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
                                         }
-
-                                        var deviceBitC = new DeviceBitC
-                                        {
-                                            Name = bitCItem.Name,
-                                            Description = bitCItem.Description,
-                                            WordOffset = bitCItem.WordOffset,
-                                            BitOffset = bitCItem.BitOffset,
-                                            BitWidth = bitCItem.BitWidth,
-                                            Access = bitCItem.Access,
-                                            ValuesNbr = bitCItem.ValuesNbr,
-                                            Values = bitValueCList,
-                                            Equation = bitCItem.Equation,
-                                            Reference = bitCItem.Reference,
-                                            BitValue = bitCItem.BitValue
-                                        };
-                                        bitCList.Add(deviceBitC);
-
-                                        Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                     }
-
-                                    var deviceCategoryC = new DeviceCategoryC
-                                    {
-                                        Name = categoryCItem.Name,
-                                        BitsNbr = categoryCItem.BitsNbr,
-                                        Bits = bitCList
-                                    };
-                                    categoryCList.Add(deviceCategoryC);
-                                    Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
                                 }
-                            }
 
-                            var deviceBankC = new DeviceBankC
-                            {
-                                Size = bankCItem.Size,
-                                Address = bankCItem.Address,
-                                Access = bankCItem.Access,
-                                CategoriesNbr = bankCItem.CategoriesNbr,
-                                Categories = categoryCList
-                            };
-                            bankCList.Add(deviceBankC);
-                            Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                                var deviceBankC = new DeviceBankC
+                                {
+                                    Size = bankCItem.Size,
+                                    Address = bankCItem.Address,
+                                    Access = bankCItem.Access,
+                                    CategoriesNbr = bankCItem.CategoriesNbr,
+                                    Categories = categoryCList
+                                };
+                                bankCList.Add(deviceBankC);
+                                Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                            }
                         }
                     }
                 }
@@ -1522,43 +1524,30 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError FirmwareDelete()
+        public bool FirmwareDelete()
         {
-            var firmwareDeleteResult = this._programmerInstanceApi.FirmwareDelete();
-            var result = this.CheckResult(firmwareDeleteResult);
-
-            return result;
+            return this._programmerInstanceApi.FirmwareDelete();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError FirmwareUpgrade(string filePath, string address, uint firstInstall, uint startStack, uint verify)
+        public bool FirmwareUpgrade(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify)
         {
             var uintAddress = this.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-            var firmwareUpgradeResult =
-            this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, firstInstall, startStack, verify);
 
-            var result = this.CheckResult(firmwareUpgradeResult);
-
-            return result;
+            return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError StartWirelessStack()
+        public bool StartWirelessStack()
         {
-            var startWirelessStackResult = this._programmerInstanceApi.StartWirelessStack();
-            var result = this.CheckResult(startWirelessStackResult);
-
-            return result;
+            return this._programmerInstanceApi.StartWirelessStack();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError UpdateAuthKey(string filePath)
+        public bool UpdateAuthKey(string filePath)
         {
-            var updateAuthKeyResult = this._programmerInstanceApi.UpdateAuthKey(filePath);
-            var result = this.CheckResult(updateAuthKeyResult);
-
-            return result;
+            return this._programmerInstanceApi.UpdateAuthKey(filePath);
         }
 
         /// <inheritdoc />
@@ -1581,20 +1570,15 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError AntiRollBack()
+        public bool AntiRollBack()
         {
-            var antiRollBackResult = this._programmerInstanceApi.AntiRollBack();
-            var result = this.CheckResult(antiRollBackResult);
-            return result;
+            return this._programmerInstanceApi.AntiRollBack();
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError StartFus()
+        public bool StartFus()
         {
-            var startFusResult = this._programmerInstanceApi.StartFus();
-            var result = this.CheckResult(startFusResult);
-
-            return result;
+            return this._programmerInstanceApi.StartFus();
         }
 
         /// <inheritdoc />

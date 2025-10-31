@@ -5,12 +5,16 @@ namespace QuickStart
     using System;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Text.RegularExpressions;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
     internal static class Program
     {
+        private const int WIDH = 50;
+        private static uint Progress = 0;
+        private static int Left = 0;
+        private static int Top = 0;
+        internal static VerbosityLevel VerbosityLevel { get; set; } = VerbosityLevel.VerbosityLevel1;
         private static void Main()
         {
             var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
@@ -29,7 +33,7 @@ namespace QuickStart
 
             cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-            cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel0);
+            cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel1);
 
             #endregion
 
@@ -79,8 +83,11 @@ namespace QuickStart
 
                     #region [DownloadFile Test]
 
+                    //var downloadFileResult = cubeProgrammerApi.DownloadFile(
+                    //    @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.bin", "0x08000000");
+
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
-                        @"..\..\..\..\..\Test\NUCLEO-L452RE.bin", "0x08000000");
+                        @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.hex");
 
                     if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {
@@ -109,76 +116,118 @@ namespace QuickStart
         
         private static void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
         {
-            message = Regex.Replace(message, "(?<!\r)\n", "");
-            if (String.IsNullOrEmpty(message))
-            {
-                return;
-            }
-
             switch ((MessageType)messageType)
             {
                 case MessageType.Normal:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.White;
                     break;
 
                 case MessageType.Info:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     break;
 
                 case MessageType.GreenInfo:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     break;
 
                 case MessageType.Title:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
 
                 case MessageType.Warning:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
 
                 case MessageType.Error:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     break;
 
                 case MessageType.Verbosity1:
-                    Console.WriteLine("Verbosity1 Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
 
                 case MessageType.Verbosity2:
-                    Console.WriteLine("Verbosity2 Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
 
                 case MessageType.Verbosity3:
-                    Console.WriteLine("Verbosity3 Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
 
                 case MessageType.GreenInfoNoPopup:
+                    //Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+
                 case MessageType.WarningNoPopup:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+
                 case MessageType.ErrorNoPopup:
-                    Console.WriteLine("Message: {0}", message);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     break;
 
                 default:
                     break;
             }
+
+            if ((MessageType)messageType != MessageType.Verbosity1 && (MessageType)messageType != MessageType.Verbosity2 && (MessageType)messageType != MessageType.Verbosity3 ||
+                (MessageType)messageType == MessageType.Verbosity1 && VerbosityLevel >= VerbosityLevel.VerbosityLevel1 ||
+                (MessageType)messageType == MessageType.Verbosity2 && VerbosityLevel >= VerbosityLevel.VerbosityLevel2 ||
+                (MessageType)messageType == MessageType.Verbosity3 && VerbosityLevel == VerbosityLevel.VerbosityLevel3)
+            {
+                Console.WriteLine("{0}", message);
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void InitProgressBar()
         {
-            Console.WriteLine("InitProgressBar");
+            if (VerbosityLevel >= VerbosityLevel.VerbosityLevel1)
+            {
+                for (var idx = 0; idx < WIDH; idx++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.OpenStandardOutput().WriteByte(177);
+                }
+                (Left, Top) = Console.GetCursorPosition();
+                Console.Write($" {Progress}%");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write('\r');
+                Progress = 0;
+            }
         }
 
         private static void ProgressBarUpdate(int currentProgress, int total)
         {
-            if (total > 0)
+            uint alreadyLoaded = 0;
+            if (total == 0)
             {
-                //can use current variable to set a progress bar, I have noticed that currentProgress is advancing only by write or download 
-                //operation, erase operation does not produce advance
-                var current = (currentProgress * 100F) / total;
-
-                Console.WriteLine("ProgressBarUpdate: {0}", current);
+                return;
             }
+
+            if (currentProgress > total)
+            {
+                currentProgress = total;
+            }
+
+            /*Calculuate the ratio of complete-to-incomplete.*/
+            var ratio = currentProgress / (float)total;
+            var counter = (uint)ratio * WIDH;
+
+            if (counter > alreadyLoaded && VerbosityLevel == VerbosityLevel.VerbosityLevel1)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                for (var Idx = Progress; Idx < counter - alreadyLoaded; Idx++)
+                {
+                    Console.OpenStandardOutput().WriteByte(219);
+                }
+            }
+            Progress = counter;
+            var (leftCur, topCur) = Console.GetCursorPosition();
+            Console.SetCursorPosition(Left, Top);
+            Console.Write($" {(int)(ratio * 100)}%");
+            Console.SetCursorPosition(leftCur, topCur);
         }
     }
 }

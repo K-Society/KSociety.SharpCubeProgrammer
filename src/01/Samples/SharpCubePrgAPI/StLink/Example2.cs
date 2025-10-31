@@ -1,9 +1,10 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
     using System;
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
@@ -60,14 +61,9 @@ namespace SharpCubePrgAPI
                     DisplayManager.LogMessage(MessageType.GreenInfo, $"\n--- Device {index} Connected --- \n");
                 }
                 index++;
+
                 /* Display device informations */
-                var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-                if (genInfo != null)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Cpu} \n");
-                }
+                Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
                 /* Download File + verification */
                 const string filePath = @"..\..\..\..\..\Test\data.hex";

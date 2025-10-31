@@ -1,8 +1,10 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.User
 {
     using System;
+    using SharpCubePrgAPI.Bootoader;
+    using SharpCubePrgAPI.StLink;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
@@ -30,10 +32,19 @@ namespace SharpCubePrgAPI
             cubeProgrammerApi.SetVerbosityLevel(DisplayManager.VerbosityLevel);
 
             #endregion
-
-            var result = Example1.Example(cubeProgrammerApi);
-            //var result = Example2.Example(cubeProgrammerApi);
-            //var result = Example3.Example(cubeProgrammerApi);
+            var result = 0;
+            result = Example1.Example(cubeProgrammerApi); //Tested
+            //result = Example2.Example(cubeProgrammerApi); //Tested
+            //result = Example3.Example(cubeProgrammerApi); //Tested
+            //result = ExampleWB.Example(cubeProgrammerApi); //Tested
+            //result = UartExample.Example(cubeProgrammerApi); //Not Tested
+            //result = CanExample.Example(cubeProgrammerApi); //Not Tested
+            //result = I2cExample.Example(cubeProgrammerApi); //Not Tested
+            //result = SpiExample.Example(cubeProgrammerApi); //Not Tested
+            //result = UsbExample.Example(cubeProgrammerApi); //Tested
+            //result = TsvFlashing.Example(cubeProgrammerApi); //Not Tested
+            //result = MpuSsp.Example(cubeProgrammerApi); //Not Tested
+            //result = HSMExample.Example(cubeProgrammerApi); //Not Tested
 
             cubeProgrammerApi.Dispose();
 

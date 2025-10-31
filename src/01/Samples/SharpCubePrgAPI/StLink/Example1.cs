@@ -1,9 +1,9 @@
 // Copyright © K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubePrgAPI
+namespace SharpCubePrgAPI.StLink
 {
-    using System;
     using System.Linq;
+    using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
@@ -13,7 +13,6 @@ namespace SharpCubePrgAPI
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
             DisplayManager.LogMessage(MessageType.Title, "\n+++ Example 1 +++\n\n");
-
             DebugConnectParameters debugConnectParameters;
             var stLinkList = cubeProgrammerApi.GetStLinkEnumerationList();
 
@@ -60,14 +59,9 @@ namespace SharpCubePrgAPI
                     DisplayManager.LogMessage(MessageType.GreenInfo, $"\n--- Device {index} Connected --- \n");
                 }
                 index++;
+
                 /* Display device informations */
-                var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-                if (genInfo != null)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Cpu} \n");
-                }
+                Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
                 /* Apply mass Erase */
                 var massEraseFlag = cubeProgrammerApi.MassErase();
@@ -89,39 +83,12 @@ namespace SharpCubePrgAPI
                 }
 
                 /* Reading 64 bytes from 0x08000000 */
-                size = 64;
-
-                var readMemoryFlag = cubeProgrammerApi.ReadMemory(startAddress, size);
-                if (readMemoryFlag.Item1 != 0)
+                var readMemoryResult = Shared.ReadMemory(cubeProgrammerApi);
+                if (readMemoryResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
+                    return 0;
                 }
-
-                DisplayManager.LogMessage(MessageType.Normal, "\nReading 32-bit memory content\n");
-                DisplayManager.LogMessage(MessageType.Normal, $"  Size          : {size} Bytes\n");
-                DisplayManager.LogMessage(MessageType.Normal, $"  Address:      : {startAddress}\n");
-
-                var i = 0;
-                int col;
-
-                while (i < size)
-                {
-                    col = 0;
-                    var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
-                    hexAddress += (uint)i;
-                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :");
-                    while (col < 4 && i < size)
-                    {
-                        var buffer = new byte[4];
-                        Array.Copy(readMemoryFlag.Item2, i, buffer, 0, 4);
-                        DisplayManager.LogMessage(MessageType.Info, $" {BitConverter.ToString(buffer.Reverse().ToArray()).Replace("-", String.Empty)} ");
-
-                        col++;
-                        i += 4;
-                    }
-                }
-                DisplayManager.LogMessage(MessageType.Normal, "\n");
 
                 /* Sector Erase */
                 var sectors = new uint[] { 0, 1, 2, 3 };  // we suppose that we have 4 sectors
@@ -133,63 +100,19 @@ namespace SharpCubePrgAPI
                 }
 
                 /* Reading 64 bytes from 0x08000000 */
-                i = 0;
-                size = 64;
-
-                readMemoryFlag = cubeProgrammerApi.ReadMemory(startAddress, size);
-                if (readMemoryFlag.Item1 != 0)
+                readMemoryResult = Shared.ReadMemory(cubeProgrammerApi);
+                if (readMemoryResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
+                    return 0;
                 }
-
-                DisplayManager.LogMessage(MessageType.Normal, "\nReading 32-bit memory content\n");
-                DisplayManager.LogMessage(MessageType.Normal, $"  Size          : {size} Bytes\n");
-                DisplayManager.LogMessage(MessageType.Normal, $"  Address:      : {startAddress}\n");
-
-                while (i < size)
-                {
-                    col = 0;
-                    var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
-                    hexAddress += (uint)i;
-                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :" );
-                    while (col < 4 && i < size)
-                    {
-                        DisplayManager.LogMessage(MessageType.Info, $" 0x{readMemoryFlag.Item2[i].ToString("X") + readMemoryFlag.Item2[i + 1].ToString("X") + readMemoryFlag.Item2[i + 2].ToString("X") + readMemoryFlag.Item2[i + 3].ToString("X")} ");
-                        col++;
-                        i += 4;
-                    }
-                }
-                DisplayManager.LogMessage(MessageType.Normal, "\n");
 
                 /* Read Option bytes from target device memory */
-                var ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
+                var readOptionBytesResult = Shared.ReadOptionBytes(cubeProgrammerApi);
+                if (readOptionBytesResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
-                }
-
-                var j = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    j++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
+                    return 0;
                 }
 
                 /* Apply a System Reset */

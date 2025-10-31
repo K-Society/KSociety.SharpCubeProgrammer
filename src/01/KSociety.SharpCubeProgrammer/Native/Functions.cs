@@ -52,7 +52,7 @@ namespace SharpCubeProgrammer.Native
         internal delegate int ConnectCanBootloader(CanConnectParameters canParameters);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int ConnectI2cBootloader(I2CConnectParameters i2cParameters);
+        internal delegate int ConnectI2cBootloader(I2cConnectParameters i2cParameters);
 
         #endregion
 
@@ -182,16 +182,16 @@ namespace SharpCubeProgrammer.Native
         internal delegate int GetUID64(ref IntPtr data);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int FirmwareDelete();
+        internal delegate bool FirmwareDelete();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int FirmwareUpgrade([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
+        internal delegate bool FirmwareUpgrade([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint firstInstall, uint startStack, uint verify);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int StartWirelessStack();
+        internal delegate bool StartWirelessStack();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int UpdateAuthKey([MarshalAs(UnmanagedType.LPWStr)] string filePath);
+        internal delegate bool UpdateAuthKey([MarshalAs(UnmanagedType.LPWStr)] string filePath);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate int AuthKeyLock();
@@ -200,10 +200,10 @@ namespace SharpCubeProgrammer.Native
         internal delegate int WriteUserKey([MarshalAs(UnmanagedType.LPWStr)] string filePath, byte keyType);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int AntiRollBack();
+        internal delegate bool AntiRollBack();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int StartFus();
+        internal delegate bool StartFus();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate int UnlockChip();
