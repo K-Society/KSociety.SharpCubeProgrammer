@@ -23,7 +23,7 @@ namespace SharpCubeProgrammer.DeviceDataStructure
 
         public IntPtr Values;
         public BitCoefficientC Equation;
-        public string Reference;
+        public IntPtr Reference;
         public uint BitValue;
         public uint ValLine;
     }
