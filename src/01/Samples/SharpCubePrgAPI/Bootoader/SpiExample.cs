@@ -9,33 +9,33 @@ namespace SharpCubePrgAPI.Bootoader
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
 
-    internal static class I2cExample
+    internal static class SpiExample
     {
-        private const int STM32L45xxx = 0x4A;
-        private const int STM32L42xxx = 0x38;
-        private const int STM32L72xxx = 0x49;
-        private const int STM32L74xxx = 0x4E;
-
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ I2C Bootloader Example +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ SPI Bootloader Example +++\n\n");
 
-            var i2cParam = new I2cConnectParameters
+            var spiParam = new SpiConnectParameters
             {
-                add = STM32L45xxx, // Device Address
-                br = 400, // Baudrate 400 KHz
-                sm = 1, // FAST MODE
-                am = 0, // 7 BITS ADDRESS
-                af = 1, // ANALOG FILTER ENABLE
-                df = 0, // DIGITAL FILTER DISABLE
-                dnf = 0x00, // DIGITAL NOISE FILTER 0
-                rt = 0, // RISE TIME
-                ft = 0 // FALL TIME
+                baudrate = 375, // Baudrate 1 MHz
+                crcPol = 7,
+                direction = 0, // FULL DUPLEX
+                cpha = 0,
+                cpol = 0,
+                crc = 0, // CRC DISABLE
+                firstBit = 1, // MSB FIRST
+                frameFormat = 0, // MOTOROLA
+                dataSize = 1, // 1 BITS
+                mode = 1, // MASTER
+                nss = 1, // SOFTWARE
+                nssPulse = 1,
+                delay = 1
             };
 
+
             /* Target connect */
-            var canConnectFlag = cubeProgrammerApi.ConnectI2CBootloader(i2cParam);
-            if (canConnectFlag != 0)
+            var spiConnectFlag = cubeProgrammerApi.ConnectSpiBootloader(spiParam);
+            if (spiConnectFlag != 0)
             {
                 DisplayManager.LogMessage(MessageType.Error, "Establishing connection with the device failed");
                 cubeProgrammerApi.Disconnect();
