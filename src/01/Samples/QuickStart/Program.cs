@@ -83,8 +83,11 @@ namespace QuickStart
 
                     #region [DownloadFile Test]
 
+                    //var downloadFileResult = cubeProgrammerApi.DownloadFile(
+                    //    @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.bin", "0x08000000");
+
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
-                        @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.bin", "0x08000000");
+                        @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.hex");
 
                     if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
                     {

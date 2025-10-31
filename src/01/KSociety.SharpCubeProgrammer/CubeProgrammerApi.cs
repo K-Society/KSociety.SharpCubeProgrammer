@@ -686,24 +686,6 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
-            //var extension = Path.GetExtension(inputFilePath);
-            //var binPath = "";
-
-            //string filePath;
-            //switch (extension)
-            //{
-            //    case ".tsv":
-            //        filePath = inputFilePath;
-            //        binPath = binFilePath;
-            //        break;
-
-            //    default:
-            //        filePath = inputFilePath;
-            //        break;
-            //}
-
-            //var filePath = inputFilePath;
-            //var binPath = binFilePath;
 
             var uintAddress = this.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
