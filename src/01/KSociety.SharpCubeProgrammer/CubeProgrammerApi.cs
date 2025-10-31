@@ -683,46 +683,49 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U)
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
-            var extension = Path.GetExtension(inputFilePath);
-            var binPath = "";
+            //var extension = Path.GetExtension(inputFilePath);
+            //var binPath = "";
 
-            string filePath;
-            switch (extension)
-            {
-                case ".hex":
-                    filePath = inputFilePath;
-                    break;
+            //string filePath;
+            //switch (extension)
+            //{
+            //    case ".tsv":
+            //        filePath = inputFilePath;
+            //        binPath = binFilePath;
+            //        break;
 
-                case ".bin":
-                    filePath = inputFilePath;
-                    binPath = inputFilePath;
-                    break;
+            //    default:
+            //        filePath = inputFilePath;
+            //        break;
+            //}
 
-                default:
-                    return output;
-            }
+            //var filePath = inputFilePath;
+            //var binPath = binFilePath;
 
             var uintAddress = this.HexConverterToUint(address);
-            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-            var binPathAdapted = String.IsNullOrEmpty(binPath) ? "" : binPath.Replace(@"\", "/");
+            var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
+            var binPathAdapted = String.IsNullOrEmpty(binFilePath) ? "" : binFilePath.Replace(@"\", "/");
 
-            try
+            if (!String.IsNullOrEmpty(filePathAdapted))
             {
-                var downloadFileResult = this._programmerInstanceApi.DownloadFile(
-                filePathAdapted,
-                uintAddress,
-                skipErase,
-                verify,
-                binPathAdapted
-                );
-                output = this.CheckResult(downloadFileResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "DownloadFile: ");
+                try
+                {
+                    var downloadFileResult = this._programmerInstanceApi.DownloadFile(
+                    filePathAdapted,
+                    uintAddress,
+                    skipErase,
+                    verify,
+                    binPathAdapted
+                    );
+                    output = this.CheckResult(downloadFileResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.LogError(ex, "DownloadFile: ");
+                }
             }
 
             return output;

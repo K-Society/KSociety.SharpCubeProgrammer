@@ -180,7 +180,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to run the application.

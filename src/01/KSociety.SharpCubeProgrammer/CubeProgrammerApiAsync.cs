@@ -181,9 +181,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify, binFilePath), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
