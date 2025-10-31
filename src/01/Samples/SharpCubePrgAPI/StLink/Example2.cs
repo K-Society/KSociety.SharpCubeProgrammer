@@ -61,14 +61,9 @@ namespace SharpCubePrgAPI.StLink
                     DisplayManager.LogMessage(MessageType.GreenInfo, $"\n--- Device {index} Connected --- \n");
                 }
                 index++;
+
                 /* Display device informations */
-                var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-                if (genInfo != null)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
-                }
+                Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
                 /* Download File + verification */
                 const string filePath = @"..\..\..\..\..\Test\data.hex";

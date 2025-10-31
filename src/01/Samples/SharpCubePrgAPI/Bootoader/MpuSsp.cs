@@ -3,6 +3,7 @@
 namespace SharpCubePrgAPI.Bootoader
 {
     using System.Linq;
+    using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
@@ -49,19 +50,7 @@ namespace SharpCubePrgAPI.Bootoader
             }
 
             /* Display device informations */
-            var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-            if (genInfo != null)
-            {
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
-            }
-            else
-            {
-                DisplayManager.LogMessage(MessageType.Error, "Failed to get device information");
-                cubeProgrammerApi.Disconnect();
-                return 0;
-            }
+            Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
             /* SSP Input binaries */
             const string sspFilePath = ""; //Indicate the SSP image path here.

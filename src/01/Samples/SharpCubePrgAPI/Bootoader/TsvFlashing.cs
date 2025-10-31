@@ -3,6 +3,7 @@
 namespace SharpCubePrgAPI.Bootoader
 {
     using System.Linq;
+    using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
@@ -48,13 +49,7 @@ namespace SharpCubePrgAPI.Bootoader
             }
 
             /* Display device informations */
-            var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-            if (genInfo != null)
-            {
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
-            }
+            Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
             /* Download File */
             const string tsvFilePath = @"..\..\..\..\..\Test\STM32MP\FlashLayout_sdcard_stm32mp157c-dk2-trusted.tsv";
