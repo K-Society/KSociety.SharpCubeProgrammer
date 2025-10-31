@@ -50,7 +50,7 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Filter bank number: 0 to 13.
         /// </summary>
-        public string fbn;
+        public byte fbn;
 
     }
 }
