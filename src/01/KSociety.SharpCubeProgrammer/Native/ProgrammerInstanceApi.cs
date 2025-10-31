@@ -467,7 +467,7 @@ namespace SharpCubeProgrammer.Native
                 (function) => function(canParameters));
         }
 
-        internal int ConnectI2cBootloader(I2CConnectParameters i2cParameters)
+        internal int ConnectI2cBootloader(I2cConnectParameters i2cParameters)
         {
             return this.EnsureFunctionAndInvoke(
                 "connectI2cBootloader",

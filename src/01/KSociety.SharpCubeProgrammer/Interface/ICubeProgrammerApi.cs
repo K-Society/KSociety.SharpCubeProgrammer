@@ -96,7 +96,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters);
+        CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters);
 
         #endregion
 

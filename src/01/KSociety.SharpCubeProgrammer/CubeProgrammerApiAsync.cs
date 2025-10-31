@@ -109,7 +109,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2cConnectParameters i2CParameters, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.ConnectI2CBootloader(i2CParameters), cancellationToken).ConfigureAwait(false);
         }

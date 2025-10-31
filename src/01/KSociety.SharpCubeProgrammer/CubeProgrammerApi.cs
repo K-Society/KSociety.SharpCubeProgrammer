@@ -410,7 +410,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters)
+        public CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
             try

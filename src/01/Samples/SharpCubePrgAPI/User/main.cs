@@ -38,6 +38,7 @@ namespace SharpCubePrgAPI.User
             //result = Example3.Example(cubeProgrammerApi); //Tested
             //result = ExampleWB.Example(cubeProgrammerApi); //Tested
             //result = UartExample.Example(cubeProgrammerApi); //Not Tested
+            //result = CanExample.Example(cubeProgrammerApi); //Not Tested
             //result = UsbExample.Example(cubeProgrammerApi); //Tested
             //result = HSMExample.Example(cubeProgrammerApi); //Not Tested
 

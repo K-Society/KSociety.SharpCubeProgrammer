@@ -5,7 +5,7 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct I2CConnectParameters
+    public struct I2cConnectParameters
     {
         /// <summary>
         /// Device address in hex format.
@@ -40,7 +40,7 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Digital noise filter: 0 to 15.
         /// </summary>
-        public string dnf;
+        public byte dnf;
 
         /// <summary>
         /// Rise time: 0-1000 for STANDARD speed mode and  0-300 for FAST.

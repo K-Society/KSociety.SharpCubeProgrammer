@@ -98,7 +98,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2cConnectParameters i2CParameters, CancellationToken cancellationToken = default);
 
         #endregion
 
