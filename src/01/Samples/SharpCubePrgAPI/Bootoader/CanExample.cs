@@ -2,44 +2,37 @@
 
 namespace SharpCubePrgAPI.Bootoader
 {
-    using System.Linq;
     using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Struct;
 
-    internal static class UsbExample
+    internal static class CanExample
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ USB Bootloader Example +++\n\n");
 
-            var dfuList = cubeProgrammerApi.GetDfuDeviceList(0xDF11, 0x0483);
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ CAN Bootloader Example +++\n\n");
 
-            if (!dfuList.Any())
+            var canParam = new CanConnectParameters
             {
-                DisplayManager.LogMessage(MessageType.Error, "No USB DFU available\n");
-                return 0;
-            }
-            else
-            {
-                DisplayManager.LogMessage(MessageType.Title, "\n------------- USB DFU List --------------\n");
-                var dfuIndex = 0;
-                foreach (var dfu in dfuList)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"USB Port {dfuIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB index   : {dfu.UsbIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB SN      : {dfu.SerialNumber} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	DFU version : {dfu.DfuVersion} ");
-                    dfuIndex++;
-                }
-                DisplayManager.LogMessage(MessageType.Title, "\n-----------------------------------------\n\n");
-            }
+                br = 125000, // Baudrate 125KHz
+                mode = 0, // NORMAL MODE
+                ide = 0,  // STANDARD ID
+                rtr = 0,  // DATA FRAME
+                fifo = 0, // FIFO0
+                fm = 0,   // MASK MODE
+                fs = 1,   // 32 BIT
+                fe = 1,   // FILTER ENABLE
+                fbn = 0,  // FILTER BANK NUMBER 0
+            };
 
-            /* Target connect, choose the adequate USB port by indicating its index that is already mentioned in USB DFU List above */
-            var usbConnectFlag = cubeProgrammerApi.ConnectDfuBootloader(dfuList.First().UsbIndex);
-            if (usbConnectFlag != 0)
+            /* Target connect */
+            var canConnectFlag = cubeProgrammerApi.ConnectCanBootloader(canParam);
+            if (canConnectFlag != 0)
             {
+                DisplayManager.LogMessage(MessageType.Error, "Establishing connection with the device failed");
                 cubeProgrammerApi.Disconnect();
                 return 0;
             }
@@ -88,7 +81,6 @@ namespace SharpCubePrgAPI.Bootoader
 
             /* Process successfully Done */
             cubeProgrammerApi.Disconnect();
-
             return 1;
         }
     }

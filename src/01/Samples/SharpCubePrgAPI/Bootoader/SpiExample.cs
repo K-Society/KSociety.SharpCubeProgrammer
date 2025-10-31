@@ -2,44 +2,41 @@
 
 namespace SharpCubePrgAPI.Bootoader
 {
-    using System.Linq;
     using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Struct;
 
-    internal static class UsbExample
+    internal static class SpiExample
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ USB Bootloader Example +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ SPI Bootloader Example +++\n\n");
 
-            var dfuList = cubeProgrammerApi.GetDfuDeviceList(0xDF11, 0x0483);
+            var spiParam = new SpiConnectParameters
+            {
+                baudrate = 375, // Baudrate 1 MHz
+                crcPol = 7,
+                direction = 0, // FULL DUPLEX
+                cpha = 0,
+                cpol = 0,
+                crc = 0, // CRC DISABLE
+                firstBit = 1, // MSB FIRST
+                frameFormat = 0, // MOTOROLA
+                dataSize = 1, // 1 BITS
+                mode = 1, // MASTER
+                nss = 1, // SOFTWARE
+                nssPulse = 1,
+                delay = 1
+            };
 
-            if (!dfuList.Any())
-            {
-                DisplayManager.LogMessage(MessageType.Error, "No USB DFU available\n");
-                return 0;
-            }
-            else
-            {
-                DisplayManager.LogMessage(MessageType.Title, "\n------------- USB DFU List --------------\n");
-                var dfuIndex = 0;
-                foreach (var dfu in dfuList)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"USB Port {dfuIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB index   : {dfu.UsbIndex} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	USB SN      : {dfu.SerialNumber} \n");
-                    DisplayManager.LogMessage(MessageType.Info, $"	DFU version : {dfu.DfuVersion} ");
-                    dfuIndex++;
-                }
-                DisplayManager.LogMessage(MessageType.Title, "\n-----------------------------------------\n\n");
-            }
 
-            /* Target connect, choose the adequate USB port by indicating its index that is already mentioned in USB DFU List above */
-            var usbConnectFlag = cubeProgrammerApi.ConnectDfuBootloader(dfuList.First().UsbIndex);
-            if (usbConnectFlag != 0)
+            /* Target connect */
+            var spiConnectFlag = cubeProgrammerApi.ConnectSpiBootloader(spiParam);
+            if (spiConnectFlag != 0)
             {
+                DisplayManager.LogMessage(MessageType.Error, "Establishing connection with the device failed");
                 cubeProgrammerApi.Disconnect();
                 return 0;
             }
@@ -88,7 +85,6 @@ namespace SharpCubePrgAPI.Bootoader
 
             /* Process successfully Done */
             cubeProgrammerApi.Disconnect();
-
             return 1;
         }
     }

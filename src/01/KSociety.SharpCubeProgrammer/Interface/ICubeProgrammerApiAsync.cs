@@ -68,7 +68,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected DFU devices.
         /// </summary>
-        ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default);
+        ValueTask<IEnumerable<DfuDeviceInfo>> GetDfuDeviceListAsync(int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start a simple connection through USB DFU interface.
@@ -98,7 +98,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2cConnectParameters i2CParameters, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -180,7 +180,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to run the application.

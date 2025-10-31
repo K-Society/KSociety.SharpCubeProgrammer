@@ -60,14 +60,9 @@ namespace SharpCubePrgAPI.StLink
                     DisplayManager.LogMessage(MessageType.GreenInfo, $"\n--- Device {index} Connected --- \n");
                 }
                 index++;
+
                 /* Display device informations */
-                var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-                if (genInfo != null)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                    DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
-                }
+                Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
                 /* Download File + verification */
                 const string filePath = @"..\..\..\..\..\Test\data.hex";
@@ -89,33 +84,11 @@ namespace SharpCubePrgAPI.StLink
                 }
 
                 /* Read Option bytes from target device memory */
-                var ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
+                var readOptionBytesResult = Shared.ReadOptionBytes(cubeProgrammerApi);
+                if (readOptionBytesResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
-                }
-
-                var j = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    j++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
+                    return 0;
                 }
 
                 /* Disable readout protection */
@@ -126,34 +99,12 @@ namespace SharpCubePrgAPI.StLink
                     continue;
                 }
 
-                /* Display option bytes */
-                ob = cubeProgrammerApi.InitOptionBytesInterface();
-                if (ob == null)
+                /* Read Option bytes from target device memory */
+                readOptionBytesResult = Shared.ReadOptionBytes(cubeProgrammerApi);
+                if (readOptionBytesResult == 0)
                 {
                     cubeProgrammerApi.Disconnect();
-                    continue;
-                }
-
-                var jj = 0;
-                /* Display option bytes */
-                foreach (var bank in ob?.Banks)
-                {
-                    DisplayManager.LogMessage(MessageType.Normal, $"OPTION BYTES BANK: {j}\n");
-                    jj++;
-
-                    foreach (var categori in bank.Categories)
-                    {
-                        DisplayManager.LogMessage(MessageType.Title, $"\t{categori.Name}\n");
-
-                        foreach (var bit in categori.Bits)
-                        {
-                            if (bit.Access == 0 || bit.Access == 2)
-                            {
-                                DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                                DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
-                            }
-                        }
-                    }
+                    return 0;
                 }
 
                 /* Apply a System Reset */

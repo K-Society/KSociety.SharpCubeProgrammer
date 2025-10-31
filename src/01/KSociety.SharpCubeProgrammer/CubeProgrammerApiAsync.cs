@@ -73,9 +73,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<int> GetDfuDeviceListAsync(List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default)
+        public async ValueTask<IEnumerable<DfuDeviceInfo>> GetDfuDeviceListAsync(int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.GetDfuDeviceList(ref dfuDeviceList, iPID, iVID), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.GetDfuDeviceList(iPID, iVID), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -109,7 +109,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2CConnectParameters i2CParameters, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2cConnectParameters i2CParameters, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.ConnectI2CBootloader(i2CParameters), cancellationToken).ConfigureAwait(false);
         }
@@ -181,9 +181,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify, binFilePath), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

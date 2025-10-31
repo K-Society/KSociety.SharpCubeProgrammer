@@ -66,13 +66,7 @@ namespace SharpCubePrgAPI
             }
 
             /* Display device informations */
-            var genInfo = cubeProgrammerApi.GetDeviceGeneralInf();
-            if (genInfo != null)
-            {
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice name : {genInfo?.Name} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice type : {genInfo?.Type} ");
-                DisplayManager.LogMessage(MessageType.Normal, $"\nDevice CPU : {genInfo?.Cpu} \n");
-            }
+            Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
             /* Get HSM license and save the output file in the location ..\..\..\..\..\Test\licenseFile.bin */
             var ret = cubeProgrammerApi.GetHsmLicense(HSM_SLOT_INDEX, @"..\..\..\..\..\Test\licenseFile.bin");

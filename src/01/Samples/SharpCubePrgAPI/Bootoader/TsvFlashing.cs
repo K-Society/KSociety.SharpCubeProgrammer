@@ -8,11 +8,11 @@ namespace SharpCubePrgAPI.Bootoader
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
 
-    internal static class UsbExample
+    internal static class TsvFlashing
     {
         internal static int Example(ICubeProgrammerApi cubeProgrammerApi)
         {
-            DisplayManager.LogMessage(MessageType.Title, "\n+++ USB Bootloader Example +++\n\n");
+            DisplayManager.LogMessage(MessageType.Title, "\n+++ TSV Flashing service [STM32MP15] +++\n\n");
 
             var dfuList = cubeProgrammerApi.GetDfuDeviceList(0xDF11, 0x0483);
 
@@ -51,36 +51,13 @@ namespace SharpCubePrgAPI.Bootoader
             /* Display device informations */
             Shared.DisplayDeviceInformations(cubeProgrammerApi);
 
-            /* Download File + verification */
-            const string filePath = @"..\..\..\..\..\Test\data.hex";
-            uint isVerify = 1; //add verification step
-            uint isSkipErase = 0; // no skip erase
-            var downloadFileFlag = cubeProgrammerApi.DownloadFile(filePath, "0x08000000", isSkipErase, isVerify);
+            /* Download File */
+            const string tsvFilePath = @"..\..\..\..\..\Test\STM32MP\FlashLayout_sdcard_stm32mp157c-dk2-trusted.tsv";
+            const string binFilePath = @"..\..\..\..\..\Test\STM32MP\";
+            uint isVerify = 0; //no verification step
+            uint isSkipErase = 0; // skip erase
+            var downloadFileFlag = cubeProgrammerApi.DownloadFile(tsvFilePath, "", isSkipErase, isVerify, binFilePath);
             if (downloadFileFlag != 0)
-            {
-                cubeProgrammerApi.Disconnect();
-                return 0;
-            }
-
-            /* Reading 64 bytes from 0x08000000 */
-            var readMemoryResult = Shared.ReadMemory(cubeProgrammerApi);
-            if (readMemoryResult == 0)
-            {
-                cubeProgrammerApi.Disconnect();
-                return 0;
-            }
-
-            /* Option bytes programming : BOR level */
-            var sendOptionBytesCmdFlag = cubeProgrammerApi.SendOptionBytesCmd("-ob BOR_LEV=1");
-            if (sendOptionBytesCmdFlag != 0)
-            {
-                cubeProgrammerApi.Disconnect();
-                return 0;
-            }
-
-            /* Read Option bytes from target device memory */
-            var readOptionBytesResult = Shared.ReadOptionBytes(cubeProgrammerApi);
-            if (readOptionBytesResult == 0)
             {
                 cubeProgrammerApi.Disconnect();
                 return 0;
@@ -88,7 +65,6 @@ namespace SharpCubePrgAPI.Bootoader
 
             /* Process successfully Done */
             cubeProgrammerApi.Disconnect();
-
             return 1;
         }
     }

@@ -66,7 +66,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to get connected DFU devices.
         /// </summary>
-        int GetDfuDeviceList(ref List<DfuDeviceInfo> dfuDeviceList, int iPID = 0xdf11, int iVID = 0x0483);
+        IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483);
 
         /// <summary>
         /// This routine allows to start a simple connection through USB DFU interface.
@@ -96,7 +96,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through I2C interface.
         /// </summary>
-        CubeProgrammerError ConnectI2CBootloader(I2CConnectParameters i2CParameters);
+        CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters);
 
         #endregion
 
@@ -178,7 +178,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to download data from a file to the memory.
         /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
         /// </summary>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U);
+        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "");
 
         /// <summary>
         /// This routine allows to run the application.

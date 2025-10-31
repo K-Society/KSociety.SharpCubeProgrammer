@@ -52,7 +52,7 @@ namespace SharpCubeProgrammer.Native
         internal delegate int ConnectCanBootloader(CanConnectParameters canParameters);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int ConnectI2cBootloader(I2CConnectParameters i2cParameters);
+        internal delegate int ConnectI2cBootloader(I2cConnectParameters i2cParameters);
 
         #endregion
 
