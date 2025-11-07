@@ -4,6 +4,7 @@ namespace SharpCubePrgAPI.User
 {
     using System;
     using SharpCubePrgAPI.Bootoader;
+    using SharpCubePrgAPI.HSM;
     using SharpCubePrgAPI.StLink;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
