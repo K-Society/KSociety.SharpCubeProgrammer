@@ -202,9 +202,27 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [Constructor]
+
+        internal ProgrammerInstanceApi()
+        {
+            var libraryLoaded = this.EnsureNativeLibraryLoaded();
+
+            if (libraryLoaded)
+            {
+                this.LoadDefaultLoaders();
+            }
+            else
+            {
+                throw new InvalidOperationException("K-Society ProgrammerInstanceApi: Native library could not be loaded.");
+            }
+        }
+
+        #endregion
+
         #region [Init]
 
-        internal void LoadDefaultLoaders()
+        private void LoadDefaultLoaders()
         {
             var currentDirectory = this.GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "st", "Programmer");
@@ -212,38 +230,50 @@ namespace SharpCubeProgrammer.Native
             this.SetLoadersPath(targetAdapted);
         }
 
-        internal bool EnsureNativeLibraryLoaded()
+        private bool EnsureNativeLibraryLoaded()
         {
             if (this.HandleSTLinkDriver == null || this.HandleProgrammer == null)
             {
                 var currentDirectory = this.GetAssemblyDirectory();
-                var target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+                var target = String.Empty;
 
-                try
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    var stLinkDriverResult = this.LoadStLinkDriver(target);
+                    target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+                }
 
-                    if (stLinkDriverResult != null)
+                if (String.IsNullOrEmpty(target))
+                {
+                    return false;
+                }
+                else
+                {
+                    try
                     {
-                        var programmerResult = this.LoadProgrammer(target);
+                        var stLinkDriverResult = this.LoadStLinkDriver(target);
 
-                        if (programmerResult != null)
+                        if (stLinkDriverResult != null)
                         {
-                            return true;
+                            var programmerResult = this.LoadProgrammer(target);
+
+                            if (programmerResult != null)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
                             return false;
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        return false;
+                        throw new Exception("K-Society ProgrammerInstanceApi native library loading error!", ex);
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("K-Society CubeProgrammer native library loading error!", ex);
                 }
             }
 
@@ -283,7 +313,7 @@ namespace SharpCubeProgrammer.Native
                             var error = Marshal.GetLastWin32Error();
                             this.HandleSTLinkDriver = null;
 
-                            throw new Exception("K-Society CubeProgrammer StLinkDriver loading error: " + error);
+                            throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver loading error: " + error);
                         }
                     }
                 }
@@ -309,7 +339,7 @@ namespace SharpCubeProgrammer.Native
                             var error = Marshal.GetLastWin32Error();
                             this.HandleProgrammer = null;
 
-                            throw new Exception("K-Society CubeProgrammer Programmer loading error: " + error);
+                            throw new Exception("K-Society ProgrammerInstanceApi Programmer loading error: " + error);
                         }
                     }
                 }
