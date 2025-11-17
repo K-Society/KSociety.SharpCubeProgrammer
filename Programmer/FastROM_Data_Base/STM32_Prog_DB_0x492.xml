@@ -338,7 +338,7 @@
 										<BitWidth>0x19</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x80" offset="0x0000000"/>
-										<DefaultVal>0x17F200</DefaultVal>
+										<DefaultVal>0x17F000</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>

@@ -6,7 +6,7 @@
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.20.0.
+KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.21.0.
 Emulation of the STM32CubePrgAPI program is available in the examples: [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI).
 
 ![Sample app](docs/Example.gif)
@@ -21,7 +21,7 @@ It makes use of several 3rd party tools:
 
 ## Introduction
 
-This is a C# wrapper for STM32 CubeProgrammer_API v2.20.0 (not fully tested).
+This is a C# wrapper for STM32 CubeProgrammer_API v2.21.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
 Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
 STM32 CubeProgrammer_API is a C library created by ST to manage microcontrollers, it allows to access memory for reading and writing and to manage option bytes.
@@ -123,7 +123,7 @@ All functions also exist in an asynchronous version.
 
 ## Prerequisites
 
-- Visual Studio 2022 (17.12.1 or higher) with the following installed:
+- Visual Studio 2026 (18.0.0 or higher) with the following installed:
 
 | Workloads |
 | :-------- |
@@ -260,7 +260,10 @@ cubeProgrammerApi.DeleteInterfaceList();
 ```
 
 ## License
-The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)
+The project is under: 
+- Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)
+- STMicroelectronics [SLA0048](https://github.com/K-Society/KSociety.SharpCubeProgrammer/blob/master/docs/license.txt)
+- SEGGER Microcontroller GmbH [JLink](https://github.com/K-Society/KSociety.SharpCubeProgrammer/blob/master/docs/License_Segger_JLink.txt)
 
 ## Dependencies
 

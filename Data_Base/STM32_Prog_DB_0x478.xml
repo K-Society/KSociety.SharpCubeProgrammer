@@ -767,6 +767,17 @@
 										</Values>
 									</Bit>
 									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>R</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
 										<Name>SRAM2_ECC</Name>
 										<Description>ECC in SRAM2 region configuration bit</Description>
 										<BitOffset>0x6</BitOffset>
@@ -824,6 +835,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>W</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1789,6 +1811,17 @@
 										</Values>
 									</Bit>
 									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>R</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
 										<Name>SRAM2_ECC</Name>
 										<Description>ECC in SRAM2 region configuration bit</Description>
 										<BitOffset>0x6</BitOffset>
@@ -1846,6 +1879,17 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
+										</Values>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>W</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -2807,6 +2851,17 @@
 									</Values>
 								</Bit>
 								<Bit>
+									<Name>USBPD_DIS</Name>
+									<Description>USB power delivery configuration option bit</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">Enabled</Val>
+										<Val value="0x1">Disabled</Val>
+									</Values>
+								</Bit>
+								<Bit>
 									<Name>SRAM2_ECC</Name>
 									<Description>ECC in SRAM2 region configuration bit</Description>
 									<BitOffset>0x6</BitOffset>
@@ -2864,6 +2919,17 @@
 									<Values>
 										<Val value="0xC3">Trust zone disabled</Val>
 										<Val value="0xB4">Trust zone enabled</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>USBPD_DIS</Name>
+									<Description>USB power delivery configuration option bit</Description>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Values>
+										<Val value="0x0">Enabled</Val>
+										<Val value="0x1">Disabled</Val>
 									</Values>
 								</Bit>
 								<Bit>
