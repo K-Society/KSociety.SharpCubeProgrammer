@@ -5,10 +5,19 @@
   <PropertyGroup>
 	<BaseLicensePath>$(MSBuildThisFileDirectory)..\docs\</BaseLicensePath>
 	<LicenseFile Condition=" Exists('$(BaseLicensePath)license.txt') ">docs\license.txt</LicenseFile>
+	<LicenseFile Condition=" Exists('$(BaseLicensePath)License_Segger_JLink.txt') ">docs\License_Segger_JLink.txt</LicenseFile>
   </PropertyGroup>
   
   <ItemGroup Condition=" Exists('$(BaseLicensePath)license.txt') ">
 	<None Include="$(BaseLicensePath)license.txt">
+	  <Pack>true</Pack>
+	  <PackagePath>docs</PackagePath>
+	  <Visible>false</Visible>
+	</None>
+  </ItemGroup>
+  
+  <ItemGroup Condition=" Exists('$(BaseLicensePath)License_Segger_JLink.txt') ">
+	<None Include="$(BaseLicensePath)License_Segger_JLink.txt">
 	  <Pack>true</Pack>
 	  <PackagePath>docs</PackagePath>
 	  <Visible>false</Visible>

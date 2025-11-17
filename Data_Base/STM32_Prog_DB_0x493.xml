@@ -11,9 +11,35 @@
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
-			<Interface name="JTAG_SWD"/>
+			<Interface name="JTAG_SWD">
+				<Configuration number="0x0">
+				<!--  128KB single Bank -->
+					<FLASHSIZE reference="0x0">
+						<ReadRegister address="0x1FFF75A0" mask="0x000FFF" value="0x80"/>
+					</FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x1">
+				<!--  64KB single Bank -->
+					<FLASHSIZE reference="0x1">
+						<ReadRegister address="0x1FFF75A0" mask="0x000FFF" value="0x40"/>
+					</FLASHSIZE>
+				</Configuration>
+			</Interface>
 			<!-- Bootloader Interface -->
-			<Interface name="Bootloader"/>
+			<Interface name="Bootloader">
+				<Configuration number="0x2">
+				<!--  128KB single Bank -->
+					<FLASHSIZE reference="0x2">
+						<ReadRegister address="0x1FFF75A0" mask="0x000FFF" value="0x80"/>
+					</FLASHSIZE>
+				</Configuration>
+				<Configuration number="0x3">
+				<!--  64KB single Bank -->
+					<FLASHSIZE reference="0x3">
+						<ReadRegister address="0x1FFF75A0" mask="0x000FFF" value="0x40"/>
+					</FLASHSIZE>
+				</Configuration>
+			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
 		<Peripherals>
@@ -46,7 +72,7 @@
 				<FlashSize address="0x1FFF75A0" default="0x20000"/>
 				<BootloaderVersion address="0x1FFF67FE"/>
 				<!-- 128KB  -->
-				<Configuration>
+				<Configuration config="0,2">
 					<Parameters address="0x08000000" name=" 128 KB Embedded Flash" size="0x20000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -57,8 +83,20 @@
 						</Field>
 					</Bank>
 				</Configuration>
+				<!-- 64KB  -->
+				<Configuration config="1,3">
+					<Parameters address="0x08000000" name=" 64 KB Embedded Flash" size="0x10000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
 			</Peripheral>
-				<!-- OTP -->
+			<!-- OTP -->
 			<Peripheral>
 				<Name>OTP</Name>
 				<Type>Storage</Type>

@@ -83,7 +83,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to start connection to device through USB DFU interface.
         /// </summary>
-        ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte rdu, byte tzenreg, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to start connection to device through SPI interface.

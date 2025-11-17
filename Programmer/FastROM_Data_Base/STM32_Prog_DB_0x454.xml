@@ -432,7 +432,7 @@
 										<BitWidth>0x19</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x80" offset="0x0000000"/>
-										<DefaultVal>0x080000</DefaultVal>
+										<DefaultVal>0x100000</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -446,7 +446,7 @@
 										<BitWidth>0x19</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x80" offset="0x0000000"/>
-										<DefaultVal>0x0BF8F0</DefaultVal>
+										<DefaultVal>0x17F200</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -460,7 +460,7 @@
 										<BitWidth>0x19</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x80" offset="0x0000000"/>
-										<DefaultVal>0x0C0000</DefaultVal>
+										<DefaultVal>0x180000</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>
