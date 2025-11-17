@@ -21,5 +21,10 @@ namespace SharpCubeProgrammer.Struct
         /// Request a TZEN regression: value in {0,1}.
         /// </summary>
         public byte tzenreg;
+
+        /// <summary>
+        /// USB Timeout control.
+        /// </summary>
+        public int usbTimeout;
     }
 }

@@ -6,7 +6,6 @@ namespace SharpCubeProgrammer
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Threading;
@@ -38,8 +37,6 @@ namespace SharpCubeProgrammer
 
             this._logger = logger;
             this._programmerInstanceApi = new ProgrammerInstanceApi();
-            this._programmerInstanceApi.EnsureNativeLibraryLoaded();
-            this._programmerInstanceApi.LoadDefaultLoaders();
         }
 
         #endregion
@@ -355,13 +352,14 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg)
+        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000)
         {
             var dfuParameters = new DfuConnectParameters
             {
                 usb_index = usbIndex,
                 rdu = rdu,
-                tzenreg = tzenreg
+                tzenreg = tzenreg,
+                usbTimeout = usbTimeout
             };
 
             return this.ConnectDfuBootloader2(dfuParameters);

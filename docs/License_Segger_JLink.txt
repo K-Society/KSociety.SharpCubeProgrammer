@@ -1,0 +1,39 @@
+Important - Read carefully:
+
+DEFINITIONS:
+The "software" means any and all J-Link related software components included in the J-Link software & documentation pack, available at: http://www.segger.com/jlink-software.html.
+"Licensor" shall mean SEGGER Microcontroller GmbH.
+"Licensee" means any individual or entity installing the J-Link software & documentation pack or making use of any parts of it.
+If the "software" is included (in whole or parts) in a third party product or service, then such third party shall either include this license terms or be Licensor and provide similar terms which will not exceed those set forth in this agreement.
+
+1. LICENSE GRANT
+The "software" is proprietary, protected under copyright laws and all rights, title and interest in the "software" are and shall remain with SEGGER Microcontroller GmbH.
+"Licensor" grants "Licensee" a non-exclusive and non-transferable License to use the "software" or parts thereof with "Licensors" J-Link family of debug probes or authorized OEM products only.
+The use of the "software" to operate J-Link clones is prohibited and illegal. "Licensee" is entitled to make copies of the "software" for backup purposes only.
+All copies of the "software", including modifications to the "software", must bear all copyright, trademarks and other proprietary notices included thereon by SEGGER Microcontroller GmbH.
+
+2. RESTRICTIONS
+"Licensee" may not:
+(a) decompile, disassemble, reverse engineer, or otherwise attempt to derive the source code of the "software",
+(b) redistribute, encumber, sell, rent, lease, sublicense, or otherwise transfer rights of the "software",
+(c) remove or alter any trademark, logo, copyright or other proprietary notices, legends, symbols or labels of the "software",
+(d) install or use the "software" with unauthorized debug probes and/or J-Link clones.
+
+3. TERMINATION
+Without prejudice to any other rights, "Licensor" may terminate this agreement with immediate effect if "Licensee" breaches any term or condition of this agreement, or is in breach of any other agreement related to the "software"
+entered into between "Licensor" and "Licensee" or "Licensee" becomes insolvent, or for whatever reason at any time upon giving "Licensee" 60 days prior written notice. For a period not to exceed 60 days following the date of termination, "Licensee" will cease to use the "software".
+
+4. DISCLAIMER OF WARRANTY
+The "software" is provided on an "as is" basis, without warranty of any kind, including without limitation the warranties that it is free of defects, merchantable, fit for a particular purpose or non-infringing. The entire risk as to the quality and performance of the "software" is borne by "Licensee".This disclaimer of warranty constitutes an essential part of this agreement. No use of the "software" is authorized hereunder except under this disclaimer.
+
+5. LIMITATION OF LIABILITY
+To the maximum extent permitted by applicable law, in no event will "Licensor" or its suppliers or resellers be liable for any indirect, special, incidental or consequential damages arising out of the use of or inability to use the "software", including, without limitation, damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses, even if advised of the possibility thereof, and regardless of the legal or equitable theory (contract, tort or otherwise) upon which the claim is based. In any case, "Licensor's" entire liability under any provision of this agreement shall not exceed the lesser of the fees "Licensee" paid for the "software" to "Licensor" (if any) or 0,10 Euro (in words: ten Euro cents).
+
+6. HIGH RISK ACTIVITIES
+The "software" is not designed for use in hazardous environments requiring fail-safe performance, such as in the operation of nuclear facilities, aircraft navigation or communication systems, air traffic control, direct life support machines, or weapons systems, in which the failure of the "software" could lead directly to death, personal injury, or severe physical or environmental damage ("High Risk Activities"). Accordingly, "Licensor" disclaims any express or implied warranty of fitness for High Risk Activities.
+
+7. MISCELLANEOUS
+If any provision in this agreement should be held illegal or unenforceable by a court having jurisdiction, such provision shall be modified to the extent necessary to render it enforceable without losing its intent, or severed from     this agreement if no such modification is possible, and other provisions of this agreement shall remain in full force and effect.
+This agreement shall be governed by the laws of the Federal Republic of Germany.
+
+(c) 2004-2023 SEGGER Microcontroller GmbH

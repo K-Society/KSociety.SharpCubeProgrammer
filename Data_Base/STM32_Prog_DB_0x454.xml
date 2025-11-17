@@ -193,7 +193,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,7,11"> <!-- 1M dual Bank -->
+				<Configuration config="1,7,8,11"> <!-- 1M dual Bank -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -209,7 +209,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="2,4,8"> <!-- 1M Single Bank secure -->
+				<Configuration config="2,4"> <!-- 1M Single Bank secure -->
 					<Parameters address="0x0C000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -267,7 +267,7 @@
 					</Bank>
 				</Configuration>
 				
-				<Configuration config="14,16,18,20"> <!-- 512KSingle Bank secure -->
+				<Configuration config="14,16,18,20"> <!-- 512K Single Bank securee -->
 					<Parameters address="0x0C000000" name=" 512K Embedded Flash" size="0x80000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -314,7 +314,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="3,15,5,19,6,20,8,22,11,17">
+				<Configuration config="3,15,5,19,6,20,22,11,17">
 					<Parameters address="0x08000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -331,7 +331,7 @@
 					</Bank>
 				</Configuration>
 				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
-				<Configuration config="1,13,12">
+				<Configuration config="0,1,8,13,12,22,23,8,9">
 					<Parameters address="0x0C000000" name=" 1 Mbyte Data EEPROM" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -680,7 +680,7 @@
 							<Field>
 								<Parameters address="0x4002204C" name="FLASH_SECBOOTADD0" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>SECBOOTADD0</Name>
 										<Description>Secure boot base address 0</Description>
 										<BitOffset>0x7</BitOffset>
@@ -712,7 +712,7 @@
 							<Field>
 								<Parameters address="0x40022050" name="FLASH_SECWM1R1" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>SECWM1_PSTRT</Name>
 										<Description>Start page of first secure area</Description>
 										<BitOffset>0x0</BitOffset>
@@ -720,7 +720,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x08000000"/>
 									</Bit>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>SECWM1_PEND</Name>
 										<Description>End page of first secure area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -733,7 +733,7 @@
 							<Field>
 								<Parameters address="0x40022054" name="FLASH_SECWM1R2" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>HDP1_PEND</Name>
 										<Description>End page of first hide protection area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -741,7 +741,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x8000000"/>
 									</Bit>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>HDP1EN</Name>
 										<Description>Hide protection first area enable</Description>
 										<BitOffset>0x18</BitOffset>
@@ -830,7 +830,7 @@
 							<Field>
 								<Parameters address="0x40022060" name="FLASH_SECWM2R1" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>SECWM2_PSTRT</Name>
 										<Description>Start page of second secure area</Description>
 										<BitOffset>0x0</BitOffset>
@@ -838,7 +838,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x08080000"/>
 									</Bit>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>SECWM2_PEND</Name>
 										<Description>End page of second secure area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -851,7 +851,7 @@
 							<Field>
 								<Parameters address="0x40022064" name="FLASH_SECWM2R2" size="0x4"/>
 								<AssignedBits>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>HDP2_PEND</Name>
 										<Description>End page of second hide protection area</Description>
 										<BitOffset>0x10</BitOffset>
@@ -859,7 +859,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x8080000"/>
 									</Bit>
-									<Bit>
+									<Bit config="10,16,11,17,4,18,5,19">
 										<Name>HDP2EN</Name>
 										<Description>Hide protection second area enable</Description>
 										<BitOffset>0x18</BitOffset>

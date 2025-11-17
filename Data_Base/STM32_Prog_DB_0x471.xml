@@ -13,22 +13,22 @@
 			<Interface name="JTAG_SWD">
 				<!-- 1M Single Bank-->
 				<Configuration number="0x2">
-					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x400000" value="0x0"/> </DBANK>
 					<flashSize> <ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x400"/> </flashSize>
 				</Configuration>
 				<!-- 1M Dual Bank-->
 				<Configuration number="0x3">
-					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DBANK>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x400000"/> </DBANK>
 					<flashSize> <ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x400"/> </flashSize>
 				</Configuration>
 				<!-- 512K Single Bank-->
 				<Configuration number="0x4">
-					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x200000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022020" mask="0x400000" value="0x0"/> </DBANK>
 					<flashSize><ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x200"/> </flashSize>
 				</Configuration>
 				<!-- 512K Dual Bank-->
 				<Configuration number="0x5">
-					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x200000" value="0x200000"/> </DBANK>
+					<DBANK reference="0x1"> <ReadRegister address="0x40022020" mask="0x400000" value="0x400000"/> </DBANK>
 					<flashSize><ReadRegister address="0x1FFF75E0" mask="0xFFFF" value="0x200"/> </flashSize>
 				</Configuration>
 				<Configuration number="0xA">
@@ -38,10 +38,10 @@
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
 				<Configuration number="0x2">
-					<DBANK reference="0x0"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x1FF00000" mask="0x400000" value="0x0"/> </DBANK>
 				</Configuration>
 				<Configuration number="0x3">
-					<DBANK reference="0x1"> <ReadRegister address="0x1FF00000" mask="0x200000" value="0x200000"/> </DBANK>
+					<DBANK reference="0x1"> <ReadRegister address="0x1FF00000" mask="0x400000" value="0x400000"/> </DBANK>
 				</Configuration>
 				<Configuration number="0xA">
 					<dummy> <ReadRegister address="0x1FF00000" mask="0" value="0"/> </dummy>
@@ -88,7 +88,7 @@
 					<Alignment>0x8</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x1000"/>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -330,7 +330,7 @@
 								<Bit config="2,3,4,5,10">
 									<Name>DBANK</Name>
 									<Description>Dual-Bank on 1 MB Flash or 512 KB Flash memory devices</Description>
-									<BitOffset>0x15</BitOffset>
+									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
@@ -948,7 +948,7 @@
 								<Bit config="2,3,4,5,10">
 									<Name>DBANK</Name>
 									<Description>Dual-Bank on 1 MB Flash or 512 KB Flash memory devices</Description>
-									<BitOffset>0x15</BitOffset>
+									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>

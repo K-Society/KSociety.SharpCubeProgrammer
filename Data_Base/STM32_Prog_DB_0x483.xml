@@ -301,6 +301,17 @@
 										<Val value="0x1">Independent watchdog is running in STANDBY mode</Val>
 									</Values>
 								</Bit>
+								<Bit config="0,2,6,4,5,9,8">
+									<Name>SECURITY</Name>
+									<Description/>
+									<BitOffset>0x15</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">Security feature disabled</Val>
+										<Val value="0x1">Security feature enabled</Val>
+									</Values>
+								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
@@ -311,7 +322,7 @@
 									<Description/>
 									<BitOffset>0x4</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is controlled by hardware</Val>
 										<Val value="0x1">Independent watchdog is controlled by software</Val>
@@ -322,7 +333,7 @@
 									<Description/>
 									<BitOffset>0x6</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">STOP mode on Domain 1 is entering with reset</Val>
 										<Val value="0x1">STOP mode on Domain 1 is entering without reset</Val>
@@ -333,7 +344,7 @@
 									<Description/>
 									<BitOffset>0x7</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">STANDBY mode on Domain 1 is entering with reset</Val>
 										<Val value="0x1">STANDBY mode on Domain 1 is entering without reset</Val>
@@ -344,7 +355,7 @@
 									<Description/>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">Product working in the full voltage range, I/O speed optimization at low-voltage disabled</Val>
 										<Val value="0x1">Product operating below 2.5 V, I/O speed optimization at low-voltage feature allowed</Val>
@@ -355,7 +366,7 @@
 									<Description/>
 									<BitOffset>0x11</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is freezed in STOP mode</Val>
 										<Val value="0x1">Independent watchdog is running in STOP mode</Val>
@@ -366,7 +377,7 @@
 									<Description/>
 									<BitOffset>0x12</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">Independent watchdog is freezed in STANDBY mode</Val>
 										<Val value="0x1">Independent watchdog is running in STANDBY mode</Val>
@@ -377,7 +388,7 @@
 									<Description/>
 									<BitOffset>0x15</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">Security feature disabled</Val>
 										<Val value="0x1">Security feature enabled</Val>

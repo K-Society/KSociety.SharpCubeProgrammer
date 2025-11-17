@@ -298,7 +298,7 @@
 					<Parameters address="0x0BFA0000" name=" 512 Bytes Data OTP" size="0x200"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x10</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x0BFA0000" name="OTP" occurrence="0x1" size="0x200"/>
@@ -450,7 +450,7 @@
 										<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit config="6,10">
+								<Bit config="6,10" reference="DualBank">
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
@@ -877,7 +877,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit config="7,11">
+									<Bit config="7,11" reference="DualBank">
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -1445,7 +1445,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit config="8,12">
+									<Bit config="8,12" reference="DualBank">
 									<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -2025,7 +2025,7 @@
 										<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit config="16,17,18,19">
+								<Bit config="16,17,18,19" reference="DualBank">
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>
