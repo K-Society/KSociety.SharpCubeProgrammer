@@ -264,7 +264,10 @@ cubeProgrammerApi.DeleteInterfaceList();
 ```
 
 ## License
-The project is under Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)
+The project is under: 
+- Microsoft Reciprocal License [(MS-RL)](http://www.opensource.org/licenses/MS-RL)
+- STMicroelectronics [SLA0048](https://github.com/K-Society/KSociety.SharpCubeProgrammer/blob/master/docs/license.txt)
+- SEGGER Microcontroller GmbH [JLink](https://github.com/K-Society/KSociety.SharpCubeProgrammer/blob/master/docs/License_Segger_JLink.txt)
 
 ## Dependencies
 
