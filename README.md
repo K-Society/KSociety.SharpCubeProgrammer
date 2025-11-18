@@ -10,7 +10,9 @@
 
 # KSociety.SharpCubeProgrammer
 
-KSociety.SharpCubeProgrammer is a wrapper for CubeProgrammer_API v2.21.0.
+KSociety.SharpCubeProgrammer is a .NET library providing interop with the
+[CubeProgrammer_API](https://www.st.com/en/development-tools/stm32cubeprog.html) API from managed code using .NET APIs.
+
 Emulation of the STM32CubePrgAPI program is available in the examples: [SharpCubePrgAPI](https://github.com/K-Society/KSociety.SharpCubeProgrammer/tree/master/src/01/Samples/SharpCubePrgAPI).
 
 ![Sample app](docs/Example.gif)
@@ -25,9 +27,14 @@ It makes use of several 3rd party tools:
 
 ## Introduction
 
+This library exposes types that wrap the native CubeProgrammer_API API to perform operations on ST's microcontrollers & microprocessors.
+
 This is a C# wrapper for STM32 CubeProgrammer_API v2.21.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
-Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
+
+> [!IMPORTANT]
+> Please make sure you have updated the firmware of your ST-LINK V2 / V3, you can do this using STM32CubeProgrammer.
+
 STM32 CubeProgrammer_API is a C library created by ST to manage microcontrollers, it allows to access memory for reading and writing and to manage option bytes.
 The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
 This has been tested on Windows 10 and Windows 11, you don't need to install STM32CubeProgrammer.
@@ -38,7 +45,8 @@ STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions ar
 ## Get Packages
 
 You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer/).
-You need to use _PackageReference_, otherwise some contents will not be copied to the output folder and consequently it will not work.
+> [!IMPORTANT]
+> You need to use _PackageReference_, otherwise some contents will not be copied to the output folder and consequently it will not work.
 
 ## Currently supported features
 
@@ -274,3 +282,9 @@ The project is under:
 List of technologies, frameworks and libraries used for implementation:
 
 - [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions)
+
+## Copyright and Trademarks
+
+This library is copyright © K-Society 2022-2025.
+
+[ST](https://www.st.com/content/st_com/en.html) is a trademark and copyright of the STMicroelectronics NV.
