@@ -37,7 +37,11 @@ This package does not contain any C/C++ runtimes (MSVC), and is meant to run on 
 
 STM32 CubeProgrammer_API is a C library created by ST to manage microcontrollers, it allows to access memory for reading and writing and to manage option bytes.
 The ST-Link drivers is required, and can be downloaded from st.com and installed [(STSW-LINK009)](https://www.st.com/en/development-tools/stsw-link009.html).
-This has been tested on Windows 10 and Windows 11, you don't need to install STM32CubeProgrammer.
+This has been tested on Windows 10 and Windows 11. 
+
+> [!NOTE]
+> You don't need to install STM32CubeProgrammer, everything you need is already included in the NuGet [package](https://www.nuget.org/packages/KSociety.SharpCubeProgrammer).
+> Only the ST-Link drivers need to be installed.
 
 ### KSociety.SharpCubeProgrammer
 STM32CubeProgrammer_API C# wrapper, the first wrapper for C#. Any suggestions are welcome.
