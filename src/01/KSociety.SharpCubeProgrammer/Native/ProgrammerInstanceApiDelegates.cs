@@ -44,6 +44,8 @@ namespace SharpCubeProgrammer.Native
 
         private Functions.SetDisplayCallbacks _setDisplayCallbacks;
 
+        private Functions.SetDisplayCallbacksLinux _setDisplayCallbacksLinux;
+
         private Functions.SetVerbosityLevel _setVerbosityLevel;
 
         private Functions.CheckDeviceConnection _checkDeviceConnection;

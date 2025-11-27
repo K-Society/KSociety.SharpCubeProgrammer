@@ -4,6 +4,7 @@ namespace SharpCubePrgAPI.User
 {
     using System;
     using System.Runtime.InteropServices;
+    using System.Text;
     using SharpCubeProgrammer.Enum;
 
     internal static class DisplayManager
@@ -80,7 +81,7 @@ namespace SharpCubePrgAPI.User
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        internal static void DisplayMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        internal static void DisplayMessage(int messageType, string message)
         {
             switch ((MessageType)messageType)
             {
@@ -145,6 +146,20 @@ namespace SharpCubePrgAPI.User
             }
 
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        internal static void DisplayMessageLinux(int messageType, IntPtr messageIntPtr)
+        {
+            var pos = 0;
+            while (Marshal.ReadInt32(messageIntPtr, pos) != 0)
+            {
+                pos += 4;
+            }
+
+            var strbuf = new byte[pos];
+            Marshal.Copy(messageIntPtr, strbuf, 0, pos);
+            var message = Encoding.UTF32.GetString(strbuf);
+            DisplayMessage(messageType, message);
         }
 
         internal static void InitProgressBar()

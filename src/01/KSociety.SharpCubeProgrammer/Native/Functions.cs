@@ -62,6 +62,9 @@ namespace SharpCubeProgrammer.Native
         internal delegate void SetDisplayCallbacks(DisplayCallBacks c);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
+        internal delegate void SetDisplayCallbacksLinux(DisplayCallBacksLinux c);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate void SetVerbosityLevel(int level);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]

@@ -28,7 +28,7 @@ namespace SharpCubeProgrammer.Native
         /// </returns>
         protected override bool ReleaseHandle()
         {
-            return Utility.FreeLibrary(this.handle);
+            return WindowsUtility.FreeLibrary(this.handle);
         }
     }
 }

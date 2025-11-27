@@ -21,7 +21,11 @@ namespace SharpCubeProgrammer.Native
         internal volatile SafeLibraryHandle HandleSTLinkDriver;
         internal volatile SafeLibraryHandle HandleProgrammer;
 
+        internal volatile IntPtr HandleSTLinkDriverIntPtr;
+        internal volatile IntPtr HandleProgrammerIntPtr;
+
         internal DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
+        internal DisplayCallBacksLinux DisplayCallBacksLinux = new DisplayCallBacksLinux();
 
         #region [Constructor]
 
@@ -53,23 +57,49 @@ namespace SharpCubeProgrammer.Native
 
         private bool EnsureNativeLibraryLoaded()
         {
-            if (this.HandleSTLinkDriver == null || this.HandleProgrammer == null)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var currentDirectory = this.GetAssemblyDirectory();
-                var target = String.Empty;
-
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (this.HandleSTLinkDriver != null && this.HandleProgrammer != null)
                 {
-                    target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+                    return true;
                 }
-
-                if (String.IsNullOrEmpty(target))
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                if (this.HandleSTLinkDriverIntPtr != IntPtr.Zero && this.HandleProgrammerIntPtr != IntPtr.Zero)
                 {
-                    return false;
+                    return true;
                 }
-                else
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return false;
+            }
+
+            var currentDirectory = this.GetAssemblyDirectory();
+            var target = String.Empty;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                target = Path.Combine(currentDirectory, "dll", Environment.Is64BitProcess ? "x64" : "x86");
+            }else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                target = Path.Combine(currentDirectory, "so", "lib");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                target = Path.Combine(currentDirectory, "dylib", Environment.Is64BitProcess ? "x64" : "x86");
+            }
+
+            if (String.IsNullOrEmpty(target))
+            {
+                return false;
+            }
+            else
+            {
+                try
                 {
-                    try
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
                         var stLinkDriverResult = this.LoadStLinkDriver(target);
 
@@ -91,14 +121,36 @@ namespace SharpCubeProgrammer.Native
                             return false;
                         }
                     }
-                    catch (Exception ex)
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        throw new Exception("K-Society ProgrammerInstanceApi native library loading error!", ex);
+                        var stLinkDriverResult = this.LoadStLinkDriverLinux(target);
+                        if (stLinkDriverResult != IntPtr.Zero)
+                        {
+                            var programmerResult = this.LoadProgrammerLinux(target);
+                            if (programmerResult != IntPtr.Zero)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
+                catch (Exception ex)
+                {
+                    throw new Exception("K-Society ProgrammerInstanceApi native library loading error!", ex);
+                }
             }
-
-            return true;
         }
 
         private SafeLibraryHandle LoadStLinkDriver(string target)
@@ -109,38 +161,72 @@ namespace SharpCubeProgrammer.Native
                 {
                     if (this.HandleSTLinkDriver == null)
                     {
-                        // Check if the local machine has KB2533623 installed in order
-                        // to use the more secure flags when calling LoadLibraryEx
-                        bool hasKB2533623;
-
-                        using (var hModule = Utility.LoadLibraryEx(Utility.KernelLibName, IntPtr.Zero, 0))
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
-                            // If the AddDllDirectory function is found then the flags are supported.
-                            hasKB2533623 = Utility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
-                        }
+                            // Check if the local machine has KB2533623 installed in order
+                            // to use the more secure flags when calling LoadLibraryEx
+                            bool hasKB2533623;
 
-                        var dwFlags = 0;
+                            using (var hModule = WindowsUtility.LoadLibraryEx(WindowsUtility.KernelLibName, IntPtr.Zero, 0))
+                            {
+                                // If the AddDllDirectory function is found then the flags are supported.
+                                hasKB2533623 = WindowsUtility.GetProcAddress(hModule, "AddDllDirectory") != IntPtr.Zero;
+                            }
 
-                        if (hasKB2533623)
-                        {
-                            // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags.
-                            dwFlags = Utility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
-                        }
+                            var dwFlags = 0;
 
-                        this.HandleSTLinkDriver = Utility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
+                            if (hasKB2533623)
+                            {
+                                // If KB2533623 is installed then specify the more secure LOAD_LIBRARY_SEARCH_DEFAULT_DIRS in dwFlags.
+                                dwFlags = WindowsUtility.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS;
+                            }
 
-                        if (this.HandleSTLinkDriver.IsInvalid)
-                        {
-                            var error = Marshal.GetLastWin32Error();
-                            this.HandleSTLinkDriver = null;
+                            this.HandleSTLinkDriver = WindowsUtility.LoadLibraryEx(target + @"\STLinkUSBDriver.dll", IntPtr.Zero, dwFlags);
 
-                            throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver loading error: " + error);
+                            if (this.HandleSTLinkDriver.IsInvalid)
+                            {
+                                var error = Marshal.GetLastWin32Error();
+                                this.HandleSTLinkDriver = null;
+
+                                throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver loading error: " + error);
+                            }
                         }
                     }
                 }
             }
 
             return this.HandleSTLinkDriver;
+        }
+
+        private IntPtr LoadStLinkDriverLinux(string target)
+        {
+            if (this.HandleSTLinkDriverIntPtr == IntPtr.Zero)
+            {
+                lock (this.SyncRoot)
+                {
+                    if (this.HandleSTLinkDriverIntPtr == IntPtr.Zero)
+                    {
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                        {
+                            this.HandleSTLinkDriverIntPtr = LinuxUtility.DlOpen(target + "/libSTLinkUSBDriver.so", 0x00102); // 0x00001 == RTLD_LEAZY, 0x00002 == RTLD_NOW, 0x00100 = RTLD_GLOBAL
+
+                            var error = LinuxUtility.DlError();
+                            if (error != IntPtr.Zero)
+                            {
+                                var message = Marshal.PtrToStringAnsi(error);
+                                throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver Linux loading error: " + message + " !");
+                            }
+
+                            if (this.HandleSTLinkDriverIntPtr == IntPtr.Zero)
+                            {
+                                throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver Linux loading error: IntPtr.Zero ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return this.HandleSTLinkDriverIntPtr;
         }
 
         private SafeLibraryHandle LoadProgrammer(string target)
@@ -151,16 +237,19 @@ namespace SharpCubeProgrammer.Native
                 {
                     if (this.HandleProgrammer == null)
                     {
-                        var dwFlags = Utility.LOAD_WITH_ALTERED_SEARCH_PATH;
-
-                        this.HandleProgrammer = Utility.LoadLibraryEx(target + @"\CubeProgrammer_API.dll", IntPtr.Zero, dwFlags);
-
-                        if (this.HandleProgrammer.IsInvalid)
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
-                            var error = Marshal.GetLastWin32Error();
-                            this.HandleProgrammer = null;
+                            var dwFlags = WindowsUtility.LOAD_WITH_ALTERED_SEARCH_PATH;
 
-                            throw new Exception("K-Society ProgrammerInstanceApi Programmer loading error: " + error);
+                            this.HandleProgrammer = WindowsUtility.LoadLibraryEx(target + @"\CubeProgrammer_API.dll", IntPtr.Zero, dwFlags);
+
+                            if (this.HandleProgrammer.IsInvalid)
+                            {
+                                var error = Marshal.GetLastWin32Error();
+                                this.HandleProgrammer = null;
+
+                                throw new Exception("K-Society ProgrammerInstanceApi Programmer loading error: " + error);
+                            }
                         }
                     }
                 }
@@ -169,10 +258,45 @@ namespace SharpCubeProgrammer.Native
             return this.HandleProgrammer;
         }
 
+        private IntPtr LoadProgrammerLinux(string target)
+        {
+            if (this.HandleProgrammerIntPtr == IntPtr.Zero)
+            {
+                lock (this.SyncRoot)
+                {
+                    if (this.HandleProgrammerIntPtr == IntPtr.Zero)
+                    {
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                        {
+                            this.HandleProgrammerIntPtr = LinuxUtility.DlOpen(target + "/libCubeProgrammer_API.so.1", 0x00102); // 0x00002 == RTLD_NOW, 0x00100 = RTLD_GLOBAL
+
+                            var error = LinuxUtility.DlError();
+                            if (error != IntPtr.Zero)
+                            {
+                                var message = Marshal.PtrToStringAnsi(error);
+                                throw new Exception("K-Society ProgrammerInstanceApi Programmer Linux loading error: " + message + " !");
+                            }
+
+                            if (this.HandleProgrammerIntPtr == IntPtr.Zero)
+                            {
+                                throw new Exception("K-Society ProgrammerInstanceApi Programmer Linux loading error: IntPtr.Zero ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return this.HandleProgrammerIntPtr;
+        }
+
         private string GetAssemblyDirectory()
         {
             var codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
+            var uri = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Path = codeBase
+            };
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
@@ -335,6 +459,14 @@ namespace SharpCubeProgrammer.Native
             this.EnsureFunctionAndInvoke(
             "setDisplayCallbacks",
             ref this._setDisplayCallbacks,
+            (function) => function(c));
+        }
+
+        internal void SetDisplayCallbacks(DisplayCallBacksLinux c)
+        {
+            this.EnsureFunctionAndInvoke(
+            "setDisplayCallbacks",
+            ref this._setDisplayCallbacksLinux,
             (function) => function(c));
         }
 
@@ -1009,12 +1141,23 @@ namespace SharpCubeProgrammer.Native
         {
             if (this.EnsureNativeLibraryLoaded())
             {
-                if (this.HandleProgrammer == null)
-                {
-                    return null;
-                }
+                var address = IntPtr.Zero;
 
-                var address = Utility.GetProcAddress(this.HandleProgrammer, functionName);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    if (this.HandleProgrammer == null)
+                    {
+                        return null;
+                    }
+                    address = WindowsUtility.GetProcAddress(this.HandleProgrammer, functionName);
+                }else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    if (this.HandleProgrammerIntPtr == IntPtr.Zero)
+                    {
+                        return null;
+                    }
+                    address = LinuxUtility.DlSym(this.HandleProgrammerIntPtr, functionName);
+                }
 
                 if (address == IntPtr.Zero)
                 {
@@ -1062,16 +1205,33 @@ namespace SharpCubeProgrammer.Native
             this.DeleteInterfaceList();
 
             // Free any unmanaged objects here.
-            if (this.HandleProgrammer != null)
-            {
-                this.HandleProgrammer?.Dispose();
-                this.HandleProgrammer = null;
-            }
 
-            if (this.HandleSTLinkDriver != null)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                this.HandleSTLinkDriver?.Dispose();
-                this.HandleSTLinkDriver = null;
+                if (this.HandleProgrammer != null)
+                {
+                    this.HandleProgrammer?.Dispose();
+                    this.HandleProgrammer = null;
+                }
+
+                if (this.HandleSTLinkDriver != null)
+                {
+                    this.HandleSTLinkDriver?.Dispose();
+                    this.HandleSTLinkDriver = null;
+                }
+            }else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                if (this.HandleProgrammerIntPtr != IntPtr.Zero)
+                {
+                    LinuxUtility.DlClose(this.HandleProgrammerIntPtr);
+                    this.HandleProgrammerIntPtr = IntPtr.Zero;
+                }
+
+                if (this.HandleSTLinkDriverIntPtr != IntPtr.Zero)
+                {
+                    LinuxUtility.DlClose(this.HandleSTLinkDriverIntPtr);
+                    this.HandleSTLinkDriverIntPtr = IntPtr.Zero;
+                }
             }
         }
 

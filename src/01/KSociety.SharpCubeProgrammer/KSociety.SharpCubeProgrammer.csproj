@@ -22,20 +22,29 @@
     <Content Include="Build\KSociety.SharpCubeProgrammer.props" Pack="true" PackagePath="build" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU') ">
-    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\native\x64\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+  <ItemGroup Condition=" $([System.OperatingSystem]::IsWindows()) AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU') ">
+    <None Include="..\..\..\Programmer\x64\*.dll" Pack="true" PackagePath="build\win-x64\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x64\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>
-    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x64" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\x64\STLinkUSBDriver.dll" Pack="true" PackagePath="build\win-x64\native" Visible="false" Link="dll\x64\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(OS)' == 'WINDOWS_NT' AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU') ">
-    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\native\x86\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+  <ItemGroup Condition=" $([System.OperatingSystem]::IsWindows()) AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU') ">
+    <None Include="..\..\..\Programmer\x86\*.dll" Pack="true" PackagePath="build\win-x86\native\Programmer" Visible="false" Exclude="**\STLinkUSBDriver.dll" Link="dll\x86\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>
-    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="build\native\x86" Visible="false" Link="dll\x86\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+    <None Include="..\..\..\Programmer\x86\STLinkUSBDriver.dll" Pack="true" PackagePath="build\win-x86\native" Visible="false" Link="dll\x86\STLinkUSBDriver.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU') ">
+    <None Include="..\..\..\Programmer\Linux\*.*" Pack="true" PackagePath="build\linux-x64\native\Programmer" Visible="false" Exclude="**\libSTLinkUSBDriver.so" Link="so\lib\%(FileName)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
+
+    </None>
+    <None Include="..\..\..\Programmer\Linux\libSTLinkUSBDriver.so" Pack="true" PackagePath="build\linux-x64\native" Visible="false" Link="so\lib\libSTLinkUSBDriver.so" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest">
 
     </None>
   </ItemGroup>

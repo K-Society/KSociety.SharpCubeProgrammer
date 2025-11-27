@@ -9,6 +9,7 @@ namespace SharpCubeProgrammer.Interface
     using DeviceDataStructure;
     using Enum;
     using Struct;
+    using static SharpCubeProgrammer.Native.DisplayCallBacksFunctions;
 
     public interface ICubeProgrammerApiAsync : IAsyncDisposable
     {
@@ -120,6 +121,22 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
         ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="initProgressBar"></param>
+        /// <param name="messageReceived"></param>
+        /// <param name="progressBarUpdate"></param>
+        /// <returns></returns>
+        ValueTask<DisplayCallBacksLinux> SetDisplayCallbacksAsync(InitProgressBar initProgressBar, LogMessageReceivedLinux messageReceivedLinux, ProgressBarUpdateReceived progressBarUpdate, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
+        ValueTask<DisplayCallBacksLinux> SetDisplayCallbacksAsync(DisplayCallBacksLinux callbacksHandleLinux, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.

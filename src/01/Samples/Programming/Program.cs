@@ -54,13 +54,12 @@ namespace Programming
 
             #endregion
 
-            var dfuList = new List<SharpCubeProgrammer.Struct.DfuDeviceInfo>();
-            var resultDfuList = CubeProgrammerApi.GetDfuDeviceList(ref dfuList);
+            var resultDfuList = CubeProgrammerApi.GetDfuDeviceList();
 
 
-            if (resultDfuList > 0)
+            if (resultDfuList.Any())
             {
-                var dfuConnect = CubeProgrammerApi.ConnectDfuBootloader(dfuList.First().UsbIndex);
+                var dfuConnect = CubeProgrammerApi.ConnectDfuBootloader(resultDfuList.First().UsbIndex);
 
                 if (dfuConnect.Equals(CubeProgrammerError.CubeprogrammerNoError))
                 {
@@ -229,7 +228,7 @@ namespace Programming
             return builder.Build();
         }
 
-        private static void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        private static void ReceiveMessage(int messageType, string message)
         {
             //Logger?.LogTrace(message);
             message = Regex.Replace(message, "(?<!\r)\n", "");

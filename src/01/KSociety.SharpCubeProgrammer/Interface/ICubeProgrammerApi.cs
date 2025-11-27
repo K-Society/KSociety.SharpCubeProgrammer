@@ -7,6 +7,7 @@ namespace SharpCubeProgrammer.Interface
     using DeviceDataStructure;
     using Enum;
     using Struct;
+    using static SharpCubeProgrammer.Native.DisplayCallBacksFunctions;
 
     public interface ICubeProgrammerApi : IDisposable
     {
@@ -118,6 +119,21 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
         DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle);
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="initProgressBar"></param>
+        /// <param name="messageReceivedLinux"></param>
+        /// <param name="progressBarUpdate"></param>
+        /// <returns></returns>
+        DisplayCallBacksLinux SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceivedLinux messageReceivedLinux, ProgressBarUpdateReceived progressBarUpdate);
+
+        /// <summary>
+        /// This routine allows to choose your custom display.
+        /// </summary>
+        /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
+        DisplayCallBacksLinux SetDisplayCallbacks(DisplayCallBacksLinux callbacksHandleLinux);
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.

@@ -114,7 +114,7 @@ namespace QuickStart
             Console.ReadLine();
         }
         
-        private static void ReceiveMessage(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message)
+        private static void ReceiveMessage(int messageType, string message)
         {
             switch ((MessageType)messageType)
             {

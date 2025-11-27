@@ -16,6 +16,7 @@ namespace SharpCubeProgrammer
     using Microsoft.Extensions.Logging.Abstractions;
     using SharpCubeProgrammer.Native;
     using Struct;
+    using static SharpCubeProgrammer.Native.DisplayCallBacksFunctions;
 
     public partial class CubeProgrammerApi : ICubeProgrammerApi
     {
@@ -454,6 +455,28 @@ namespace SharpCubeProgrammer
             this._programmerInstanceApi.SetDisplayCallbacks(callbacksHandle);
 
             return this._programmerInstanceApi.DisplayCallBacks;
+        }
+
+        /// <inheritdoc />
+        public DisplayCallBacksLinux SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceivedLinux messageReceivedLinux, ProgressBarUpdateReceived progressBarUpdate)
+        {
+            this._programmerInstanceApi.DisplayCallBacksLinux.InitProgressBar = initProgressBar;
+            this._programmerInstanceApi.DisplayCallBacksLinux.LogMessage = messageReceivedLinux;
+            this._programmerInstanceApi.DisplayCallBacksLinux.LoadBar = progressBarUpdate;
+            this._programmerInstanceApi.SetDisplayCallbacks(this._programmerInstanceApi.DisplayCallBacksLinux);
+
+            return this._programmerInstanceApi.DisplayCallBacksLinux;
+        }
+
+        /// <inheritdoc />
+        public DisplayCallBacksLinux SetDisplayCallbacks(DisplayCallBacksLinux callbacksHandleLinux)
+        {
+            this._programmerInstanceApi.DisplayCallBacksLinux.InitProgressBar = callbacksHandleLinux.InitProgressBar;
+            this._programmerInstanceApi.DisplayCallBacksLinux.LogMessage = callbacksHandleLinux.LogMessage;
+            this._programmerInstanceApi.DisplayCallBacksLinux.LoadBar = callbacksHandleLinux.LoadBar;
+            this._programmerInstanceApi.SetDisplayCallbacks(callbacksHandleLinux);
+
+            return this._programmerInstanceApi.DisplayCallBacksLinux;
         }
 
         /// <inheritdoc />

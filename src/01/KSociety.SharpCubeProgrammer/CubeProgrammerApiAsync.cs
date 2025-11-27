@@ -11,6 +11,7 @@ namespace SharpCubeProgrammer
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
+    using static SharpCubeProgrammer.Native.DisplayCallBacksFunctions;
 
     public partial class CubeProgrammerApi : ICubeProgrammerApiAsync
     {
@@ -130,6 +131,18 @@ namespace SharpCubeProgrammer
         public async ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.SetDisplayCallbacks(callbacksHandle), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async ValueTask<DisplayCallBacksLinux> SetDisplayCallbacksAsync(InitProgressBar initProgressBar, LogMessageReceivedLinux messageReceivedLinux, ProgressBarUpdateReceived progressBarUpdate, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => this.SetDisplayCallbacks(initProgressBar, messageReceivedLinux, progressBarUpdate), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async ValueTask<DisplayCallBacksLinux> SetDisplayCallbacksAsync(DisplayCallBacksLinux callbacksHandleLinux, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => this.SetDisplayCallbacks(callbacksHandleLinux), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

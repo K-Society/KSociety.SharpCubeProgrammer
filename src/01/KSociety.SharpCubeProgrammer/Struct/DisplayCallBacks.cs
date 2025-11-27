@@ -3,15 +3,7 @@
 namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
-    public delegate void InitProgressBar();
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, SetLastError = true)]
-    public delegate void LogMessageReceived(int messageType, [MarshalAs(UnmanagedType.LPWStr)] string message);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
-    public delegate void ProgressBarUpdateReceived(int currentProgress, int total);
+    using static SharpCubeProgrammer.Native.DisplayCallBacksFunctions;
 
     /// <summary>
     /// Functions must be implemented to personalize the display of messages.
