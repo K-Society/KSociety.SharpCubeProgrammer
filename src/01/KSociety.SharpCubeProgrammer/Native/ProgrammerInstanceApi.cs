@@ -172,7 +172,11 @@ namespace SharpCubeProgrammer.Native
         private string GetAssemblyDirectory()
         {
             var codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
+            var uri = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Path = codeBase
+            };
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
