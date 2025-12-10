@@ -190,7 +190,7 @@ namespace SharpCubeProgrammer.Native
         internal int GetStLinkList(ref IntPtr stLinkList, int shared)
         {
             var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
-
+           
             if (function != null)
             {
                 return function(ref stLinkList, shared);

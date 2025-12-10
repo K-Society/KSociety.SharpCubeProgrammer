@@ -156,6 +156,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
+        [Obsolete("WriteMemoryAutoFillAsync is deprecated, please use WriteMemoryAsync instead.")]
         ValueTask<CubeProgrammerError> WriteMemoryAutoFillAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -164,6 +165,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
+        [Obsolete("WriteMemoryAndVerifyAsync is deprecated, please use WriteMemoryAsync instead.")]
         ValueTask<CubeProgrammerError> WriteMemoryAndVerifyAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
         /// <summary>

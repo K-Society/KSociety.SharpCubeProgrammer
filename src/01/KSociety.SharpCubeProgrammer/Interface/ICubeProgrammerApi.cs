@@ -154,6 +154,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
+        [Obsolete("WriteMemoryAutoFill is deprecated, please use WriteMemory instead.")]
         CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data);
 
         /// <summary>
@@ -162,6 +163,7 @@ namespace SharpCubeProgrammer.Interface
         /// </summary>
         /// <param name="address">The address to start writing from.</param>
         /// <param name="data">Data buffer.</param>
+        [Obsolete("WriteMemoryAndVerify is deprecated, please use WriteMemory instead.")]
         CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data);
 
         /// <summary>

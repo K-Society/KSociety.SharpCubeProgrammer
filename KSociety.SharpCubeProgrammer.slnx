@@ -1,0 +1,60 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/01. Infrastructure Sub Layer/">
+    <Project Path="src/01/KSociety.SharpCubeProgrammer/KSociety.SharpCubeProgrammer.csproj">
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Build Solution="Release|Any CPU" Project="false" />
+      <Build Solution="Release|x64" Project="false" />
+      <Build Solution="Release|x86" Project="false" />
+    </Project>
+    <Project Path="src/01/KSociety.Test/KSociety.Test.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Build Solution="*|x64" Project="false" />
+      <Build Solution="*|x86" Project="false" />
+      <Build Solution="Release|Any CPU" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/01. Infrastructure Sub Layer/Samples/">
+    <Project Path="src/01/Samples/Programming/Programming.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Build Solution="Release|Any CPU" Project="false" />
+      <Build Solution="Release|x64" Project="false" />
+      <Build Solution="Release|x86" Project="false" />
+    </Project>
+    <Project Path="src/01/Samples/ProgrammingLegacy/ProgrammingLegacy.csproj" Id="3285b360-3124-4a10-8d51-be29eba68d33">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Build Solution="Release|Any CPU" Project="false" />
+      <Build Solution="Release|x64" Project="false" />
+      <Build Solution="Release|x86" Project="false" />
+    </Project>
+    <Project Path="src/01/Samples/QuickStart/QuickStart.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Build Solution="Release|Any CPU" Project="false" />
+      <Build Solution="Release|x64" Project="false" />
+      <Build Solution="Release|x86" Project="false" />
+    </Project>
+    <Project Path="src/01/Samples/SharpCubePrgAPI/SharpCubePrgAPI.csproj">
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Build Solution="Release|Any CPU" Project="false" />
+      <Build Solution="Release|x64" Project="false" />
+      <Build Solution="Release|x86" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="build.cmd" />
+    <File Path="global.json" />
+    <File Path="LICENSE.TXT" />
+    <File Path="README.md" />
+    <File Path="version.json" />
+  </Folder>
+</Solution>

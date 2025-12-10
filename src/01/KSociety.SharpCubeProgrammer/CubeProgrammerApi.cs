@@ -557,6 +557,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        [Obsolete("WriteMemoryAutoFill is deprecated, please use WriteMemory instead.")]
         public CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -598,6 +599,7 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        [Obsolete("WriteMemoryAndVerify is deprecated, please use WriteMemory instead.")]
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
         {
             var result = CubeProgrammerError.CubeprogrammerErrorOther;

@@ -9,7 +9,7 @@ namespace SharpCubePrgAPI.User
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
-    internal class main
+    internal class Program
     {
         static int Main()
         {
