@@ -172,7 +172,11 @@ namespace SharpCubeProgrammer.Native
         private string GetAssemblyDirectory()
         {
             var codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
+            var uri = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Path = codeBase
+            };
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
@@ -186,7 +190,7 @@ namespace SharpCubeProgrammer.Native
         internal int GetStLinkList(ref IntPtr stLinkList, int shared)
         {
             var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
-
+           
             if (function != null)
             {
                 return function(ref stLinkList, shared);
