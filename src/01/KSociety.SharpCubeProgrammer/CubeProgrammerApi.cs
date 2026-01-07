@@ -1722,8 +1722,6 @@ namespace SharpCubeProgrammer
             return hex;
         }
 
-        #endregion
-
         private CubeProgrammerError CheckResult(int result)
         {
             var output = CubeProgrammerError.CubeprogrammerErrorOther;
@@ -1742,6 +1740,8 @@ namespace SharpCubeProgrammer
 
             return output;
         }
+
+        #endregion
 
         #region [Dispose]
 
