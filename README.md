@@ -52,6 +52,20 @@ You can get KSociety.SharpCubeProgrammer by [grabbing the latest NuGet package](
 > [!IMPORTANT]
 > You need to use _PackageReference_, otherwise some contents will not be copied to the output folder and consequently it will not work.
 
+## Install
+
+Package Manager Console
+
+```
+PM> Install-Package KSociety.SharpCubeProgrammer
+```
+
+.NET CLI Console
+
+```
+> dotnet add package KSociety.SharpCubeProgrammer
+```
+
 ## Currently supported features
 
 All functions also exist in an asynchronous version.
@@ -80,8 +94,6 @@ All functions also exist in an asynchronous version.
 - GetDeviceGeneralInf
 - ReadMemory
 - WriteMemory
-- WriteMemoryAutoFill
-- WriteMemoryAndVerify
 - EditSector
 - DownloadFile
 - Execute
@@ -289,6 +301,6 @@ List of technologies, frameworks and libraries used for implementation:
 
 ## Copyright and Trademarks
 
-This library is copyright © K-Society 2022-2025.
+This library is copyright © K-Society 2022-2026.
 
 [ST](https://www.st.com/content/st_com/en.html) is a trademark and copyright of the STMicroelectronics NV.
