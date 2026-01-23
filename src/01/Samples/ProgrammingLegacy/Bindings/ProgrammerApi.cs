@@ -11,7 +11,7 @@ namespace ProgrammingLegacy.Bindings
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CubeProgrammerApi>().UsingConstructor(typeof(ILogger)).As<ICubeProgrammerApi>().SingleInstance();
+            builder.RegisterType<CubeProgrammerApi>().UsingConstructor(typeof(ILogger<CubeProgrammerApi>)).As<ICubeProgrammerApi>().SingleInstance();
         }
     }
 }
