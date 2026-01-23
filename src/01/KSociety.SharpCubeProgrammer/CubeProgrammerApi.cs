@@ -28,7 +28,13 @@ namespace SharpCubeProgrammer
 
         #region [Constructor]
 
-        public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger = default)
+        public CubeProgrammerApi()
+        {
+            this._logger = new NullLogger<CubeProgrammerApi>();
+            this._programmerInstanceApi = new ProgrammerInstanceApi();
+        }
+
+        public CubeProgrammerApi(ILogger<CubeProgrammerApi> logger)
         {
             if (logger == null)
             {
@@ -37,6 +43,20 @@ namespace SharpCubeProgrammer
 
             this._logger = logger;
             this._programmerInstanceApi = new ProgrammerInstanceApi();
+        }
+
+        public CubeProgrammerApi(ILoggerFactory loggerFactory)
+        {
+            if (loggerFactory == null)
+            {
+                this._logger = new NullLogger<CubeProgrammerApi>();
+            }
+            else
+            {
+                this._logger = loggerFactory.CreateLogger<CubeProgrammerApi>();
+            }
+
+            this._programmerInstanceApi = new ProgrammerInstanceApi(loggerFactory);
         }
 
         #endregion
