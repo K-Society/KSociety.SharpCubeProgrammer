@@ -3,6 +3,7 @@
 namespace Programming.Bindings
 {
     using Autofac;
+    using Microsoft.Extensions.Logging;
     using SharpCubeProgrammer;
     using SharpCubeProgrammer.Interface;
 
@@ -10,7 +11,7 @@ namespace Programming.Bindings
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CubeProgrammerApi>().As<ICubeProgrammerApi>().As<ICubeProgrammerApiAsync>().SingleInstance();
+            builder.RegisterType<CubeProgrammerApi>().UsingConstructor(typeof(ILoggerFactory)).As<ICubeProgrammerApi>().As<ICubeProgrammerApiAsync>().SingleInstance();
         }
     }
 }

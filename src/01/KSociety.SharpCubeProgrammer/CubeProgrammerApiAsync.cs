@@ -163,12 +163,14 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
+        [Obsolete("WriteMemoryAutoFillAsync is deprecated, please use WriteMemoryAsync instead.")]
         public async ValueTask<CubeProgrammerError> WriteMemoryAutoFillAsync(string address, byte[] data, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.WriteMemoryAutoFill(address, data), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
+        [Obsolete("WriteMemoryAndVerifyAsync is deprecated, please use WriteMemoryAsync instead.")]
         public async ValueTask<CubeProgrammerError> WriteMemoryAndVerifyAsync(string address, byte[] data, CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.WriteMemoryAndVerify(address, data), cancellationToken).ConfigureAwait(false);

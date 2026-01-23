@@ -8,11 +8,15 @@ namespace SharpCubeProgrammer.Native
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
     internal sealed partial class ProgrammerInstanceApi : IDisposable
     {
+        private readonly ILogger<ProgrammerInstanceApi> _logger;
+
         private const int DisposedFlag = 1;
         private int _isDisposed;
 
@@ -25,8 +29,17 @@ namespace SharpCubeProgrammer.Native
 
         #region [Constructor]
 
-        internal ProgrammerInstanceApi()
+        internal ProgrammerInstanceApi(ILoggerFactory loggerFactory = default)
         {
+            if (loggerFactory == null)
+            {
+                this._logger = new NullLogger<ProgrammerInstanceApi>();
+            }
+            else
+            {
+                this._logger = loggerFactory.CreateLogger<ProgrammerInstanceApi>();
+            }
+
             var libraryLoaded = this.EnsureNativeLibraryLoaded();
 
             if (libraryLoaded)
@@ -172,7 +185,11 @@ namespace SharpCubeProgrammer.Native
         private string GetAssemblyDirectory()
         {
             var codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
+            var uri = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Path = codeBase
+            };
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
@@ -186,7 +203,7 @@ namespace SharpCubeProgrammer.Native
         internal int GetStLinkList(ref IntPtr stLinkList, int shared)
         {
             var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
-
+           
             if (function != null)
             {
                 return function(ref stLinkList, shared);
