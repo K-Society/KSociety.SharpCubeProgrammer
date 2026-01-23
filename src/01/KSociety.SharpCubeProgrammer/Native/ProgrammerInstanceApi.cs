@@ -8,11 +8,15 @@ namespace SharpCubeProgrammer.Native
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Struct;
 
     internal sealed partial class ProgrammerInstanceApi : IDisposable
     {
+        private readonly ILogger<ProgrammerInstanceApi> _logger;
+
         private const int DisposedFlag = 1;
         private int _isDisposed;
 
@@ -25,8 +29,17 @@ namespace SharpCubeProgrammer.Native
 
         #region [Constructor]
 
-        internal ProgrammerInstanceApi()
+        internal ProgrammerInstanceApi(ILoggerFactory loggerFactory = default)
         {
+            if (loggerFactory == null)
+            {
+                this._logger = new NullLogger<ProgrammerInstanceApi>();
+            }
+            else
+            {
+                this._logger = loggerFactory.CreateLogger<ProgrammerInstanceApi>();
+            }
+
             var libraryLoaded = this.EnsureNativeLibraryLoaded();
 
             if (libraryLoaded)

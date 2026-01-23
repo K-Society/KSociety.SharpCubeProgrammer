@@ -15,7 +15,7 @@
 	
     <Authors>K-Society Team</Authors>
     <Company>K-Society</Company>
-    <Copyright>Copyright © K-Society and contributors 2024. All rights reserved.</Copyright>
+    <Copyright>Copyright © K-Society and contributors 2026. All rights reserved.</Copyright>
 	<PackageLicenseExpression>MS-RL</PackageLicenseExpression>
 	<Description>K-Society SharpCubeProgrammer is an STM32 CubeProgrammer_API C# wrapper.</Description>
     <Product>K-Society SharpCubeProgrammer</Product>
