@@ -1042,12 +1042,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public CubeProgrammerError Disconnect()
+        public void Disconnect()
         {
-            var result = this._programmerInstanceApi.Disconnect();
-            var output = this.CheckResult(result);
-            
-            return output;
+            this._programmerInstanceApi.Disconnect();
         }
 
         /// <inheritdoc />

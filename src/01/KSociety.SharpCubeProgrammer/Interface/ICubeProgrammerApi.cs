@@ -270,7 +270,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to clean up and disconnect the current connected target.
         /// </summary>
-        CubeProgrammerError Disconnect();
+        void Disconnect();
 
         /// <summary>
         /// This routine allows to clear the list of each created interface.

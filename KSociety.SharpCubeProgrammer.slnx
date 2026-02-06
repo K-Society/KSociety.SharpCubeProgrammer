@@ -13,13 +13,6 @@
       <Build Solution="Release|x64" Project="false" />
       <Build Solution="Release|x86" Project="false" />
     </Project>
-    <Project Path="src/01/KSociety.Test/KSociety.Test.csproj">
-      <Platform Solution="*|x64" Project="x64" />
-      <Platform Solution="*|x86" Project="x86" />
-      <Build Solution="*|x64" Project="false" />
-      <Build Solution="*|x86" Project="false" />
-      <Build Solution="Release|Any CPU" Project="false" />
-    </Project>
   </Folder>
   <Folder Name="/01. Infrastructure Sub Layer/Samples/">
     <Project Path="src/01/Samples/Programming/Programming.csproj">
