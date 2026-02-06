@@ -301,6 +301,6 @@ List of technologies, frameworks and libraries used for implementation:
 
 ## Copyright and Trademarks
 
-This library is copyright © K-Society 2022-2026.
+This library is copyright (c) K-Society 2022-2026.
 
 [ST](https://www.st.com/content/st_com/en.html) is a trademark and copyright of the STMicroelectronics NV.
