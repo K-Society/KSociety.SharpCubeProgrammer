@@ -272,7 +272,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to clean up and disconnect the current connected target.
         /// </summary>
-        ValueTask<CubeProgrammerError> DisconnectAsync(CancellationToken cancellationToken = default);
+        ValueTask DisconnectAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to clear the list of each created interface.
