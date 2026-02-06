@@ -590,9 +590,9 @@ namespace SharpCubeProgrammer.Native
                 (function) => function(address, size, sFileName));
         }
 
-        internal int Disconnect()
+        internal void Disconnect()
         {
-            return this.EnsureFunctionAndInvoke(
+            this.EnsureFunctionAndInvoke(
                 "disconnect",
                 ref this._disconnect,
                 (function) => function());

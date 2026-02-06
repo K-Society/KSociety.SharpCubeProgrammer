@@ -285,9 +285,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> DisconnectAsync(CancellationToken cancellationToken = default)
+        public async ValueTask DisconnectAsync(CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.Disconnect(), cancellationToken).ConfigureAwait(false);
+            await Task.Run(() => this.Disconnect(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

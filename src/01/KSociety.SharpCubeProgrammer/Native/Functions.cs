@@ -122,7 +122,7 @@ namespace SharpCubeProgrammer.Native
         internal delegate int SaveMemoryToFile(int address, int size, [MarshalAs(UnmanagedType.LPWStr)] string sFileName);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int Disconnect();
+        internal delegate void Disconnect();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate void DeleteInterfaceList();
