@@ -281,7 +281,7 @@
 						</Field>
 					</Category>
 						<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
 							<AssignedBits>
@@ -353,7 +353,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -474,7 +474,7 @@
 									</Values>
 								</Bit>				
 								<Bit>
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -487,7 +487,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -501,7 +501,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -710,7 +710,7 @@
 				<Bank interface="JTAG_SWD">
 					<Parameters address="0x40022080" name="Bank 2" size="0x10"/>
 					<Category>
-						<Name>FLASH security</Name>
+						<Name>FLASH security (Present only on stm32g0x1 devices)</Name>
 								<Field>
 							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
@@ -745,7 +745,7 @@
 					</Category>
 				</Bank>
 				<Bank interface="Bootloader">
-					<Parameters address="0x1FFF7800" name="Bank 1" size="0x44"/>
+					<Parameters address="0x1FFF7800" name="Bank 1" size="0x74"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -767,7 +767,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -839,7 +839,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW(Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -960,7 +960,7 @@
 									</Values>
 								</Bit>				
 								<Bit>
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -973,7 +973,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -987,7 +987,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -1191,12 +1191,8 @@
 							</AssignedBits>
 						</Field>					
 					</Category>
-					
-				</Bank>
-				<Bank interface="Bootloader">
-					<Parameters address="0x1FFF7870" name="Bank 2" size="0x4"/>
 					<Category>
-						<Name>FLASH security</Name>
+						<Name>FLASH security (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>

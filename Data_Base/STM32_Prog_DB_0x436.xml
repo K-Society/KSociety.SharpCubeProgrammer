@@ -386,7 +386,7 @@
 					<Category>
 						<Name>Write Protection</Name>
 						<Field>
-							<Parameters address="0x1FF80008" name="WRP1" size="0x8"/>
+							<Parameters address="0x1FF80008" name="WRP1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP0</Name>
@@ -402,7 +402,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF8000C" name="WRP1" size="0x8"/>
+							<Parameters address="0x1FF8000C" name="WRP1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP16</Name>
@@ -418,7 +418,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80010" name="WRP2" size="0x8"/>
+							<Parameters address="0x1FF80010" name="WRP2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP32</Name>
@@ -434,7 +434,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80014" name="WRP2" size="0x8"/>
+							<Parameters address="0x1FF80014" name="WRP2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP48</Name>
@@ -450,7 +450,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80018" name="WRP3" size="0x8"/>
+							<Parameters address="0x1FF80018" name="WRP3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP64</Name>
@@ -466,7 +466,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF8001C" name="WRP3" size="0x8"/>
+							<Parameters address="0x1FF8001C" name="WRP3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP80</Name>
@@ -590,7 +590,7 @@
 					<Category>
 						<Name>Write Protection</Name>
 						<Field>
-							<Parameters address="0x1FF80008" name="WRP1" size="0x8"/>
+							<Parameters address="0x1FF80008" name="WRP1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP0</Name>
@@ -606,7 +606,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF8000C" name="WRP1" size="0x8"/>
+							<Parameters address="0x1FF8000C" name="WRP1" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP16</Name>
@@ -622,7 +622,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80010" name="WRP2" size="0x8"/>
+							<Parameters address="0x1FF80010" name="WRP2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP32</Name>
@@ -638,7 +638,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80014" name="WRP2" size="0x8"/>
+							<Parameters address="0x1FF80014" name="WRP2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP48</Name>
@@ -654,7 +654,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF80018" name="WRP3" size="0x8"/>
+							<Parameters address="0x1FF80018" name="WRP3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP64</Name>
@@ -670,7 +670,7 @@
 							</AssignedBits>
 						</Field> 
 						<Field>
-							<Parameters address="0x1FF8001C" name="WRP3" size="0x8"/>
+							<Parameters address="0x1FF8001C" name="WRP3" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>WRP80</Name>

@@ -6,7 +6,7 @@
 		<Type>MCU</Type>
 		<CPU>Cortex-M0+</CPU>
 		<Name>STM32WL3x</Name>
-		<Series>STM32WL3x</Series>
+		<Series>STM32WL3</Series>
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
 		<Configurations>
 			<!-- JTAG_SWD Interface -->

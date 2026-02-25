@@ -69,7 +69,7 @@
 					<Parameters address="0x1FFF7000" name=" 1 KBytes Data OTP" size="0x400"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x8</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x1FFF7000" name="OTP" occurrence="0x1" size="0x400"/>
@@ -131,7 +131,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -204,7 +204,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -303,7 +303,7 @@
 									</Values>
 								</Bit>				
 								<Bit>
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -316,7 +316,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -330,7 +330,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -444,7 +444,7 @@
 				<Bank interface="JTAG_SWD">
 					<Parameters address="0x40022080" name="Bank 2" size="0x10"/>
 					<Category>
-						<Name>FLASH security</Name>
+						<Name>FLASH security (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
@@ -471,7 +471,7 @@
 					</Category>
 				</Bank>
 				<Bank interface="Bootloader">
-					<Parameters address="0x1FFF7800" name="Bank 1" size="0x34"/>
+					<Parameters address="0x1FFF7800" name="Bank 1" size="0x74"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -493,7 +493,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -566,7 +566,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -665,7 +665,7 @@
 									</Values>
 								</Bit>				
 								<Bit>
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -678,7 +678,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -692,7 +692,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -730,29 +730,29 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
-					    <Field>
-							<Parameters name="PCROP1BSR" size="0x4" address="0x1FFF8028"/>
+						<Field>
+							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>PCROP1B_STRT</Name>
-									<Description>Flash Bank 2 PCROP start address</Description>
+									<Description>Flash Area B in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
-									<Equation	multiplier="0x8"	offset="0x08000000"/>
+									<Equation multiplier="0x200" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
-							<Field>
-							<Parameters name="PCROP1BER" size="0x4" address="0x1FFF8030"/>
+						<Field>
+							<Parameters address="0x1FFF7830" name="FLASH_PCROP1BER" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>PCROP1B_END</Name>
-									<Description>Flash Bank 2 PCROP End address. Deactivation of PCROP can be done by enbaling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
-									<Equation	multiplier="0x8"	offset="0x08000008"/>
+									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -802,11 +802,8 @@
 							</AssignedBits>
 						</Field>
 					</Category>
-				</Bank>
-				<Bank interface="Bootloader">
-					<Parameters address="0x1FFF7870" name="Bank 2" size="0x4"/>
 					<Category>
-						<Name>FLASH security</Name>
+						<Name>FLASH security (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
