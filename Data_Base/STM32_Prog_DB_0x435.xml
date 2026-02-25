@@ -17,6 +17,12 @@
 						<ReadRegister address="0x1FFF75E0" mask="0x0000FFFF" value="0x0100"/>
 					</FlashSize>
 				</Configuration>
+				<Configuration number="0x1">
+					<!-- 128KB-->
+					<FlashSize>
+						<ReadRegister address="0x1FFF75E0" mask="0x0000FFFF" value="0x0080"/>
+					</FlashSize>
+				</Configuration>
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
@@ -55,7 +61,7 @@
 				<FlashSize address="0x1FFF75E0" default="0x40000"/>
 				<BootloaderVersion address="0x1FFF6FFE"/>
 				<!-- 256KB-->
-				<Configuration>
+				<Configuration config="0">
 					<Parameters address="0x08000000" name=" 256 Kbytes Embedded Flash" size="0x40000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -63,6 +69,18 @@
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x800"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<!-- 128KB-->
+				<Configuration config="1">
+					<Parameters address="0x08000000" name=" 128 Kbytes Embedded Flash" size="0x20000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x8</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>

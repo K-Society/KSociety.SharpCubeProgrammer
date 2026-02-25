@@ -182,7 +182,7 @@
 				<BootloaderVersion address="0x0BF98FFE"/>
 				<DBGMCU_CR address="0xE0044004" mask="0x06"/>
 				<DBGMCU_APB1_FZ address="0xE0044008" mask="0x1800"/> 
-				<Configuration config="0,6,10"> <!-- 1M Single Bank -->
+				<Configuration config="0,8,10"> <!-- 1M Single Bank -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -193,7 +193,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,7,8,11"> <!-- 1M dual Bank -->
+				<Configuration config="1,7,9,11"> <!-- 1M dual Bank -->
 					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -220,7 +220,7 @@
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="3,5,9"> <!-- 1M dual Bank secure -->
+				<Configuration config="3,5,7"> <!-- 1M dual Bank secure -->
 					<Parameters address="0x0c000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
@@ -360,7 +360,7 @@
 					<Parameters address="0x0BFA0000" name=" 512 Bytes Data OTP" size="0x200"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x8</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x0BFA0000" name="OTP" occurrence="0x1" size="0x200"/>
@@ -439,7 +439,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
-										<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneouslyDescription</Description>
+										<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneously</Description>
 										<BitOffset>0x1F</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
@@ -558,7 +558,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<Bit config="12,14,13,15,17,19">
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -1114,7 +1114,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<Bit config="14,15">
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -1550,7 +1550,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>TZEN</Name>
-									<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneouslyDescription</Description>
+									<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneously</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -1669,7 +1669,7 @@
 										<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="20,21,22,23">
 									<Name>DBANK</Name>
 									<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 									<BitOffset>0x15</BitOffset>

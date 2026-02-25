@@ -13,11 +13,19 @@
 			<Interface name="JTAG_SWD">
 				<Configuration number="0x0">	<!-- 128K + Double Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x80"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
 				</Configuration>
 				<Configuration number="0x1">	<!-- 128K + Single Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x80"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x1"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x00800000"/> </DBANK>
+				</Configuration>
+				<Configuration number="0x6">	<!-- 64K + Double Bank -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x40"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
+				</Configuration>
+				<Configuration number="0x7">	<!-- 64K + Single Bank -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x40"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x00800000"/> </DBANK>
 				</Configuration>
 
 				<Configuration number="0x4">	<!-- 1M  + Double Bank -->
@@ -27,12 +35,19 @@
 			<Interface name="Bootloader">
 				<Configuration number="0x2">	<!-- 128K + Double Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x80"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
 				</Configuration>
-
 				<Configuration number="0x3">	<!-- 128K + Single Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x80"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x1"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x00800000"/> </DBANK>
+				</Configuration>
+				<Configuration number="0x8">	<!-- 64K + Double Bank -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x40"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
+				</Configuration>
+				<Configuration number="0x9">	<!-- 64K + Single Bank -->
+					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x40"/> </FLASHSIZE>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x00800000"/> </DBANK>
 				</Configuration>
 
 				<Configuration number="0x5">	<!-- 1M  + Double Bank -->
@@ -49,7 +64,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
 				<!-- 96 KB -->
-				<Configuration config="0,1,2,3,4,5">
+				<Configuration config="0,1,2,3,4,5,6,7,8,9">
 					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -113,6 +128,33 @@
 					<Bank name="Bank 1">
 						<Field>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x10" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="6,8"> <!-- 64K Dual Bank -->
+					<Parameters address="0x08000000" name=" 64 Kbyte Embedded Flash" size="0x10000"/>
+					<Description/>
+					<Organization>Dual</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x4" size="0x2000"/>
+						</Field>
+					</Bank>
+					<Bank name="Bank 2">
+						<Field>
+							<Parameters address="0x08008000" name="sector4" occurrence="0x4" size="0x2000"/>
+						</Field>
+					</Bank>
+				</Configuration>
+				<Configuration config="7,9"> <!-- 64K Single Bank -->
+					<Parameters address="0x08000000" name=" 64 KByte Embedded Flash" size="0x10000"/>
+					<Description/>
+					<Organization>Single</Organization>
+					<Alignment>0x10</Alignment>
+					<Bank name="Bank 1">
+						<Field>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x8" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -240,10 +282,10 @@
 						<Field>
 						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,2,3">
+								<Bit config="0,1,2,3,6,7,8,9">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -254,10 +296,10 @@
 						<Field>
 						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,2,3">
+								<Bit config="0,1,2,3,6,7,8,9">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -951,10 +993,10 @@
 						<Field>
 						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,2,3">
+								<Bit config="0,1,2,3,6,7,8,9">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -965,10 +1007,10 @@
 						<Field>
 						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,2,3">
+								<Bit config="0,1,2,3,6,7,8,9">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>

@@ -254,7 +254,7 @@
 					<Parameters address="0x1FFF7000" name=" 1 KBytes Data OTP" size="0x400"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x8</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x1FFF7000" name="OTP" occurrence="0x1" size="0x400"/>

@@ -29,7 +29,7 @@ It makes use of several 3rd party tools:
 
 This library exposes types that wrap the native CubeProgrammer_API API to perform operations on ST's microcontrollers & microprocessors.
 
-This is a C# wrapper for STM32 CubeProgrammer_API v2.21.0 (not fully tested).
+This is a C# wrapper for STM32 CubeProgrammer_API v2.22.0 (not fully tested).
 This package does not contain any C/C++ runtimes (MSVC), and is meant to run on Windows operating systems only (for now).
 
 > [!IMPORTANT]
@@ -301,6 +301,6 @@ List of technologies, frameworks and libraries used for implementation:
 
 ## Copyright and Trademarks
 
-This library is copyright © K-Society 2022-2026.
+This library is copyright (c) K-Society 2022-2026.
 
 [ST](https://www.st.com/content/st_com/en.html) is a trademark and copyright of the STMicroelectronics NV.
