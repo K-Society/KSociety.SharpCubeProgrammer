@@ -167,7 +167,7 @@
 					<Parameters address="0x1FFF7000" name=" 1 KBytes Data OTP" size="0x400"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x4</Alignment>
+					<Alignment>0x8</Alignment>
 					<Bank name="OTP">
 						<Field>
 							<Parameters address="0x1FFF7000" name="OTP" occurrence="0x1" size="0x400"/>
@@ -229,7 +229,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
 							<AssignedBits>
@@ -301,7 +301,7 @@
 									</Values>
 								</Bit>
 								<Bit config="0,2,3,5,6">
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW (Present only on stm32g0x1 devices) </Name>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -399,7 +399,7 @@
 									</Values>
 								</Bit>				
 								<Bit config="0,2,3,5,6">
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
 									<Access>RW</Access>
@@ -411,7 +411,7 @@
 									</Values>
 								</Bit>
 								<Bit config="0,2,3,5,6">
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -425,7 +425,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -464,32 +464,6 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022044" name="FLASH_PCROP2ASR" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2A_STRT</Name>
-									<Description>Flash Area A in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022048" name="FLASH_PCROP2AER" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2A_END</Name>
-									<Description>Flash Area A in Bank 2 PCROP end address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
 							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
 								<Bit config="0,2,3,5,6">
@@ -508,32 +482,6 @@
 								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000200"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022054" name="FLASH_PCROP2BSR" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2B_STRT</Name>
-									<Description>Flash Area B in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022058" name="FLASH_PCROP2BER" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2B_END</Name>
-									<Description>Flash Area B in Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
@@ -586,55 +534,12 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
-						<Field>
-							<Parameters address="0x4002204C" name="FLASH_WRP2AR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2A_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>WRP2A_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x40022050" name="FLASH_WRP2BR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2B_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>WRP2B_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
 					</Category>
 				</Bank>
-
 					<Bank interface="JTAG_SWD">
 					<Parameters address="0x40022080" name="Bank 2" size="0x4"/>
 					<Category>
-						<Name >FLASH security</Name>
+						<Name >FLASH security (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
@@ -657,21 +562,12 @@
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>SEC_SIZE2</Name>
-									<Description>Securable memory area size, Bank 2</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
 							</AssignedBits>
 						</Field>
 					</Category>
 					</Bank>
-
 				<Bank interface="Bootloader">
-					<Parameters address="0x1FFF7800" name="Bank 1" size="0x34"/>
+					<Parameters address="0x1FFF7800" name="Bank 1" size="0x74"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -693,7 +589,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>BOR Level</Name>
+						<Name>BOR Level (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -765,7 +661,7 @@
 									</Values>
 								</Bit>
 								<Bit config="0,2,3,5,6">
-									<Name>nRST_SHDW</Name>
+									<Name>nRST_SHDW (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -864,7 +760,7 @@
 									</Values>
 								</Bit>				
 								<Bit config="0,2,3,5,6">
-									<Name>NRST_MODE</Name>
+									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
 									<Description/>
 									<BitOffset>0x1B</BitOffset>
 									<BitWidth>0x2</BitWidth>
@@ -877,7 +773,7 @@
 									</Values>
 								</Bit>
 								<Bit config="0,2,3,5,6">
-									<Name>IRHEN</Name>
+									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -891,7 +787,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>PCROP Protection</Name>
+						<Name>PCROP Protection (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
@@ -930,32 +826,6 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x1FFF7838" name="FLASH_PCROP2ASR" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2A_STRT</Name>
-									<Description>Flash Area A in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x1FFF7840" name="FLASH_PCROP2AER" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2A_END</Name>
-									<Description>Flash Area A in Bank 2 PCROP end address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
 							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
 								<Bit config="0,2,3,5,6">
@@ -974,32 +844,6 @@
 								<Bit config="0,2,3,5,6">
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000200"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x1FFF7858" name="FLASH_PCROP2BSR" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2B_STRT</Name>
-									<Description>Flash Area B in Bank 2 PCROP start address</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x200" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x1FFF7860" name="FLASH_PCROP2BER" size="0x4"/>
-							<AssignedBits>
-								<Bit config="0,2,3,5,6">
-									<Name>PCROP2B_END</Name>
-									<Description>Flash Area B in Bank 2 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
@@ -1052,54 +896,12 @@
 								</Bit>
 							</AssignedBits>
 						</Field>
-						<Field>
-							<Parameters address="0x1FFF7848" name="FLASH_WRP2AR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2A_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>WRP2A_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP first area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x1FFF7850" name="FLASH_WRP2BR" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRP2B_STRT</Name>
-									<Description>The address of the first page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>WRP2B_END</Name>
-									<Description>The address of the last page of the Bank 2 WRP second area</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
 					</Category>
-				</Bank>
+					</Bank>
 				<Bank interface="Bootloader">
 					<Parameters address="0x1FFF7870" name="Bank 2" size="0x4"/>
 					<Category>
-						<Name>FLASH security</Name>
+						<Name>FLASH security (Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
@@ -1118,15 +920,7 @@
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
-									<Access>RW</Access>
-									<Equation multiplier="0x800" offset="0x08000000"/>
-								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>SEC_SIZE2</Name>
-									<Description>Securable memory area size, Bank 2</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x7</BitWidth>
+									<BitWidth>0x8</BitWidth>
 									<Access>RW</Access>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
