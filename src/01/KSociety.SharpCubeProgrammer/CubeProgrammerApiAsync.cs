@@ -566,10 +566,6 @@ namespace SharpCubeProgrammer
         #region [Dispose]
 
         /// <inheritdoc/>
-        [SuppressMessage(
-            "Usage",
-            "CA1816:Dispose methods should call SuppressFinalize",
-            Justification = "DisposeAsync should also call SuppressFinalize (see various .NET internal implementations).")]
         public ValueTask DisposeAsync()
         {
             // Still need to check if we've already disposed; can't do both.
