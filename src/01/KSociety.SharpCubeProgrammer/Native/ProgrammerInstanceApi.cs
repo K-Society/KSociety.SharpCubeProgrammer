@@ -7,6 +7,7 @@ namespace SharpCubeProgrammer.Native
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
     using SharpCubeProgrammer.Enum;
@@ -26,6 +27,11 @@ namespace SharpCubeProgrammer.Native
 
         internal DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
 
+        // Single-thread dispatcher to serialize access to native library.
+        private readonly System.Collections.Concurrent.BlockingCollection<WorkItem> _workQueue;
+        private readonly System.Threading.Thread _dispatcherThread;
+        private volatile bool _dispatcherRunning;
+
         #region [Constructor]
 
         internal ProgrammerInstanceApi(ILoggerFactory loggerFactory = default)
@@ -38,6 +44,16 @@ namespace SharpCubeProgrammer.Native
             {
                 this._logger = loggerFactory.CreateLogger<ProgrammerInstanceApi>();
             }
+
+            // Start single-thread dispatcher to serialize native calls.
+            this._workQueue = new System.Collections.Concurrent.BlockingCollection<WorkItem>();
+            this._dispatcherRunning = true;
+            this._dispatcherThread = new System.Threading.Thread(() => this.DispatcherLoop())
+            {
+                IsBackground = true,
+                Name = "ProgrammerInstanceApi.Dispatcher"
+            };
+            this._dispatcherThread.Start();
 
             var libraryLoaded = this.EnsureNativeLibraryLoaded();
 
@@ -191,6 +207,66 @@ namespace SharpCubeProgrammer.Native
             };
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
+        }
+
+        private void DispatcherLoop()
+        {
+            try
+            {
+                foreach (var item in this._workQueue.GetConsumingEnumerable())
+                {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        var result = item.Work();
+                        item.Tcs.TrySetResult(result);
+                    }
+                    catch (OperationCanceledException oce)
+                    {
+                        this._logger.LogError(oce, "TrySetResult encountered an operation canceled exception");
+                        item.Tcs.TrySetCanceled();
+                    }
+                    catch (Exception ex)
+                    {
+                        this._logger.LogError(ex, "DispatcherLoop encountered an exception");
+                        item.Tcs.TrySetException(ex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "DispatcherLoop encountered an exception");
+            }
+        }
+
+        private Task<object> InvokeOnDispatcherAsync(Func<object> work)
+        {
+            if (!this._dispatcherRunning)
+            {
+                throw new ObjectDisposedException(nameof(ProgrammerInstanceApi));
+            }
+
+            var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var item = new WorkItem { Work = work, Tcs = tcs };
+            this._workQueue.Add(item);
+            return tcs.Task;
+        }
+
+        private T InvokeOnDispatcher<T>(Func<T> work)
+        {
+            // Execute synchronously on dispatcher thread and wait for result.
+            var task = this.InvokeOnDispatcherAsync(() => (object)work());
+            task.Wait();
+            if (task.IsFaulted)
+            {
+                throw task.Exception.InnerException;
+            }
+
+            return (T)task.Result;
         }
 
         #endregion
@@ -1023,24 +1099,40 @@ namespace SharpCubeProgrammer.Native
         private T GetDelegate<T>(string functionName)
             where T : class, Delegate
         {
-            if (this.EnsureNativeLibraryLoaded())
+            // Ensure not disposed
+            if (this.IsDisposed)
             {
-                if (this.HandleProgrammer == null)
-                {
-                    return null;
-                }
-
-                var address = Utility.GetProcAddress(this.HandleProgrammer, functionName);
-
-                if (address == IntPtr.Zero)
-                {
-                    return null;
-                }
-
-                return Marshal.GetDelegateForFunctionPointer<T>(address);
+                throw new ObjectDisposedException(nameof(ProgrammerInstanceApi));
             }
 
-            return null;
+            // Ensure libraries are loaded
+            if (!this.EnsureNativeLibraryLoaded())
+            {
+                return null;
+            }
+
+            SafeLibraryHandle handle;
+            lock (this.SyncRoot)
+            {
+                handle = this.HandleProgrammer;
+            }
+
+            if (handle == null)
+            {
+                return null;
+            }
+
+            // We marshal the proc address lookup to the dispatcher thread to ensure
+            // any native loader calls happen from the same thread.
+            var addrObj = this.InvokeOnDispatcher<object>(() => (object)Utility.GetProcAddress(handle, functionName));
+            var address = (IntPtr)addrObj;
+
+            if (address == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            return Marshal.GetDelegateForFunctionPointer<T>(address);
         }
 
         #endregion
@@ -1052,6 +1144,8 @@ namespace SharpCubeProgrammer.Native
         /// </summary>
         public void Dispose()
         {
+            this.DeleteInterfaceList();
+
             var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
             if (wasDisposed == DisposedFlag)
             {
@@ -1074,7 +1168,56 @@ namespace SharpCubeProgrammer.Native
                 
             }
 
-            this.DeleteInterfaceList();
+            // Stop dispatcher before releasing native resources to ensure no further
+            // work items will touch native handles.
+            if (this._dispatcherRunning)
+            {
+                this._dispatcherRunning = false;
+                try
+                {
+                    this._workQueue.CompleteAdding();
+                }
+                catch { }
+
+                try
+                {
+                    if (this._dispatcherThread != null && this._dispatcherThread.IsAlive)
+                    {
+                        // Wait a short time for the thread to exit gracefully.
+                        this._dispatcherThread.Join(1000);
+                    }
+                }
+                catch { }
+
+                // Drain any remaining work items and cancel their TaskCompletionSources
+                // so callers waiting on InvokeOnDispatcherAsync do not hang.
+                try
+                {
+                    try
+                    {
+                        while (this._workQueue != null && this._workQueue.TryTake(out var pending))
+                        {
+                            try
+                            {
+                                pending?.Tcs?.TrySetCanceled();
+                            }
+                            catch
+                            {
+                                // Swallow to ensure shutdown proceeds.
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // Swallow any exceptions when draining.
+                    }
+                }
+                catch
+                {
+                    // Ensure no exception escapes disposal.
+                }
+            }
+   
 
             // Free any unmanaged objects here.
             if (this.HandleProgrammer != null)
