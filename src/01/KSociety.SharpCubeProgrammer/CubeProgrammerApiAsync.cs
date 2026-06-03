@@ -567,29 +567,8 @@ namespace SharpCubeProgrammer
         /// <inheritdoc/>
         public ValueTask DisposeAsync()
         {
-            // Still need to check if we've already disposed; can't do both.
-            var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
-            if (wasDisposed != DisposedFlag)
-            {
-                GC.SuppressFinalize(this);
-
-                // Always true, but means we get the similar syntax as Dispose,
-                // and separates the two overloads.
-                return this.DisposeAsync(true);
-            }
-
-            return default;
-        }
-
-        /// <summary>
-        ///  Releases unmanaged and - optionally - managed resources, asynchronously.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected ValueTask DisposeAsync(bool disposing)
-        {
-            // Default implementation does a synchronous dispose.
-            this.Dispose(disposing);
-
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
             return default;
         }
 

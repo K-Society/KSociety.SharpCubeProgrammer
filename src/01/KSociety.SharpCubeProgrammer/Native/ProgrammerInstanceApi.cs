@@ -1023,6 +1023,12 @@ namespace SharpCubeProgrammer.Native
         private T GetDelegate<T>(string functionName)
             where T : class, Delegate
         {
+            // Ensure not disposed
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(ProgrammerInstanceApi));
+            }
+
             if (this.EnsureNativeLibraryLoaded())
             {
                 if (this.HandleProgrammer == null)
@@ -1052,11 +1058,7 @@ namespace SharpCubeProgrammer.Native
         /// </summary>
         public void Dispose()
         {
-            var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
-            if (wasDisposed == DisposedFlag)
-            {
-                return;
-            }
+            this.DeleteInterfaceList();
 
             this.Dispose(true);
             GC.SuppressFinalize(this);
@@ -1068,25 +1070,26 @@ namespace SharpCubeProgrammer.Native
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         internal void Dispose(bool disposing)
         {
-            if (disposing)
+            if (Interlocked.CompareExchange(ref this._isDisposed, DisposedFlag, 0) == 0)
             {
-                // Free any other managed objects here.
+                if (disposing)
+                {
+                    // Free any other managed objects here.
+                    if (this.HandleProgrammer != null)
+                    {
+                        this.HandleProgrammer?.Dispose();
+                        this.HandleProgrammer = null;
+                    }
+
+                    if (this.HandleSTLinkDriver != null)
+                    {
+                        this.HandleSTLinkDriver?.Dispose();
+                        this.HandleSTLinkDriver = null;
+                    }
+                }
+
+                // Free any unmanaged objects here.
                 
-            }
-
-            this.DeleteInterfaceList();
-
-            // Free any unmanaged objects here.
-            if (this.HandleProgrammer != null)
-            {
-                this.HandleProgrammer?.Dispose();
-                this.HandleProgrammer = null;
-            }
-
-            if (this.HandleSTLinkDriver != null)
-            {
-                this.HandleSTLinkDriver?.Dispose();
-                this.HandleSTLinkDriver = null;
             }
         }
 
