@@ -8,6 +8,14 @@
 		<Name>STM32V8xx</Name>
 		<Series>STM32V8</Series>
 		<Description>ARM 32-bit Cortex-M85 based device</Description>
+
+		<Boolean name="NVM-4M">
+			<ReadRegister name="Size" address="0x08FFF80C" mask="0xFFFF0000" value="0x10000000"/>
+		</Boolean>
+		<Boolean name="NVM-2M">
+			<ReadRegister name="Size" address="0x08FFF80C" mask="0xFFFF0000" value="0x01000000"/>
+		</Boolean>
+
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
@@ -32,13 +40,13 @@
 					<EDATA2 reference="0x3"> <ReadRegister address="0x480224D0" mask="0x00008000" value="0x00008000"/> </EDATA2>
 				</Configuration>
 				
-				<Configuration number="0x5">	<!-- Empty config to avoid crash -->
+				<Configuration number="0x5">
 				</Configuration>
 
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
-				<Configuration number="0x6">	<!-- Empty config to avoid crash -->
+				<Configuration number="0x6">
 				</Configuration>
 			</Interface>
 		</Configurations>
@@ -51,7 +59,6 @@
 				<Description/>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<!-- 96 KB -->
 				<Configuration  config="1,2,3,4,5,6">
 					<Parameters address="0x24040000" name="SRAM" size="0x8000"/>
 					<Description/>
@@ -79,15 +86,25 @@
 					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
+					<Alignment>0x20</Alignment>
 					<Bank name="Bank 1">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08100000" name="sector128" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -95,20 +112,35 @@
 					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
+					<Alignment>0x20</Alignment>
 					<Bank name="Bank 1">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08100000" name="sector128" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 3">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x09000000" name="sector340" occurrence="0x10" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x09000000" name="sector240" occurrence="0x10" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -116,20 +148,35 @@
 					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
+					<Alignment>0x20</Alignment>
 					<Bank name="Bank 1">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08100000" name="sector128" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 3">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x09020000" name="sector440" occurrence="0x10" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x09010000" name="sector340" occurrence="0x10" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -137,25 +184,45 @@
 					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
 					<Description/>
 					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
+					<Alignment>0x20</Alignment>
 					<Bank name="Bank 1">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x08100000" name="sector128" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 3">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x09000000" name="sector340" occurrence="0x10" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x09000000" name="sector240" occurrence="0x10" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 4">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x09020000" name="sector440" occurrence="0x10" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x09010000" name="sector340" occurrence="0x10" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -167,20 +234,29 @@
 				<Description>The Data EEPROM memory block. It contains user data.</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<!-- Dummy Config Just to avoid crash when TZEN=0 -->
 				<Configuration config="1,2,3,4,5,5,6">
 					<Parameters address="0x18000000" name=" 4 Mbyte Data EEPROM" size="0x400000"/>
 					<Description/>
 					<Organization>Single</Organization>
-					<Alignment>0x10</Alignment>
+					<Alignment>0x20</Alignment>
 					<Bank name="Bank 1">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x18000000" name="sector0" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x18000000" name="sector0" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
+							<Condition>NVM-4M</Condition>
 							<Parameters address="0x18200000" name="sector256" occurrence="0x100" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-2M</Condition>
+							<Parameters address="0x18100000" name="sector128" occurrence="0x80" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -1246,6 +1322,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
@@ -1254,6 +1331,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
@@ -1267,6 +1363,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
@@ -1275,6 +1372,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
@@ -1291,6 +1407,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -1299,6 +1416,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -1312,6 +1448,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -1320,6 +1457,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -1477,6 +1633,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
 									</Bit>
 									<Bit>
@@ -1485,7 +1642,26 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1498,6 +1674,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
 									</Bit>
 									<Bit>
@@ -1506,7 +1683,26 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1609,6 +1805,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -1617,6 +1814,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -1630,6 +1846,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -1638,6 +1855,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -2731,6 +2967,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
@@ -2739,6 +2976,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
@@ -2752,6 +3008,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 									<Bit>
@@ -2760,6 +3017,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
@@ -2776,6 +3052,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -2784,6 +3061,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -2797,6 +3093,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -2805,6 +3102,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -2949,6 +3265,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
 									</Bit>
 									<Bit>
@@ -2957,7 +3274,26 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -2970,6 +3306,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
 									</Bit>
 									<Bit>
@@ -2978,7 +3315,26 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -3068,6 +3424,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -3076,6 +3433,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -3089,6 +3465,7 @@
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 									<Bit>
@@ -3097,6 +3474,25 @@
 										<BitOffset>0x10</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
@@ -4173,90 +4569,170 @@
 						<Name>Bank1 - NVM watermark area definition</Name>
 						<Field>
 							<Parameters address="0x48022280" name="NVM_SECWM_CUR1R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>SECWM1_STRT</Name>
-									<Description>Bank 1 security WM area 1 start sector</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>SECWM1_END</Name>
-									<Description>Bank 1 security WM area 1 end sector</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x48022284" name="NVM_SECWM_CUR1R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>SECWM1_STRT</Name>
-									<Description>Bank 1 security WM area 1 start sector</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
-								</Bit>
-								<Bit>
-									<Name>SECWM1_END</Name>
-									<Description>Bank 1 security WM area 1 end sector</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 					</Category>
 					<Category>
 						<Name>NVM HDP bank 1</Name>
 						<Field>
 							<Parameters address="0x48022288" name="NVM_HDP1R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>HDP1_STRT</Name>
-									<Description>HDP barrier start set in number of 8kb sectors</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-								<Bit>
-									<Name>HDP1_END</Name>
-									<Description>HDP barrier end set in number of 8kb sectors</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x4802228C" name="NVM_HDP1R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>HDP1_STRT</Name>
-									<Description>HDP barrier start set in number of 8kb sectors</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-								<Bit>
-									<Name>HDP1_END</Name>
-									<Description>HDP barrier end set in number of 8kb sectors</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 					</Category>
 					<Category>
@@ -4401,45 +4877,85 @@
 						<Name>Bank2 - NVM watermark area definition</Name>
 						<Field>
 							<Parameters address="0x48022480" name="NVM_SECWM_CUR2R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>SECWM2_STRT</Name>
-									<Description>Bank 2 security WM area start sector</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
-								</Bit>
-								<Bit>
-									<Name>SECWM2_END</Name>
-									<Description>Bank 2 security WM area end sector</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x48022484" name="NVM_SECWM_CUR2R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>SECWM2_STRT</Name>
-									<Description>Bank 2 security WM area start sector</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
-								</Bit>
-								<Bit>
-									<Name>SECWM2_END</Name>
-									<Description>Bank 2 security WM area end sector</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x08100000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 					</Category>
 					<Category>
@@ -4533,45 +5049,85 @@
 						<Name>NVM HDP bank 2</Name>
 						<Field>
 							<Parameters address="0x48022488" name="NVM_HDP2R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>HDP2_STRT</Name>
-									<Description>HDP barrier start set in number of 8kb sectors</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-								<Bit>
-									<Name>HDP2_END</Name>
-									<Description>HDP barrier end set in number of 8kb sectors</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>R</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 						<Field>
 							<Parameters address="0x4802248C" name="NVM_HDP2R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>HDP2_STRT</Name>
-									<Description>HDP barrier start set in number of 8kb sectors</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-								<Bit>
-									<Name>HDP2_END</Name>
-									<Description>HDP barrier end set in number of 8kb sectors</Description>
-									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x00000000"/>
-								</Bit>
-							</AssignedBits>
+								<AssignedBits>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-4M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+									<Bit>
+										<Name>HDP2_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x7</BitWidth>
+										<Access>W</Access>
+										<Condition>NVM-2M</Condition>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+									</Bit>
+								</AssignedBits>
 						</Field>
 					</Category>
 					<Category>
@@ -4687,12 +5243,16 @@
 				    </conditions>
 					<OptionBytesInit>
 						<Boot>
-							<option name="SECWM1_STRT" value="0x0" />
-							<option name="SECWM1_END" value="0xFF" />
-							<option name="SECWM2_STRT" value="0x0" />
-							<option name="SECWM2_END" value="0xFF" />
-							<option name="BOOT_UBE" value="0xC3" />
-					   		<option name="PRODUCT_STATE" value="0x17" />						 
+							<group>
+								<option name="SECWM1_STRT" value="0x0" />
+								<option name="SECWM1_END" value="0xFF" />
+								<option name="SECWM2_STRT" value="0x0" />
+								<option name="SECWM2_END" value="0xFF" />
+							</group>
+							<group>			
+								<option name="BOOT_UBE" value="0xC3" />
+								<option name="PRODUCT_STATE" value="0x17" />
+							</group>								
 						</Boot>
 						<Chip_Certificate>
 								<option name="TZEN" value="0xB4" action="ShortReconnect" />

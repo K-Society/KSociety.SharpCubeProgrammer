@@ -1,114 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
 <Device>
-		<DeviceID>0x47A</DeviceID>
+		<DeviceID>0x47C</DeviceID>
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M33</CPU>
-		<Name>STM32H5F4xJ/H5F5xJ/H5E4xJ/H5E5xJ</Name>
+		<Name>STM32H5x</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
+
+		<Boolean name="NVM-1M">
+			<ReadRegister name="Size" address="0x08FFF80C" mask="0x0000FFFF" value="0x400"/>
+		</Boolean>
+		<Boolean name="NVM-512K">
+			<ReadRegister name="Size" address="0x08FFF80C" mask="0x0000FFFF" value="0x200"/>
+		</Boolean>
+
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
-			    
-				<Configuration number="0x16">	<!-- 3M dual Bank non secure -->
-					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-				<Configuration number="0x14">	<!-- 3M Dual Bank  secure+PROVISIONED STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00002E00"/> </RDP>
+				<Configuration number="0x1">	<!-- 1M secure -->
 					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
+					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000ED00"/> </RDP>
 				</Configuration>
-				<Configuration number="0x19">	<!-- 3M Dual Bank  TZ-Closed STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
+				<Configuration number="0x0">	<!-- 1M no secure-->
 				</Configuration>
-				<Configuration number="0x1A">	<!-- 3M Dual Bank  Closed STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00007200"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-				<Configuration number="0x18">	<!-- 3M Dual Bank  secure provisioning -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00001700"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-				<Configuration number="0x15">	<!-- 3M Dual Bank  secure provisioning other -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00000000"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-				<Configuration number="0x11">	<!-- 3M Dual Bank  secure -->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-			
-			
-				<Configuration number="0x0">	<!-- 4M dual Bank non secure -->
-					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
-					<!--<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>-->
-				</Configuration>
-				<Configuration number="0x4">	<!-- 4M Dual Bank  secure+PROVISIONED STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00002E00"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
-				<Configuration number="0x9">	<!-- 4M Dual Bank  TZ-Closed STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x0000C600"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
-				<Configuration number="0xA">	<!-- 4M Dual Bank  Closed STATE -->
-					<RDP reference="0x1"> <ReadRegister address="0x40022050" mask="0x0000FF00" value="0x00007200"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
-				<Configuration number="0x8">	<!-- 4M Dual Bank  secure provisioning -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00001700"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<!--<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>-->
-				</Configuration>
-				<Configuration number="0x5">	<!-- 4M Dual Bank  secure provisioning other -->
-					<RDP reference="0x1"> <ReadRegister address="0x50022050" mask="0x0000FF00" value="0x00000000"/> </RDP>
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<!--<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>-->
-				</Configuration>
-				<Configuration number="0x1">	<!-- 4M Dual Bank  secure -->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<!--<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>-->
-				</Configuration>
-			
-				
-
 			</Interface>
 			<!-- Bootloader Interface -->
 			<Interface name="Bootloader">
-				<Configuration number="0x2">	<!-- 4M Dual Bank Secure-->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>
+				<Configuration number="0x2">
 				</Configuration>
-				<Configuration number="0x3">	<!-- 4M Dual Bank non Secure-->
-					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0x1000"/> </FLASHSIZE>
-				</Configuration>
-				
-				<Configuration number="0x12">	<!-- 3M Dual Bank Secure-->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-				<Configuration number="0x13">	<!-- 3M Dual Bank non Secure-->
-					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
-					<FLASHSIZE reference="0x1"> <ReadRegister address="0x08FFF80C" mask="0x0000FFFF" value="0xC00"/> </FLASHSIZE>
-				</Configuration>
-
-				<!-- config to avoid read issue of flash size address -->
-				<Configuration number="0xE">	<!-- 4M Dual Bank Secure-->
-					<TZEN reference="0x1"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xB4000000"/> </TZEN>
-				</Configuration>
-				<Configuration number="0xF">	<!-- 4M Dual Bank non Secure-->
-					<TZEN reference="0x0"> <ReadRegister address="0x40022070" mask="0xFF000000" value="0xC3000000"/> </TZEN>
-				</Configuration>
-
 			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
@@ -120,23 +41,13 @@
 				<Description/>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<Configuration config="0,3,16,19,15">
-					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
+				<Configuration>
+					<Parameters address="0x20003000" name="SRAM" size="0x10000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x10000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="1,2,4,9,10,5,6,7,8,17,18,20,25,26,21,22,23,24,11,12,13,14,27">
-					<Parameters address="0x20000000" name="SRAM" size="0x10000"/>
-					<Description/>
-					<Organization>Single</Organization>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x10000"/>
+							<Parameters address="0x20003000" name="SRAM" occurrence="0x1" size="0x10000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -148,111 +59,65 @@
 				<Description>The Flash memory interface manages CPU AHB I-Code and D-Code accesses to the Flash memory. It implements the erase and program Flash memory operations and the read and write protection mechanisms</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<FlashSize address="0x08FFF80C" default="0x400000"/>
-				<BootloaderVersion address="0x0BFB5FFE"/>
+				<FlashSize address="0x08FFF80C" default="0x100000"/>
+				<BootloaderVersion address="0x0BFADFFE"/>
 				<RCC_DBGEN address="0x44020C9C" mask="0x00000800"/>
 				<DBGMCU_CR address="0x44024004" mask="0x06"/>
 				<DBGMCU_APB1_FZ address="0x44024008" mask="0x1800"/>
-				<SFSPVersion address="0x0BFAA0CC"/>
-				<Configuration config="0,2,3,6,7,14,15"> <!-- 4M dual Bank nn secure -->
-					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
+				<SFSPVersion address="0x0BFA20CC"/>
+				<Configuration config="0,2"> <!-- Non Secure -->
+					<Parameters address="0x08000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
 					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x08080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x08040000" name="sector32" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,5,8,27"> <!-- 4M dual Bank secure -->
-					<Parameters address="0x08000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
+				<Configuration config="1"> <!-- Dual Bank Secure -->
+					<Parameters address="0x0C000000" name=" 1 Mbyte Embedded Flash" size="0x100000"/>
 					<Description/>
 					<Organization>Dual</Organization>
 					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x0C080000" name="sector64" occurrence="0x40" size="0x2000"/>
 						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="4,9,10,11,12,13"> <!-- 4M dual Bank secure -->
-					<Parameters address="0x0C000000" name=" 4 Mbyte Embedded Flash" size="0x400000"/>
-					<Description/>
-					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x0C000000" name="sector0" occurrence="0x100" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x0C200000" name="sector256" occurrence="0x100" size="0x2000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-
-				<Configuration config="22,19"> <!-- 3M dual Bank nn secure -->
-					<Parameters address="0x08000000" name=" 3 Mbyte Embedded Flash" size="0x300000"/>
-					<Description/>
-					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x08180000" name="sector192" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="18,17,21,24"> <!-- 3M dual Bank secure -->
-					<Parameters address="0x08000000" name=" 3 Mbyte Embedded Flash" size="0x300000"/>
-					<Description/>
-					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x08180000" name="sector192" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="20,25,26"> <!-- 3M dual Bank secure -->
-					<Parameters address="0x0C000000" name=" 3 Mbyte Embedded Flash" size="0x300000"/>
-					<Description/>
-					<Organization>Dual</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x0C000000" name="sector0" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x0C180000" name="sector192" occurrence="0xC0" size="0x2000"/>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x0C040000" name="sector32" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
 			</Peripheral>
-
 			<!-- Data EEPROM -->
 			<Peripheral>
 				<Name>Data EEPROM</Name>
@@ -260,68 +125,55 @@
 				<Description>The Data EEPROM memory block. It contains user data.</Description>
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RWE</Access>
-				<Configuration config="0,2,3,6,7,1,5,8,14,15,27"> <!-- 4M -->
-					<Parameters address="0x0C000000" name=" 4 Mbyte Data EEPROM" size="0x400000"/>
+				<Configuration config="1">
+					<Parameters address="0x0C000000" name="1 Mbyte Flash Emul" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x0C000000" name="sector0" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x0C000000" name="sector0" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x0C200000" name="sector256" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x0C080000" name="sector64" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x0C040000" name="sector32" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
-				<Configuration config="4,9,10,11,12,13"> <!-- 4M -->
-					<Parameters address="0x08000000" name=" 4 Mbyte Data EEPROM" size="0x400000"/>
+				<Configuration config="0,2">
+					<Parameters address="0x08000000" name="1 Mbyte Flash Emul" size="0x100000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Alignment>0x10</Alignment>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x40" size="0x2000"/>
+						</Field>
+						<Field>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x08000000" name="sector0" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08200000" name="sector256" occurrence="0x100" size="0x2000"/>
+							<Condition>NVM-1M</Condition>
+							<Parameters address="0x08080000" name="sector64" occurrence="0x40" size="0x2000"/>
 						</Field>
-					</Bank>
-				</Configuration>
-
-				<Configuration config="16,18,19,22,23,17,21,24"> <!-- 3M -->
-					<Parameters address="0x0C000000" name=" 3 Mbyte Data EEPROM" size="0x300000"/>
-					<Description/>
-					<Organization>Single</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x0C000000" name="sector0" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x0C180000" name="sector192" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-				</Configuration>
-				<Configuration config="20,25,26"> <!-- 3M -->
-					<Parameters address="0x08000000" name=" 3 Mbyte Data EEPROM" size="0x300000"/>
-					<Description/>
-					<Organization>Single</Organization>
-					<Alignment>0x10</Alignment>
-					<Bank name="Bank 1">
-						<Field>
-							<Parameters address="0x08000000" name="sector0" occurrence="0xC0" size="0x2000"/>
-						</Field>
-					</Bank>
-					<Bank name="Bank 2">
-						<Field>
-							<Parameters address="0x08180000" name="sector192" occurrence="0xC0" size="0x2000"/>
+							<Condition>NVM-512K</Condition>
+							<Parameters address="0x08040000" name="sector32" occurrence="0x20" size="0x2000"/>
 						</Field>
 					</Bank>
 				</Configuration>
@@ -334,7 +186,7 @@
 				<ErasedValue>0xFF</ErasedValue>
 				<Access>RW</Access>
 				<!-- 2 kBytes single bank -->
-				<Configuration>
+				<Configuration config="0,1,2">
 					<Parameters address="0x08FFF000" name=" 2 kBytes Data OTP" size="0x800"/>
 					<Description/>
 					<Organization>Single</Organization>
@@ -352,7 +204,7 @@
 				<Type>Configuration</Type>
 				<Description/>
 				<Access>RW</Access>
-				<Configuration config="0,5,6,8,4,9,10,16,21,22,24,20,25,26,11,12,13">
+				<Configuration config="0">
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x40022050" name="Bank 1" size="0x8"/>
 						<Category>
@@ -401,7 +253,7 @@
 						<Category>
 							<Name>BOR Level</Name>
 							<Field>
-								<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOR_LEV</Name>
@@ -418,7 +270,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOR_LEV</Name>
@@ -435,7 +287,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
@@ -449,7 +301,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
@@ -466,7 +318,7 @@
 						<Category>
 							<Name>User Configuration</Name>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDD_HSLV</Name>
@@ -480,7 +332,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDD_HSLV</Name>
@@ -494,7 +346,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDDIO2_HSLV</Name>
@@ -508,7 +360,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDDIO2_HSLV</Name>
@@ -522,7 +374,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STOP</Name>
@@ -536,7 +388,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STOP</Name>
@@ -550,7 +402,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STDBY</Name>
@@ -564,7 +416,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STDBY</Name>
@@ -578,11 +430,11 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
@@ -594,11 +446,11 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
@@ -610,7 +462,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SWAP_BANK</Name>
@@ -624,7 +476,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SWAP_BANK</Name>
@@ -638,7 +490,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_SW</Name>
@@ -652,7 +504,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_SW</Name>
@@ -666,7 +518,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STOP</Name>
@@ -680,7 +532,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STOP</Name>
@@ -694,7 +546,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STDBY</Name>
@@ -708,7 +560,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STDBY</Name>
@@ -728,7 +580,7 @@
 						<Category>
 							<Name>User Configuration 2</Name>
 							<Field>
-								<Parameters address="0x40022070" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x40022070" name="FLASH_OPTSR2" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -739,17 +591,6 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>USBPD_DIS</Name>
-										<Description>USB power delivery configuration option bit</Description>
-										<BitOffset>0x8</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>R</Access>
-										<Values>
-											<Val value="0x0">Enabled</Val>
-											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -797,7 +638,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM1_3_4_5_RST</Name>
+										<Name>SRAM1_3_RST</Name>
 										<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -810,7 +651,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x40022074" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x40022074" name="FLASH_OPTSR2" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -821,17 +662,6 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>USBPD_DIS</Name>
-										<Description>USB power delivery configuration option bit</Description>
-										<BitOffset>0x8</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>W</Access>
-										<Values>
-											<Val value="0x0">Enabled</Val>
-											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -879,7 +709,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM1_3_4_5_RST</Name>
+										<Name>SRAM1_3_RST</Name>
 										<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -898,7 +728,7 @@
 						<Category>
 							<Name>Boot Configuration</Name>
 							<Field>
-								<Parameters address="0x40022080" name="FLASH_WRP2AR" size="0x4"/>
+								<Parameters address="0x40022080" name="FLASH_NSBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NSBOOTADD</Name>
@@ -922,7 +752,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x40022084" name="FLASH_WRP2AR" size="0x4"/>
+								<Parameters address="0x40022084" name="FLASH_NSBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NSBOOTADD</Name>
@@ -946,7 +776,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x40022088" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x40022088" name="FLASH_SECBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SECBOOT_LOCK</Name>
@@ -970,7 +800,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x4002208C" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x4002208C" name="FLASH_SECBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 									<Name>SECBOOT_LOCK</Name>
@@ -1028,38 +858,6 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022098" name="Bank 5" size="0x8"/>
-						<Category>
-							<Name>FLASH write sector group 2 protection for bank1</Name>
-							<Field>
-								<Parameters address="0x40022098" name="FLASH_WRP12R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG12</Name>
-										<Description>Bank 1 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>R</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-							<Field>
-								<Parameters address="0x4002209C" name="FLASH_WRP12R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG12</Name>
-										<Description>Bank 1 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>W</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
 						<Parameters address="0x400220E0" name="Bank 6" size="0x8"/>
 						<Category>
 							<Name>Bank1 - Flash watermark area definition</Name>
@@ -1070,7 +868,7 @@
 										<Name>SECWM1_STRT</Name>
 										<Description>Bank 1 security WM area 1 start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -1078,20 +876,20 @@
 										<Name>SECWM1_END</Name>
 										<Description>Bank 1 security WM area 1 end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400220E4" name="FLASH_SECWM_PRG1R" size="0x4"/>
+								<Parameters address="0x400220E4" name="FLASH_SECWM1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SECWM1_STRT</Name>
 										<Description>Bank 1 security WM area 1 start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -1099,7 +897,7 @@
 										<Name>SECWM1_END</Name>
 										<Description>Bank 1 security WM area 1 end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -1110,28 +908,28 @@
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x400220E8" name="Bank 7" size="0x8"/>
 						<Category>
-							<Name>FLASH write sector group 1 protection for bank1</Name>
+							<Name>FLASH write sector group protection for bank1</Name>
 							<Field>
-								<Parameters address="0x400220E8" name="FLASH_WRP11R" size="0x4"/>
+								<Parameters address="0x400220E8" name="FLASH_WRP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG11</Name>
+										<Name>WRPSGn1</Name>
 										<Description>Bank 1 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400220EC" name="FLASH_WRP11R" size="0x4"/>
+								<Parameters address="0x400220EC" name="FLASH_WRP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG11</Name>
+										<Name>WRPSGn1</Name>
 										<Description>Bank 1 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>W</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
@@ -1204,7 +1002,7 @@
 										<Name>HDP1_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1212,7 +1010,7 @@
 										<Name>HDP1_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1225,7 +1023,7 @@
 										<Name>HDP1_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1233,41 +1031,9 @@
 										<Name>HDP1_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022198" name="Bank 10" size="0x8"/>
-						<Category>
-							<Name>FLASH write sector group 2 protection for bank2</Name>
-							<Field>
-								<Parameters address="0x40022198" name="FLASH_WRP22R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG22</Name>
-										<Description>Bank 2 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>R</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-							<Field>
-								<Parameters address="0x4002219C" name="FLASH_WRP22R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG22</Name>
-										<Description>Bank 2 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>W</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1278,76 +1044,84 @@
 						<Category>
 							<Name>Bank2 - Flash watermark area definition</Name>
 							<Field>
-								<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
+								<Parameters address="0x400221E0" name="FLASH_SECWM2R" size="0x4"/>
 								<AssignedBits>
-									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 4M -->
+									<Bit> <!-- Flash 1M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="0,5,6,8,4,9,10,11,12,13">  <!-- Flash 4M -->
+									<Bit>  <!-- Flash 1M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="17,20,21,22,24,25,26">  <!-- Flash 3M -->
+									<Bit> <!-- Flash 512K -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
-									<Bit config="17,20,21,22,24,25,26">  <!-- Flash 3M -->
+									<Bit>  <!-- Flash 512K -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
+								<Parameters address="0x400221E4" name="FLASH_SECWM2R" size="0x4"/>
 								<AssignedBits>
-									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 4M -->
+									<Bit> <!-- Flash 1M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="0,5,6,8,4,9,10,11,12,13"> <!-- Flash 4M -->
+									<Bit>  <!-- Flash 1M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="17,20,21,22,24,25,26"> <!-- Flash 3M -->
+									<Bit> <!-- Flash 512K -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
-									<Bit config="17,20,21,22,24,25,26"> <!-- Flash 3M -->
+									<Bit>  <!-- Flash 512K -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -1356,28 +1130,28 @@
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x400221E8" name="Bank 12" size="0x8"/>
 						<Category>
-							<Name>FLASH write sector group 1 protection for bank2</Name>
+							<Name>FLASH write sector group protection for bank2</Name>
 							<Field>
-								<Parameters address="0x400221E8" name="FLASH_WRP21R" size="0x4"/>
+								<Parameters address="0x400221E8" name="FLASH_WRP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG21</Name>
+										<Name>WRPSGn2</Name>
 										<Description>Bank 2 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400221EC" name="FLASH_WRP21R" size="0x4"/>
+								<Parameters address="0x400221EC" name="FLASH_WRP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG21</Name>
+										<Name>WRPSGn2</Name>
 										<Description>Bank 2 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>W</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
@@ -1390,7 +1164,7 @@
 						<Category>
 							<Name>Flash data bank 2 sectors</Name>
 							<Field>
-								<Parameters address="0x400221F0" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x400221F0" name="FLASH_EDATA2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA2_EN</Name>
@@ -1414,7 +1188,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400221F4" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x400221F4" name="FLASH_EDATA2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA2_EN</Name>
@@ -1444,13 +1218,13 @@
 						<Category>
 							<Name>Flash HDP bank 2</Name>
 							<Field>
-								<Parameters address="0x400221F8" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x400221F8" name="FLASH_HDP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP2_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1458,20 +1232,20 @@
 										<Name>HDP2_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x400221FC" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x400221FC" name="FLASH_HDP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP2_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1479,7 +1253,7 @@
 										<Name>HDP2_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -1488,7 +1262,7 @@
 						</Category>
 					</Bank>
 				</Configuration>
-				<Configuration config="1,17,27">
+				<Configuration config="1">
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x50022050" name="Bank 1" size="0x8"/>
 						<Category>
@@ -1537,7 +1311,7 @@
 						<Category>
 							<Name>BOR Level</Name>
 							<Field>
-								<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOR_LEV</Name>
@@ -1554,7 +1328,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOR_LEV</Name>
@@ -1571,7 +1345,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
@@ -1585,7 +1359,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BORH_EN</Name>
@@ -1602,7 +1376,7 @@
 						<Category>
 							<Name>User Configuration</Name>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDD_HSLV</Name>
@@ -1616,7 +1390,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDD_HSLV</Name>
@@ -1630,7 +1404,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDDIO2_HSLV</Name>
@@ -1644,7 +1418,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IO_VDDIO2_HSLV</Name>
@@ -1658,7 +1432,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STOP</Name>
@@ -1672,7 +1446,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STOP</Name>
@@ -1686,7 +1460,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STDBY</Name>
@@ -1700,7 +1474,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_STDBY</Name>
@@ -1714,11 +1488,11 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
@@ -1730,11 +1504,11 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
@@ -1746,7 +1520,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SWAP_BANK</Name>
@@ -1760,7 +1534,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SWAP_BANK</Name>
@@ -1774,7 +1548,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_SW</Name>
@@ -1788,7 +1562,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>IWDG_SW</Name>
@@ -1802,7 +1576,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STOP</Name>
@@ -1816,7 +1590,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STOP</Name>
@@ -1830,7 +1604,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022050" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STDBY</Name>
@@ -1844,7 +1618,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-							<Parameters address="0x50022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x50022054" name="FLASH_OPTSR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NRST_STDBY</Name>
@@ -1864,7 +1638,7 @@
 						<Category>
 							<Name>User Configuration 2</Name>
 							<Field>
-								<Parameters address="0x50022070" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x50022070" name="FLASH_OPTSR2" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -1875,17 +1649,6 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>USBPD_DIS</Name>
-										<Description>USB power delivery configuration option bit</Description>
-										<BitOffset>0x8</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>R</Access>
-										<Values>
-											<Val value="0x0">Enabled</Val>
-											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1933,7 +1696,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM1_3_4_5_RST</Name>
+										<Name>SRAM1_3_RST</Name>
 										<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -1946,7 +1709,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022074" name="FLASH_WRP1AR" size="0x4"/>
+								<Parameters address="0x50022074" name="FLASH_OPTSR2" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
@@ -1957,17 +1720,6 @@
 										<Values>
 											<Val value="0xC3">Trust zone disabled</Val>
 											<Val value="0xB4">Trust zone enabled</Val>
-										</Values>
-									</Bit>
-									<Bit>
-										<Name>USBPD_DIS</Name>
-										<Description>USB power delivery configuration option bit</Description>
-										<BitOffset>0x8</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>W</Access>
-										<Values>
-											<Val value="0x0">Enabled</Val>
-											<Val value="0x1">Disabled</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -2015,7 +1767,7 @@
 										</Values>
 									</Bit>
 									<Bit>
-										<Name>SRAM1_3_4_5_RST</Name>
+										<Name>SRAM1_3_RST</Name>
 										<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -2034,7 +1786,7 @@
 						<Category>
 							<Name>Boot Configuration</Name>
 							<Field>
-								<Parameters address="0x50022080" name="FLASH_WRP2AR" size="0x4"/>
+								<Parameters address="0x50022080" name="FLASH_NSBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NSBOOTADD</Name>
@@ -2058,7 +1810,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022084" name="FLASH_WRP2AR" size="0x4"/>
+								<Parameters address="0x50022084" name="FLASH_NSBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>NSBOOTADD</Name>
@@ -2082,7 +1834,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022088" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x50022088" name="FLASH_SECBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SECBOOT_LOCK</Name>
@@ -2106,7 +1858,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x5002208C" name="FLASH_OPTR" size="0x4"/>
+								<Parameters address="0x5002208C" name="FLASH_SECBOOTR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 									<Name>SECBOOT_LOCK</Name>
@@ -2136,7 +1888,7 @@
 						<Category>
 							<Name>OTP write protection</Name>
 							<Field>
-								<Parameters address="0x50022090" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x50022090" name="FLASH_OTPBLR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>LOCKBL</Name>
@@ -2149,7 +1901,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x50022094" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x50022094" name="FLASH_OTPBLR" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>LOCKBL</Name>
@@ -2158,38 +1910,6 @@
 										<BitWidth>0x20</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0" offset="0x00000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022098" name="Bank 5" size="0x8"/>
-						<Category>
-							<Name>FLASH write sector group 2 protection for bank1</Name>
-							<Field>
-								<Parameters address="0x50022098" name="FLASH_WRP12R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG12</Name>
-										<Description>Bank 1 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>R</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-							<Field>
-								<Parameters address="0x5002209C" name="FLASH_WRP12R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG12</Name>
-										<Description>Bank 1 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>W</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -2200,13 +1920,13 @@
 						<Category>
 							<Name>Bank1 - Flash watermark area definition</Name>
 							<Field>
-								<Parameters address="0x500220E0" name="FLASH_SECWM_CUR1R" size="0x4"/>
+								<Parameters address="0x500220E0" name="FLASH_SECWM1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SECWM1_STRT</Name>
 										<Description>Bank 1 security WM area 1 start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -2214,20 +1934,20 @@
 										<Name>SECWM1_END</Name>
 										<Description>Bank 1 security WM area 1 end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500220E4" name="FLASH_SECWM_PRG1R" size="0x4"/>
+								<Parameters address="0x500220E4" name="FLASH_SECWM1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>SECWM1_STRT</Name>
 										<Description>Bank 1 security WM area 1 start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -2235,7 +1955,7 @@
 										<Name>SECWM1_END</Name>
 										<Description>Bank 1 security WM area 1 end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x08000000"/>
 									</Bit>
@@ -2246,28 +1966,28 @@
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x500220E8" name="Bank 7" size="0x8"/>
 						<Category>
-							<Name>FLASH write sector group 1 protection for bank1</Name>
+							<Name>FLASH write sector group protection for bank1</Name>
 							<Field>
-								<Parameters address="0x500220E8" name="FLASH_WRP11R" size="0x4"/>
+								<Parameters address="0x500220E8" name="FLASH_WRP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG11</Name>
+										<Name>WRPSGn1</Name>
 										<Description>Bank 1 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500220EC" name="FLASH_WRP11R" size="0x4"/>
+								<Parameters address="0x500220EC" name="FLASH_WRP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG11</Name>
+										<Name>WRPSGn1</Name>
 										<Description>Bank 1 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>W</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
@@ -2280,7 +2000,7 @@
 						<Category>
 							<Name>Flash data bank 1 sectors</Name>
 							<Field>
-								<Parameters address="0x500220F0" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500220F0" name="FLASH_EDATA1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA1_EN</Name>
@@ -2304,7 +2024,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500220F4" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500220F4" name="FLASH_EDATA1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA1_EN</Name>
@@ -2334,13 +2054,13 @@
 						<Category>
 							<Name>Flash HDP bank 1</Name>
 							<Field>
-								<Parameters address="0x500220F8" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500220F8" name="FLASH_HDP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP1_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -2348,20 +2068,20 @@
 										<Name>HDP1_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500220FC" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500220FC" name="FLASH_HDP1R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP1_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -2369,41 +2089,9 @@
 										<Name>HDP1_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x50022198" name="Bank 10" size="0x8"/>
-						<Category>
-							<Name>FLASH write sector group 2 protection for bank2</Name>
-							<Field>
-								<Parameters address="0x50022198" name="FLASH_WRP22R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG22</Name>
-										<Description>Bank 2 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>R</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-									</Bit>
-								</AssignedBits>
-							</Field>
-							<Field>
-								<Parameters address="0x5002219C" name="FLASH_WRP22R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSG22</Name>
-										<Description>Bank 2 sector group 2 protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>W</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -2414,76 +2102,84 @@
 						<Category>
 							<Name>Bank2 - Flash watermark area definition</Name>
 							<Field>
-								<Parameters address="0x500221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
+								<Parameters address="0x500221E0" name="FLASH_SECWM2R" size="0x4"/>
 								<AssignedBits>
-									<Bit config="1,27"> <!-- Flash 4M -->
+									<Bit> <!-- Flash 1M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="1,27">  <!-- Flash 4M -->
+									<Bit>  <!-- Flash 1M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="17">  <!-- Flash 3M -->
+									<Bit> <!-- Flash 512K -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
-									<Bit config="17">  <!-- Flash 3M -->
+									<Bit>  <!-- Flash 512K -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
+								<Parameters address="0x500221E4" name="FLASH_SECWM2R" size="0x4"/>
 								<AssignedBits>
-									<Bit config="1,27"> <!-- Flash 4M -->
+									<Bit> <!-- Flash 1M -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="1,27"> <!-- Flash 4M -->
+									<Bit>  <!-- Flash 1M -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<Condition>NVM-1M</Condition>
+										<Equation multiplier="0x2000" offset="0x08080000"/>
 									</Bit>
-									<Bit config="17"> <!-- Flash 3M -->
+									<Bit> <!-- Flash 512K -->
 										<Name>SECWM2_STRT</Name>
 										<Description>Bank 2 security WM area start sector</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
-									<Bit config="17"> <!-- Flash 3M -->
+									<Bit>  <!-- Flash 512K -->
 										<Name>SECWM2_END</Name>
 										<Description>Bank 2 security WM area end sector</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
-										<Equation multiplier="0x2000" offset="0x08180000"/>
+										<Condition>NVM-512K</Condition>
+										<Equation multiplier="0x2000" offset="0x08040000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
@@ -2492,28 +2188,28 @@
 					<Bank interface="JTAG_SWD">
 						<Parameters address="0x500221E8" name="Bank 12" size="0x8"/>
 						<Category>
-							<Name>FLASH write sector group 1 protection for bank2</Name>
+							<Name>FLASH write sector group protection for bank2</Name>
 							<Field>
-								<Parameters address="0x500221E8" name="FLASH_WRP21R" size="0x4"/>
+								<Parameters address="0x500221E8" name="FLASH_WRP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG21</Name>
+										<Name>WRPSGn2</Name>
 										<Description>Bank 2 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500221EC" name="FLASH_WRP21R" size="0x4"/>
+								<Parameters address="0x500221EC" name="FLASH_WRP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
-										<Name>WRPSG21</Name>
+										<Name>WRPSGn2</Name>
 										<Description>Bank 2 sector group 1 protection option status byte</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
+										<BitWidth>0x10</BitWidth>
 										<Access>W</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 									</Bit>
@@ -2526,7 +2222,7 @@
 						<Category>
 							<Name>Flash data bank 2 sectors</Name>
 							<Field>
-								<Parameters address="0x500221F0" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500221F0" name="FLASH_EDATA2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA2_EN</Name>
@@ -2550,7 +2246,7 @@
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500221F4" name="FLASH_WRP2BR" size="0x4"/>
+								<Parameters address="0x500221F4" name="FLASH_EDATA2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>EDATA2_EN</Name>
@@ -2580,13 +2276,13 @@
 						<Category>
 							<Name>Flash HDP bank 2</Name>
 							<Field>
-								<Parameters address="0x500221F8" name="FLASH_WRP2BR_R" size="0x4"/>
+								<Parameters address="0x500221F8" name="FLASH_HDP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP2_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -2594,20 +2290,20 @@
 										<Name>HDP2_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>R</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
 								</AssignedBits>
 							</Field>
 							<Field>
-								<Parameters address="0x500221FC" name="FLASH_WRP2BR_W" size="0x4"/>
+								<Parameters address="0x500221FC" name="FLASH_HDP2R" size="0x4"/>
 								<AssignedBits>
 									<Bit>
 										<Name>HDP2_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -2615,7 +2311,7 @@
 										<Name>HDP2_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x8</BitWidth>
+										<BitWidth>0x6</BitWidth>
 										<Access>W</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 									</Bit>
@@ -2672,7 +2368,7 @@
 					<Category>
 						<Name>BOR Level</Name>
 						<Field>
-							<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BOR_LEV</Name>
@@ -2689,7 +2385,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BOR_LEV</Name>
@@ -2706,7 +2402,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
@@ -2720,7 +2416,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BORH_EN</Name>
@@ -2737,7 +2433,7 @@
 					<Category>
 						<Name>User Configuration</Name>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IO_VDD_HSLV</Name>
@@ -2751,7 +2447,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IO_VDD_HSLV</Name>
@@ -2765,7 +2461,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IO_VDDIO2_HSLV</Name>
@@ -2779,7 +2475,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IO_VDDIO2_HSLV</Name>
@@ -2793,7 +2489,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STOP</Name>
@@ -2807,7 +2503,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STOP</Name>
@@ -2821,7 +2517,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
@@ -2835,7 +2531,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
@@ -2849,11 +2545,11 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>R</Access>
@@ -2865,11 +2561,11 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>BOOT_UBE</Name>
-									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
+									<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
 									<BitOffset>0x16</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>W</Access>
@@ -2881,7 +2577,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>SWAP_BANK</Name>
@@ -2895,7 +2591,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>SWAP_BANK</Name>
@@ -2909,7 +2605,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_SW</Name>
@@ -2923,7 +2619,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>IWDG_SW</Name>
@@ -2937,7 +2633,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NRST_STOP</Name>
@@ -2951,7 +2647,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NRST_STOP</Name>
@@ -2965,7 +2661,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022050" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022050" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NRST_STDBY</Name>
@@ -2979,7 +2675,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-						<Parameters address="0x40022054" name="FLASH_OPTR" size="0x4"/>
+						<Parameters address="0x40022054" name="FLASH_OPTSR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NRST_STDBY</Name>
@@ -2996,7 +2692,7 @@
 					<Category>
 						<Name>User Configuration 2</Name>
 						<Field>
-							<Parameters address="0x40022070" name="FLASH_WRP1AR" size="0x4"/>
+							<Parameters address="0x40022070" name="FLASH_OPTSR2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>TZEN</Name>
@@ -3009,17 +2705,6 @@
 										<Val value="0xB4">Trust zone enabled</Val>
 									</Values>
 								</Bit>
-									<Bit>
-										<Name>USBPD_DIS</Name>
-										<Description>USB power delivery configuration option bit</Description>
-										<BitOffset>0x8</BitOffset>
-										<BitWidth>0x1</BitWidth>
-										<Access>R</Access>
-										<Values>
-											<Val value="0x0">Enabled</Val>
-											<Val value="0x1">Disabled</Val>
-										</Values>
-									</Bit>
 								<Bit>
 									<Name>SRAM2_ECC</Name>
 									<Description>ECC in SRAM2 region configuration bit</Description>
@@ -3065,7 +2750,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>SRAM1_3_4_5_RST</Name>
+									<Name>SRAM1_3_RST</Name>
 									<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -3078,7 +2763,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022074" name="FLASH_WRP1AR" size="0x4"/>
+							<Parameters address="0x40022074" name="FLASH_OPTSR2" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>TZEN</Name>
@@ -3089,17 +2774,6 @@
 									<Values>
 										<Val value="0xC3">Trust zone disabled</Val>
 										<Val value="0xB4">Trust zone enabled</Val>
-									</Values>
-								</Bit>
-								<Bit>
-									<Name>USBPD_DIS</Name>
-									<Description>USB power delivery configuration option bit</Description>
-									<BitOffset>0x8</BitOffset>
-									<BitWidth>0x1</BitWidth>
-									<Access>W</Access>
-									<Values>
-										<Val value="0x0">Enabled</Val>
-										<Val value="0x1">Disabled</Val>
 									</Values>
 								</Bit>
 								<Bit>
@@ -3147,7 +2821,7 @@
 									</Values>
 								</Bit>
 								<Bit>
-									<Name>SRAM1_3_4_5_RST</Name>
+									<Name>SRAM1_3_RST</Name>
 									<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 									<BitOffset>0x2</BitOffset>
 									<BitWidth>0x1</BitWidth>
@@ -3163,7 +2837,7 @@
 					<Category>
 						<Name>Boot Configuration</Name>
 						<Field>
-							<Parameters address="0x40022080" name="FLASH_WRP2AR" size="0x4"/>
+							<Parameters address="0x40022080" name="FLASH_NSBOOTR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NSBOOTADD</Name>
@@ -3187,7 +2861,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022084" name="FLASH_WRP2AR" size="0x4"/>
+							<Parameters address="0x40022084" name="FLASH_NSBOOTR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>NSBOOTADD</Name>
@@ -3211,7 +2885,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022088" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x40022088" name="FLASH_SECBOOTR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>SECBOOT_LOCK</Name>
@@ -3235,7 +2909,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x4002208C" name="FLASH_OPTR" size="0x4"/>
+							<Parameters address="0x4002208C" name="FLASH_SECBOOTR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 								<Name>SECBOOT_LOCK</Name>
@@ -3262,7 +2936,7 @@
 					<Category>
 						<Name>OTP write protection</Name>
 						<Field>
-							<Parameters address="0x40022090" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x40022090" name="FLASH_OTPBLR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>LOCKBL</Name>
@@ -3275,7 +2949,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x40022094" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x40022094" name="FLASH_OTPBLR" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>LOCKBL</Name>
@@ -3284,35 +2958,6 @@
 									<BitWidth>0x20</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0" offset="0x00000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-					</Category>
-					<Category>
-						<Name>FLASH write sector group 2 protection for bank1</Name>
-						<Field>
-							<Parameters address="0x40022098" name="FLASH_WRP12R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRPSG12</Name>
-									<Description>Bank 1 sector group 2 protection option status byte</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x4002209C" name="FLASH_WRP12R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRPSG12</Name>
-									<Description>Bank 1 sector group 2 protection option status byte</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
@@ -3320,13 +2965,13 @@
 					<Category>
 						<Name>Bank1 - Flash watermark area definition</Name>
 						<Field>
-							<Parameters address="0x400220E0" name="FLASH_SECWM_CUR1R" size="0x4"/>
+							<Parameters address="0x400220E0" name="FLASH_SECWM1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>SECWM1_STRT</Name>
 									<Description>Bank 1 security WM area 1 start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
@@ -3334,20 +2979,20 @@
 									<Name>SECWM1_END</Name>
 									<Description>Bank 1 security WM area 1 end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400220E4" name="FLASH_SECWM_PRG1R" size="0x4"/>
+							<Parameters address="0x400220E4" name="FLASH_SECWM1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>SECWM1_STRT</Name>
 									<Description>Bank 1 security WM area 1 start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x7</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
@@ -3355,7 +3000,7 @@
 									<Name>SECWM1_END</Name>
 									<Description>Bank 1 security WM area 1 end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x7</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x08000000"/>
 								</Bit>
@@ -3363,28 +3008,28 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>FLASH write sector group 1 protection for bank1</Name>
+						<Name>FLASH write sector group protection for bank1</Name>
 						<Field>
-							<Parameters address="0x400220E8" name="FLASH_WRP11R" size="0x4"/>
+							<Parameters address="0x400220E8" name="FLASH_WRP1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>WRPSG11</Name>
+									<Name>WRPSGn1</Name>
 									<Description>Bank 1 sector group 1 protection option status byte</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
+									<BitWidth>0x10</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400220EC" name="FLASH_WRP11R" size="0x4"/>
+							<Parameters address="0x400220EC" name="FLASH_WRP1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>WRPSG11</Name>
+									<Name>WRPSGn1</Name>
 									<Description>Bank 1 sector group 1 protection option status byte</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
+									<BitWidth>0x10</BitWidth>
 									<Access>W</Access>
 								<Equation multiplier="0" offset="0x08000000"/>
 								</Bit>
@@ -3394,7 +3039,7 @@
 					<Category>
 						<Name>Flash data bank 1 sectors</Name>
 						<Field>
-							<Parameters address="0x400220F0" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400220F0" name="FLASH_EDATA1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>EDATA1_EN</Name>
@@ -3418,7 +3063,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400220F4" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400220F4" name="FLASH_EDATA1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>EDATA1_EN</Name>
@@ -3445,7 +3090,7 @@
 					<Category>
 						<Name>Flash HDP bank 1</Name>
 						<Field>
-							<Parameters address="0x400220F8" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400220F8" name="FLASH_HDP1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>HDP1_STRT</Name>
@@ -3466,7 +3111,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400220FC" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400220FC" name="FLASH_HDP1R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>HDP1_STRT</Name>
@@ -3491,134 +3136,113 @@
 				<Bank interface="Bootloader">
 					<Parameters address="0x40022198" name="Bank 2" size="0x68"/>	
 					<Category>
-						<Name>FLASH write sector group 2 protection for bank2</Name>
-						<Field>
-							<Parameters address="0x40022198" name="FLASH_WRP22R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRPSG22</Name>
-									<Description>Bank 2 sector group 2 protection option status byte</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
-									<Access>R</Access>
-									<Equation multiplier="0" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-						<Field>
-							<Parameters address="0x4002219C" name="FLASH_WRP22R" size="0x4"/>
-							<AssignedBits>
-								<Bit>
-									<Name>WRPSG22</Name>
-									<Description>Bank 2 sector group 2 protection option status byte</Description>
-									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
-									<Access>W</Access>
-									<Equation multiplier="0" offset="0x08000000"/>
-								</Bit>
-							</AssignedBits>
-						</Field>
-					</Category>
-					<Category>
 						<Name>Bank2 - Flash watermark area definition</Name>
 						<Field>
-							<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
+							<Parameters address="0x400221E0" name="FLASH_SECWM2R" size="0x4"/>
 							<AssignedBits>
-								<Bit config="2,3,7,14,15"> <!-- Flash 4M -->
+								<Bit> 
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
+									<Condition>NVM-1M</Condition>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="2,3,7,14,15"> <!-- Flash 4M -->
+								<Bit> 
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
+									<Condition>NVM-1M</Condition>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="18,19"> <!-- Flash 3M -->
+								<Bit> <!-- Flash 512K -->
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08180000"/>
+									<Condition>NVM-512K</Condition>
+									<Equation multiplier="0x2000" offset="0x08040000"/>
 								</Bit>
-								<Bit config="18,19"> <!-- Flash 3M -->
+								<Bit>  <!-- Flash 512K -->
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
-									<Equation multiplier="0x2000" offset="0x08180000"/>
+									<Condition>NVM-512K</Condition>
+									<Equation multiplier="0x2000" offset="0x08040000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400221E4" name="FLASH_SECWM_PRG2R" size="0x4"/>
+							<Parameters address="0x400221E4" name="FLASH_SECWM2R" size="0x4"/>
 							<AssignedBits>
-								<Bit config="2,3,7,14,15"> <!-- Flash 4M -->
+								<Bit> 
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
+									<Condition>NVM-1M</Condition>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="2,3,7,14,15"> <!-- Flash 4M -->
+								<Bit>
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08200000"/>
+									<Condition>NVM-1M</Condition>
+									<Equation multiplier="0x2000" offset="0x08080000"/>
 								</Bit>
-								<Bit config="18,19"> <!-- Flash 3M -->
+								<Bit> <!-- Flash 512K -->
 									<Name>SECWM2_STRT</Name>
 									<Description>Bank 2 security WM area start sector</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08180000"/>
+									<Condition>NVM-512K</Condition>
+									<Equation multiplier="0x2000" offset="0x08040000"/>
 								</Bit>
-								<Bit config="18,19"> <!-- Flash 3M -->
+								<Bit>  <!-- Flash 512K -->
 									<Name>SECWM2_END</Name>
 									<Description>Bank 2 security WM area end sector</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
-									<Equation multiplier="0x2000" offset="0x08180000"/>
+									<Condition>NVM-512K</Condition>
+									<Equation multiplier="0x2000" offset="0x08040000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 					</Category>
 					<Category>
-						<Name>FLASH write sector group 1 protection for bank2</Name>
+						<Name>FLASH write sector group protection for bank2</Name>
 						<Field>
-							<Parameters address="0x400221E8" name="FLASH_WRP21R" size="0x4"/>
+							<Parameters address="0x400221E8" name="FLASH_WRP2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>WRPSG21</Name>
+									<Name>WRPSGn2</Name>
 									<Description>Bank 2 sector group 1 protection option status byte</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
+									<BitWidth>0x10</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400221EC" name="FLASH_WRP21R" size="0x4"/>
+							<Parameters address="0x400221EC" name="FLASH_WRP2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
-									<Name>WRPSG21</Name>
+									<Name>WRPSGn2</Name>
 									<Description>Bank 2 sector group 1 protection option status byte</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x20</BitWidth>
+									<BitWidth>0x10</BitWidth>
 									<Access>W</Access>
 								<Equation multiplier="0" offset="0x08000000"/>
 								</Bit>
@@ -3628,7 +3252,7 @@
 					<Category>
 						<Name>Flash data bank 2 sectors</Name>
 						<Field>
-							<Parameters address="0x400221F0" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400221F0" name="FLASH_EDATA2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>EDATA2_EN</Name>
@@ -3652,7 +3276,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400221F4" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400221F4" name="FLASH_EDATA2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>EDATA2_EN</Name>
@@ -3679,13 +3303,13 @@
 					<Category>
 						<Name>Flash HDP bank 2</Name>
 						<Field>
-							<Parameters address="0x400221F8" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400221F8" name="FLASH_HDP2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>HDP2_STRT</Name>
 									<Description>HDP barrier start set in number of 8kb sectors</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x00000000"/>
 								</Bit>
@@ -3693,20 +3317,20 @@
 									<Name>HDP2_END</Name>
 									<Description>HDP barrier end set in number of 8kb sectors</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>R</Access>
 									<Equation multiplier="0x2000" offset="0x00000000"/>
 								</Bit>
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x400221FC" name="FLASH_WRP2BR" size="0x4"/>
+							<Parameters address="0x400221FC" name="FLASH_HDP2R" size="0x4"/>
 							<AssignedBits>
 								<Bit>
 									<Name>HDP2_STRT</Name>
 									<Description>HDP barrier start set in number of 8kb sectors</Description>
 									<BitOffset>0x0</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x00000000"/>
 								</Bit>
@@ -3714,7 +3338,7 @@
 									<Name>HDP2_END</Name>
 									<Description>HDP barrier end set in number of 8kb sectors</Description>
 									<BitOffset>0x10</BitOffset>
-									<BitWidth>0x8</BitWidth>
+									<BitWidth>0x6</BitWidth>
 									<Access>W</Access>
 									<Equation multiplier="0x2000" offset="0x00000000"/>
 								</Bit>

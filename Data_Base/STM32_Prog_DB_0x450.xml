@@ -417,7 +417,7 @@
 										<Val value="0x1">Security feature enabled</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,1">
+								<Bit config="1">
 									<Name>BCM4</Name>
 									<Description/>
 									<BitOffset>0x16</BitOffset>
@@ -428,7 +428,7 @@
 										<Val value="0x1">CM4 boot enabled</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BCM7</Name>
 									<Description/>
 									<BitOffset>0x17</BitOffset>
@@ -439,7 +439,7 @@
 										<Val value="0x1">CM7 boot enabled</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>NRST_STOP_D2</Name>
 									<Description/>
 									<BitOffset>0x18</BitOffset>
@@ -450,7 +450,7 @@
 										<Val value="0x1">STOP mode on Domain 2 is entering without reset</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>NRST_STBY_D2</Name>
 									<Description/>
 									<BitOffset>0x19</BitOffset>
@@ -576,7 +576,7 @@
 										<Val value="0x1">Product operating below 2.5 V, I/O speed optimization at low-voltage feature allowed</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,1,4,5">
+								<Bit config="1,4,5">
 									<Name>BCM4</Name>
 									<Description/>
 									<BitOffset>0x16</BitOffset>
@@ -587,7 +587,7 @@
 										<Val value="0x1">CM4 boot enabled</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BCM7</Name>
 									<Description/>
 									<BitOffset>0x17</BitOffset>
@@ -598,7 +598,7 @@
 										<Val value="0x1">CM7 boot enabled</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>NRST_STOP_D2</Name>
 									<Description/>
 									<BitOffset>0x18</BitOffset>
@@ -609,7 +609,7 @@
 										<Val value="0x1">STOP mode on Domain 2 is entering without reset</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>NRST_STBY_D2</Name>
 									<Description/>
 									<BitOffset>0x19</BitOffset>
@@ -639,7 +639,7 @@
 						<Field>
 							<Parameters address="0x52002040" name="FBOOT7_CUR" size="0x4"/>
 							<AssignedBits>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BOOT_CM7_ADD0</Name>
 									<Description>Define the boot address for Cortex-M7 when BOOT0=0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -647,8 +647,24 @@
 									<Access>R</Access>
 									<Equation multiplier="0x10000" offset="0x0"/>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BOOT_CM7_ADD1</Name>
+									<Description>Define the boot address for Cortex-M7 when BOOT0=1</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x10</BitWidth>
+									<Access>R</Access>
+									<Equation multiplier="0x10000" offset="0x0"/>
+								</Bit>
+								<Bit config="0,2,3,6,7">
+									<Name>BOOT_ADD0</Name>
+									<Description>Define the boot address for Cortex-M7 when BOOT0=0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x10</BitWidth>
+									<Access>R</Access>
+									<Equation multiplier="0x10000" offset="0x0"/>
+								</Bit>
+								<Bit config="0,2,3,6,7">
+									<Name>BOOT_ADD1</Name>
 									<Description>Define the boot address for Cortex-M7 when BOOT0=1</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x10</BitWidth>
@@ -660,7 +676,7 @@
 						<Field>
 							<Parameters address="0x52002048" name="FBOOT4_CUR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,4,5">
+								<Bit config="1,4,5">
 									<Name>BOOT_CM4_ADD0</Name>
 									<Description>Define the boot address for Cortex-M4 when BOOT0=0</Description>
 									<BitOffset>0x0</BitOffset>
@@ -668,7 +684,7 @@
 									<Access>R</Access>
 									<Equation multiplier="0x10000" offset="0x0"/>
 								</Bit>
-								<Bit config="0,1,4,5">
+								<Bit config="1,4,5">
 									<Name>BOOT_CM4_ADD1</Name>
 									<Description>Define the boot address for Cortex-M4 when BOOT0=1</Description>
 									<BitOffset>0x10</BitOffset>
@@ -681,7 +697,7 @@
 						<Field>
 							<Parameters address="0x52002044" name="FBOOT7_PRG" size="0x4"/>
 							<AssignedBits>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BOOT_CM7_ADD0</Name>
 									<Description/>
 									<BitOffset>0x0</BitOffset>
@@ -689,8 +705,24 @@
 									<Access>W</Access>
 									<Equation multiplier="0x10000" offset="0x0"/>
 								</Bit>
-								<Bit>
+								<Bit config="1,4,5">
 									<Name>BOOT_CM7_ADD1</Name>
+									<Description/>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x10</BitWidth>
+									<Access>W</Access>
+									<Equation multiplier="0x10000" offset="0x0"/>
+								</Bit>
+								<Bit config="0,2,3,6,7">
+									<Name>BOOT_ADD0</Name>
+									<Description/>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x10</BitWidth>
+									<Access>W</Access>
+									<Equation multiplier="0x10000" offset="0x0"/>
+								</Bit>
+								<Bit config="0,2,3,6,7">
+									<Name>BOOT_ADD1</Name>
 									<Description/>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x10</BitWidth>
@@ -702,7 +734,7 @@
 						<Field>
 							<Parameters address="0x5200204C" name="FBOOT4_PRG" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,1,4,5">
+								<Bit config="1,4,5">
 									<Name>BOOT_CM4_ADD0</Name>
 									<Description/>
 									<BitOffset>0x0</BitOffset>
@@ -710,7 +742,7 @@
 									<Access>W</Access>
 									<Equation multiplier="0x10000" offset="0x0"/>
 								</Bit>
-								<Bit config="0,1,4,5">
+								<Bit config="1,4,5">
 									<Name>BOOT_CM4_ADD1</Name>
 									<Description/>
 									<BitOffset>0x10</BitOffset>

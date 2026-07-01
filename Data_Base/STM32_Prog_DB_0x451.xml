@@ -490,7 +490,7 @@
 						<Field>
 							<Parameters address="0x40023C14" name="FLASH_OPTCR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="8,2,5">
+								<Bit config="0,8,2,5">
 									<Name>nWRP0</Name>
 									<Description/>
 									<BitOffset>0x10</BitOffset>
