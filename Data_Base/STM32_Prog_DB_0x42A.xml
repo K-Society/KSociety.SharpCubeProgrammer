@@ -759,7 +759,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x8000000"/>
 									</Bit>
-									<Bit>
+									<Bit  config="10,11,4,5,16,17,18,19">
 										<Name>HDP1EN</Name>
 										<Description>Hide protection first area enable</Description>
 										<BitOffset>0x18</BitOffset>
@@ -917,7 +917,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x0c100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="10,11,4,5,16,17,18,19">
 										<Name>HDP2EN</Name>
 										<Description>Hide protection second area enable</Description>
 										<BitOffset>0x18</BitOffset>
@@ -1379,7 +1379,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0xC000000"/>
 									</Bit>
-									<Bit>
+									<Bit config="2,3,14,15">
 										<Name>HDP1EN</Name>
 										<Description>Hide protection first area enable</Description>
 										<BitOffset>0x18</BitOffset>
@@ -1553,7 +1553,7 @@
 										<Access>RW</Access>
 										<Equation multiplier="0x1000" offset="0x0C100000"/>
 									</Bit>
-									<Bit>
+									<Bit config="2,3,14,15">
 										<Name>HDP2EN</Name>
 										<Description>Hide protection second area enable</Description>
 										<BitOffset>0x18</BitOffset>

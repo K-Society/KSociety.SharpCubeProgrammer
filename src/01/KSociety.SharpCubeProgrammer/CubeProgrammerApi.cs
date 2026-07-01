@@ -4,7 +4,6 @@ namespace SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -1765,15 +1764,8 @@ namespace SharpCubeProgrammer
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Dispose is implemented correctly, FxCop just doesn't see it.")]
         public void Dispose()
         {
-            var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
-            if (wasDisposed == DisposedFlag)
-            {
-                return;
-            }
-
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -1784,13 +1776,16 @@ namespace SharpCubeProgrammer
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected void Dispose(bool disposing)
         {
-            if (disposing)
+            if (Interlocked.CompareExchange(ref this._isDisposed, DisposedFlag, 0) == 0)
             {
-                // Free any other managed objects here.
-                this._programmerInstanceApi.Dispose();
-            }
+                if (disposing)
+                {
+                    // Free any other managed objects here.
+                    this._programmerInstanceApi.Dispose();
+                }
 
-            // Free any unmanaged objects here.
+                // Free any unmanaged objects here.
+            }
         }
 
         /// <summary>

@@ -819,7 +819,7 @@
 									</Bit>
 									<Bit>
 										<Name>HSE_value</Name>
-										<Description>0x0 (auto): HSE value is auto-detected among 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, and 48 MHz. 0x1: HSE = 24 MHz 0x2: HSE = 25 MHz. 0x3: HSE = 26 MHz. 0x4: HSE = 19.2 MHz. 0x5: HSE = 40 MHz. 0x6: HSE = 48 MHz. 0x7: Reserved.</Description>
+										<Description>0x0 (auto): HSE value is auto-detected among 16, 20, 24, 28, 32, 36, 40, and 48 MHz. 0x1: HSE = 19.2 MHz 0x2: HSE = 20 MHz. 0x3: HSE = 24 MHz. 0x4: HSE = 38.4 MHz. 0x5: HSE = 40 MHz. 0x6: HSE = 48 MHz. 0x7: Reserved.</Description>
 										<BitOffset>0xB</BitOffset>
 										<BitWidth>0x3</BitWidth>
 										<Access>RW</Access>
@@ -1011,7 +1011,7 @@
 									<Bit>
 										<Name>rng_htcr_value</Name>
 										<Description>1: 0xA2B3 2: 0xAA74 3: 0xA6BA 4: 0x9AAE 5: 0x72AC 6: 0xAAC7 others: RNG HTCR not modified</Description>
-										<BitOffset>0x21</BitOffset>
+										<BitOffset>0x12</BitOffset>
 										<BitWidth>0x3</BitWidth>
 										<Access>RW</Access>
 									</Bit>

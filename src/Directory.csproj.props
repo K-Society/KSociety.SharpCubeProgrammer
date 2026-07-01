@@ -16,9 +16,9 @@
   <ItemGroup>
     <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
       <PrivateAssets>all</PrivateAssets>
-      <Version>3.9.50</Version>
+      <Version>3.10.85</Version>
     </PackageReference>
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103">
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -6,7 +6,7 @@
 		<Type>MCU</Type>
 		<!-- cortex written in word file +mpu should it be written?? -->
 		<CPU>Cortex-M0+</CPU>
-		<Name>STM32U0xx</Name>
+		<Name>STM32U031</Name>
 		<Series>STM32U0</Series>
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
 		<Configurations>

@@ -5,7 +5,7 @@
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M33</CPU>
-		<Name>STM32U3xx</Name>
+		<Name>STM32U375/STM32U385</Name>
 		<Series>STM32U3</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
 		<Configurations>
@@ -494,7 +494,7 @@
 									</Bit>
 									<Bit>
 										<Name>SRAM1_RST</Name>
-										<Description>SRAM1, SRAM3, SRAM4  and SRAM5 erase upon system reset</Description>
+										<Description>Controls whether SRAM1 is erased during a system reset.</Description>
 										<BitOffset>0xF</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
@@ -558,7 +558,7 @@
 											<Val value="0x1">Bank 1 and bank 2 address are swapped</Val>
 										</Values>
 									</Bit>
-									<Bit config="12,14,13,15,17,19">
+									<Bit config="12,13,16,17,18,19">
 										<Name>DBANK</Name>
 										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
 										<BitOffset>0x15</BitOffset>
@@ -1050,7 +1050,7 @@
 									</Bit>
 									<Bit>
 										<Name>SRAM1_RST</Name>
-										<Description>SRAM1, SRAM3, SRAM4  and SRAM5 erase upon system reset</Description>
+										<Description>Controls whether SRAM1 is erased during a system reset.</Description>
 										<BitOffset>0xF</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
@@ -1116,13 +1116,13 @@
 									</Bit>
 									<Bit config="14,15">
 										<Name>DBANK</Name>
-										<Description>Dual-bank on 1-Mbyte and 512-Kbyte Flash memory devices</Description>
+										<Description>Dual-bank configuration bit</Description>
 										<BitOffset>0x15</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
 										<Values>
-											<Val value="0x0">Single bank mode with 128 bits data read width</Val>
-											<Val value="0x1">Dual bank mode with 64 bits data</Val>
+											<Val value="0x0">Single-bank flash with contiguous address in bank 1</Val>
+											<Val value="0x1">Dual-bank flash with contiguous addresses</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -1605,7 +1605,7 @@
 								</Bit>
 								<Bit>
 									<Name>SRAM1_RST</Name>
-									<Description>SRAM1, SRAM3, SRAM4  and SRAM5 erase upon system reset</Description>
+									<Description>Controls whether SRAM1 is erased during a system reset.</Description>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
