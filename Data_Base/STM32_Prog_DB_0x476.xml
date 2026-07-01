@@ -488,7 +488,7 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="1,11,13,17">
 									<Name>SWAP_BANK</Name>
 									<Description/>
 									<BitOffset>0x14</BitOffset>
@@ -960,7 +960,7 @@
 											<Val value="0x1">Software window watchdog</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<Bit config="3,15">
 										<Name>SWAP_BANK</Name>
 										<Description/>
 										<BitOffset>0x14</BitOffset>
@@ -1572,7 +1572,7 @@
 											<Val value="0x1">Software window watchdog</Val>
 										</Values>
 									</Bit>
-									<Bit>
+									<Bit config="5,19">
 										<Name>SWAP_BANK</Name>
 										<Description/>
 										<BitOffset>0x14</BitOffset>
@@ -2216,7 +2216,7 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 								</Bit>
-								<Bit>
+								<Bit config="7,9,21,23">
 									<Name>SWAP_BANK</Name>
 									<Description/>
 									<BitOffset>0x14</BitOffset>

@@ -358,7 +358,7 @@
 										<BitOffset>0x8</BitOffset>
 										<BitWidth>0x18</BitWidth>
 										<Access>RW</Access>
-										<DefaultVal>0xC0000</DefaultVal>
+										<DefaultVal>0xC000000</DefaultVal>
 									</Bit>
 								</AssignedBits>
 							</Field>

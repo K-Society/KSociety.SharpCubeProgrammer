@@ -3,7 +3,6 @@
 namespace SharpCubeProgrammer.Native
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
     using System.Runtime.InteropServices;
@@ -203,7 +202,7 @@ namespace SharpCubeProgrammer.Native
         internal int GetStLinkList(ref IntPtr stLinkList, int shared)
         {
             var function = this.EnsureFunction("getStLinkList", ref this._getStLinkList);
-           
+
             if (function != null)
             {
                 return function(ref stLinkList, shared);
@@ -1024,6 +1023,12 @@ namespace SharpCubeProgrammer.Native
         private T GetDelegate<T>(string functionName)
             where T : class, Delegate
         {
+            // Ensure not disposed
+            if (this.IsDisposed)
+            {
+                throw new ObjectDisposedException(nameof(ProgrammerInstanceApi));
+            }
+
             if (this.EnsureNativeLibraryLoaded())
             {
                 if (this.HandleProgrammer == null)
@@ -1051,14 +1056,9 @@ namespace SharpCubeProgrammer.Native
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Dispose is implemented correctly, FxCop just doesn't see it.")]
         public void Dispose()
         {
-            var wasDisposed = Interlocked.Exchange(ref this._isDisposed, DisposedFlag);
-            if (wasDisposed == DisposedFlag)
-            {
-                return;
-            }
+            this.DeleteInterfaceList();
 
             this.Dispose(true);
             GC.SuppressFinalize(this);
@@ -1070,25 +1070,26 @@ namespace SharpCubeProgrammer.Native
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         internal void Dispose(bool disposing)
         {
-            if (disposing)
+            if (Interlocked.CompareExchange(ref this._isDisposed, DisposedFlag, 0) == 0)
             {
-                // Free any other managed objects here.
+                if (disposing)
+                {
+                    // Free any other managed objects here.
+                    if (this.HandleProgrammer != null)
+                    {
+                        this.HandleProgrammer?.Dispose();
+                        this.HandleProgrammer = null;
+                    }
+
+                    if (this.HandleSTLinkDriver != null)
+                    {
+                        this.HandleSTLinkDriver?.Dispose();
+                        this.HandleSTLinkDriver = null;
+                    }
+                }
+
+                // Free any unmanaged objects here.
                 
-            }
-
-            this.DeleteInterfaceList();
-
-            // Free any unmanaged objects here.
-            if (this.HandleProgrammer != null)
-            {
-                this.HandleProgrammer?.Dispose();
-                this.HandleProgrammer = null;
-            }
-
-            if (this.HandleSTLinkDriver != null)
-            {
-                this.HandleSTLinkDriver?.Dispose();
-                this.HandleSTLinkDriver = null;
             }
         }
 

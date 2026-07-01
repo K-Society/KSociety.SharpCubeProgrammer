@@ -8,6 +8,15 @@
 		<Name>STM32G03x/STM32G04x</Name>
 		<Series>STM32G0</Series>
 		<Description>ARM 32-bit Cortex-M0+ based device</Description>
+		<Boolean name="NVM-G041">
+			<ReadRegister name="Size" address="0x1FFF77DD" mask="0xFF" value="0xFF"/>
+		</Boolean>
+		<Boolean name="NVM-G031">
+			<ReadRegister name="Size" address="0x1FFF77DD" mask="0xFF" value="0x31"/>
+		</Boolean>
+		<Boolean name="NVM-G030">
+			<ReadRegister name="Size" address="0x1FFF77DD" mask="0xFF" value="0x30"/>
+		</Boolean>
 		<Configurations>
 			<!-- JTAG_SWD Interface -->
 			<Interface name="JTAG_SWD">
@@ -233,23 +242,23 @@
 						<Field>
 							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BOR_EN</Name>
 									<Description/>
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BORF_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0xB</BitOffset>
 									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
 										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
@@ -257,12 +266,102 @@
 										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BORR_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0x9</BitOffset>
 									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description/>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
+										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORF_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0xB</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORR_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Condition>NVM-G031</Condition>
+									<Access>W</Access>
+									<Values>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters name="FLASH_OPTR" size="0x4" address="0x40022020"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description/>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
+										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORF_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0xB</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORR_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Condition>NVM-G041</Condition>
+									<Access>W</Access>
 									<Values>
 										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
 										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
@@ -274,7 +373,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>User Configuration</Name>
+						<Name>User Configuration (nRST_SHDW, NRST_MODE, IRHEN Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -289,6 +388,11 @@
 										<Val value="0x1">No reset generated when entering Stop mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+					    </Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nRST_STDBY</Name>
 									<Description/>
@@ -300,16 +404,58 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>nRST_SHDW (Present only on stm32g0x1 devices) </Name>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
 										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
+									<BitOffset>0xF</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
+										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
+									<BitOffset>0xF</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
+										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_SW</Name>
 									<Description/>
@@ -321,6 +467,11 @@
 										<Val value="0x1">Software independent watchdog</Val>
 									</Values>
 								</Bit>
+						    </AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STOP</Name>
 									<Description/>
@@ -332,6 +483,11 @@
 										<Val value="0x1">IWDG counter active in stop mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
 									<Description/>
@@ -343,6 +499,11 @@
 										<Val value="0x1">IWDG counter active in standby mode</Val>
 									</Values>
 								</Bit>
+							 </AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>WWDG_SW</Name>
 									<Description/>
@@ -354,6 +515,11 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>RAM_PARITY_CHECK</Name>
 									<Description/>
@@ -365,6 +531,11 @@
 										<Val value="0x1">SRAM parity check disable</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT_SEL</Name>
 									<Description/>
@@ -376,6 +547,11 @@
 										<Val value="0x1">BOOT0 signal is defined by nBOOT0 option bit</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT1</Name>
 									<Description/>
@@ -387,6 +563,11 @@
 										<Val value="0x1">Boot from Flash if BOOT0 = 1, otherwise system memory</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT0</Name>
 									<Description/>
@@ -397,25 +578,105 @@
 										<Val value="0x0">nBOOT0=0</Val>
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
-								</Bit>				
-								<Bit config="0,2,3,5,6">
-									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
-									<BitOffset>0x1B</BitOffset>
-									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">Reserved</Val>
-										<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
-										<Val value="0x2">GPIO: standard GPIO pad functionality, only internal RESET possible</Val>
-										<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
-									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
+							</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>R</Access>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad functionality, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>W</Access>
+								<Condition>NVM-G031</Condition>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad functionality, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>W</Access>
+								<Condition>NVM-G041</Condition>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad functionality, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
+										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
+									<Description>Internal reset holder enable bit</Description>
+									<BitOffset>0x1D</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
+										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022020" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
+									<Description>Internal reset holder enable bit</Description>
+									<BitOffset>0x1D</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Values>
 										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
 										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
@@ -429,12 +690,40 @@
 						<Field>
 							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1A_STRT</Name>
 									<Description>Flash Area A in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_STRT</Name>
+									<Description>Flash Area A in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022024" name="FLASH_PCROP1SR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_STRT</Name>
+									<Description>Flash Area A in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
@@ -442,20 +731,72 @@
 						<Field>
 							<Parameters address="0x40022028" name="FLASH_PCROP1ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1A_END</Name>
 									<Description>Flash Area A in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP_RDP</Name>
 									<Description/>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
+										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022028" name="FLASH_PCROP1ER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_END</Name>
+									<Description>Flash Area A in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+								<Bit>
+									<Name>PCROP_RDP</Name>
+									<Description/>
+									<BitOffset>0x1F</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
+										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022028" name="FLASH_PCROP1ER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_END</Name>
+									<Description>Flash Area A in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+								<Bit>
+									<Name>PCROP_RDP</Name>
+									<Description/>
+									<BitOffset>0x1F</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Values>
 										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
 										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
@@ -466,12 +807,40 @@
 						<Field>
 							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1B_STRT</Name>
 									<Description>Flash Area B in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_STRT</Name>
+									<Description>Flash Area B in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022034" name="FLASH_PCROP1BSR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_STRT</Name>
+									<Description>Flash Area B in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
@@ -479,12 +848,40 @@
 						<Field>
 							<Parameters address="0x40022038" name="FLASH_PCROP1BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022038" name="FLASH_PCROP1BER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_END</Name>
+									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022038" name="FLASH_PCROP1BER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_END</Name>
+									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
 							</AssignedBits>
@@ -543,23 +940,75 @@
 						<Field>
 							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BOOT_LOCK</Name>
 									<Description>used to force boot from user area</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
 										<Val value="0x1">Boot forced from Main Flash memory</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x7</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOOT_LOCK</Name>
+									<Description>used to force boot from user area</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot forced from Main Flash memory</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>SEC_SIZE</Name>
+									<Description>Securable memory area size, Bank 1</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x800" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x40022080" name="FLASH_SECR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOOT_LOCK</Name>
+									<Description>used to force boot from user area</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot forced from Main Flash memory</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>SEC_SIZE</Name>
+									<Description>Securable memory area size, Bank 1</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x7</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
@@ -593,23 +1042,23 @@
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BOR_EN</Name>
 									<Description/>
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BORF_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0xB</BitOffset>
 									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
 										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
@@ -617,12 +1066,102 @@
 										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BORR_LEV</Name>
 									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
 									<BitOffset>0x9</BitOffset>
 									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description/>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Values>
+									<Condition>NVM-G031</Condition>
+										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
+										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORF_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0xB</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORR_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
+										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
+										<Val value="0x2">BOR rising level 3 with threshold around 2.6 V</Val>
+										<Val value="0x3">BOR rising level 4 with threshold around 2.9 V</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOR_EN</Name>
+									<Description/>
+									<BitOffset>0x8</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Values>
+									<Condition>NVM-G041</Condition>
+										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
+										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORF_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0xB</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">BOR falling level 1 with threshold around 2.0 V</Val>
+										<Val value="0x1">BOR falling level 2 with threshold around 2.2 V</Val>
+										<Val value="0x2">BOR falling level 3 with threshold around 2.5 V</Val>
+										<Val value="0x3">BOR falling level 4 with threshold around 2.8 V</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>BORR_LEV</Name>
+									<Description>These bits contain the supply level threshold that activates/releases the reset. They can be written to program a new BOR level value into Flash memory</Description>
+									<BitOffset>0x9</BitOffset>
+									<BitWidth>0x2</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Values>
 										<Val value="0x0">BOR rising level 1 with threshold around 2.1 V</Val>
 										<Val value="0x1">BOR rising level 2 with threshold around 2.3 V</Val>
@@ -634,7 +1173,7 @@
 						</Field>
 					</Category>
 					<Category>
-						<Name>User Configuration</Name>
+						<Name>User Configuration (nRST_SHDW, NRST_MODE, IRHEN Present only on stm32g0x1 devices)</Name>
 						<Field>
 							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
 							<AssignedBits>
@@ -649,6 +1188,11 @@
 										<Val value="0x1">No reset generated when entering Stop mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nRST_STDBY</Name>
 									<Description/>
@@ -660,17 +1204,61 @@
 										<Val value="0x1">No reset generated when entering Standby mode</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>nRST_SHDW (Present only on stm32g0x1 devices)</Name>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
 									<Description/>
 									<BitOffset>0xF</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
 										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
+									<Description/>
+									<BitOffset>0xF</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
+										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>nRST_SHDW</Name>
+									<Description/>
+									<BitOffset>0xF</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">Reset generated when entering the Shutdown mode</Val>
+										<Val value="0x1">No reset generated when entering the Shutdown mode</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+					    <Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_SW</Name>
 									<Description/>
@@ -682,6 +1270,11 @@
 										<Val value="0x1">Software independent watchdog</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STOP</Name>
 									<Description/>
@@ -693,6 +1286,11 @@
 										<Val value="0x1">IWDG counter active in stop mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>IWDG_STDBY</Name>
 									<Description/>
@@ -704,6 +1302,11 @@
 										<Val value="0x1">IWDG counter active in standby mode</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>WWDG_SW</Name>
 									<Description/>
@@ -715,6 +1318,11 @@
 										<Val value="0x1">Software window watchdog</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>RAM_PARITY_CHECK</Name>
 									<Description/>
@@ -726,6 +1334,11 @@
 										<Val value="0x1">SRAM parity check disable</Val>
 									</Values>
 								</Bit>
+								</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT_SEL</Name>
 									<Description/>
@@ -737,6 +1350,11 @@
 										<Val value="0x1">BOOT0 signal is defined by nBOOT0 option bit</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT1</Name>
 									<Description/>
@@ -748,6 +1366,11 @@
 										<Val value="0x1">Boot from Flash if BOOT0 = 1, otherwise system memory</Val>
 									</Values>
 								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
 								<Bit>
 									<Name>nBOOT0</Name>
 									<Description/>
@@ -758,26 +1381,108 @@
 										<Val value="0x0">nBOOT0=0</Val>
 										<Val value="0x1">nBOOT0=1</Val>
 									</Values>
-								</Bit>				
-								<Bit config="0,2,3,5,6">
-									<Name>NRST_MODE (Present only on stm32g0x1 devices)</Name>
-									<Description/>
-									<BitOffset>0x1B</BitOffset>
-									<BitWidth>0x2</BitWidth>
-									<Access>RW</Access>
-									<Values>
-										<Val value="0x0">Reserved</Val>
-										<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
-										<Val value="0x2">GPIO: standard GPIO pad functionality, only internal RESET possible</Val>
-										<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
-									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
-									<Name>IRHEN (Present only on stm32g0x1 devices)</Name>
+							</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<Description/>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>R</Access>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad fonctionnalité, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<Description/>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>W</Access>
+								<Condition>NVM-G031</Condition>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad fonctionnalité, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+						<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+						<AssignedBits>
+							<Bit>
+								<Name>NRST_MODE</Name>
+								<Description/>
+								<BitOffset>0x1B</BitOffset>
+								<BitWidth>0x2</BitWidth>
+								<Access>W</Access>
+								<Condition>NVM-G041</Condition>
+								<Values>
+									<Val value="0x0">Reserved</Val>
+									<Val value="0x1">Reset Input only: a low level on the NRST pin generates system reset, internal RESET not propagated to the NSRT pin</Val>
+									<Val value="0x2">GPIO: standard GPIO pad fonctionnalité, only internal RESET possible</Val>
+									<Val value="0x3">Bidirectional reset: NRST pin configured in reset input/output mode (legacy mode)</Val>
+								</Values>
+							</Bit>
+						</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
 									<Description>Internal reset holder enable bit</Description>
 									<BitOffset>0x1D</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
+										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
+									<Description>Internal reset holder enable bit</Description>
+									<BitOffset>0x1D</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
+										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7800" name="FLASH_OPTR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>IRHEN</Name>
+									<Description>Internal reset holder enable bit</Description>
+									<BitOffset>0x1D</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Values>
 										<Val value="0x0">Internal resets are propagated as simple pulse on NRST pin</Val>
 										<Val value="0x1">Internal resets drives NRST pin low until it is seen as low level</Val>
@@ -791,12 +1496,40 @@
 						<Field>
 							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1A_STRT</Name>
 									<Description>Flash Area A PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x9</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_STRT</Name>
+									<Description>Flash Area A PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x9</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7808" name="FLASH_PCROP1SR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_STRT</Name>
+									<Description>Flash Area A PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x9</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
@@ -804,20 +1537,72 @@
 						<Field>
 							<Parameters address="0x1FFF7810" name="FLASH_PCROP1ER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1A_END</Name>
 									<Description>Flash Area A PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x9</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP_RDP</Name>
 									<Description/>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Values>
+										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
+										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7810" name="FLASH_PCROP1ER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_END</Name>
+									<Description>Flash Area A PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x9</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+								<Bit>
+									<Name>PCROP_RDP</Name>
+									<Description/>
+									<BitOffset>0x1F</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
+										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
+									</Values>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7810" name="FLASH_PCROP1ER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1A_END</Name>
+									<Description>Flash Area A PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x9</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+								<Bit>
+									<Name>PCROP_RDP</Name>
+									<Description/>
+									<BitOffset>0x1F</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Values>
 										<Val value="0x0">PCROP zone is kept when RDP is decreased</Val>
 										<Val value="0x1">PCROP zone is erased when RDP is decreased</Val>
@@ -828,12 +1613,40 @@
 						<Field>
 							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1B_STRT</Name>
 									<Description>Flash Area B in Bank1 PCROP start address</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_STRT</Name>
+									<Description>Flash Area B in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7828" name="FLASH_PCROP1BSR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_STRT</Name>
+									<Description>Flash Area B in Bank1 PCROP start address</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
@@ -841,12 +1654,40 @@
 						<Field>
 							<Parameters address="0x1FFF7830" name="FLASH_PCROP1BER" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>PCROP1B_END</Name>
 									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7830" name="FLASH_PCROP1BER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_END</Name>
+									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x200" offset="0x08000200"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7830" name="FLASH_PCROP1BER" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>PCROP1B_END</Name>
+									<Description>Flash Area B in Bank1 PCROP End address(excluded). Deactivation of PCROP can be done by enabling PCROP_RDP and changing RDP from level 1 to level 0</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x200" offset="0x08000200"/>
 								</Bit>
 							</AssignedBits>
@@ -905,23 +1746,75 @@
 						<Field>
 							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
 							<AssignedBits>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>BOOT_LOCK</Name>
 									<Description>used to force boot from user area</Description>
 									<BitOffset>0x10</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
 									<Values>
 										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
 										<Val value="0x1">Boot forced from Main Flash memory</Val>
 									</Values>
 								</Bit>
-								<Bit config="0,2,3,5,6">
+								<Bit>
 									<Name>SEC_SIZE</Name>
 									<Description>Securable memory area size, Bank 1</Description>
 									<BitOffset>0x0</BitOffset>
 									<BitWidth>0x8</BitWidth>
-									<Access>RW</Access>
+									<Access>R</Access>
+									<Equation multiplier="0x800" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOOT_LOCK</Name>
+									<Description>used to force boot from user area</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Values>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot forced from Main Flash memory</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>SEC_SIZE</Name>
+									<Description>Securable memory area size, Bank 1</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G031</Condition>
+									<Equation multiplier="0x800" offset="0x08000000"/>
+								</Bit>
+							</AssignedBits>
+						</Field>
+						<Field>
+							<Parameters address="0x1FFF7870" name="FLASH_SECR" size="0x4"/>
+							<AssignedBits>
+								<Bit>
+									<Name>BOOT_LOCK</Name>
+									<Description>used to force boot from user area</Description>
+									<BitOffset>0x10</BitOffset>
+									<BitWidth>0x1</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
+									<Values>
+										<Val value="0x0">Boot based on the pad/option bit configuration</Val>
+										<Val value="0x1">Boot forced from Main Flash memory</Val>
+									</Values>
+								</Bit>
+								<Bit>
+									<Name>SEC_SIZE</Name>
+									<Description>Securable memory area size, Bank 1</Description>
+									<BitOffset>0x0</BitOffset>
+									<BitWidth>0x8</BitWidth>
+									<Access>W</Access>
+									<Condition>NVM-G041</Condition>
 									<Equation multiplier="0x800" offset="0x08000000"/>
 								</Bit>
 							</AssignedBits>
