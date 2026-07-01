@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
 <Device>
-		<DeviceID>0x484</DeviceID>
+		<DeviceID>0x47A</DeviceID>
 		<Vendor>STMicroelectronics</Vendor>
 		<Type>MCU</Type>
 		<CPU>Cortex-M33</CPU>
-		<Name>STM32H56x/573</Name>
+		<Name>STM32H5F4xJ/H5F5xJ/H5E4xJ/H5E5xJ</Name>
 		<Series>STM32H5</Series>
 		<Description>ARM 32-bit Cortex-M33 based device</Description>
 		<Configurations>
@@ -14,7 +14,7 @@
 			</Interface>
 		</Configurations>
 		<!-- Peripherals -->
-		<Peripherals>			
+		<Peripherals>
 			<!-- Option Bytes -->
 			<Peripheral>
 				<Name>Option Bytes</Name>
@@ -150,7 +150,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>BOOT_UBE</Name>
-										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot.</Description>
+										<Description>Unique boot entry control, selects either ST or OEM iRoT for secure boot. Warning: Do not modify BOOT_UBE on non-crypto device</Description>
 										<BitOffset>0x16</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>RW</Access>
@@ -225,7 +225,7 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022070" name="Bank 2" size="0x10"/>
+						<Parameters address="0x40022070" name="Bank 2" size="0x8"/>
 						<Category>
 							<Name>User Configuration 2</Name>
 							<Field>
@@ -242,6 +242,18 @@
 											<Val value="0xB4">Trust zone enabled</Val>
 										</Values>
 										<DefaultVal>0xC3</DefaultVal>
+									</Bit>
+									<Bit>
+										<Name>USBPD_DIS</Name>
+										<Description>USB power delivery configuration option bit</Description>
+										<BitOffset>0x8</BitOffset>
+										<BitWidth>0x1</BitWidth>
+										<Access>RW</Access>
+										<Values>
+											<Val value="0x0">Enabled</Val>
+											<Val value="0x1">Disabled</Val>
+										</Values>
+										<DefaultVal>0x1</DefaultVal>
 									</Bit>
 									<Bit>
 										<Name>SRAM2_ECC</Name>
@@ -292,7 +304,7 @@
 										<DefaultVal>0x1</DefaultVal>
 									</Bit>
 									<Bit>
-										<Name>SRAM1_3_RST</Name>
+										<Name>SRAM1_3_4_5_RST</Name>
 										<Description>SRAM1 and SRAM3 erase upon system reset</Description>
 										<BitOffset>0x2</BitOffset>
 										<BitWidth>0x1</BitWidth>
@@ -365,99 +377,7 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400220E0" name="Bank 4" size="0x10"/>
-						<Category>
-							<Name>Bank1 - Flash watermark area definition</Name>
-							<Field>
-								<Parameters address="0x400220E0" name="FLASH_SECWM_CUR1R" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>SECWM1_STRT</Name>
-										<Description>Bank 1 security WM area 1 start sector</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
-										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-									<Bit>
-										<Name>SECWM1_END</Name>
-										<Description>Bank 1 security WM area 1 end sector</Description>
-										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08000000"/>
-										<DefaultVal>0x7f</DefaultVal>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-						<Category>
-							<Name>Write sector group protection 1</Name>
-							<Field>
-								<Parameters address="0x400220EC" name="FLASH_WRP2BR" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSGn1</Name>
-										<Description>Bank 1 sector group protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-										<DefaultVal>0xffffffff</DefaultVal>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400221E0" name="Bank 5" size="0x10"/>
-						<Category>
-							<Name>Bank2 - Flash watermark area definition</Name>
-							<Field>
-								<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
-								<AssignedBits>
-									<Bit> 
-										<Name>SECWM2_STRT</Name>
-										<Description>Bank 2 security WM area start sector</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
-										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-									<Bit> 
-										<Name>SECWM2_END</Name>
-										<Description>Bank 2 security WM area end sector</Description>
-										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x08100000"/>
-										<DefaultVal>0x7f</DefaultVal>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-						<Category>
-							<Name>Write sector group protection 2</Name>
-							<Field>
-								<Parameters address="0x400221EC" name="FLASH_WRP2BR" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>WRPSGn2</Name>
-										<Description>Bank 2 sector group protection option status byte</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x20</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0" offset="0x08000000"/>
-										<DefaultVal>0xffffffff</DefaultVal>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022090" name="Bank 6" size="0x8"/>
+						<Parameters address="0x40022090" name="Bank 4" size="0x8"/>
 						<Category>
 							<Name>OTP write protection</Name>
 							<Field>
@@ -477,7 +397,76 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400220F0" name="Bank 7" size="0x8"/>
+						<Parameters address="0x40022098" name="Bank 5" size="0x8"/>
+						<Category>
+							<Name>FLASH write sector group 2 protection for bank1</Name>
+							<Field>
+								<Parameters address="0x40022098" name="FLASH_WRP12R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>WRPSG12</Name>
+										<Description>Bank 1 sector group 2 protection option status byte</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x20</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0" offset="0x08000000"/>
+										<DefaultVal>0xffffffff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400220E0" name="Bank 6" size="0x8"/>
+						<Category>
+							<Name>Bank1 - Flash watermark area definition</Name>
+							<Field>
+								<Parameters address="0x400220E0" name="FLASH_SECWM_CUR1R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM1_STRT</Name>
+										<Description>Bank 1 security WM area 1 start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<DefaultVal>0x0</DefaultVal>
+									</Bit>
+									<Bit>
+										<Name>SECWM1_END</Name>
+										<Description>Bank 1 security WM area 1 end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x08000000"/>
+										<DefaultVal>0xff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400220E8" name="Bank 7" size="0x8"/>
+						<Category>
+							<Name>FLASH write sector group 1 protection for bank1</Name>
+							<Field>
+								<Parameters address="0x400220E8" name="FLASH_WRP11R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>WRPSG11</Name>
+										<Description>Bank 1 sector group 1 protection option status byte</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x20</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0" offset="0x08000000"/>
+										<DefaultVal>0xffffffff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>	
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400220F0" name="Bank 8" size="0x8"/>
 						<Category>
 							<Name>Flash data bank 1 sectors</Name>
 							<Field>
@@ -499,7 +488,7 @@
 										<Name>EDATA1_STRT</Name>
 										<Description>EDATA1_STRT contains the start sectors of the Flash high-cycle data area in Bank1.</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x3</BitWidth>
+										<BitWidth>0x4</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
@@ -509,7 +498,105 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400221F0" name="Bank 8" size="0x8"/>
+						<Parameters address="0x400220F8" name="Bank 9" size="0x8"/>
+						<Category>
+							<Name>Flash HDP bank 1</Name>
+							<Field>
+								<Parameters address="0x400220F8" name="FLASH_WRP2BR" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>HDP1_STRT</Name>
+										<Description>HDP barrier start set in number of 8kb sectors</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+										<DefaultVal>0x1</DefaultVal>
+									</Bit>
+									<Bit>
+										<Name>HDP1_END</Name>
+										<Description>HDP barrier end set in number of 8kb sectors</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x00000000"/>
+										<DefaultVal>0x0</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x40022198" name="Bank 10" size="0x8"/>
+						<Category>
+							<Name>FLASH write sector group 2 protection for bank2</Name>
+							<Field>
+								<Parameters address="0x40022198" name="FLASH_WRP22R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>WRPSG22</Name>
+										<Description>Bank 2 sector group 2 protection option status byte</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x20</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0" offset="0x08000000"/>
+										<DefaultVal>0xffffffff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400221E0" name="Bank 11" size="0x8"/>
+						<Category>
+							<Name>Bank2 - Flash watermark area definition</Name>
+							<Field>
+								<Parameters address="0x400221E0" name="FLASH_SECWM_CUR2R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>SECWM2_STRT</Name>
+										<Description>Bank 2 security WM area start sector</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<DefaultVal>0x0</DefaultVal>
+									</Bit>
+									<Bit>
+										<Name>SECWM2_END</Name>
+										<Description>Bank 2 security WM area end sector</Description>
+										<BitOffset>0x10</BitOffset>
+										<BitWidth>0x8</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0x2000" offset="0x08200000"/>
+										<DefaultVal>0xff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400221E8" name="Bank 12" size="0x8"/>
+						<Category>
+							<Name>FLASH write sector group 1 protection for bank2</Name>
+							<Field>
+								<Parameters address="0x400221E8" name="FLASH_WRP21R" size="0x4"/>
+								<AssignedBits>
+									<Bit>
+										<Name>WRPSG21</Name>
+										<Description>Bank 2 sector group 1 protection option status byte</Description>
+										<BitOffset>0x0</BitOffset>
+										<BitWidth>0x20</BitWidth>
+										<Access>RW</Access>
+										<Equation multiplier="0" offset="0x08000000"/>
+										<DefaultVal>0xffffffff</DefaultVal>
+									</Bit>
+								</AssignedBits>
+							</Field>
+						</Category>
+					</Bank>
+					<Bank interface="JTAG_SWD">
+						<Parameters address="0x400221F0" name="Bank 13" size="0x8"/>
 						<Category>
 							<Name>Flash data bank 2 sectors</Name>
 							<Field>
@@ -531,7 +618,7 @@
 										<Name>EDATA2_STRT</Name>
 										<Description>EDATA2_STRT contains the start sectors of the Flash high-cycle data area in Bank2.</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x3</BitWidth>
+										<BitWidth>0x4</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0" offset="0x0"/>
 										<DefaultVal>0x0</DefaultVal>
@@ -541,36 +628,7 @@
 						</Category>
 					</Bank>
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400220F8" name="Bank 10" size="0x8"/>
-						<Category>
-							<Name>Flash HDP bank 1</Name>
-							<Field>
-								<Parameters address="0x400220F8" name="FLASH_WRP2BR" size="0x4"/>
-								<AssignedBits>
-									<Bit>
-										<Name>HDP1_STRT</Name>
-										<Description>HDP barrier start set in number of 8kb sectors</Description>
-										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x00000000"/>
-										<DefaultVal>0x1</DefaultVal>
-									</Bit>
-									<Bit>
-										<Name>HDP1_END</Name>
-										<Description>HDP barrier end set in number of 8kb sectors</Description>
-										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
-										<Access>RW</Access>
-										<Equation multiplier="0x2000" offset="0x00000000"/>
-										<DefaultVal>0x0</DefaultVal>
-									</Bit>
-								</AssignedBits>
-							</Field>
-						</Category>
-					</Bank>
-					<Bank interface="JTAG_SWD">
-						<Parameters address="0x400221F8" name="Bank 11" size="0x8"/>
+						<Parameters address="0x400221F8" name="Bank 14" size="0x8"/>
 						<Category>
 							<Name>Flash HDP bank 2</Name>
 							<Field>
@@ -580,7 +638,7 @@
 										<Name>HDP2_STRT</Name>
 										<Description>HDP barrier start set in number of 8kb sectors</Description>
 										<BitOffset>0x0</BitOffset>
-										<BitWidth>0x7</BitWidth>
+										<BitWidth>0x8</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 										<DefaultVal>0x1</DefaultVal>
@@ -589,7 +647,7 @@
 										<Name>HDP2_END</Name>
 										<Description>HDP barrier end set in number of 8kb sectors</Description>
 										<BitOffset>0x10</BitOffset>
-										<BitWidth>0x7</BitWidth>
+										<BitWidth>0x8</BitWidth>
 										<Access>RW</Access>
 										<Equation multiplier="0x2000" offset="0x00000000"/>
 										<DefaultVal>0x0</DefaultVal>
