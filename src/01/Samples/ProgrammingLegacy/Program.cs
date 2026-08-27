@@ -42,7 +42,7 @@ namespace ProgrammingLegacy
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
                     if (generalInfo != null)
@@ -72,7 +72,7 @@ namespace ProgrammingLegacy
 
                     var storageStructure = CubeProgrammerApi.GetStorageStructure();
 
-                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
                         //Logger.LogInformation("Storage structure: \n" +
                         //                      "Address: {0} \n" +

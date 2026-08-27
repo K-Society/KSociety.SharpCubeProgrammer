@@ -34,7 +34,7 @@ namespace SharpCubeProgrammer.Native
         internal delegate int ConnectUsartBootloader(UsartConnectParameters usartParameters);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int SendByteUart(int byteToSend);
+        internal delegate int SendByteUart(int @byte);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate int GetDfuDeviceList(ref IntPtr dfuList, int iPID, int iVID);

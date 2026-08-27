@@ -16,6 +16,7 @@ namespace SharpCubeProgrammer
     using SharpCubeProgrammer.Native;
     using Struct;
 
+    /// <inheritdoc cref="ICubeProgrammerApi"/>
     public partial class CubeProgrammerApi : ICubeProgrammerApi
     {
         private readonly ILogger<CubeProgrammerApi> _logger;
@@ -75,10 +76,9 @@ namespace SharpCubeProgrammer
 
         //ST-LINK module groups debug ports JTAG/SWD functions together.
 
-        /// <inheritdoc />
         public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             var listPtr = new IntPtr();
             var parametersList = new List<DebugConnectParameters>();
 
@@ -122,8 +122,7 @@ namespace SharpCubeProgrammer
 
             return output;
         }
-
-        /// <inheritdoc />
+       
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
             var listPtr = new IntPtr();
@@ -154,8 +153,7 @@ namespace SharpCubeProgrammer
 
             return parametersList;
         }
-
-        /// <inheritdoc />
+      
         public IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false)
         {
             var listPtr = new IntPtr();
@@ -187,10 +185,9 @@ namespace SharpCubeProgrammer
             return parametersList;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {
@@ -206,10 +203,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError Reset(DebugResetMode rstMode)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {
@@ -229,7 +225,6 @@ namespace SharpCubeProgrammer
 
         //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN function together.
 
-        /// <inheritdoc />
         public IEnumerable<UsartConnectParameters> GetUsartList()
         {
             var listPtr = new IntPtr();
@@ -262,10 +257,9 @@ namespace SharpCubeProgrammer
             return parametersList;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {
@@ -281,13 +275,12 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
-        public CubeProgrammerError SendByteUart(int bytes)
+        public CubeProgrammerError SendByteUart(int @byte)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
-                var connectUsartResult = this._programmerInstanceApi.SendByteUart(bytes);
+                var connectUsartResult = this._programmerInstanceApi.SendByteUart(@byte);
 
                 output = this.CheckResult(connectUsartResult);
             }
@@ -298,7 +291,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483)
         {
             var listPtr = new IntPtr();
@@ -330,10 +322,9 @@ namespace SharpCubeProgrammer
             return dfuDeviceList;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var connectDfuBootloaderResult = this._programmerInstanceApi.ConnectDfuBootloader(usbIndex);
@@ -352,10 +343,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {
@@ -381,7 +371,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000)
         {
             var dfuParameters = new DfuConnectParameters
@@ -395,10 +384,9 @@ namespace SharpCubeProgrammer
             return this.ConnectDfuBootloader2(dfuParameters);
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var connectSpiBootloaderResult = this._programmerInstanceApi.ConnectSpiBootloader(spiParameters);
@@ -416,10 +404,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectCanBootloader(CanConnectParameters canParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var connectCanBootloaderResult = this._programmerInstanceApi.ConnectCanBootloader(canParameters);
@@ -437,10 +424,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var connectI2CBootloaderResult = this._programmerInstanceApi.ConnectI2cBootloader(i2CParameters);
@@ -464,7 +450,6 @@ namespace SharpCubeProgrammer
 
         // General module groups general purposes functions used by any interface.
 
-        /// <inheritdoc />
         public DisplayCallBacks SetDisplayCallbacks(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate)
         {
             this._programmerInstanceApi.DisplayCallBacks.InitProgressBar = initProgressBar;
@@ -475,24 +460,21 @@ namespace SharpCubeProgrammer
             return this._programmerInstanceApi.DisplayCallBacks;
         }
 
-        /// <inheritdoc />
-        public DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks callbacksHandle)
+        public DisplayCallBacks SetDisplayCallbacks(DisplayCallBacks c)
         {
-            this._programmerInstanceApi.DisplayCallBacks.InitProgressBar = callbacksHandle.InitProgressBar;
-            this._programmerInstanceApi.DisplayCallBacks.LogMessage = callbacksHandle.LogMessage;
-            this._programmerInstanceApi.DisplayCallBacks.LoadBar = callbacksHandle.LoadBar;
-            this._programmerInstanceApi.SetDisplayCallbacks(callbacksHandle);
+            this._programmerInstanceApi.DisplayCallBacks.InitProgressBar = c.InitProgressBar;
+            this._programmerInstanceApi.DisplayCallBacks.LogMessage = c.LogMessage;
+            this._programmerInstanceApi.DisplayCallBacks.LoadBar = c.LoadBar;
+            this._programmerInstanceApi.SetDisplayCallbacks(c);
 
             return this._programmerInstanceApi.DisplayCallBacks;
         }
 
-        /// <inheritdoc />
         public void SetVerbosityLevel(VerbosityLevel level)
         {
             this._programmerInstanceApi.SetVerbosityLevel((int)level);
         }
 
-        /// <inheritdoc />
         public bool CheckDeviceConnection()
         {
             var checkDeviceConnectionResult = this._programmerInstanceApi.CheckDeviceConnection();
@@ -503,7 +485,6 @@ namespace SharpCubeProgrammer
             return false;
         }
 
-        /// <inheritdoc />
         public GeneralInf? GetDeviceGeneralInf()
         {
             GeneralInf? generalInf = null;
@@ -527,11 +508,10 @@ namespace SharpCubeProgrammer
             return generalInf;
         }
 
-        /// <inheritdoc />
         public (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize)
         {
             var uintAddress = this.HexConverterToUint(address);
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
             var buffer = new byte[byteSize];
 
             try
@@ -540,7 +520,7 @@ namespace SharpCubeProgrammer
                 var readMemoryResult =
                     this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
                 result = this.CheckResult(readMemoryResult);
-                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
                     this.FreeLibraryMemory(bufferPtr);
@@ -554,10 +534,9 @@ namespace SharpCubeProgrammer
             return (result, buffer);
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError WriteMemory(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
@@ -586,27 +565,30 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
-        [Obsolete("WriteMemoryAutoFill is deprecated, please use WriteMemory instead.")]
-        public CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data)
+        public CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
                 var uintAddress = this.HexConverterToUint(address);
+                var length = data.Length;
+                if (size != 0 && size <= data.Length)
+                {
+                    length = size;
+                }
 
                 try
                 {
-                    var remainder = data.Length % 8;
+                    var remainder = length % 8;
 
                     if (remainder > 0)
                     {
                         var filling = 8 - remainder;
-                        var newSize = data.Length + filling;
+                        var newSize = length + filling;
                         Array.Resize(ref data, newSize);
 
-                        for (var i = data.Length - filling; i < data.Length; i++)
+                        for (var i = length - filling; i < length; i++)
                         {
                             data[i] = 0xFF;
                         }
@@ -628,27 +610,30 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
-        [Obsolete("WriteMemoryAndVerify is deprecated, please use WriteMemory instead.")]
-        public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data)
+        public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
                 var uintAddress = this.HexConverterToUint(address);
+                var length = data.Length;
+                if (size != 0 && size <= data.Length)
+                {
+                    length = size;
+                }
 
                 try
                 {
-                    var remainder = data.Length % 8;
+                    var remainder = length % 8;
 
                     if (remainder > 0)
                     {
                         var filling = 8 - remainder;
-                        var newSize = data.Length + filling;
+                        var newSize = length + filling;
                         Array.Resize(ref data, newSize);
 
-                        for (var i = data.Length - filling; i < data.Length; i++)
+                        for (var i = length - filling; i < length; i++)
                         {
                             data[i] = 0xFF;
                         }
@@ -659,7 +644,7 @@ namespace SharpCubeProgrammer
                     gch.Free();
                     result = this.CheckResult(writeMemoryResult);
 
-                    if (result.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
                         var bufferPtr = IntPtr.Zero;
                         var buffer = new byte[data.Length];
@@ -667,7 +652,7 @@ namespace SharpCubeProgrammer
                             this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
                         result = this.CheckResult(readMemoryResult);
 
-                        if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                        if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                         {
                             Marshal.Copy(bufferPtr, buffer, 0, data.Length);
                             this.FreeLibraryMemory(bufferPtr);
@@ -675,11 +660,11 @@ namespace SharpCubeProgrammer
                             if (data.SequenceEqual(buffer))
                             {
                                 
-                                result = CubeProgrammerError.CubeprogrammerNoError;
+                                result = CubeProgrammerError.CubeProgrammerNoError;
                             }
                             else
                             {
-                                result = CubeProgrammerError.CubeprogrammerErrorWriteMem;
+                                result = CubeProgrammerError.CubeProgrammerErrorWriteMem;
                             }
                         }
                     }
@@ -693,18 +678,23 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
-        public CubeProgrammerError EditSector(string address, byte[] data)
+        public CubeProgrammerError EditSector(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
+                var length = data.Length;
+                if (size != 0 && size <= data.Length)
+                {
+                    length = size;
+                }
+
                 var uintAddress = this.HexConverterToUint(address);
                 var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                var writeMemoryResult = this._programmerInstanceApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                var editSectorResult = this._programmerInstanceApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
                 gch.Free();
-                result = this.CheckResult(writeMemoryResult);
+                result = this.CheckResult(editSectorResult);
 
                 return result;
             }
@@ -712,10 +702,9 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             var uintAddress = this.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
@@ -743,10 +732,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError Execute(string address = "0x08000000")
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {
@@ -763,7 +751,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError MassErase(string sFlashMemName = "")
         {
             var massEraseResult = this._programmerInstanceApi.MassErase(sFlashMemName);
@@ -772,7 +759,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName = "")
         {
             var sectorEraseResult = this._programmerInstanceApi.SectorErase(sectors, sectorNbr, sFlashMemName);
@@ -781,7 +767,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ReadUnprotect()
         {
             var result = this._programmerInstanceApi.ReadUnprotect();
@@ -790,7 +775,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError TzenRegression()
         {
             var result = this._programmerInstanceApi.TzenRegression();
@@ -799,7 +783,6 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public TargetInterfaceType? GetTargetInterfaceType()
         {
             var result = this._programmerInstanceApi.GetTargetInterfaceType();
@@ -812,13 +795,11 @@ namespace SharpCubeProgrammer
             return (TargetInterfaceType)result;
         }
 
-        /// <inheritdoc />
         public int GetCancelPointer()
         {
             return this._programmerInstanceApi.GetCancelPointer();
         }
 
-        /// <inheritdoc />
         public DeviceFileDataC? FileOpen(string filePath)
         {
             var segmentSize = Marshal.SizeOf<SegmentDataC>();
@@ -874,7 +855,6 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        /// <inheritdoc />
         public IntPtr FileOpenAsPointer(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))
@@ -893,7 +873,6 @@ namespace SharpCubeProgrammer
             return IntPtr.Zero;
         }
 
-        /// <inheritdoc />
         public void FreeFileData(IntPtr data)
         {
             if (data != IntPtr.Zero)
@@ -902,7 +881,6 @@ namespace SharpCubeProgrammer
             }
         }
 
-        /// <inheritdoc />
         public void FreeLibraryMemory(IntPtr ptr)
         {
             if (ptr != IntPtr.Zero)
@@ -911,7 +889,6 @@ namespace SharpCubeProgrammer
             }
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
             var uintAddress = this.HexConverterToUint(address);
@@ -922,10 +899,9 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError VerifyMemory(string address, byte[] data)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
             var buffer = new byte[data.Length];
             var bufferPtr = IntPtr.Zero;
 
@@ -935,18 +911,18 @@ namespace SharpCubeProgrammer
                 var readMemoryResult =
                     this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
                 result = this.CheckResult(readMemoryResult);
-                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, data.Length);
                     this.FreeLibraryMemory(bufferPtr);
 
                     if (data.SequenceEqual(buffer))
                     {
-                        result = CubeProgrammerError.CubeprogrammerNoError;
+                        result = CubeProgrammerError.CubeProgrammerNoError;
                     }
                     else
                     {
-                        result = CubeProgrammerError.CubeprogrammerErrorOther;
+                        result = CubeProgrammerError.CubeProgrammerErrorOther;
                     }
                 }
 
@@ -956,10 +932,9 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
         {
-            var result = CubeProgrammerError.CubeprogrammerErrorOther;
+            var result = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
@@ -999,11 +974,10 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName)
         {
             var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (String.IsNullOrEmpty(sFileNameAdapted))
             {
@@ -1023,13 +997,12 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError SaveMemoryToFile(string address, string size, string fileName)
         {
             var intAddress = this.HexConverterToInt(address);
             var intSize = this.HexConverterToInt(size);
             var fileNameAdapted = String.IsNullOrEmpty(fileName) ? "" : fileName.Replace(@"\", "/");
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             if (String.IsNullOrEmpty(fileNameAdapted))
             {
@@ -1051,19 +1024,16 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public void Disconnect()
         {
             this._programmerInstanceApi.Disconnect();
         }
 
-        /// <inheritdoc />
         public void DeleteInterfaceList()
         {
             this._programmerInstanceApi.DeleteInterfaceList();
         }
 
-        /// <inheritdoc />
         public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
             if (!String.IsNullOrEmpty(filePath))
@@ -1080,7 +1050,6 @@ namespace SharpCubeProgrammer
             }
         }
 
-        /// <inheritdoc />
         public void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "")
         {
             if (!String.IsNullOrEmpty(filePath))
@@ -1096,7 +1065,6 @@ namespace SharpCubeProgrammer
             }
         }
 
-        /// <inheritdoc />
         public (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure()
         {
             var deviceStorageStructure = new DeviceStorageStructure();
@@ -1104,14 +1072,14 @@ namespace SharpCubeProgrammer
             var bankSectorSize = Marshal.SizeOf<BankSector>();
             var storageStructurePtr = new IntPtr();
 
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var result = this._programmerInstanceApi.GetStorageStructure(ref storageStructurePtr);
 
                 output = this.CheckResult(result);
 
-                if (output.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (output.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     if (storageStructurePtr != IntPtr.Zero)
                     {
@@ -1172,7 +1140,6 @@ namespace SharpCubeProgrammer
 
         //OB module groups option bytes functions used by any interface.
 
-        /// <inheritdoc />
         public CubeProgrammerError SendOptionBytesCmd(string command)
         {
             var result = this._programmerInstanceApi.SendOptionBytesCmd(command);
@@ -1181,21 +1148,18 @@ namespace SharpCubeProgrammer
             return output;
         }
 
-        /// <inheritdoc />
         public DevicePeripheralC? InitOptionBytesInterface()
         {
             var pointer = this._programmerInstanceApi.InitOptionBytesInterface();
             return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
         }
 
-        /// <inheritdoc />
         public DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
             var pointer = this._programmerInstanceApi.FastRomInitOptionBytesInterface(deviceId);
             return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
         }
 
-        /// <inheritdoc />
         private DevicePeripheralC? DevicePeripheralCHandler(IntPtr pointer)
         {
             var pointerSize = Marshal.SizeOf<IntPtr>();
@@ -1325,10 +1289,9 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError ObDisplay()
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
             try
             {
                 var obDisplayResult = this._programmerInstanceApi.ObDisplay();
@@ -1349,14 +1312,12 @@ namespace SharpCubeProgrammer
 
         //Loaders module groups loaders functions.
 
-        /// <inheritdoc />
         public void SetLoadersPath(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
             this._programmerInstanceApi.SetLoadersPath(pathAdapted);
         }
 
-        /// <inheritdoc />
         public DeviceExternalLoader? SetExternalLoaderPath(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
@@ -1402,7 +1363,6 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        /// <inheritdoc />
         public DeviceExternalLoader? SetExternalLoaderOBL(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
@@ -1448,7 +1408,6 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        /// <inheritdoc />
         public DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer")
         {
             var pathAdapted = path.Replace(@"\", "/");
@@ -1513,14 +1472,12 @@ namespace SharpCubeProgrammer
             return null;
         }
 
-        /// <inheritdoc />
         public void RemoveExternalLoader(string path)
         {
             var pathAdapted = path.Replace(@"\", "/");
             this._programmerInstanceApi.RemoveExternalLoader(pathAdapted);
         }
 
-        /// <inheritdoc />
         public void DeleteLoaders()
         {
             this._programmerInstanceApi.DeleteLoaders();
@@ -1534,7 +1491,6 @@ namespace SharpCubeProgrammer
         /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
-        /// <inheritdoc />
         public (CubeProgrammerError, byte[]) GetUID64()
         {
             var buffer = new byte[8];
@@ -1542,7 +1498,7 @@ namespace SharpCubeProgrammer
             var getUID64Result = this._programmerInstanceApi.GetUID64(ref bufferPtr);
 
             var result = this.CheckResult(getUID64Result);
-            if (result.Equals(CubeProgrammerError.CubeprogrammerNoError) && bufferPtr != IntPtr.Zero)
+            if (result.Equals(CubeProgrammerError.CubeProgrammerNoError) && bufferPtr != IntPtr.Zero)
             {
                 Marshal.Copy(bufferPtr, buffer, 0, 8);
             }
@@ -1550,13 +1506,11 @@ namespace SharpCubeProgrammer
             return (result, buffer);
         }
 
-        /// <inheritdoc />
         public bool FirmwareDelete()
         {
             return this._programmerInstanceApi.FirmwareDelete();
         }
 
-        /// <inheritdoc />
         public bool FirmwareUpgrade(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify)
         {
             var uintAddress = this.HexConverterToUint(address);
@@ -1565,19 +1519,16 @@ namespace SharpCubeProgrammer
             return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
         }
 
-        /// <inheritdoc />
         public bool StartWirelessStack()
         {
             return this._programmerInstanceApi.StartWirelessStack();
         }
 
-        /// <inheritdoc />
         public bool UpdateAuthKey(string filePath)
         {
             return this._programmerInstanceApi.UpdateAuthKey(filePath);
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError AuthKeyLock()
         {
             var authKeyLockResult = this._programmerInstanceApi.AuthKeyLock();
@@ -1586,7 +1537,6 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError WriteUserKey(string filePath, byte keyType)
         {
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
@@ -1596,19 +1546,16 @@ namespace SharpCubeProgrammer
             return result;
         }
 
-        /// <inheritdoc />
         public bool AntiRollBack()
         {
             return this._programmerInstanceApi.AntiRollBack();
         }
 
-        /// <inheritdoc />
         public bool StartFus()
         {
             return this._programmerInstanceApi.StartFus();
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError UnlockChip()
         {
             var unlockChipResult = this._programmerInstanceApi.UnlockChip();
@@ -1621,7 +1568,6 @@ namespace SharpCubeProgrammer
 
         #region [STM32MP specific functions]
 
-        /// <inheritdoc />
         public CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
         {
             var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
@@ -1638,37 +1584,31 @@ namespace SharpCubeProgrammer
 
         #region [STM32 HSM specific functions]
 
-        /// <inheritdoc />
         public string GetHsmFirmwareID(int hsmSlotId)
         {
             return this._programmerInstanceApi.GetHsmFirmwareID(hsmSlotId);
         }
 
-        /// <inheritdoc />
         public ulong GetHsmCounter(int hsmSlotId)
         {
             return this._programmerInstanceApi.GetHsmCounter(hsmSlotId);
         }
 
-        /// <inheritdoc />
         public string GetHsmState(int hsmSlotId)
         {
             return this._programmerInstanceApi.GetHsmState(hsmSlotId);
         }
 
-        /// <inheritdoc />
         public string GetHsmVersion(int hsmSlotId)
         {
             return this._programmerInstanceApi.GetHsmVersion(hsmSlotId);
         }
 
-        /// <inheritdoc />
         public string GetHsmType(int hsmSlotId)
         {
             return this._programmerInstanceApi.GetHsmType(hsmSlotId);
         }
 
-        /// <inheritdoc />
         public CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath)
         {
             var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
@@ -1702,7 +1642,6 @@ namespace SharpCubeProgrammer
 
         #region [Util]
 
-        /// <inheritdoc />
         public uint HexConverterToUint(string hex)
         {
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
@@ -1711,7 +1650,6 @@ namespace SharpCubeProgrammer
             return parseResult ? result : 0;
         }
 
-        /// <inheritdoc />
         public int HexConverterToInt(string hex)
         {
             IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
@@ -1720,14 +1658,12 @@ namespace SharpCubeProgrammer
             return parseResult ? result : 0;
         }
 
-        /// <inheritdoc />
         public string HexConverterToString(uint hex)
         {
             var output = "0x" + hex.ToString("X");
             return output;
         }
 
-        /// <inheritdoc />
         public string HexConverterToString(int hex)
         {
             var output = "0x" + hex.ToString("X");
@@ -1751,7 +1687,7 @@ namespace SharpCubeProgrammer
 
         private CubeProgrammerError CheckResult(int result)
         {
-            var output = CubeProgrammerError.CubeprogrammerErrorOther;
+            var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
             try
             {

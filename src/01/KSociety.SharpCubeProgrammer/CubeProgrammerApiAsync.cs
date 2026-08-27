@@ -66,9 +66,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> SendByteUartAsync(int bytes, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> SendByteUartAsync(int @byte, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.SendByteUart(bytes), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.SendByteUart(@byte), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -126,9 +126,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default)
+        public async ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks c, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.SetDisplayCallbacks(callbacksHandle), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.SetDisplayCallbacks(c), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -176,9 +176,9 @@ namespace SharpCubeProgrammer
         }
 
         /// <inheritdoc />
-        public async ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.EditSector(address, data), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.EditSector(address, data, size), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />

@@ -263,12 +263,12 @@ namespace SharpCubeProgrammer.Native
                 (function) => function(usartParameters));
         }
 
-        internal int SendByteUart(int byteToSend)
+        internal int SendByteUart(int @byte)
         {
             return this.EnsureFunctionAndInvoke(
                 "sendByteUart",
                 ref this._sendByteUart,
-                (function) => function(byteToSend));
+                (function) => function(@byte));
         }
 
         internal int GetDfuDeviceList(ref IntPtr dfuList, int iPID, int iVID)

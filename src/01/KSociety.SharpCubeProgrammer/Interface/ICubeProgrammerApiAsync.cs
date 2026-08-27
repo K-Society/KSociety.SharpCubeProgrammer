@@ -63,7 +63,7 @@ namespace SharpCubeProgrammer.Interface
         /// <summary>
         /// This routine allows to send a single byte through the USART interface.
         /// </summary>
-        ValueTask<CubeProgrammerError> SendByteUartAsync(int bytes, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> SendByteUartAsync(int @byte, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to get connected DFU devices.
@@ -119,7 +119,7 @@ namespace SharpCubeProgrammer.Interface
         /// This routine allows to choose your custom display.
         /// </summary>
         /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
-        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default);
+        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks c, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to choose the verbosity level for display.
@@ -176,7 +176,7 @@ namespace SharpCubeProgrammer.Interface
         /// <returns>CubeprogrammerNoError if the writing operation correctly finished, otherwise an error occurred.</returns>
         /// <remarks>Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.</remarks>
         /// <remarks>Data size should not exceed sector size.</remarks>
-        ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This routine allows to download data from a file to the memory.

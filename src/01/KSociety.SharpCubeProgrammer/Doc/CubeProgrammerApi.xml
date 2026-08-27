@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>  
+    <members name="cubeProgrammerApi">
+        <CubeProgrammerApi>
+            <summary>
+                The main <c>CubeProgrammerApi</c> class.
+            </summary>
+            <remarks>
+                <para>
+                    <c>CubeProgrammerApi</c> is a class wrapper around a native ST CubeProgrammer_API library for connecting to ST-LINK and bootloader interfaces, managing loaders and option bytes, reading/writing/verifying device memory, and handling device-specific features with interop marshalling and safe disposal.
+                </para>
+            </remarks>
+        </CubeProgrammerApi>
+
+        <!-- STLINK functions -->
+        
+        <GetStLinkList>
+            <summary>
+                This method allows to get ST-LINK connected probe(s).
+            </summary>
+            <param name="shared">
+                Enable shared mode allowing connection of two or more instances to the same ST-LINK probe.
+            </param>
+            <returns>
+                This method returns a list of connected ST-LINK probes and its default configurations.
+            </returns>
+            <remarks>
+                <para>
+                    The Share option is useful only with ST-LINK Server.
+                    At the end of usage, <c>DeleteInterfaceList</c> must have been called.
+                </para>
+            </remarks>
+        </GetStLinkList>
+
+        <GetStLinkEnumerationList>
+            <summary>
+                This method allows to get ST-LINK connected probe(s) without connecting and intruse the target.
+            </summary>
+            <param name="shared">
+                Enable shared mode allowing connection of two or more instances to the same ST-LINK probe.
+            </param>
+            <returns>
+                This method returns a list of connected ST-LINK probes and its default configurations.
+            </returns>
+            <remarks>
+                <para>
+                    The Share option is useful only with ST-LINK Server.
+                    At the end of usage, <c>DeleteInterfaceList</c> must have been called.
+                </para>
+            </remarks>
+        </GetStLinkEnumerationList>
+
+        <ConnectStLink>
+            <summary>
+                This method allows to start connection to device through SWD or JTAG interfaces.
+            </summary>
+            <param name="debugConnectParameters">
+                Indicates customized configuration for ST-LINK connection.           
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    It is recommended to check <paramref name="debugConnectParameters"/> fields before connection.
+                </para>
+            </remarks>
+        </ConnectStLink>
+
+        <Reset>
+            <summary>
+                This method used to apply a target reset.
+            </summary>
+            <param name="rstMode">
+                Indicates the reset type Soft/Hard/Core #debugResetMode.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Reset operation is only available with JTAG/SWD debug interface.
+                </para>
+            </remarks>
+        </Reset>
+
+
+        <!-- Bootloader functions -->
+        
+        <GetUsartList>
+            <summary>
+                This method allows to get the list of available USART interfaces.
+            </summary>
+            <returns>
+                This method returns a list of available USART interfaces.
+            </returns>
+        </GetUsartList>
+
+        <ConnectUsartBootloader>
+            <summary>
+                This method allows to start connection to device through USART interface.
+            </summary>
+            <param name="usartConnectParameters">
+                Indicates customized configuration for USART connection.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </ConnectUsartBootloader>
+
+        <SendByteUart>
+            <summary>
+                This method allows to send a single byte through the USART interface.
+            </summary>
+            <param name="byte">
+                Indicates the data to be written.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </SendByteUart>
+
+        <GetDfuDeviceList>
+            <summary>
+                This method allows to get the list of connected DFU devices.
+            </summary>
+            <param name="iPID">
+                Indicate the Product ID to be used for DFU interface (0xdf11).
+            </param>
+            <param name="iVID">
+                Indicate the Vendor ID to be used for DFU interface (0x0483).
+            </param>
+            <returns>
+                This method returns a list of available Dfu devices.
+            </returns>
+            <remarks>
+                <para>
+                    At the end of usage, <c>DeleteInterfaceList</c> must have been called.
+                </para>
+            </remarks>
+        </GetDfuDeviceList>
+
+        <ConnectDfuBootloader>
+            <summary>
+                This method allows to start a simple connection through USB DFU interface.
+            </summary>
+            <param name="usbIndex">
+                Indicates the index of DFU ports already connected.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </ConnectDfuBootloader>
+
+        <ConnectDfuBootloader2>
+            <summary>
+                This method allows to start connection to device through USB DFU interface.
+            </summary>
+            <param name="dfuParameters">
+                Indicates the DFU connection parameters.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    It's recommanded to use this method to disable readout protection when connecting a MCU based device.
+                </para>
+            </remarks>
+        </ConnectDfuBootloader2>
+
+        <ConnectDfuBootloader2Overload>
+            <summary>
+                This method allows to start connection to device through USB DFU interface.
+            </summary>
+            <param name="usbIndex">
+                Indicates the index of DFU ports already connected.
+            </param>
+            <param name="rdu">
+                Request a read unprotect: value in {0,1}.
+            </param>
+            <param name="tzenreg">
+                Request a TZEN regression: value in {0,1}.
+            </param>
+            <param name="usbTimeout">
+                USB Timeout control (30000).
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    It's recommanded to use this method to disable readout protection when connecting a MCU based device.
+                </para>
+            </remarks>
+        </ConnectDfuBootloader2Overload>
+
+        <ConnectSpiBootloader>
+            <summary>
+                This method allows to start connection to device through SPI interface.
+            </summary>
+            <param name="spiParameters">
+                Indicates customized configuration for SPI connection.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </ConnectSpiBootloader>
+
+        <ConnectCanBootloader>
+            <summary>
+                This method allows to start connection to device through CAN interface.
+            </summary>
+            <param name="canParameters">
+                Indicates customized configuration for  CAN connection.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    To have CAN full support, you must have St-Link firmware version at least v3JxMxB2.
+                </para>
+            </remarks>
+        </ConnectCanBootloader>
+
+        <ConnectI2CBootloader>
+            <summary>
+                This method allows to start connection to device through I2C interface.
+            </summary>
+            <param name="i2CParameters">
+                Indicates customized configuration for I2C connection.
+            </param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </ConnectI2CBootloader>
+
+        <!-- General purposes functions -->
+
+        <SetDisplayCallbacksOverload>
+            <summary>
+                This method allows to choose your custom display.
+                Fill the parameters to customize the display tool.
+            </summary>
+            <param name="initProgressBar">Add a progress bar.</param>
+            <param name="messageReceived">Display internal messages according to verbosity level.</param>
+            <param name="progressBarUpdate">Display the loading of read/write process.</param>
+            <returns>
+                This method returns <see cref="DisplayCallBacks" />.</returns>
+            <remarks>
+                <para>
+                    This method must be called first of all to ensure the display management.
+                </para>
+            </remarks>
+        </SetDisplayCallbacksOverload>
+
+        <SetDisplayCallbacks>
+            <summary>
+                This method allows to choose your custom display.
+            </summary>
+            <param name="c">Fill the struct to customize the display tool.</param>
+            <returns>
+                This method returns <see cref="DisplayCallBacks" />.
+            </returns>
+            <remarks>
+                <para>
+                    This method must be called first of all to ensure the display management.
+                </para>
+            </remarks>
+        </SetDisplayCallbacks>
+
+        <SetVerbosityLevel>
+            <summary>
+                This method allows to choose the verbosity level for display.
+            </summary>
+            <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
+            <returns></returns>
+        </SetVerbosityLevel>
+
+        <CheckDeviceConnection>
+            <summary>
+                This method allows to check connection status [maintained or lost].
+            </summary>
+            <returns>
+                <c>TRUE</c> if the device is already connected, otherwise the connection to device is lost.
+            </returns>
+        </CheckDeviceConnection>
+
+        <GetDeviceGeneralInf>
+            <summary>
+                This method allows to get general device information.
+            </summary>
+            <returns>
+                This method returns structure <see cref="GeneralInf" /> in which the informations are stored.
+            </returns>
+        </GetDeviceGeneralInf>
+
+        <ReadMemory>
+            <summary>
+                This method allows to receive memory data on the used interface with the configration already initialized.
+            </summary>
+            <param name="address">The address to start reading from.</param>
+            <param name="byteSize">The number of bytes to read.</param>
+            <returns>
+                This method returns a tuple containing the <see cref="CubeProgrammerError" /> and the data buffer.
+            </returns>
+            <remarks>
+                <para>
+                    Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.
+                </para>
+            </remarks>
+        </ReadMemory>
+
+        <WriteMemory>
+            <summary>
+                This method allows to write memory data on the used interface with the configuration already initialized.
+            </summary>
+            <param name="address">The address to start writing from.</param>
+            <param name="data">Data buffer.</param>
+            <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.
+                </para>
+            </remarks>
+        </WriteMemory>
+
+        <WriteMemoryAutoFill>
+            <summary>
+                This method allows to write memory data on the used interface with the configuration already initialized.
+                <para>
+                    Aligns the buffer to a multiple of 8 bytes appending 0xFF if necessary.
+                </para>
+            </summary>
+            <param name="address">The address to start writing from.</param>
+            <param name="data">Data buffer.</param>
+            <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    WARNING: This method is not recommended for large data sizes, as it may lead to performance issues. It is advisable to use the <c>WriteMemory</c> method followed by a separate verification step for larger data transfers.
+                </para>
+                <para>
+                    WARNING: This method does not reference an official function from the CubeProgrammer_API library!
+                </para>
+            </remarks>
+        </WriteMemoryAutoFill>
+
+        <WriteMemoryAndVerify>
+            <summary>
+                This method allows to write memory data and verify on the user interface with the configuration already initialized.
+                <para>
+                    Aligns the buffer to a multiple of 8 bytes appending 0xFF if necessary.
+                </para>
+            </summary>
+            <param name="address">The address to start writing from.</param>
+            <param name="data">Data buffer.</param>
+            <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    WARNING: This method is not recommended for large data sizes, as it may lead to performance issues. It is advisable to use the <c>WriteMemory</c> method followed by a separate verification step for larger data transfers.
+                </para>
+                <para>
+                    WARNING: This method does not reference an official function from the CubeProgrammer_API library!
+                </para>
+            </remarks>
+        </WriteMemoryAndVerify>
+
+        <EditSector>
+            <summary>
+                This method allows to write sector data on the user interface with the configuration already initialized.
+            </summary>
+            <param name="address">The address to start writing from.</param>
+            <param name="data">Data buffer.</param>
+            <param name="size">The number of bytes to write if smaller than the data length.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.
+                </para>
+                <para>
+                    Data size should not exceed sector size.
+                </para>
+            </remarks>
+        </EditSector>
+
+        <DownloadFile>
+            <summary>
+                This method allows to download data from a file to the memory.
+                <para>
+                    File formats that are supported :
+                    <list type="table">
+                        <item>
+                            <term>hex</term>
+                            <description>Is an ASCII text file that stores binary machine code and memory addresses using hexadecimal numbers.</description>
+                        </item>
+                        <item>
+                            <term>bin</term>
+                            <description>Is a data archive saved in binary code, not directly readable as text.</description>
+                        </item>
+                        <item>
+                            <term>binary</term>
+                            <description>Is a data archive saved in binary code, not directly readable as text.</description>
+                        </item>
+                        <item>
+                            <term>srec</term>
+                            <description>Motorola S-record.</description>
+                        </item>
+                        <item>
+                            <term>s19</term>
+                            <description>Motorola S-record.</description>
+                        </item>
+                        <item>
+                            <term>tsv</term>
+                            <description>Flash Layout Files (Tab-Separated Values).</description>
+                        </item>
+                        <item>
+                            <term>elf</term>
+                            <description>Executable and Linkable Format.</description>
+                        </item>
+                        <item>
+                            <term>axf</term>
+                            <description>Executable and Linkable Format (ARM Executable file).</description>
+                        </item>
+                        <item>
+                            <term>out</term>
+                            <description>Executable and Linkable Format.</description>
+                        </item>
+                        <item>
+                            <term>stm32</term>
+                            <description>Is a binary file format that contains a special STMicroelectronics header.</description>
+                        </item>
+                    </list>
+                </para>
+            </summary>
+            <param name="inputFilePath">Indicates the full path of the considered file.</param>
+            <param name="address">The address to start downloading from.</param>
+            <param name="skipErase">In case to win in term time and if we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
+            <param name="verify">To add verification step after downloading.</param>
+            <param name="binFilePath">Path of the binary file.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </DownloadFile>
+
+        <Execute>
+            <summary>
+                This method allows to run the application.
+            </summary>
+            <param name="address">The address to start executing from.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    In most cases, the program will run from the Flash memory starting from 0x08000000.
+                </para>
+            </remarks>
+        </Execute>
+
+        <MassErase>
+            <summary>
+                This method allows to erase the whole Flash memory.
+            </summary>
+            <param name="sFlashMemName">The name of the Flash memory to be erased.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Depending on the device, this method can take a particular period of time.
+                </para>
+            </remarks>
+        </MassErase>
+
+        <SectorErase>
+            <summary>
+                This method allows to erase specific sectors of the Flash memory.
+            </summary>
+            <param name="sectors">Indicates the indexs of the specific sectors to be erased.</param>
+            <param name="sectorNbr">The number of chosen sectors.</param>
+            <param name="sFlashMemName">The name of the Flash memory to be erased.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Each circuit has a specific number of Flash memory sectors.
+                </para>
+            </remarks>
+        </SectorErase>
+
+        <ReadUnprotect>
+            <summary>
+                This method allows to disable the readout protection.
+            </summary>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    If the memory is not protected, a message appears to indicate that the device is not
+                    under Readout protection and the command has no effects.
+                </para>
+                <para>
+                    Depending on the device used, this method take a specific time.
+                </para>
+            </remarks>
+        </ReadUnprotect>
+
+        <TzenRegression>
+            <summary>
+                This method allows to perform the TZEN Option Byte regression.
+            </summary>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    Depending on the device used, this method take a specific time.
+                </para>
+            </remarks>
+        </TzenRegression>
+
+        <GetTargetInterfaceType>
+            <summary>
+                This method allows to know the interface that is in use.
+            </summary>
+            <returns>
+                This method returns <see cref="TargetInterfaceType" />.
+            </returns>
+        </GetTargetInterfaceType>
+
+        <GetCancelPointer>
+            <summary>
+                This method allows to drop the current read/write operation.
+            </summary>
+            <returns>
+                0 if there is no call for stop operation, otherwise 1.
+            </returns>
+        </GetCancelPointer>
+
+        <FileOpen>
+            <summary>
+                This method allows to open and get data from any supported file extension.
+            </summary>
+            <param name="filePath">Indicates the full path of the considered file.</param>
+            <returns>
+                This method returns <see cref="DeviceFileDataC" />.
+            </returns>
+            <remarks>
+                <para>
+                    WARNING: This method does not reference an official function from the CubeProgrammer_API library!
+                </para>
+            </remarks>
+        </FileOpen>
+
+        <FileOpenAsPointer>
+            <summary>
+                This method allows to open and get a pointer from any supported file extension.
+            </summary>
+            <param name="filePath">Indicates the full path of the considered file.</param>
+            <returns>
+                Pointer to <see cref="FileDataC" /> if the file has <c>hex, bin, srec or elf</c> as extension, otherwise a null pointer to indicate that the file type is not supported.
+            </returns>
+        </FileOpenAsPointer>
+
+        <FreeFileData>
+            <summary>
+                This method allows to clean up the handled file data.
+            </summary>
+            <param name="data">Pointer to the file data to be freed.</param>
+        </FreeFileData>
+
+        <FreeLibraryMemory>
+            <summary>
+                This method allows to free a specific memory region, typically used after readMemory().
+            </summary>
+            <param name="ptr">The input pointer address.</param>
+            <remarks>
+                <para>
+                    It's crucial to ensure that the data is no longer in use after you free the memory.
+                </para>
+            </remarks>
+        </FreeLibraryMemory>
+
+        <Verify>
+            <summary>
+                This method allows to verify if the indicated file data is identical to Flash memory content.
+            </summary>
+            <param name="fileData">Pointer to the file data to be verified.</param>
+            <param name="address">The address to start verifying from, it's considered only if the file has .bin or .binary as extension.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </Verify>
+
+        <VerifyMemory>
+            <summary>
+                This method allows to verify if the indicated memory data is identical to Flash memory content.
+            </summary>
+            <param name="address">The address to start verifying from.</param>
+            <param name="data">Data buffer.</param>         
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    WARNING: This method does not reference an official function from the CubeProgrammer_API library!
+                </para>
+            </remarks>
+        </VerifyMemory>
+
+        <VerifyMemoryBySegment>
+            <summary>
+                This method allows to verify if the indicated memory data is identical to Flash memory content.
+            </summary>
+            <param name="address">The address to start verifying from.</param>
+            <param name="data">Data buffer.</param>         
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    WARNING: This method does not reference an official function from the CubeProgrammer_API library!
+                </para>
+            </remarks>
+        </VerifyMemoryBySegment>
+
+        <SaveFileToFile>
+            <summary>
+                This method allows to save the data file content to another file.
+            </summary>
+            <param name="fileData">Pointer to the file data to be saved (Input file name.).</param>
+            <param name="sFileName">The name of the file to save the data to (Output file name.).</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+        </SaveFileToFile>
+
+        <SaveMemoryToFile>
+            <summary>
+                This method allows to save Flash memory content to a file.
+            </summary>
+            <param name="address">The address to start saving from.</param>
+            <param name="size">The size of the data to save.</param>
+            <param name="fileName">The name of the file to save the data to.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    The file name must finish with an extension ".hex", ".bin" or ".srec".
+                </para>
+            </remarks>
+        </SaveMemoryToFile>
+
+        <Disconnect>
+            <summary>
+                This method allows to clean up and disconnect the current connected target.
+            </summary>
+            <remarks>
+                <para>
+                    This method disconnect the target and delete the loaded Flash Loaders.
+                </para>
+            </remarks>
+        </Disconnect>
+
+        <DeleteInterfaceList>
+            <summary>
+                This method allows to clear the list of each created interface.
+            </summary>
+            <remarks>
+                <para>
+                    The list is filled by <see cref="GetStLinkList" />, <see cref="GetDfuDeviceList" />, <see cref="GetUsartList" />.
+                </para>
+            </remarks>
+        </DeleteInterfaceList>
+
+        <AutomaticMode>
+            <summary>
+                This method allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
+            </summary>
+            <param name="filePath">Indicates the full file path.</param>
+            <param name="address">The address to start downloading from.</param>
+            <param name="skipErase">If we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
+            <param name="verify">Add verification step after downloading.</param>
+            <param name="isMassErase">Erase the whole Flash memory.</param>
+            <param name="obCommand">Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."</param>
+            <param name="run">Start the application.</param>
+            <remarks>
+                <para>
+                    Connection to target must be established before performing automatic mode.
+                </para>
+            </remarks>
+        </AutomaticMode>
+
+        <SerialNumberingAutomaticMode>
+            <summary>
+                This method allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
+            </summary>
+            <param name="filePath">Indicates the full file path.</param>
+            <param name="address">The address to start downloading from.</param>
+            <param name="skipErase">If we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
+            <param name="verify">Add verification step after downloading.</param>
+            <param name="isMassErase">Erase the whole Flash memory.</param>
+            <param name="obCommand">Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."</param>
+            <param name="run">Start the application.</param>
+            <param name="enableSerialNumbering">Enables the serial numbering.</param>
+            <param name="serialAddress">The address where the inital data and the subsequent increments will be made.</param>
+            <param name="serialSize">Size for the serial numbering.</param>
+            <param name="serialInitialData">Intial data used for the serial numbering that will be incremented.</param>
+            <remarks>
+                <para>
+                    Connection to target must be established before performing automatic mode with serial numbering.
+                </para>
+            </remarks>
+        </SerialNumberingAutomaticMode>
+
+        <GetStorageStructure>
+            <summary>
+                This method allows to get Flash storage information.
+            </summary>
+            <returns>A tuple containing the <see cref="CubeProgrammerError" /> and the storage structure.</returns>
+        </GetStorageStructure>
+
+    </members>
+</docs>
