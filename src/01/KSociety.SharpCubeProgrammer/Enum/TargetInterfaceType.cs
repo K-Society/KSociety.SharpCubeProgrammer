@@ -2,44 +2,28 @@
 
 namespace SharpCubeProgrammer.Enum
 {
-    /// <summary>
-    /// Indicates the supported interfaces.
-    /// </summary>
+    /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/TargetInterfaceType/*'/>
     public enum TargetInterfaceType
     {
-        /// <summary>
-        /// STLINK used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/StlinkInterface/*'/>
         StlinkInterface = 0,
 
-        /// <summary>
-        /// USART used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/UsartInterface/*'/>
         UsartInterface = 1,
 
-        /// <summary>
-        /// USB DFU used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/UsbInterface/*'/>
         UsbInterface = 2,
 
-        /// <summary>
-        /// SPI used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/SpiInterface/*'/>
         SpiInterface = 3,
 
-        /// <summary>
-        /// I2C used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/I2CInterface/*'/>
         I2CInterface = 4,
 
-        /// <summary>
-        /// CAN used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/CanInterface/*'/>
         CanInterface = 5,
 
-        /// <summary>
-        /// JLINK used as connection interface.
-        /// </summary>
+        /// <include file='..\Doc\TargetInterfaceType.xml' path='docs/members[@name="targetInterfaceType"]/JLinkInterface/*'/>
         JLinkInterface = 6
     }
 }

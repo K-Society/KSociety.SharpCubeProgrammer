@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="debugResetMode">
+        <DebugResetMode>
+            <summary>
+                Choose the way to apply a system reset.
+                <list type="table">
+                    <item>
+                        <term>SoftwareReset (0)</term>
+                        <description>Apply a reset by the software.</description>
+                    </item>
+                    <item>
+                        <term>HardwareReset (1)</term>
+                        <description>Apply a reset by the hardware.</description>
+                    </item>
+                    <item>
+                        <term>CoreReset (2)</term>
+                        <description>Apply a reset by the internal core peripheral.</description>
+                    </item>
+                </list>
+            </summary>
+        </DebugResetMode>
+
+        <SoftwareReset>
+            <summary>
+                Apply a reset by the software.
+            </summary>
+        </SoftwareReset>
+
+        <HardwareReset>
+            <summary>
+                Apply a reset by the hardware.
+            </summary>
+        </HardwareReset>
+
+        <CoreReset>
+            <summary>
+                Apply a reset by the internal core peripheral.
+            </summary>
+        </CoreReset>
+    </members>
+</docs>

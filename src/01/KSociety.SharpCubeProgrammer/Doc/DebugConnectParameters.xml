@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="debugConnectParameters">
+        <DebugConnectParameters>
+            <summary>
+                Get device characterization and specify connection parameters through ST-LINK interface.
+            </summary>
+        </DebugConnectParameters>
+
+        <DebugPort>
+            <summary>
+                Select the type of debug interface.
+            </summary>
+        </DebugPort>
+
+        <Index>
+            <summary>
+                Select one of the debug ports connected.
+            </summary>
+        </Index>
+
+        <SerialNumber>
+            <summary>
+                ST-LINK serial number.
+            </summary>
+        </SerialNumber>
+
+        <FirmwareVersion>
+            <summary>
+                ST-LINK firmware version.
+            </summary>
+        </FirmwareVersion>
+
+        <TargetVoltage>
+            <summary>
+                Operate voltage.
+            </summary>
+        </TargetVoltage>
+
+        <AccessPortNumber>
+            <summary>
+                Number of available access port.
+            </summary>
+        </AccessPortNumber>
+
+        <AccessPort>
+            <summary>
+                Select access port controller.
+            </summary>
+        </AccessPort>
+
+        <ConnectionMode>
+            <summary>
+                Select the debug CONNECT mode.
+            </summary>
+        </ConnectionMode>
+
+        <ResetMode>
+            <summary>
+                Select the debug RESET mode.
+            </summary>
+        </ResetMode>
+
+        <IsOldFirmware>
+            <summary>
+                Check Old ST-LINK firmware version.
+            </summary>
+        </IsOldFirmware>
+
+        <Frequencies>
+            <summary>
+                Supported frequencies.
+            </summary>
+        </Frequencies>
+
+        <Frequency>
+            <summary>
+                Selected frequency.
+            </summary>
+        </Frequency>
+
+        <IsBridge>
+            <summary>
+                Indicates if it's Bridge device or not.
+            </summary>
+        </IsBridge>
+
+        <Shared>
+            <summary>
+                Select connection type, if it's shared, use ST-LINK Server.
+            </summary>
+        </Shared>
+
+        <Board>
+            <summary>
+                Board name.
+            </summary>
+        </Board>
+
+        <DBG_Sleep>
+            <summary>
+                
+            </summary>
+        </DBG_Sleep>
+
+        <Speed>
+            <summary>
+                Select speed flashing of Cortex M33 series.
+            </summary>
+        </Speed>
+    </members>
+</docs>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="targetInterfaceType">
+        <TargetInterfaceType>
+            <summary>
+                Indicates the supported interfaces.
+                <list type="table">
+                    <item>
+                        <term>STLINK (0)</term>
+                        <description>STLINK used as connection interface</description>
+                    </item>
+                    <item>
+                        <term>USART (1)</term>
+                        <description>USART used as connection interface.</description>
+                    </item>
+                    <item>
+                        <term>USB (2)</term>
+                        <description>USB DFU used as connection interface.</description>
+                    </item>
+                    <item>
+                        <term>SPI (3)</term>
+                        <description>SPI used as connection interface.</description>
+                    </item>
+                    <item>
+                        <term>I2C (4)</term>
+                        <description>I2C used as connection interface..</description>
+                    </item>
+                    <item>
+                        <term>CAN (5)</term>
+                        <description>CAN used as connection interface.</description>
+                    </item>
+                    <item>
+                        <term>JLINK (6)</term>
+                        <description>JLINK used as connection interface.</description>
+                    </item>
+                </list>
+            </summary>
+        </TargetInterfaceType>
+
+        <StlinkInterface>
+            <summary>
+                STLINK used as connection interface.
+            </summary>
+        </StlinkInterface>
+
+        <UsartInterface>
+            <summary>
+                USART used as connection interface.
+            </summary>
+        </UsartInterface>
+
+        <UsbInterface>
+            <summary>
+                USB DFU used as connection interface.
+            </summary>
+        </UsbInterface>
+
+        <SpiInterface>
+            <summary>
+                SPI used as connection interface.
+            </summary>
+        </SpiInterface>
+
+        <I2CInterface>
+            <summary>
+                I2C used as connection interface.
+            </summary>
+        </I2CInterface>
+
+        <CanInterface>
+            <summary>
+                CAN used as connection interface.
+            </summary>
+        </CanInterface>
+
+        <JLinkInterface>
+            <summary>
+                JLINK used as connection interface.
+            </summary>
+        </JLinkInterface>
+
+    </members>
+</docs>

@@ -2,24 +2,16 @@
 
 namespace SharpCubeProgrammer.Enum
 {
-    /// <summary>
-    /// Choose the way to apply a system reset.
-    /// </summary>
+    /// <include file='..\Doc\DebugResetMode.xml' path='docs/members[@name="debugResetMode"]/DebugResetMode/*'/>
     public enum DebugResetMode
     {
-        /// <summary>
-        /// Apply a reset by the software.
-        /// </summary>
+        /// <include file='..\Doc\DebugResetMode.xml' path='docs/members[@name="debugResetMode"]/SoftwareReset/*'/>
         SoftwareReset = 0,
 
-        /// <summary>
-        /// Apply a reset by the hardware.
-        /// </summary>
+        /// <include file='..\Doc\DebugResetMode.xml' path='docs/members[@name="debugResetMode"]/HardwareReset/*'/>
         HardwareReset = 1,
 
-        /// <summary>
-        /// Apply a reset by the internal core peripheral.
-        /// </summary>
+        /// <include file='..\Doc\DebugResetMode.xml' path='docs/members[@name="debugResetMode"]/CoreReset/*'/>
         CoreReset = 2
     }
 }

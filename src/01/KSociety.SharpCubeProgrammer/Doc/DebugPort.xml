@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="debugPort">
+        <DebugPort>
+            <summary>
+                Select the debug port interface for connection.
+                <list type="table">
+                    <item>
+                        <term>JTAG (0)</term>
+                        <description>JTAG debug port.</description>
+                    </item>
+                    <item>
+                        <term>SWD (1)</term>
+                        <description>SWD debug port.</description>
+                    </item>
+                </list>
+            </summary>
+        </DebugPort>
+
+        <JTAG>
+            <summary>
+                JTAG debug port.
+            </summary>
+        </JTAG>
+
+        <SWD>
+            <summary>
+                SWD debug port.
+            </summary>
+        </SWD>
+        
+    </members>
+</docs>

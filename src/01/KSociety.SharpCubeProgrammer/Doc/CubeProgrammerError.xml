@@ -95,7 +95,7 @@
             </summary>
         </CubeProgrammerErrorNotConnected>
 
-        <CubeProgrammerErrorNoDevice    >
+        <CubeProgrammerErrorNoDevice>
             <summary>
                 Device not found.
             </summary>

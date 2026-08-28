@@ -2,19 +2,13 @@
 
 namespace SharpCubeProgrammer.Enum
 {
-    /// <summary>
-    /// Select the debug port interface for connection.
-    /// </summary>
+    /// <include file='..\Doc\DebugPort.xml' path='docs/members[@name="debugPort"]/DebugPort/*'/>
     public enum DebugPort
     {
-        /// <summary>
-        /// JTAG debug port.
-        /// </summary>
+        /// <include file='..\Doc\DebugPort.xml' path='docs/members[@name="debugPort"]/JTAG/*'/>
         JTAG = 0,
 
-        /// <summary>
-        /// SWD debug port.
-        /// </summary>
+        /// <include file='..\Doc\DebugPort.xml' path='docs/members[@name="debugPort"]/SWD/*'/>
         SWD = 1
     }
 }

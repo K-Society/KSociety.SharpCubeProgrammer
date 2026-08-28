@@ -2,21 +2,21 @@
 <!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
 
 <docs>  
-    <members name="cubeProgrammerApi">
-        <CubeProgrammerApi>
+    <members name="cubeProgrammerApiAsync">
+        <CubeProgrammerApiAsync>
             <summary>
-                The main <c>CubeProgrammerApi</c> class.
+                The main <c>CubeProgrammerApiAsync</c> class.
             </summary>
             <remarks>
                 <para>
-                    <c>CubeProgrammerApi</c> is a class wrapper around a native ST CubeProgrammer_API library for connecting to ST-LINK and bootloader interfaces, managing loaders and option bytes, reading/writing/verifying device memory, and handling device-specific features with interop marshalling and safe disposal.
+                    <c>CubeProgrammerApiAsync</c> is a class wrapper around a native ST CubeProgrammer_API library for connecting to ST-LINK and bootloader interfaces, managing loaders and option bytes, reading/writing/verifying device memory, and handling device-specific features with interop marshalling and safe disposal.
                 </para>
             </remarks>
-        </CubeProgrammerApi>
+        </CubeProgrammerApiAsync>
 
         <!-- STLINK functions -->
 
-        <TryConnectStLink>
+        <TryConnectStLinkAsync>
             <summary>
                 This method allows to attempt connection to ST-LINK probe.
             </summary>
@@ -29,6 +29,9 @@
             <param name="debugConnectMode">
                 Choose the appropriate mode for connection.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -37,9 +40,9 @@
                     WARNING: This method does not reference an official function from the CubeProgrammer_API library!
                 </para>
             </remarks>
-        </TryConnectStLink>
-        
-        <GetStLinkList>
+        </TryConnectStLinkAsync>
+
+        <GetStLinkListAsync>
             <summary>
                 This method allows to get ST-LINK connected probe(s).
             </summary>
@@ -49,20 +52,26 @@
             <returns>
                 This method returns a list of connected ST-LINK probes and its default configurations.
             </returns>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     The Share option is useful only with ST-LINK Server.
                     At the end of usage, <c>DeleteInterfaceList</c> must have been called.
                 </para>
             </remarks>
-        </GetStLinkList>
+        </GetStLinkListAsync>
 
-        <GetStLinkEnumerationList>
+        <GetStLinkEnumerationListAsync>
             <summary>
                 This method allows to get ST-LINK connected probe(s) without connecting and intruse the target.
             </summary>
             <param name="shared">
                 Enable shared mode allowing connection of two or more instances to the same ST-LINK probe.
+            </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
             </param>
             <returns>
                 This method returns a list of connected ST-LINK probes and its default configurations.
@@ -73,14 +82,17 @@
                     At the end of usage, <c>DeleteInterfaceList</c> must have been called.
                 </para>
             </remarks>
-        </GetStLinkEnumerationList>
+        </GetStLinkEnumerationListAsync>
 
-        <ConnectStLink>
+        <ConnectStLinkAsync>
             <summary>
                 This method allows to start connection to device through SWD or JTAG interfaces.
             </summary>
             <param name="debugConnectParameters">
                 Indicates customized configuration for ST-LINK connection.           
+            </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
             </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
@@ -90,14 +102,17 @@
                     It is recommended to check <paramref name="debugConnectParameters"/> fields before connection.
                 </para>
             </remarks>
-        </ConnectStLink>
+        </ConnectStLinkAsync>
 
-        <Reset>
+        <ResetAsync>
             <summary>
                 This method used to apply a target reset.
             </summary>
             <param name="rstMode">
                 Indicates the reset type Soft/Hard/Core #debugResetMode.
+            </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
             </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
@@ -107,44 +122,53 @@
                     Reset operation is only available with JTAG/SWD debug interface.
                 </para>
             </remarks>
-        </Reset>
+        </ResetAsync>
 
         <!-- Bootloader functions -->
-        
-        <GetUsartList>
+
+        <GetUsartListAsync>
             <summary>
                 This method allows to get the list of available USART interfaces.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns a list of available USART interfaces.
             </returns>
-        </GetUsartList>
+        </GetUsartListAsync>
 
-        <ConnectUsartBootloader>
+        <ConnectUsartBootloaderAsync>
             <summary>
                 This method allows to start connection to device through USART interface.
             </summary>
             <param name="usartConnectParameters">
                 Indicates customized configuration for USART connection.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </ConnectUsartBootloader>
+        </ConnectUsartBootloaderAsync>
 
-        <SendByteUart>
+        <SendByteUartAsync>
             <summary>
                 This method allows to send a single byte through the USART interface.
             </summary>
             <param name="byte">
                 Indicates the data to be written.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </SendByteUart>
+        </SendByteUartAsync>
 
-        <GetDfuDeviceList>
+        <GetDfuDeviceListAsync>
             <summary>
                 This method allows to get the list of connected DFU devices.
             </summary>
@@ -154,6 +178,9 @@
             <param name="iVID">
                 Indicate the Vendor ID to be used for DFU interface (0x0483).
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns a list of available Dfu devices.
             </returns>
@@ -162,26 +189,32 @@
                     At the end of usage, <c>DeleteInterfaceList</c> must have been called.
                 </para>
             </remarks>
-        </GetDfuDeviceList>
+        </GetDfuDeviceListAsync>
 
-        <ConnectDfuBootloader>
+        <ConnectDfuBootloaderAsync>
             <summary>
                 This method allows to start a simple connection through USB DFU interface.
             </summary>
             <param name="usbIndex">
                 Indicates the index of DFU ports already connected.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </ConnectDfuBootloader>
+        </ConnectDfuBootloaderAsync>
 
-        <ConnectDfuBootloader2>
+        <ConnectDfuBootloader2Async>
             <summary>
                 This method allows to start connection to device through USB DFU interface.
             </summary>
             <param name="dfuParameters">
                 Indicates the DFU connection parameters.
+            </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
             </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
@@ -191,9 +224,9 @@
                     It's recommanded to use this method to disable readout protection when connecting a MCU based device.
                 </para>
             </remarks>
-        </ConnectDfuBootloader2>
+        </ConnectDfuBootloader2Async>
 
-        <ConnectDfuBootloader2Overload>
+        <ConnectDfuBootloader2OverloadAsync>
             <summary>
                 This method allows to start connection to device through USB DFU interface.
             </summary>
@@ -209,6 +242,9 @@
             <param name="usbTimeout">
                 USB Timeout control (30000).
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -217,26 +253,32 @@
                     It's recommanded to use this method to disable readout protection when connecting a MCU based device.
                 </para>
             </remarks>
-        </ConnectDfuBootloader2Overload>
+        </ConnectDfuBootloader2OverloadAsync>
 
-        <ConnectSpiBootloader>
+        <ConnectSpiBootloaderAsync>
             <summary>
                 This method allows to start connection to device through SPI interface.
             </summary>
             <param name="spiParameters">
                 Indicates customized configuration for SPI connection.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </ConnectSpiBootloader>
+        </ConnectSpiBootloaderAsync>
 
-        <ConnectCanBootloader>
+        <ConnectCanBootloaderAsync>
             <summary>
                 This method allows to start connection to device through CAN interface.
             </summary>
             <param name="canParameters">
                 Indicates customized configuration for  CAN connection.
+            </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
             </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
@@ -246,23 +288,26 @@
                     To have CAN full support, you must have St-Link firmware version at least v3JxMxB2.
                 </para>
             </remarks>
-        </ConnectCanBootloader>
+        </ConnectCanBootloaderAsync>
 
-        <ConnectI2CBootloader>
+        <ConnectI2CBootloaderAsync>
             <summary>
                 This method allows to start connection to device through I2C interface.
             </summary>
             <param name="i2CParameters">
                 Indicates customized configuration for I2C connection.
             </param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </ConnectI2CBootloader>
+        </ConnectI2CBootloaderAsync>
 
         <!-- General purposes functions -->
 
-        <SetDisplayCallbacksOverload>
+        <SetDisplayCallbacksOverloadAsync>
             <summary>
                 This method allows to choose your custom display.
                 Fill the parameters to customize the display tool.
@@ -270,6 +315,9 @@
             <param name="initProgressBar">Add a progress bar.</param>
             <param name="messageReceived">Display internal messages according to verbosity level.</param>
             <param name="progressBarUpdate">Display the loading of read/write process.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DisplayCallBacks" />.</returns>
             <remarks>
@@ -277,13 +325,16 @@
                     This method must be called first of all to ensure the display management.
                 </para>
             </remarks>
-        </SetDisplayCallbacksOverload>
+        </SetDisplayCallbacksOverloadAsync>
 
-        <SetDisplayCallbacks>
+        <SetDisplayCallbacksAsync>
             <summary>
                 This method allows to choose your custom display.
             </summary>
             <param name="c">Fill the struct to customize the display tool.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DisplayCallBacks" />.
             </returns>
@@ -292,40 +343,52 @@
                     This method must be called first of all to ensure the display management.
                 </para>
             </remarks>
-        </SetDisplayCallbacks>
+        </SetDisplayCallbacksAsync>
 
-        <SetVerbosityLevel>
+        <SetVerbosityLevelAsync>
             <summary>
                 This method allows to choose the verbosity level for display.
             </summary>
             <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns></returns>
-        </SetVerbosityLevel>
+        </SetVerbosityLevelAsync>
 
-        <CheckDeviceConnection>
+        <CheckDeviceConnectionAsync>
             <summary>
                 This method allows to check connection status [maintained or lost].
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 <c>TRUE</c> if the device is already connected, otherwise the connection to device is lost.
             </returns>
-        </CheckDeviceConnection>
+        </CheckDeviceConnectionAsync>
 
-        <GetDeviceGeneralInf>
+        <GetDeviceGeneralInfAsync>
             <summary>
                 This method allows to get general device information.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns structure <see cref="GeneralInf" /> in which the informations are stored.
             </returns>
-        </GetDeviceGeneralInf>
+        </GetDeviceGeneralInfAsync>
 
-        <ReadMemory>
+        <ReadMemoryAsync>
             <summary>
                 This method allows to receive memory data on the used interface with the configration already initialized.
             </summary>
             <param name="address">The address to start reading from.</param>
             <param name="byteSize">The number of bytes to read.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns a tuple containing the <see cref="CubeProgrammerError" /> and the data buffer.
             </returns>
@@ -334,15 +397,18 @@
                     Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.
                 </para>
             </remarks>
-        </ReadMemory>
+        </ReadMemoryAsync>
 
-        <WriteMemory>
+        <WriteMemoryAsync>
             <summary>
                 This method allows to write memory data on the used interface with the configuration already initialized.
             </summary>
             <param name="address">The address to start writing from.</param>
             <param name="data">Data buffer.</param>
             <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -351,9 +417,9 @@
                     Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.
                 </para>
             </remarks>
-        </WriteMemory>
+        </WriteMemoryAsync>
 
-        <WriteMemoryAutoFill>
+        <WriteMemoryAutoFillAsync>
             <summary>
                 This method allows to write memory data on the used interface with the configuration already initialized.
                 <para>
@@ -363,6 +429,9 @@
             <param name="address">The address to start writing from.</param>
             <param name="data">Data buffer.</param>
             <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -374,9 +443,9 @@
                     WARNING: This method does not reference an official function from the CubeProgrammer_API library!
                 </para>
             </remarks>
-        </WriteMemoryAutoFill>
+        </WriteMemoryAutoFillAsync>
 
-        <WriteMemoryAndVerify>
+        <WriteMemoryAndVerifyAsync>
             <summary>
                 This method allows to write memory data and verify on the user interface with the configuration already initialized.
                 <para>
@@ -386,6 +455,9 @@
             <param name="address">The address to start writing from.</param>
             <param name="data">Data buffer.</param>
             <param name="size">The number of bytes to write if smaller from the data length.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -397,15 +469,18 @@
                     WARNING: This method does not reference an official function from the CubeProgrammer_API library!
                 </para>
             </remarks>
-        </WriteMemoryAndVerify>
+        </WriteMemoryAndVerifyAsync>
 
-        <EditSector>
+        <EditSectorAsync>
             <summary>
                 This method allows to write sector data on the user interface with the configuration already initialized.
             </summary>
             <param name="address">The address to start writing from.</param>
             <param name="data">Data buffer.</param>
             <param name="size">The number of bytes to write if smaller than the data length.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -417,9 +492,9 @@
                     Data size should not exceed sector size.
                 </para>
             </remarks>
-        </EditSector>
+        </EditSectorAsync>
 
-        <DownloadFile>
+        <DownloadFileAsync>
             <summary>
                 This method allows to download data from a file to the memory.
                 <para>
@@ -473,16 +548,22 @@
             <param name="skipErase">In case to win in term time and if we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
             <param name="verify">To add verification step after downloading.</param>
             <param name="binFilePath">Path of the binary file.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </DownloadFile>
+        </DownloadFileAsync>
 
-        <Execute>
+        <ExecuteAsync>
             <summary>
                 This method allows to run the application.
             </summary>
             <param name="address">The address to start executing from.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -491,13 +572,16 @@
                     In most cases, the program will run from the Flash memory starting from 0x08000000.
                 </para>
             </remarks>
-        </Execute>
+        </ExecuteAsync>
 
-        <MassErase>
+        <MassEraseAsync>
             <summary>
                 This method allows to erase the whole Flash memory.
             </summary>
             <param name="sFlashMemName">The name of the Flash memory to be erased.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -506,15 +590,18 @@
                     Depending on the device, this method can take a particular period of time.
                 </para>
             </remarks>
-        </MassErase>
+        </MassEraseAsync>
 
-        <SectorErase>
+        <SectorEraseAsync>
             <summary>
                 This method allows to erase specific sectors of the Flash memory.
             </summary>
             <param name="sectors">Indicates the indexs of the specific sectors to be erased.</param>
             <param name="sectorNbr">The number of chosen sectors.</param>
             <param name="sFlashMemName">The name of the Flash memory to be erased.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -523,12 +610,15 @@
                     Each circuit has a specific number of Flash memory sectors.
                 </para>
             </remarks>
-        </SectorErase>
+        </SectorEraseAsync>
 
-        <ReadUnprotect>
+        <ReadUnprotectAsync>
             <summary>
                 This method allows to disable the readout protection.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -541,12 +631,15 @@
                     Depending on the device used, this method take a specific time.
                 </para>
             </remarks>
-        </ReadUnprotect>
+        </ReadUnprotectAsync>
 
-        <TzenRegression>
+        <TzenRegressionAsync>
             <summary>
                 This method allows to perform the TZEN Option Byte regression.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -555,82 +648,106 @@
                     Depending on the device used, this method take a specific time.
                 </para>
             </remarks>
-        </TzenRegression>
+        </TzenRegressionAsync>
 
-        <GetTargetInterfaceType>
+        <GetTargetInterfaceTypeAsync>
             <summary>
                 This method allows to know the interface that is in use.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="TargetInterfaceType" />.
             </returns>
-        </GetTargetInterfaceType>
+        </GetTargetInterfaceTypeAsync>
 
-        <GetCancelPointer>
+        <GetCancelPointerAsync>
             <summary>
                 This method allows to drop the current read/write operation.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 0 if there is no call for stop operation, otherwise 1.
             </returns>
-        </GetCancelPointer>
+        </GetCancelPointerAsync>
 
-        <FileOpen>
+        <FileOpenAsync>
             <summary>
                 This method allows to open and get data from any supported file extension.
             </summary>
             <param name="filePath">Indicates the full path of the considered file.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DeviceFileDataC" />.
             </returns>
-        </FileOpen>
+        </FileOpenAsync>
 
-        <FileOpenAsPointer>
+        <FileOpenAsPointerAsync>
             <summary>
                 This method allows to open and get a pointer from any supported file extension.
             </summary>
             <param name="filePath">Indicates the full path of the considered file.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 Pointer to <see cref="FileDataC" /> if the file has <c>hex, bin, srec or elf</c> as extension, otherwise a null pointer to indicate that the file type is not supported.
             </returns>
-        </FileOpenAsPointer>
+        </FileOpenAsPointerAsync>
 
-        <FreeFileData>
+        <FreeFileDataAsync>
             <summary>
                 This method allows to clean up the handled file data.
             </summary>
             <param name="data">Pointer to the file data to be freed.</param>
-        </FreeFileData>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
+        </FreeFileDataAsync>
 
-        <FreeLibraryMemory>
+        <FreeLibraryMemoryAsync>
             <summary>
                 This method allows to free a specific memory region, typically used after readMemory().
             </summary>
             <param name="ptr">The input pointer address.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     It's crucial to ensure that the data is no longer in use after you free the memory.
                 </para>
             </remarks>
-        </FreeLibraryMemory>
+        </FreeLibraryMemoryAsync>
 
-        <Verify>
+        <VerifyAsync>
             <summary>
                 This method allows to verify if the indicated file data is identical to Flash memory content.
             </summary>
             <param name="fileData">Pointer to the file data to be verified.</param>
             <param name="address">The address to start verifying from, it's considered only if the file has .bin or .binary as extension.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </Verify>
+        </VerifyAsync>
 
-        <VerifyMemory>
+        <VerifyMemoryAsync>
             <summary>
                 This method allows to verify if the indicated memory data is identical to Flash memory content.
             </summary>
             <param name="address">The address to start verifying from.</param>
-            <param name="data">Data buffer.</param>         
+            <param name="data">Data buffer.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -639,14 +756,17 @@
                     WARNING: This method does not reference an official function from the CubeProgrammer_API library!
                 </para>
             </remarks>
-        </VerifyMemory>
+        </VerifyMemoryAsync>
 
-        <VerifyMemoryBySegment>
+        <VerifyMemoryBySegmentAsync>
             <summary>
                 This method allows to verify if the indicated memory data is identical to Flash memory content.
             </summary>
             <param name="address">The address to start verifying from.</param>
-            <param name="data">Data buffer.</param>         
+            <param name="data">Data buffer.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -655,26 +775,32 @@
                     WARNING: This method does not reference an official function from the CubeProgrammer_API library!
                 </para>
             </remarks>
-        </VerifyMemoryBySegment>
+        </VerifyMemoryBySegmentAsync>
 
-        <SaveFileToFile>
+        <SaveFileToFileAsync>
             <summary>
                 This method allows to save the data file content to another file.
             </summary>
             <param name="fileData">Pointer to the file data to be saved (Input file name.).</param>
             <param name="sFileName">The name of the file to save the data to (Output file name.).</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </SaveFileToFile>
+        </SaveFileToFileAsync>
 
-        <SaveMemoryToFile>
+        <SaveMemoryToFileAsync>
             <summary>
                 This method allows to save Flash memory content to a file.
             </summary>
             <param name="address">The address to start saving from.</param>
             <param name="size">The size of the data to save.</param>
             <param name="fileName">The name of the file to save the data to.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -683,31 +809,37 @@
                     The file name must finish with an extension ".hex", ".bin" or ".srec".
                 </para>
             </remarks>
-        </SaveMemoryToFile>
+        </SaveMemoryToFileAsync>
 
-        <Disconnect>
+        <DisconnectAsync>
             <summary>
                 This method allows to clean up and disconnect the current connected target.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     This method disconnect the target and delete the loaded Flash Loaders.
                 </para>
             </remarks>
-        </Disconnect>
+        </DisconnectAsync>
 
-        <DeleteInterfaceList>
+        <DeleteInterfaceListAsync>
             <summary>
                 This method allows to clear the list of each created interface.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     The list is filled by <see cref="GetStLinkList" />, <see cref="GetDfuDeviceList" />, <see cref="GetUsartList" />.
                 </para>
             </remarks>
-        </DeleteInterfaceList>
+        </DeleteInterfaceListAsync>
 
-        <AutomaticMode>
+        <AutomaticModeAsync>
             <summary>
                 This method allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
             </summary>
@@ -718,14 +850,17 @@
             <param name="isMassErase">Erase the whole Flash memory.</param>
             <param name="obCommand">Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."</param>
             <param name="run">Start the application.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     Connection to target must be established before performing automatic mode.
                 </para>
             </remarks>
-        </AutomaticMode>
+        </AutomaticModeAsync>
 
-        <SerialNumberingAutomaticMode>
+        <SerialNumberingAutomaticModeAsync>
             <summary>
                 This method allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
             </summary>
@@ -740,23 +875,29 @@
             <param name="serialAddress">The address where the inital data and the subsequent increments will be made.</param>
             <param name="serialSize">Size for the serial numbering.</param>
             <param name="serialInitialData">Intial data used for the serial numbering that will be incremented.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <remarks>
                 <para>
                     Connection to target must be established before performing automatic mode with serial numbering.
                 </para>
             </remarks>
-        </SerialNumberingAutomaticMode>
+        </SerialNumberingAutomaticModeAsync>
 
-        <GetStorageStructure>
+        <GetStorageStructureAsync>
             <summary>
                 This method allows to get Flash storage information.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>A tuple containing the <see cref="CubeProgrammerError" /> and the <see cref="DeviceStorageStructure" />.</returns>
-        </GetStorageStructure>
+        </GetStorageStructureAsync>
 
         <!-- Option Bytes functions -->
 
-        <SendOptionBytesCmd>
+        <SendOptionBytesCmdAsync>
             <summary>
                 This method allows program the given Option Byte.
                 <para>The option bytes are configured by the end user depending on the application requirements.</para>
@@ -768,6 +909,9 @@
                 </example>
             </summary>
             <param name="command">The option byte command to be sent.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>         
@@ -776,70 +920,91 @@
                     The command must written as: -ob [optionbyte=value] [optionbyte=value] ...
                 </para>
             </remarks>
-        </SendOptionBytesCmd>
+        </SendOptionBytesCmdAsync>
 
-        <InitOptionBytesInterface>
+        <InitOptionBytesInterfaceAsync>
             <summary>
                 This method allows to get option bytes values of the connected target.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns structure <see cref="DevicePeripheralC" /> in which the option bytes descriptions are stored.
             </returns>
-        </InitOptionBytesInterface>
+        </InitOptionBytesInterfaceAsync>
 
-        <FastRomInitOptionBytesInterface>
+        <FastRomInitOptionBytesInterfaceAsync>
             <summary>
                 This method allows to initialize the option bytes interface for Fast ROM.
             </summary>
             <param name="deviceId">The device ID.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns structure <see cref="DevicePeripheralC" /> in which the option bytes descriptions are stored.
             </returns>
-        </FastRomInitOptionBytesInterface>
+        </FastRomInitOptionBytesInterfaceAsync>
 
-        <ObDisplay>
+        <ObDisplayAsync>
             <summary>
                 This method allows to display the Option bytes.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </ObDisplay>
+        </ObDisplayAsync>
 
         <!-- Loaders functions -->
 
-        <SetLoadersPath>
+        <SetLoadersPathAsync>
             <summary>
                 This method allows to specify the location of Flash Loaders.
             </summary>
             <param name="path">Indicates the full path of the considered folder.</param>
-        </SetLoadersPath>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
+        </SetLoadersPathAsync>
 
-        <SetExternalLoaderPath>
+        <SetExternalLoaderPathAsync>
             <summary>
                 This method allows to specify the path of the external Loaders to be loaded.
             </summary>
             <param name="path">Indicates the full path of the folder containing external Loaders.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DeviceExternalLoader" />.
             </returns>
-        </SetExternalLoaderPath>
+        </SetExternalLoaderPathAsync>
 
-        <SetExternalLoaderOBL>
+        <SetExternalLoaderOBLAsync>
             <summary>
                 This method allows to specify the path of the external Loaders to be loaded via OBL interfaces.
             </summary>
             <param name="path">Indicates the full path of the folder containing external Loaders.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DeviceExternalLoader" />.
             </returns>
-        </SetExternalLoaderOBL>
+        </SetExternalLoaderOBLAsync>
 
-        <GetExternalLoaders>
+        <GetExternalLoadersAsync>
             <summary>
                 This method allows to get available external Loaders in the mentioned path.
             </summary>
             <param name="path">Indicates the full path containing ExternalLoader folder.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="DeviceExternalStorageInfo" />.
             </returns>
@@ -848,42 +1013,54 @@
                     All external Loader files should have the extension "stldr".
                 </para>
             </remarks>
-        </GetExternalLoaders>
+        </GetExternalLoadersAsync>
 
-        <RemoveExternalLoader>
+        <RemoveExternalLoaderAsync>
             <summary>
                 This method allows to unload an external Loaders.
             </summary>
             <param name="path">Indicates the full path of the external Loader file ready for unloading.</param>
-        </RemoveExternalLoader>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
+        </RemoveExternalLoaderAsync>
 
-        <DeleteLoaders>
+        <DeleteLoadersAsync>
             <summary>
                 This method allows to delete all target Flash Loaders.
             </summary>
-        </DeleteLoaders>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
+        </DeleteLoadersAsync>
 
         <!-- STM32WB specific functions -->
 
-        <GetUID64>
+        <GetUID64Async>
             <summary>
                 This method allows to read the device unique identifier.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A tuple containing the <see cref="CubeProgrammerError" /> and the data buffer.
             </returns>
-        </GetUID64>
+        </GetUID64Async>
 
-        <FirmwareDelete>
+        <FirmwareDeleteAsync>
             <summary>
                 This method allows to erase the BLE stack firmware.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
-        </FirmwareDelete>
+        </FirmwareDeleteAsync>
 
-        <FirmwareUpgrade>
+        <FirmwareUpgradeAsync>
             <summary>
                 This method allows to make upgrade of BLE stack firmware or FUS firmware.
             </summary>
@@ -892,25 +1069,34 @@
             <param name="firstInstall">1 if it is the first installation, otherwise 0, to ignore the firmware delete operation.</param>
             <param name="startStack">Starts the stack after programming.</param>
             <param name="verify">Verify if the download operation is achieved successfully before starting the upgrade.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
-        </FirmwareUpgrade>
+        </FirmwareUpgradeAsync>
 
-        <StartWirelessStack>
+        <StartWirelessStackAsync>
             <summary>
                 This method allows to start the programmed Wireless Stack.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
-        </StartWirelessStack>
+        </StartWirelessStackAsync>
 
-        <UpdateAuthKey>
+        <UpdateAuthKeyAsync>
             <summary>
                 This method allows to update the authentication key.
             </summary>
             <param name="filePath">Indicates the full path of the file containing the new authentication key.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
@@ -919,41 +1105,53 @@
                     This is the public key generated by STM32TrustedPackageCreator when signing the firmware using -sign command.
                 </para>
             </remarks>
-        </UpdateAuthKey>
+        </UpdateAuthKeyAsync>
 
-        <AuthKeyLock>
+        <AuthKeyLockAsync>
             <summary>
                 This method allows to lock the authentication key and once locked, it is no longer possible to change it.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </AuthKeyLock>
+        </AuthKeyLockAsync>
 
-        <WriteUserKey>
+        <WriteUserKeyAsync>
             <summary>
                 This method allows to write a customized user key.
             </summary>
             <param name="filePath">Indicates the full path of the file containing the new user key.</param>
             <param name="keyType">String indicating the key type to be used "Simple", "Master", "Encrypted".</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </WriteUserKey>
+        </WriteUserKeyAsync>
 
-        <AntiRollBack>
+        <AntiRollBackAsync>
             <summary>
                 This method allows to activate the AntiRollBack.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
-        </AntiRollBack>
+        </AntiRollBackAsync>
 
-        <StartFus>
+        <StartFusAsync>
             <summary>
                 This method allows to start and establish a communication with the FUS operator.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 A boolean indicating whether the operation was successful.
             </returns>
@@ -962,20 +1160,23 @@
                     Availbale only for ST-LINK interfaces.
                 </para>
             </remarks>
-        </StartFus>
+        </StartFusAsync>
 
-        <UnlockChip>
+        <UnlockChipAsync>
             <summary>
                 This method allows to set default option Bytes.
             </summary>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
-        </UnlockChip>
+        </UnlockChipAsync>
 
         <!-- STM32MP specific functions -->
 
-        <ProgramSsp>
+        <ProgramSspAsync>
             <summary>
                 This method aims to launch the Secure Secret Provisioning.
             </summary>
@@ -983,6 +1184,9 @@
             <param name="licenseFile">Indicates the full path of the license file. If you are trying to start the SSP without HSM, the hsmSlotId should be 0.</param>
             <param name="tfaFile">Indicates the full path of the tfa-ssp file.</param>
             <param name="hsmSlotId">Indicates the HSM slot ID.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -991,56 +1195,74 @@
                     If you are trying to start the SSP with HSM, the licenseFile parametre should be empty.
                 </para>
             </remarks>
-        </ProgramSsp>
+        </ProgramSspAsync>
 
         <!-- STM32 HSM specific functions -->
 
-        <GetHsmFirmwareID>
+        <GetHsmFirmwareIDAsync>
             <summary>
                 This method allows to get the HSM Firmware Identifier.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>String that contains the HSM Firmware Identifier.</returns>
-        </GetHsmFirmwareID>
+        </GetHsmFirmwareIDAsync>
 
-        <GetHsmCounter>
+        <GetHsmCounterAsync>
             <summary>
                 This method allows to get the HSM counter.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>ulong that contains the HSM counter value.</returns>
-        </GetHsmCounter>
+        </GetHsmCounterAsync>
 
-        <GetHsmState>
+        <GetHsmStateAsync>
             <summary>
                 This method allows to get the HSM State.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>String that contains the HSM State (with possible values: ST_STATE, OEM_STATE, OPERATIONAL_STATE, UNKNOWN_STATE).</returns>
-        </GetHsmState>
+        </GetHsmStateAsync>
 
-        <GetHsmVersion>
+        <GetHsmVersionAsync>
             <summary>
                 This method allows to get the HSM version.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>String that contains the HSM version (with possible values: 1, 2).</returns>
-        </GetHsmVersion>
+        </GetHsmVersionAsync>
 
-        <GetHsmType>
+        <GetHsmTypeAsync>
             <summary>
                 This method allows to get the HSM type.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>String that contains the HSM type (with possible values: SFI, SMU, SSP...).</returns>
-        </GetHsmType>
+        </GetHsmTypeAsync>
 
-        <GetHsmLicense>
+        <GetHsmLicenseAsync>
             <summary>
                 This method allows to get and save the HSM license into a binary file.
             </summary>
             <param name="hsmSlotId">The slot index of the plugud-in HSM.</param>
             <param name="outLicensePath">Path of the output binary file.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -1049,33 +1271,42 @@
                     Connection to target must be established before performing this method.
                 </para>
             </remarks>
-        </GetHsmLicense>
+        </GetHsmLicenseAsync>
 
         <!-- Util -->
 
-        <HexConverterToUint>
+        <HexConverterToUintAsync>
             <summary>
                 This method converts a hexadecimal string to an unsigned integer.
             </summary>
             <param name="hex">The hexadecimal string to convert.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>The unsigned integer value.</returns>
-        </HexConverterToUint>
+        </HexConverterToUintAsync>
 
-        <HexConverterToInt>
+        <HexConverterToIntAsync>
             <summary>
                 This method converts a hexadecimal string to a signed integer.
             </summary>
             <param name="hex">The hexadecimal string to convert.</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>The signed integer value.</returns>
-        </HexConverterToInt>
+        </HexConverterToIntAsync>
 
-        <HexConverterToString>
+        <HexConverterToStringAsync>
             <summary>
                 This method converts a hexadecimal value to a string.
             </summary>
             <param name="hex">The hexadecimal value to convert (int or uint).</param>
+            <param name="cancellationToken">
+                A token to cancel the operation.
+            </param>
             <returns>The string representation of the hexadecimal value.</returns>
-        </HexConverterToString>
+        </HexConverterToStringAsync>
 
     </members>
 </docs>

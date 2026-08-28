@@ -5,97 +5,63 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
     using Enum;
 
-    /// <summary>
-    /// Get device characterization and specify connection parameters through ST-LINK interface.
-    /// </summary>
-
+    /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DebugConnectParameters
     {
-        /// <summary>
-        /// Select the type of debug interface #debugPort.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
         public DebugPort DebugPort;
 
-        /// <summary>
-        /// Select one of the debug ports connected.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
         public int Index;
 
-        /// <summary>
-        /// ST-LINK serial number.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/SerialNumber/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 33)]
         public string SerialNumber;
 
-        /// <summary>
-        /// Firmware version.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/FirmwareVersion/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
         public string FirmwareVersion;
 
-        /// <summary>
-        /// Operate voltage.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/TargetVoltage/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 5)]
         public string TargetVoltage;
 
-        /// <summary>
-        /// Number of available access port.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/AccessPortNumber/*'/>
         public int AccessPortNumber;
 
-        /// <summary>
-        /// Select access port controller.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/AccessPort/*'/>
         public int AccessPort;
 
-        /// <summary>
-        /// Select the debug CONNECT mode #debugConnectMode.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/ConnectionMode/*'/>
         public DebugConnectionMode ConnectionMode;
 
-        /// <summary>
-        /// Select the debug RESET mode #debugResetMode.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/ResetMode/*'/>
         public DebugResetMode ResetMode;
 
-        /// <summary>
-        /// Check Old ST-LINK firmware version.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/IsOldFirmware/*'/>
         public int IsOldFirmware;
 
-        /// <summary>
-        /// Supported frequencies #frequencies.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Frequencies/*'/>
         public Frequencies Frequencies;
 
-        /// <summary>
-        /// Select specific frequency.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Frequency/*'/>
         public int Frequency;
 
-        /// <summary>
-        /// Indicates if it's Bridge device or not.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/IsBridge/*'/>
         public int IsBridge;
 
-        /// <summary>
-        /// Select connection type, if it's shared, use ST-LINK Server.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Shared/*'/>
         public int Shared;
 
-        /// <summary>
-        /// Board name.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Board/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Board;
 
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DBG_Sleep/*'/>
         public int DBG_Sleep;
 
-        /// <summary>
-        /// Select speed flashing of Cortex M33 series.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Speed/*'/>
         public int Speed;
     }
 }
