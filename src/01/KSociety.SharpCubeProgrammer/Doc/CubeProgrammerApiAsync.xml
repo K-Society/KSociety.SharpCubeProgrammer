@@ -65,7 +65,7 @@
 
         <GetStLinkEnumerationListAsync>
             <summary>
-                This method allows to get ST-LINK connected probe(s) without connecting and intruse the target.
+                This method allows to get ST-LINK connected probe(s) without connecting and intrude the target.
             </summary>
             <param name="shared">
                 Enable shared mode allowing connection of two or more instances to the same ST-LINK probe.
@@ -109,7 +109,7 @@
                 This method used to apply a target reset.
             </summary>
             <param name="rstMode">
-                Indicates the reset type Soft/Hard/Core #debugResetMode.
+                Indicates the reset type Soft, Hard or Core <see cref="DebugResetMode" />.
             </param>
             <param name="cancellationToken">
                 A token to cancel the operation.
