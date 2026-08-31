@@ -58,7 +58,7 @@ jobs:
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
         uses: NuGet/login@v1
         id: login
-        witch:
+        with:
           user: maniglia
 
       - name: Push to NuGet Packages
