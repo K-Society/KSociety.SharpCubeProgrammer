@@ -18,6 +18,8 @@ env:
 
 jobs:
   build:
+    permissions:
+        id-token: write
     name: Build
     runs-on: windows-2025
     steps:
@@ -51,6 +53,13 @@ jobs:
       - name: Push to GitHub Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
         run: dotnet nuget push "build/**/bin/Release/*.nupkg" --source https://nuget.pkg.github.com/K-Society/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+        
+      - name: NuGet login (OIDC → temp API key)
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        uses: NuGet/login@v1
+        id: login
+        witch:
+          user: maniglia
 
       - name: Push to NuGet Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
