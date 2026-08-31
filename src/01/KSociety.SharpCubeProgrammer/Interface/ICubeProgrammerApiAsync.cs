@@ -10,6 +10,7 @@ namespace SharpCubeProgrammer.Interface
     using Enum;
     using Struct;
 
+    /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/CubeProgrammerApiAsync/*'/>
     public interface ICubeProgrammerApiAsync : IAsyncDisposable
     {
 
@@ -17,31 +18,19 @@ namespace SharpCubeProgrammer.Interface
 
         //STLINK module groups debug ports JTAG/SWD functions together.
 
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/TryConnectStLinkAsync/*'/>
         ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get ST-LINK connected probe(s).
-        /// </summary>
-        /// <param name="shared"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetStLinkListAsync/*'/>
         ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get ST-LINK connected probe(s) without connecting and intruse the target.
-        /// </summary>
-        /// <param name="shared"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetStLinkEnumerationListAsync/*'/>
         ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkEnumerationListAsync(bool shared = false, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through SWD or JTAG interfaces.
-        /// </summary>
-        /// <param name="debugConnectParameters"></param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectStLinkAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectStLinkAsync(DebugConnectParameters debugConnectParameters, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine used to apply a target reset, use only with ST-LINK!.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ResetAsync/*'/>
         ValueTask<CubeProgrammerError> ResetAsync(DebugResetMode rstMode, CancellationToken cancellationToken = default);
 
         #endregion
@@ -50,54 +39,34 @@ namespace SharpCubeProgrammer.Interface
 
         //Bootloader module is a way to group Serial interfaces USB/UART/SPI/I2C/CAN functions together.
 
-        /// <summary>
-        /// This routine allows to get connected serial ports.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetUsartListAsync/*'/>
         ValueTask<IEnumerable<UsartConnectParameters>> GetUsartListAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through USART interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectUsartBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectUsartBootloaderAsync(UsartConnectParameters usartConnectParameters, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to send a single byte through the USART interface.
-        /// </summary>
-        ValueTask<CubeProgrammerError> SendByteUartAsync(int bytes, CancellationToken cancellationToken = default);
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SendByteUartAsync/*'/>
+        ValueTask<CubeProgrammerError> SendByteUartAsync(int @byte, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get connected DFU devices.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetDfuDeviceListAsync/*'/>
         ValueTask<IEnumerable<DfuDeviceInfo>> GetDfuDeviceListAsync(int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start a simple connection through USB DFU interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectDfuBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectDfuBootloaderAsync(string usbIndex, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through USB DFU interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectDfuBootloader2Async/*'/>
         ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(DfuConnectParameters dfuParameters, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through USB DFU interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectDfuBootloader2OverloadAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through SPI interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectSpiBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectSpiBootloaderAsync(SpiConnectParameters spiParameters, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through CAN interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectCanBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectCanBootloaderAsync(CanConnectParameters canParameters, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start connection to device through I2C interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectI2CBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectI2CBootloaderAsync(I2cConnectParameters i2CParameters, CancellationToken cancellationToken = default);
 
         #endregion
@@ -106,204 +75,100 @@ namespace SharpCubeProgrammer.Interface
 
         // General module groups general purposes functions used by any interface.
 
-        /// <summary>
-        /// This routine allows to choose your custom display.
-        /// </summary>
-        /// <param name="initProgressBar"></param>
-        /// <param name="messageReceived"></param>
-        /// <param name="progressBarUpdate"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetDisplayCallbacksAsync/*'/>
         ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(InitProgressBar initProgressBar, LogMessageReceived messageReceived, ProgressBarUpdateReceived progressBarUpdate, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to choose your custom display.
-        /// </summary>
-        /// <param name="callbacksHandle">Fill the struct to customize the display tool.</param>
-        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks callbacksHandle, CancellationToken cancellationToken = default);
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetDisplayCallbacksAsync/*'/>
+        ValueTask<DisplayCallBacks> SetDisplayCallbacksAsync(DisplayCallBacks c, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to choose the verbosity level for display.
-        /// </summary>
-        /// <param name="level">Indicates the verbosity number 0, 1 or 3.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetVerbosityLevelAsync/*'/>
         ValueTask SetVerbosityLevelAsync(VerbosityLevel level, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to check connection status [maintained or lost].
-        /// </summary>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/CheckDeviceConnectionAsync/*'/>
         ValueTask<bool> CheckDeviceConnectionAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get general device information.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetDeviceGeneralInfAsync/*'/>
         ValueTask<GeneralInf?> GetDeviceGeneralInfAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to receive memory data on the used interface with the configuration already initialized.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ReadMemoryAsync/*'/>
         ValueTask<(CubeProgrammerError, byte[])> ReadMemoryAsync(string address, int byteSize, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to write memory data on the user interface with the configuration already initialized.
-        /// </summary>
-        /// <param name="address">The address to start writing from.</param>
-        /// <param name="data">Data buffer.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/WriteMemoryAsync/*'/>
         ValueTask<CubeProgrammerError> WriteMemoryAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to write memory data on the user interface with the configuration already initialized.
-        /// Aligns the buffer to a multiple of 8 bytes appending 0xFF if necessary.
-        /// </summary>
-        /// <param name="address">The address to start writing from.</param>
-        /// <param name="data">Data buffer.</param>
-        [Obsolete("WriteMemoryAutoFillAsync is deprecated, please use WriteMemoryAsync instead.")]
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/WriteMemoryAutoFillAsync/*'/>
         ValueTask<CubeProgrammerError> WriteMemoryAutoFillAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to write memory data and verify on the user interface with the configuration already initialized.
-        /// Inside it uses the WriteMemoryAutoFill function.
-        /// </summary>
-        /// <param name="address">The address to start writing from.</param>
-        /// <param name="data">Data buffer.</param>
-        [Obsolete("WriteMemoryAndVerifyAsync is deprecated, please use WriteMemoryAsync instead.")]
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/WriteMemoryAndVerifyAsync/*'/>
         ValueTask<CubeProgrammerError> WriteMemoryAndVerifyAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to write sector data on the user interface with the configuration already initialized.
-        /// </summary>
-        /// <param name="address">The address to start writing from.</param>
-        /// <param name="data">Data buffer.</param>
-        /// <returns>CubeprogrammerNoError if the writing operation correctly finished, otherwise an error occurred.</returns>
-        /// <remarks>Unlike ST-LINK interface, the Bootloader interface can access only to some specific memory regions.</remarks>
-        /// <remarks>Data size should not exceed sector size.</remarks>
-        ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, CancellationToken cancellationToken = default);
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/EditSectorAsync/*'/>
+        ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to download data from a file to the memory.
-        /// File formats that are supported : hex, bin, srec, tsv, elf, axf, out, stm32, ext
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/DownloadFileAsync/*'/>
         ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to run the application.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ExecuteAsync/*'/>
         ValueTask<CubeProgrammerError> ExecuteAsync(string address = "0x08000000", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to erase the whole Flash memory.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/MassEraseAsync/*'/>
         ValueTask<CubeProgrammerError> MassEraseAsync(string sFlashMemName = "", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to erase specific sectors of the Flash memory.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SectorEraseAsync/*'/>
         ValueTask<CubeProgrammerError> SectorEraseAsync(uint[] sectors, uint sectorNbr, string sFlashMemName = "", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to disable the readout protection.
-        /// If the memory is not protected, a message appears to indicate that the device is not
-        /// under Readout protection and the command has no effects.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ReadUnprotectAsync/*'/>
         ValueTask<CubeProgrammerError> ReadUnprotectAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows the TZEN Option Byte regression.
-        /// </summary>
-        /// <returns>CubeprogrammerNoError if the disabling correctly accomplished, otherwise an error occurred.</returns>
-        /// <remarks>Depending on the device used, this routine take a specific time.</remarks>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/TzenRegressionAsync/*'/>
         ValueTask<CubeProgrammerError> TzenRegressionAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to know the interface what is in use.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetTargetInterfaceTypeAsync/*'/>
         ValueTask<TargetInterfaceType?> GetTargetInterfaceTypeAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to drop the current read/write operation.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetCancelPointerAsync/*'/>
         ValueTask<int> GetCancelPointerAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to open and get data from any supported file extension.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FileOpenAsync/*'/>
         ValueTask<DeviceFileDataC?> FileOpenAsync(string filePath, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to open and get pointer from any supported file extension.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FileOpenAsPointerAsync/*'/>
         ValueTask<IntPtr> FileOpenAsPointerAsync(string filePath, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to clean up the handled file data.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FreeFileDataAsync/*'/>
         ValueTask FreeFileDataAsync(IntPtr data, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to free a specific memory region, typically used after readMemory().
-        /// </summary>
-        /// <param name="ptr">The input pointer address.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FreeLibraryMemoryAsync/*'/>
         ValueTask FreeLibraryMemoryAsync(IntPtr ptr, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to verify if the indicated file data is identical to Flash memory content.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/VerifyAsync/*'/>
         ValueTask<CubeProgrammerError> VerifyAsync(IntPtr fileData, string address, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/VerifyMemoryAsync/*'/>
         ValueTask<CubeProgrammerError> VerifyMemoryAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to verify if the indicated data[] is identical to Flash memory content.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/VerifyMemoryBySegmentAsync/*'/>
         ValueTask<CubeProgrammerError> VerifyMemoryBySegmentAsync(string address, byte[] data, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to save the data file content to another file.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SaveFileToFileAsync/*'/>
         ValueTask<CubeProgrammerError> SaveFileToFileAsync(IntPtr fileData, string sFileName, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to save Flash memory content to file.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SaveMemoryToFileAsync/*'/>
         ValueTask<CubeProgrammerError> SaveMemoryToFileAsync(string address, string size, string fileName, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to clean up and disconnect the current connected target.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/DisconnectAsync/*'/>
         ValueTask DisconnectAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to clear the list of each created interface.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/DeleteInterfaceListAsync/*'/>
         ValueTask DeleteInterfaceListAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to enter and make an automatic process for memory management through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/AutomaticModeAsync/*'/>
         ValueTask AutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to enter and make an automatic process for memory management with serial numbering through JTAG/SWD, UART, DFU, SPI, CAN and I²C interfaces.
-        /// Connection to target must be established before performing automatic mode with serial numbering.
-        /// </summary>
-        /// <param name="filePath">Indicates the full file path.</param>
-        /// <param name="address">The address to start downloading from.</param>
-        /// <param name="skipErase">If we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
-        /// <param name="verify">Add verification step after downloading.</param>
-        /// <param name="isMassErase">Erase the whole Flash memory.</param>
-        /// <param name="obCommand">Indicates the option bytes commands to be loaded "-ob [optionbyte=value] [optionbyte=value]..."</param>
-        /// <param name="run">Start the application.</param>
-        /// <param name="enableSerialNumbering">Enables the serial numbering.</param>
-        /// <param name="serialAddress">The address where the inital data and the subsequent increments will be made.</param>
-        /// <param name="serialSize">Size for the serial numbering.</param>
-        /// <param name="serialInitialData">Intial data used for the serial numbering that will be incremented.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SerialNumberingAutomaticModeAsync/*'/>
         ValueTask SerialNumberingAutomaticModeAsync(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get Flash storage information.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetStorageStructureAsync/*'/>
         ValueTask<(CubeProgrammerError, DeviceStorageStructure)> GetStorageStructureAsync(CancellationToken cancellationToken = default);
 
         #endregion
@@ -312,25 +177,16 @@ namespace SharpCubeProgrammer.Interface
 
         //OB module groups option bytes functions used by any interface.
 
-        /// <summary>
-        /// This routine allows program the given Option Byte.
-        /// The option bytes are configured by the end user depending on the application requirements.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SendOptionBytesCmdAsync/*'/>
         ValueTask<CubeProgrammerError> SendOptionBytesCmdAsync(string command, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get option bytes values of the connected target.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/InitOptionBytesInterfaceAsync/*'/>
         ValueTask<DevicePeripheralC?> InitOptionBytesInterfaceAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get option bytes values of the connected target.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FastRomInitOptionBytesInterfaceAsync/*'/>
         ValueTask<DevicePeripheralC?> FastRomInitOptionBytesInterfaceAsync(ushort deviceId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to display the Option bytes.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ObDisplayAsync/*'/>
         ValueTask<CubeProgrammerError> ObDisplayAsync(CancellationToken cancellationToken = default);
 
         #endregion
@@ -339,37 +195,22 @@ namespace SharpCubeProgrammer.Interface
 
         //Loaders module groups loaders functions.
 
-        /// <summary>
-        /// This routine allows to specify the location of Flash Loader.
-        /// </summary>
-        /// <param name="path">Indicates the full path of the considered folder.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetLoadersPathAsync/*'/>
         ValueTask SetLoadersPathAsync(string path, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to specify the path of the external Loaders to be loaded.
-        /// </summary>
-        /// <param name="path"></param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetExternalLoaderPathAsync/*'/>
         ValueTask<DeviceExternalLoader?> SetExternalLoaderPathAsync(string path, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to specify the path of the external Loaders to be loaded via OBL interfaces.
-        /// </summary>
-        /// <param name="path">Indicates the full path of the folder containing external Loaders.</param>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SetExternalLoaderOBLAsync/*'/>
         ValueTask<DeviceExternalLoader?> SetExternalLoaderOBLAsync(string path, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to get available external Loaders in th mentioned path.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetExternalLoadersAsync/*'/>
         ValueTask<DeviceExternalStorageInfo?> GetExternalLoadersAsync(string path = @".\st\Programmer", CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to unload an external Loaders.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/RemoveExternalLoaderAsync/*'/>
         ValueTask RemoveExternalLoaderAsync(string path, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to delete all target Flash Loaders.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/DeleteLoadersAsync/*'/>
         ValueTask DeleteLoadersAsync(CancellationToken cancellationToken = default);
 
         #endregion
@@ -380,55 +221,34 @@ namespace SharpCubeProgrammer.Interface
         /// except for the "firmwareDelete" and the "firmwareUpgrade", available through USB DFU, UART and SWD interfaces.
         /// Connection under Reset is mandatory.
 
-        /// <summary>
-        /// This routine allows to read the device unique identifier.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetUID64Async/*'/>
         ValueTask<(CubeProgrammerError, byte[])> GetUID64Async(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to erase the BLE stack firmware.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FirmwareDeleteAsync/*'/>
         ValueTask<bool> FirmwareDeleteAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to make upgrade of BLE stack firmware or FUS firmware.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FirmwareUpgradeAsync/*'/>
         ValueTask<bool> FirmwareUpgradeAsync(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start the programmed Stack.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/StartWirelessStackAsync/*'/>
         ValueTask<bool> StartWirelessStackAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start the programmed Stack.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/UpdateAuthKeyAsync/*'/>
         ValueTask<bool> UpdateAuthKeyAsync(string filePath, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to lock the authentication key and once locked, it is no longer possible to change it.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/AuthKeyLockAsync/*'/>
         ValueTask<CubeProgrammerError> AuthKeyLockAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to write a customized user key.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/WriteUserKeyAsync/*'/>
         ValueTask<CubeProgrammerError> WriteUserKeyAsync(string filePath, byte keyType, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to activate the AntiRollBack.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/AntiRollBackAsync/*'/>
         ValueTask<bool> AntiRollBackAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to start and establish a communication with the FUS operator.
-        /// </summary>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/StartFusAsync/*'/>
         ValueTask<bool> StartFusAsync(CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine allows to set default option Bytes.
-        /// </summary>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/UnlockChipAsync/*'/>
         ValueTask<CubeProgrammerError> UnlockChipAsync(CancellationToken cancellationToken = default);
 
         #endregion
@@ -437,15 +257,7 @@ namespace SharpCubeProgrammer.Interface
 
         //Specific APIs used exclusively for STM32MP devices. The connection is available only through USB DFU and UART interfaces
 
-        /// <summary>
-        /// This routine aims to launch the Secure Secret Provisioning.
-        /// If you are trying to start the SSP with HSM, the licenseFile parameter should be empty.
-        /// </summary>
-        /// <param name="sspFile">Indicates the full path of the ssp file [Use STM32TrustedPackageCreator to generate a ssp image].</param>
-        /// <param name="licenseFile">Indicates the full path of the license file. If you are trying to start the SSP without HSM, the hsmSlotId should be 0.</param>
-        /// <param name="tfaFile">Indicates the full path of the tfa-ssp file.</param>
-        /// <param name="hsmSlotId">Indicates the HSM slot ID.</param>
-        /// <returns>0 if the SSP was finished successfully, otherwise an error occurred.</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ProgramSspAsync/*'/>
         ValueTask<CubeProgrammerError> ProgramSspAsync(string sspFile, string licenseFile, string tfaFile, int hsmSlotId, CancellationToken cancellationToken = default);
 
         #endregion
@@ -454,55 +266,27 @@ namespace SharpCubeProgrammer.Interface
 
         //Specific APIs used exclusively for STM32 devices to manage the Hardware Secure Module.
 
-        /// <summary>
-        /// This routine aims to get the HSM Firmware Identifier.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <returns>string that contains the HSM Firmware Identifier.</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmFirmwareIDAsync/*'/>
         ValueTask<string> GetHsmFirmwareIDAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine aims to get the current HSM counter.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <returns>Counter value</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmCounterAsync/*'/>
         ValueTask<ulong> GetHsmCounterAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine aims to get the HSM State.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <returns>string with possible values: ST_STATE , OEM_STATE, OPERATIONAL_STATE , UNKNOWN_STATE</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmStateAsync/*'/>
         ValueTask<string> GetHsmStateAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine aims to get the HSM version.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <returns>string with possible values: 1 , 2</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmVersionAsync/*'/>
         ValueTask<string> GetHsmVersionAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine aims to get the HSM type.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <returns>string with possible values: SFI. SMU. SSP...</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmTypeAsync/*'/>
         ValueTask<string> GetHsmTypeAsync(int hsmSlotId, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// This routine aims to get and save the HSM license into a binary file.
-        /// Connection to target must be established before performing this routine.
-        /// </summary>
-        /// <param name="hsmSlotId">The slot index of the plugged-in HSM</param>
-        /// <param name="outLicensePath">Path of the output binary file.</param>
-        /// <returns>0 if the operation was finished successfully, otherwise an error occurred.</returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetHsmLicenseAsync/*'/>
         ValueTask<CubeProgrammerError> GetHsmLicenseAsync(int hsmSlotId, string outLicensePath, CancellationToken cancellationToken = default);
 
         #endregion
 
         #region [EXTENDED]
-
-        //string VersionAPIAsync();
 
         void HaltAsync(CancellationToken cancellationToken = default);
 
@@ -514,32 +298,16 @@ namespace SharpCubeProgrammer.Interface
 
         #region [Util]
 
-        /// <summary>
-        /// HexConverterToUint
-        /// </summary>
-        /// <param name="hex"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToUintAsync/*'/>
         ValueTask<uint> HexConverterToUintAsync(string hex, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// HexConverterToInt
-        /// </summary>
-        /// <param name="hex"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToIntAsync/*'/>
         ValueTask<int> HexConverterToIntAsync(string hex, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// HexConverterToString
-        /// </summary>
-        /// <param name="hex"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToStringAsync/*'/>
         ValueTask<string> HexConverterToStringAsync(uint hex, CancellationToken cancellationToken = default);
 
-        /// <summary>
-        /// HexConverterToString
-        /// </summary>
-        /// <param name="hex"></param>
-        /// <returns></returns>
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToStringAsync/*'/>
         ValueTask<string> HexConverterToStringAsync(int hex, CancellationToken cancellationToken = default);
 
         #endregion

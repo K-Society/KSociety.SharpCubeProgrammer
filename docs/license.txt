@@ -50,8 +50,7 @@ AGREEMENT is void and will automatically terminate RECIPIENT’s rights under th
 12.The RECIPIENT shall be solely liable to determine and verify that the SOFTWARE PACKAGE is fit for the RECIPIENT
 intended use, environment or application and comply with all regulatory, safety and security related requirements concerning
 any use.
-SLA0048 - Rev 5 - October 2025 www.st.com
-For further information, contact your local STMicroelectronics sales office.
+SLA0048 - Rev 6 - February 2026 www.st.com
 SLA0048
 DISCLAIMER
 THE SOFTWARE PACKAGE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" AND ANY
@@ -68,4 +67,4 @@ EXCEPT AS EXPRESSLY PERMITTED HEREUNDER AND SUBJECT TO THE APPLICABLE LICENSING 
 THIRD-PARTY SOFTWARE INCORPORATED IN THE SOFTWARE PACKAGE AND OPEN SOURCE TERMS AS
 APPLICABLE, NO LICENSE OR OTHER RIGHTS, WHETHER EXPRESS OR IMPLIED, ARE GRANTED UNDER ANY
 PATENT OR OTHER INTELLECTUAL PROPERTY RIGHTS OF STMICROELECTRONICS OR ANY THIRD PARTY.
-SLA0048 - Rev 5 page 2/0
+SLA0048 - Rev 6 page 2/0
