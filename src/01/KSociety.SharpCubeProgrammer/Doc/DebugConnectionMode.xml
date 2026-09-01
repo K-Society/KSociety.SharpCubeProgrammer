@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="debugConnectionMode">
+        <DebugConnectionMode>
+            <summary>
+                Choose the appropriate mode for connection.
+                <list type="table">
+                    <item>
+                        <term>NormalMode (0)</term>
+                        <description>Connect with normal mode, the target is reset then halted while the type of reset is selected using the [debugResetMode].</description>
+                    </item>
+                    <item>
+                        <term>HotplugMode (1)</term>
+                        <description>Connect with under reset mode, option allows the user to connect to the target using a reset vector catch before executing any instruction.</description>
+                    </item>
+                    <item>
+                        <term>UnderResetMode (2)</term>
+                        <description>Connect with under reset mode, option allows the user to connect to the target using a reset vector catch before executing any instruction.</description>
+                    </item>
+                    <item>
+                        <term>PowerDownMode (3)</term>
+                        <description>Connect with power down mode.</description>
+                    </item>
+                    <item>
+                        <term>PreResetMode (4)</term>
+                        <description>Connect with pre reset mode.</description>
+                    </item>
+                    <item>
+                        <term>HwRstPulseMode (5)</term>
+                        <description>Connect with hwRstPulse mode.</description>
+                    </item>
+                </list>
+            </summary>
+        </DebugConnectionMode>
+
+        <NormalMode>
+            <summary>
+                Connect with normal mode, the target is reset then halted while the type of reset is selected using the [debugResetMode].
+            </summary>
+        </NormalMode>
+
+        <HotplugMode>
+            <summary>
+                Connect with hotplug mode,  this option allows the user to connect to the target without halt or reset.
+            </summary>
+        </HotplugMode>
+
+        <UnderResetMode>
+            <summary>
+                Connect with under reset mode, option allows the user to connect to the target using a reset vector catch before executing any instruction.
+            </summary>
+        </UnderResetMode>
+
+        <PowerDownMode>
+            <summary>
+                Connect with power down mode.
+            </summary>
+        </PowerDownMode>
+
+        <PreResetMode>
+            <summary>
+                Connect with pre reset mode.
+            </summary>
+        </PreResetMode>
+
+        <HwRstPulseMode>
+            <summary>
+                Connect with hwRstPulse mode.
+            </summary>
+        </HwRstPulseMode>
+</members>
+</docs>

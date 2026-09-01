@@ -61,7 +61,7 @@ namespace Programming
             {
                 var dfuConnect = CubeProgrammerApi.ConnectDfuBootloader(resultDfuList.First().UsbIndex);
 
-                if (dfuConnect.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (dfuConnect.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
 
@@ -102,7 +102,7 @@ namespace Programming
 
             var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 
-            if (tryConnectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+            if (tryConnectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
             {
                 
             }
@@ -122,7 +122,7 @@ namespace Programming
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
                     CubeProgrammerApi.Halt();
@@ -154,7 +154,7 @@ namespace Programming
 
                     var storageStructure = CubeProgrammerApi.GetStorageStructure();
 
-                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
                         Logger.LogInformation("Storage structure: \n" +
                                               "BanksNumber: {0} \n",
@@ -179,7 +179,7 @@ namespace Programming
 
                     var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
-                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
 
                     }

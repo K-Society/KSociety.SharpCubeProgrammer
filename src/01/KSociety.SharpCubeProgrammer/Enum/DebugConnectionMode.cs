@@ -2,39 +2,25 @@
 
 namespace SharpCubeProgrammer.Enum
 {
-    /// <summary>
-    /// Choose the appropriate mode for connection.
-    /// </summary>
+    /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/DebugConnectionMode/*'/>
     public enum DebugConnectionMode
     {
-        /// <summary>
-        /// Connect with normal mode, the target is reset then halted while the type of reset is selected using the [debugResetMode].
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/NormalMode/*'/>
         NormalMode = 0,
 
-        /// <summary>
-        /// Connect with hotplug mode,  this option allows the user to connect to the target without halt or reset.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/HotplugMode/*'/>
         HotplugMode = 1,
 
-        /// <summary>
-        /// Connect with under reset mode, option allows the user to connect to the target using a reset vector catch before executing any instruction.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/UnderResetMode/*'/>
         UnderResetMode = 2,
 
-        /// <summary>
-        /// Connect with power down mode.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/PowerDownMode/*'/>
         PowerDownMode = 3,
 
-        /// <summary>
-        /// Connect with pre reset mode.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/PreResetMode/*'/>
         PreResetMode = 4,
 
-        /// <summary>
-        /// Connect with hwRstPulse mode.
-        /// </summary>
+        /// <include file='..\Doc\DebugConnectionMode.xml' path='docs/members[@name="debugConnectionMode"]/HwRstPulseMode/*'/>
         HwRstPulseMode = 5
     }
 }

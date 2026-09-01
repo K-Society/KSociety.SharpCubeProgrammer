@@ -2,101 +2,63 @@
 
 namespace SharpCubeProgrammer.Enum
 {
-    /// <summary>
-    /// List of errors that can be occurred.
-    /// </summary>
+    /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerError/*'/>
     public enum CubeProgrammerError
     {
-        /// <summary>
-        /// Success (no error)
-        /// </summary>
-        CubeprogrammerNoError = 0,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerNoError/*'/>
+        CubeProgrammerNoError = 0,
 
-        /// <summary>
-        /// Device not connected.
-        /// </summary>
-        CubeprogrammerErrorNotConnected = -1,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNotConnected/*'/>
+        CubeProgrammerErrorNotConnected = -1,
 
-        /// <summary>
-        /// Device not found.
-        /// </summary>
-        CubeprogrammerErrorNoDevice = -2,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNoDevice/*'/>
+        CubeProgrammerErrorNoDevice = -2,
 
-        /// <summary>
-        /// Device connection error.
-        /// </summary>
-        CubeprogrammerErrorConnection = -3,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorConnection/*'/>
+        CubeProgrammerErrorConnection = -3,
 
-        /// <summary>
-        /// No such file.
-        /// </summary> 
-        CubeprogrammerErrorNoFile = -4,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNoFile/*'/>
+        CubeProgrammerErrorNoFile = -4,
 
-        /// <summary>
-        /// Operation not supported or unimplemented on this interface.
-        /// </summary>
-        CubeprogrammerErrorNotSupported = -5,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNotSupported/*'/>
+        CubeProgrammerErrorNotSupported = -5,
 
-        /// <summary>
-        /// Interface not supported or unimplemented on this platform.
-        /// </summary>
-        CubeprogrammerErrorInterfaceNotSupported = -6,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorInterfaceNotSupported/*'/>
+        CubeProgrammerErrorInterfaceNotSupported = -6,
 
-        /// <summary>
-        /// Insufficient memory.
-        /// </summary>
-        CubeprogrammerErrorNoMem = -7,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNoMem/*'/>
+        CubeProgrammerErrorNoMem = -7,
 
-        /// <summary>
-        /// Wrong parameters.
-        /// </summary>
-        CubeprogrammerErrorWrongParam = -8,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorWrongParam/*'/>
+        CubeProgrammerErrorWrongParam = -8,
 
-        /// <summary>
-        /// Memory read failure.
-        /// </summary>
-        CubeprogrammerErrorReadMem = -9,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorReadMem/*'/>
+        CubeProgrammerErrorReadMem = -9,
 
-        /// <summary>
-        /// Memory write failure.
-        /// </summary>
-        CubeprogrammerErrorWriteMem = -10,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorWriteMem/*'/>
+        CubeProgrammerErrorWriteMem = -10,
 
-        /// <summary>
-        /// Memory erase failure.
-        /// </summary>
-        CubeprogrammerErrorEraseMem = -11,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorEraseMem/*'/>
+        CubeProgrammerErrorEraseMem = -11,
 
-        /// <summary>
-        /// File format not supported for this kind of device.
-        /// </summary>
-        CubeprogrammerErrorUnsupportedFileFormat = -12,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorUnsupportedFileFormat/*'/>
+        CubeProgrammerErrorUnsupportedFileFormat = -12,
 
-        /// <summary>
-        /// Refresh required.
-        /// </summary>
-        CubeprogrammerErrorRefreshRequired = -13,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorRefreshRequired/*'/>
+        CubeProgrammerErrorRefreshRequired = -13,
 
-        /// <summary>
-        /// Refresh required.
-        /// </summary>
-        CubeprogrammerErrorNoSecurity = -14,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorNoSecurity/*'/>
+        CubeProgrammerErrorNoSecurity = -14,
 
-        /// <summary>
-        /// Changing frequency problem.
-        /// </summary>
-        CubeprogrammerErrorChangeFreq = -15,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorChangeFreq/*'/>
+        CubeProgrammerErrorChangeFreq = -15,
 
-        /// <summary>
-        /// RDP Enabled error.
-        /// </summary>
-        CubeprogrammerErrorRdpEnabled = -16,
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorRdpEnabled/*'/>
+        CubeProgrammerErrorRdpEnabled = -16,
 
         /* NB: Remember to update CUBEPROGRAMMER_ERROR_COUNT below. */
 
-        /// <summary>
-        /// Other error.
-        /// </summary>
-        CubeprogrammerErrorOther = -99
+        /// <include file='..\Doc\CubeProgrammerError.xml' path='docs/members[@name="cubeProgrammerError"]/CubeProgrammerErrorOther/*'/>
+        CubeProgrammerErrorOther = -99
     }
 }

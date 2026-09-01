@@ -46,7 +46,7 @@ namespace QuickStart
 
                 var connectionResult = cubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     var generalInfo = cubeProgrammerApi.GetDeviceGeneralInf();
                     if (generalInfo != null)
@@ -76,7 +76,7 @@ namespace QuickStart
 
                     var sendOptionBytesCmd = cubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
-                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
 
                     }
@@ -89,7 +89,7 @@ namespace QuickStart
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
                         @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.hex");
 
-                    if (downloadFileResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+                    if (downloadFileResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
                         ;
                     }
