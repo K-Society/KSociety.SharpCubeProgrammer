@@ -21,7 +21,7 @@ jobs:
     permissions:
         id-token: write
     name: Build
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -41,10 +41,6 @@ jobs:
       - name: Build KSociety.SharpCubeProgrammer
         shell: cmd
         run: ./build.cmd
-
-      - name: Push to GitHub Packages
-        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop')
-        run: dotnet nuget push "build/**/bin/Release/*.nupkg" --source https://nuget.pkg.github.com/K-Society/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
         
       - name: NuGet login (OIDC → temp API key)
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
