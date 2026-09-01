@@ -21,7 +21,7 @@ jobs:
     permissions:
         id-token: write
     name: Build
-    runs-on: windows-2025
+    runs-on: windows-2025-vs2026
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
