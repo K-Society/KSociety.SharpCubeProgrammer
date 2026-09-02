@@ -19,7 +19,8 @@ env:
 jobs:
   build:
     permissions:
-        id-token: write
+        contents: read
+        id-token: write # enable GitHub OIDC token issuance for this job
     name: Build
     runs-on: windows-2025-vs2026
     steps:
@@ -43,14 +44,14 @@ jobs:
         run: ./build.cmd
         
       - name: NuGet login (OIDC → temp API key)
-        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
+        #if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
         uses: NuGet/login@v1
         id: login
         with:
-          user: K-Society
+          user: ${{ secrets.NUGET_USER }}
 
       - name: Push to NuGet Packages
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
-        run: nuget push build/**/bin/Release/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{ secrets.NUGET_API_KEY }}
+        run: nuget push build/**/bin/Release/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{ steps.login.outputs.NUGET_API_KEY }}
         
         
