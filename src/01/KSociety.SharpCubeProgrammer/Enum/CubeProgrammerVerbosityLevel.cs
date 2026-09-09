@@ -10,27 +10,27 @@ namespace SharpCubeProgrammer.Enum
         /// <summary>
         /// No messages ever printed by the library.
         /// </summary>
-        CubeprogrammerVerLevelNone = 0,
+        CubeProgrammerVerLevelNone = 0,
 
         /// <summary>
         /// Warning, error and success messages are printed (default).
         /// </summary>
-        CubeprogrammerVerLevelOne = 1,
+        CubeProgrammerVerLevelOne = 1,
 
         /// <summary>
         /// Error roots informational messages are printed.
         /// </summary>
-        CubeprogrammerVerLevelTwo = 2,
+        CubeProgrammerVerLevelTwo = 2,
 
         /// <summary>
         /// Debug and informational messages are printed.
         /// </summary>
-        CubeprogrammerVerLevelDebug = 3,
+        CubeProgrammerVerLevelDebug = 3,
 
         /// <summary>
         /// No progress bar is printed in the output of the library.
         /// Progress bars are printed only with verbosity level one.
         /// </summary>
-        CubeprogrammerNoProgressBar = 4
+        CubeProgrammerNoProgressBar = 4
     }
 }
