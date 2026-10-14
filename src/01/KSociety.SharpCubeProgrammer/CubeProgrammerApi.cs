@@ -45,10 +45,13 @@ namespace SharpCubeProgrammer
         {
             if (logger == null)
             {
-                logger = new NullLogger<CubeProgrammerApi>();
+                this._logger = new NullLogger<CubeProgrammerApi>();
+            }
+            else
+            {
+                this._logger = logger;
             }
 
-            this._logger = logger;
             this._programmerInstanceApi = new ProgrammerInstanceApi();
         }
 
