@@ -172,7 +172,7 @@ namespace Programming
                                 Logger.LogInformation("Sector [{0}] \n" +
                                                       "Sector address: {1} \n" +
                                                       "Sector index: {2} \n" +
-                                                      "Sector size: {3} \n", ii, CubeProgrammerApi.HexConverterToString(sector.Address), sector.Index, sector.Size);
+                                                      "Sector size: {3} \n", ii, SharpCubeProgrammer.HexConverterUtil.HexConverterToString(sector.Address), sector.Index, sector.Size);
                             }
                         }
                     }

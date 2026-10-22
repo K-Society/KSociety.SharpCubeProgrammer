@@ -296,21 +296,5 @@ namespace SharpCubeProgrammer.Interface
 
         #endregion
 
-        #region [Util]
-
-        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToUintAsync/*'/>
-        ValueTask<uint> HexConverterToUintAsync(string hex, CancellationToken cancellationToken = default);
-
-        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToIntAsync/*'/>
-        ValueTask<int> HexConverterToIntAsync(string hex, CancellationToken cancellationToken = default);
-
-        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToStringAsync/*'/>
-        ValueTask<string> HexConverterToStringAsync(uint hex, CancellationToken cancellationToken = default);
-
-        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/HexConverterToStringAsync/*'/>
-        ValueTask<string> HexConverterToStringAsync(int hex, CancellationToken cancellationToken = default);
-
-        #endregion
-
     }
 }

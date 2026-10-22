@@ -5,6 +5,7 @@ namespace SharpCubePrgAPI
     using System;
     using System.Linq;
     using SharpCubePrgAPI.User;
+    using SharpCubeProgrammer;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
 
@@ -49,9 +50,9 @@ namespace SharpCubePrgAPI
             while (i < size)
             {
                 col = 0;
-                var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
+                var hexAddress = HexConverterUtil.HexConverterToUint(startAddress);
                 hexAddress += (uint)i;
-                DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :");
+                DisplayManager.LogMessage(MessageType.Normal, $"\n{HexConverterUtil.HexConverterToString(hexAddress)} :");
                 while (col < 4 && i < size)
                 {
                     var buffer = new byte[4];
@@ -93,7 +94,7 @@ namespace SharpCubePrgAPI
                         if (bit.Access == 0 || bit.Access == 2)
                         {
                             DisplayManager.LogMessage(MessageType.Normal, $"\t\t{bit.Name}:");
-                            DisplayManager.LogMessage(MessageType.Info, $" {cubeProgrammerApi.HexConverterToString(bit.BitValue)}\n");
+                            DisplayManager.LogMessage(MessageType.Info, $" {HexConverterUtil.HexConverterToString(bit.BitValue)}\n");
                         }
                     }
                 }
