@@ -294,21 +294,5 @@ namespace SharpCubeProgrammer.Interface
 
         #endregion
 
-        #region [Util]
-
-        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/HexConverterToUint/*'/>
-        uint HexConverterToUint(string hex);
-
-        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/HexConverterToInt/*'/>
-        int HexConverterToInt(string hex);
-
-        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/HexConverterToString/*'/>
-        string HexConverterToString(uint hex);
-
-        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/HexConverterToString/*'/>
-        string HexConverterToString(int hex);
-
-        #endregion
-
     }
 }

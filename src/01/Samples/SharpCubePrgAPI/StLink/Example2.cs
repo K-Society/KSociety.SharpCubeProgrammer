@@ -5,6 +5,7 @@ namespace SharpCubePrgAPI.StLink
     using System;
     using System.Linq;
     using SharpCubePrgAPI.User;
+    using SharpCubeProgrammer;
     using SharpCubeProgrammer.Enum;
     using SharpCubeProgrammer.Interface;
     using SharpCubeProgrammer.Struct;
@@ -97,9 +98,9 @@ namespace SharpCubePrgAPI.StLink
                 while (i < size)
                 {
                     col = 0;
-                    var hexAddress = cubeProgrammerApi.HexConverterToUint(startAddress);
+                    var hexAddress = HexConverterUtil.HexConverterToUint(startAddress);
                     hexAddress += (uint)i;
-                    DisplayManager.LogMessage(MessageType.Normal, $"\n{cubeProgrammerApi.HexConverterToString(hexAddress)} :");
+                    DisplayManager.LogMessage(MessageType.Normal, $"\n{HexConverterUtil.HexConverterToString(hexAddress)} :");
                     while (col < 4 && i < size)
                     {
                         var buffer = new byte[4];

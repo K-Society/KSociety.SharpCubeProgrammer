@@ -1051,31 +1051,5 @@
             </remarks>
         </GetHsmLicense>
 
-        <!-- Util -->
-
-        <HexConverterToUint>
-            <summary>
-                This method converts a hexadecimal string to an unsigned integer.
-            </summary>
-            <param name="hex">The hexadecimal string to convert.</param>
-            <returns>The unsigned integer value.</returns>
-        </HexConverterToUint>
-
-        <HexConverterToInt>
-            <summary>
-                This method converts a hexadecimal string to a signed integer.
-            </summary>
-            <param name="hex">The hexadecimal string to convert.</param>
-            <returns>The signed integer value.</returns>
-        </HexConverterToInt>
-
-        <HexConverterToString>
-            <summary>
-                This method converts a hexadecimal value to a string.
-            </summary>
-            <param name="hex">The hexadecimal value to convert (int or uint).</param>
-            <returns>The string representation of the hexadecimal value.</returns>
-        </HexConverterToString>
-
     </members>
 </docs>

@@ -183,7 +183,7 @@ var displayCallBacks = new DisplayCallBacks
 
 cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeprogrammerVerLevelDebug);
+cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeProgrammerVerLevelDebug);
 ```
 
 - Retrieves all ST-LINK connected probes:

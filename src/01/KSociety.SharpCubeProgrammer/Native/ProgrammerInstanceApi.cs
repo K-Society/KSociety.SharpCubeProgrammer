@@ -219,7 +219,7 @@ namespace SharpCubeProgrammer.Native
             {
                 return function(ref stLinkList, shared);
             }
-            
+
             return -99;
         }
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="hexConverterUtil">
+        <HexConverterUtil>
+            <summary>
+                The main <c>HexConverterUtil</c> class.
+            </summary>
+            <remarks>
+                <para>
+                    <c>HexConverterUtil</c> is a utility class for converting between hexadecimal strings and their numeric representations.
+                </para>
+            </remarks>
+        </HexConverterUtil>
+
+        <!-- Util -->
+
+        <HexConverterToUint>
+            <summary>
+                This method converts a hexadecimal string to an unsigned integer.
+            </summary>
+            <param name="hex">The hexadecimal string to convert.</param>
+            <returns>The unsigned integer value.</returns>
+        </HexConverterToUint>
+
+        <HexConverterToInt>
+            <summary>
+                This method converts a hexadecimal string to a signed integer.
+            </summary>
+            <param name="hex">The hexadecimal string to convert.</param>
+            <returns>The signed integer value.</returns>
+        </HexConverterToInt>
+
+        <HexConverterToString>
+            <summary>
+                This method converts a hexadecimal value to a string.
+            </summary>
+            <param name="hex">The hexadecimal value to convert (int or uint).</param>
+            <returns>The string representation of the hexadecimal value.</returns>
+        </HexConverterToString>
+
+    </members>
+</docs>

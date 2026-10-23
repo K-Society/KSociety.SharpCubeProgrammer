@@ -1273,40 +1273,5 @@
             </remarks>
         </GetHsmLicenseAsync>
 
-        <!-- Util -->
-
-        <HexConverterToUintAsync>
-            <summary>
-                This method converts a hexadecimal string to an unsigned integer.
-            </summary>
-            <param name="hex">The hexadecimal string to convert.</param>
-            <param name="cancellationToken">
-                A token to cancel the operation.
-            </param>
-            <returns>The unsigned integer value.</returns>
-        </HexConverterToUintAsync>
-
-        <HexConverterToIntAsync>
-            <summary>
-                This method converts a hexadecimal string to a signed integer.
-            </summary>
-            <param name="hex">The hexadecimal string to convert.</param>
-            <param name="cancellationToken">
-                A token to cancel the operation.
-            </param>
-            <returns>The signed integer value.</returns>
-        </HexConverterToIntAsync>
-
-        <HexConverterToStringAsync>
-            <summary>
-                This method converts a hexadecimal value to a string.
-            </summary>
-            <param name="hex">The hexadecimal value to convert (int or uint).</param>
-            <param name="cancellationToken">
-                A token to cancel the operation.
-            </param>
-            <returns>The string representation of the hexadecimal value.</returns>
-        </HexConverterToStringAsync>
-
     </members>
 </docs>
