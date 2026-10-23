@@ -4,7 +4,6 @@ namespace SharpCubeProgrammer
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Threading;
@@ -45,10 +44,13 @@ namespace SharpCubeProgrammer
         {
             if (logger == null)
             {
-                logger = new NullLogger<CubeProgrammerApi>();
+                this._logger = new NullLogger<CubeProgrammerApi>();
+            }
+            else
+            {
+                this._logger = logger;
             }
 
-            this._logger = logger;
             this._programmerInstanceApi = new ProgrammerInstanceApi();
         }
 
@@ -107,7 +109,7 @@ namespace SharpCubeProgrammer
                             this.Disconnect();
                                 
                         }
-                        output = this.CheckResult(connectStLinkResult);
+                        output = HexConverterUtil.CheckResult(connectStLinkResult);
                     }
                 }
                 else
@@ -193,7 +195,7 @@ namespace SharpCubeProgrammer
             {
                 var connectStLinkResult = this._programmerInstanceApi.ConnectStLink(debugConnectParameters);
 
-                output = this.CheckResult(connectStLinkResult);
+                output = HexConverterUtil.CheckResult(connectStLinkResult);
             }
             catch (Exception ex)
             {
@@ -210,7 +212,7 @@ namespace SharpCubeProgrammer
             try
             {
                 var resetResult = this._programmerInstanceApi.Reset(rstMode);
-                output = this.CheckResult(resetResult);
+                output = HexConverterUtil.CheckResult(resetResult);
             }
             catch (Exception ex)
             {
@@ -265,7 +267,7 @@ namespace SharpCubeProgrammer
             {
                 var connectUsartResult = this._programmerInstanceApi.ConnectUsartBootloader(usartConnectParameters);
 
-                output = this.CheckResult(connectUsartResult);
+                output = HexConverterUtil.CheckResult(connectUsartResult);
             }
             catch (Exception ex)
             {
@@ -282,7 +284,7 @@ namespace SharpCubeProgrammer
             {
                 var connectUsartResult = this._programmerInstanceApi.SendByteUart(@byte);
 
-                output = this.CheckResult(connectUsartResult);
+                output = HexConverterUtil.CheckResult(connectUsartResult);
             }
             catch (Exception ex)
             {
@@ -333,7 +335,7 @@ namespace SharpCubeProgrammer
                     this.Disconnect();
                 }
 
-                output = this.CheckResult(connectDfuBootloaderResult);
+                output = HexConverterUtil.CheckResult(connectDfuBootloaderResult);
             }
             catch (Exception ex)
             {
@@ -357,7 +359,7 @@ namespace SharpCubeProgrammer
                         this.Disconnect();
                     }
 
-                    output = this.CheckResult(connectDfuBootloader2Result);
+                    output = HexConverterUtil.CheckResult(connectDfuBootloader2Result);
                 }
                 else
                 {
@@ -395,7 +397,7 @@ namespace SharpCubeProgrammer
                     this.Disconnect();
                 }
 
-                output = this.CheckResult(connectSpiBootloaderResult);
+                output = HexConverterUtil.CheckResult(connectSpiBootloaderResult);
             }
             catch (Exception ex)
             {
@@ -415,7 +417,7 @@ namespace SharpCubeProgrammer
                     this.Disconnect();
                 }
 
-                output = this.CheckResult(connectCanBootloaderResult);
+                output = HexConverterUtil.CheckResult(connectCanBootloaderResult);
             }
             catch (Exception ex)
             {
@@ -435,7 +437,7 @@ namespace SharpCubeProgrammer
                     this.Disconnect();
                 }
 
-                output = this.CheckResult(connectI2CBootloaderResult);
+                output = HexConverterUtil.CheckResult(connectI2CBootloaderResult);
             }
             catch (Exception ex)
             {
@@ -510,7 +512,7 @@ namespace SharpCubeProgrammer
 
         public (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize)
         {
-            var uintAddress = this.HexConverterToUint(address);
+            var uintAddress = HexConverterUtil.HexConverterToUint(address);
             var result = CubeProgrammerError.CubeProgrammerErrorOther;
             var buffer = new byte[byteSize];
 
@@ -519,7 +521,7 @@ namespace SharpCubeProgrammer
                 var bufferPtr = IntPtr.Zero;
                 var readMemoryResult =
                     this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
-                result = this.CheckResult(readMemoryResult);
+                result = HexConverterUtil.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, byteSize);
@@ -540,7 +542,7 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var length = data.Length;
                 if (size != 0 && size <= data.Length)
                 {
@@ -552,7 +554,7 @@ namespace SharpCubeProgrammer
                     var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
                     var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
                     gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    result = HexConverterUtil.CheckResult(writeMemoryResult);
 
                     return result;
                 }
@@ -571,7 +573,7 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var length = data.Length;
                 if (size != 0 && size <= data.Length)
                 {
@@ -597,7 +599,7 @@ namespace SharpCubeProgrammer
                     var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
                     var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                     gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    result = HexConverterUtil.CheckResult(writeMemoryResult);
 
                     return result;
                 }
@@ -616,7 +618,7 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var length = data.Length;
                 if (size != 0 && size <= data.Length)
                 {
@@ -642,7 +644,7 @@ namespace SharpCubeProgrammer
                     var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
                     var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
                     gch.Free();
-                    result = this.CheckResult(writeMemoryResult);
+                    result = HexConverterUtil.CheckResult(writeMemoryResult);
 
                     if (result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                     {
@@ -650,7 +652,7 @@ namespace SharpCubeProgrammer
                         var buffer = new byte[data.Length];
                         var readMemoryResult =
                             this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
-                        result = this.CheckResult(readMemoryResult);
+                        result = HexConverterUtil.CheckResult(readMemoryResult);
 
                         if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                         {
@@ -690,11 +692,11 @@ namespace SharpCubeProgrammer
                     length = size;
                 }
 
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
                 var editSectorResult = this._programmerInstanceApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
                 gch.Free();
-                result = this.CheckResult(editSectorResult);
+                result = HexConverterUtil.CheckResult(editSectorResult);
 
                 return result;
             }
@@ -706,7 +708,7 @@ namespace SharpCubeProgrammer
         {
             var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
-            var uintAddress = this.HexConverterToUint(address);
+            var uintAddress = HexConverterUtil.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
             var binPathAdapted = String.IsNullOrEmpty(binFilePath) ? "" : binFilePath.Replace(@"\", "/");
 
@@ -721,7 +723,7 @@ namespace SharpCubeProgrammer
                     verify,
                     binPathAdapted
                     );
-                    output = this.CheckResult(downloadFileResult);
+                    output = HexConverterUtil.CheckResult(downloadFileResult);
                 }
                 catch (Exception ex)
                 {
@@ -738,10 +740,10 @@ namespace SharpCubeProgrammer
 
             try
             {
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var executeResult = this._programmerInstanceApi.Execute(uintAddress);
 
-                output = this.CheckResult(executeResult);
+                output = HexConverterUtil.CheckResult(executeResult);
             }
             catch (Exception ex)
             {
@@ -754,7 +756,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError MassErase(string sFlashMemName = "")
         {
             var massEraseResult = this._programmerInstanceApi.MassErase(sFlashMemName);
-            var output = this.CheckResult(massEraseResult);
+            var output = HexConverterUtil.CheckResult(massEraseResult);
             
             return output;
         }
@@ -762,7 +764,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName = "")
         {
             var sectorEraseResult = this._programmerInstanceApi.SectorErase(sectors, sectorNbr, sFlashMemName);
-            var output = this.CheckResult(sectorEraseResult);
+            var output = HexConverterUtil.CheckResult(sectorEraseResult);
 
             return output;
         }
@@ -770,7 +772,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError ReadUnprotect()
         {
             var result = this._programmerInstanceApi.ReadUnprotect();
-            var output = this.CheckResult(result);
+            var output = HexConverterUtil.CheckResult(result);
 
             return output;
         }
@@ -778,7 +780,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError TzenRegression()
         {
             var result = this._programmerInstanceApi.TzenRegression();
-            var output = this.CheckResult(result);
+            var output = HexConverterUtil.CheckResult(result);
 
             return output;
         }
@@ -891,10 +893,10 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
-            var uintAddress = this.HexConverterToUint(address);
+            var uintAddress = HexConverterUtil.HexConverterToUint(address);
 
             var verifyResult = this._programmerInstanceApi.Verify(fileData, uintAddress);
-            var output = this.CheckResult(verifyResult);
+            var output = HexConverterUtil.CheckResult(verifyResult);
             
             return output;
         }
@@ -907,10 +909,10 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
-                var uintAddress = this.HexConverterToUint(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var readMemoryResult =
                     this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
-                result = this.CheckResult(readMemoryResult);
+                result = HexConverterUtil.CheckResult(readMemoryResult);
                 if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
                     Marshal.Copy(bufferPtr, buffer, 0, data.Length);
@@ -938,8 +940,8 @@ namespace SharpCubeProgrammer
 
             if (!String.IsNullOrEmpty(address) && data.Length > 0)
             {
-                var intAddress = this.HexConverterToInt(address);
-                var uintAddress = this.HexConverterToUint(address);
+                var intAddress = HexConverterUtil.HexConverterToInt(address);
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
                 var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
                 
                 var segmetData = new SegmentDataC
@@ -966,7 +968,7 @@ namespace SharpCubeProgrammer
                 segmentDataGch.Free();
                 fileDataGch.Free();
 
-                result = this.CheckResult(verifyMemoryResult);
+                result = HexConverterUtil.CheckResult(verifyMemoryResult);
 
                 return result;
             }
@@ -987,7 +989,7 @@ namespace SharpCubeProgrammer
             try
             {
                 var saveFileToFileResult = this._programmerInstanceApi.SaveFileToFile(fileData, sFileNameAdapted);
-                output = this.CheckResult(saveFileToFileResult);
+                output = HexConverterUtil.CheckResult(saveFileToFileResult);
             }
             catch (Exception ex)
             {
@@ -999,8 +1001,8 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError SaveMemoryToFile(string address, string size, string fileName)
         {
-            var intAddress = this.HexConverterToInt(address);
-            var intSize = this.HexConverterToInt(size);
+            var intAddress = HexConverterUtil.HexConverterToInt(address);
+            var intSize = HexConverterUtil.HexConverterToInt(size);
             var fileNameAdapted = String.IsNullOrEmpty(fileName) ? "" : fileName.Replace(@"\", "/");
             var output = CubeProgrammerError.CubeProgrammerErrorOther;
 
@@ -1014,7 +1016,7 @@ namespace SharpCubeProgrammer
                 var saveMemoryToFileResult =
                 this._programmerInstanceApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
 
-                output = this.CheckResult(saveMemoryToFileResult);
+                output = HexConverterUtil.CheckResult(saveMemoryToFileResult);
             }
             catch (Exception ex)
             {
@@ -1041,7 +1043,7 @@ namespace SharpCubeProgrammer
                 var filePathAdapted = filePath.Replace(@"\", "/");
                 if (!String.IsNullOrEmpty(address))
                 {
-                    var uintAddress = this.HexConverterToUint(address);
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
 
                     var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
                     this._programmerInstanceApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run);
@@ -1057,7 +1059,7 @@ namespace SharpCubeProgrammer
                 var filePathAdapted = filePath.Replace(@"\", "/");
                 if (!String.IsNullOrEmpty(address))
                 {
-                    var uintAddress = this.HexConverterToUint(address);
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
                     var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
                     this._programmerInstanceApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
                     Marshal.FreeHGlobal(obCommandPtr);
@@ -1077,7 +1079,7 @@ namespace SharpCubeProgrammer
             {
                 var result = this._programmerInstanceApi.GetStorageStructure(ref storageStructurePtr);
 
-                output = this.CheckResult(result);
+                output = HexConverterUtil.CheckResult(result);
 
                 if (output.Equals(CubeProgrammerError.CubeProgrammerNoError))
                 {
@@ -1143,7 +1145,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError SendOptionBytesCmd(string command)
         {
             var result = this._programmerInstanceApi.SendOptionBytesCmd(command);
-            var output = this.CheckResult(result);
+            var output = HexConverterUtil.CheckResult(result);
             
             return output;
         }
@@ -1296,7 +1298,7 @@ namespace SharpCubeProgrammer
             {
                 var obDisplayResult = this._programmerInstanceApi.ObDisplay();
 
-                output = this.CheckResult(obDisplayResult);
+                output = HexConverterUtil.CheckResult(obDisplayResult);
             }
             catch (Exception ex)
             {
@@ -1497,7 +1499,7 @@ namespace SharpCubeProgrammer
             var bufferPtr = new IntPtr();
             var getUID64Result = this._programmerInstanceApi.GetUID64(ref bufferPtr);
 
-            var result = this.CheckResult(getUID64Result);
+            var result = HexConverterUtil.CheckResult(getUID64Result);
             if (result.Equals(CubeProgrammerError.CubeProgrammerNoError) && bufferPtr != IntPtr.Zero)
             {
                 Marshal.Copy(bufferPtr, buffer, 0, 8);
@@ -1513,7 +1515,7 @@ namespace SharpCubeProgrammer
 
         public bool FirmwareUpgrade(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify)
         {
-            var uintAddress = this.HexConverterToUint(address);
+            var uintAddress = HexConverterUtil.HexConverterToUint(address);
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
 
             return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
@@ -1532,7 +1534,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError AuthKeyLock()
         {
             var authKeyLockResult = this._programmerInstanceApi.AuthKeyLock();
-            var result = this.CheckResult(authKeyLockResult);
+            var result = HexConverterUtil.CheckResult(authKeyLockResult);
 
             return result;
         }
@@ -1541,7 +1543,7 @@ namespace SharpCubeProgrammer
         {
             var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
             var writeUserKeyResult = this._programmerInstanceApi.WriteUserKey(filePathAdapted, keyType);
-            var result = this.CheckResult(writeUserKeyResult);
+            var result = HexConverterUtil.CheckResult(writeUserKeyResult);
 
             return result;
         }
@@ -1559,7 +1561,7 @@ namespace SharpCubeProgrammer
         public CubeProgrammerError UnlockChip()
         {
             var unlockChipResult = this._programmerInstanceApi.UnlockChip();
-            var result = this.CheckResult(unlockChipResult);
+            var result = HexConverterUtil.CheckResult(unlockChipResult);
 
             return result;
         }
@@ -1575,7 +1577,7 @@ namespace SharpCubeProgrammer
             var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
             var programSspResult = this._programmerInstanceApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
 
-            var result = this.CheckResult(programSspResult);
+            var result = HexConverterUtil.CheckResult(programSspResult);
 
             return result;
         }
@@ -1614,7 +1616,7 @@ namespace SharpCubeProgrammer
             var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
             var getHsmLicenseResult = this._programmerInstanceApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
 
-            var result = this.CheckResult(getHsmLicenseResult);
+            var result = HexConverterUtil.CheckResult(getHsmLicenseResult);
 
             return result;
         }
@@ -1636,72 +1638,6 @@ namespace SharpCubeProgrammer
         public void Step()
         {
             this._programmerInstanceApi.CpuStep();
-        }
-
-        #endregion
-
-        #region [Util]
-
-        public uint HexConverterToUint(string hex)
-        {
-            IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
-            var parseResult = UInt32.TryParse(StringFilter(hex), NumberStyles.HexNumber, formatProvider, out var result);
-
-            return parseResult ? result : 0;
-        }
-
-        public int HexConverterToInt(string hex)
-        {
-            IFormatProvider formatProvider = CultureInfo.InvariantCulture.NumberFormat;
-            var parseResult = Int32.TryParse(StringFilter(hex), NumberStyles.HexNumber, formatProvider, out var result);
-
-            return parseResult ? result : 0;
-        }
-
-        public string HexConverterToString(uint hex)
-        {
-            var output = "0x" + hex.ToString("X");
-            return output;
-        }
-
-        public string HexConverterToString(int hex)
-        {
-            var output = "0x" + hex.ToString("X");
-            return output;
-        }
-
-        private static string StringFilter(string hex)
-        {
-            if (String.IsNullOrEmpty(hex))
-            {
-                return String.Empty;
-            }
-
-            if (hex.StartsWith("0x") || hex.StartsWith("0X"))
-            {
-                return hex.Split('x', 'X')[1];
-            }
-
-            return hex;
-        }
-
-        private CubeProgrammerError CheckResult(int result)
-        {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            try
-            {
-                if (System.Enum.IsDefined(typeof(CubeProgrammerError), result))
-                {
-                    output = (CubeProgrammerError) result;
-                }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "CheckResult: ");
-            }
-
-            return output;
         }
 
         #endregion
