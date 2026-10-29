@@ -50,7 +50,11 @@ namespace SharpCubeProgrammer
 
             if (hex.StartsWith("0x") || hex.StartsWith("0X"))
             {
-                return hex.Split('x', 'X')[1];
+                var output = hex.Split('x', 'X');
+                if (output.Length > 1)
+                {
+                    return output[1];
+                }
             }
 
             return hex;

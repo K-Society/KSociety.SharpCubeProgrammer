@@ -50,6 +50,7 @@
     <File Path="global.json" />
     <File Path="LICENSE.TXT" />
     <File Path="README.md" />
+    <File Path="SECURITY.md" />
     <File Path="version.json" />
   </Folder>
 </Solution>
