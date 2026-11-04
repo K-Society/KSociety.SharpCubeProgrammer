@@ -105,7 +105,7 @@ namespace SharpCubeProgrammer.Native
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception("K-Society ProgrammerInstanceApi native library loading error!", ex);
+                        throw new SharpCubeProgrammerException("K-Society ProgrammerInstanceApi native library loading error!", ex);
                     }
                 }
             }
@@ -146,7 +146,7 @@ namespace SharpCubeProgrammer.Native
                             var error = Marshal.GetLastWin32Error();
                             this.HandleSTLinkDriver = null;
 
-                            throw new Exception("K-Society ProgrammerInstanceApi StLinkDriver loading error: " + error);
+                            throw new SharpCubeProgrammerException("K-Society ProgrammerInstanceApi StLinkDriver loading error: " + error);
                         }
                     }
                 }
@@ -172,7 +172,7 @@ namespace SharpCubeProgrammer.Native
                             var error = Marshal.GetLastWin32Error();
                             this.HandleProgrammer = null;
 
-                            throw new Exception("K-Society ProgrammerInstanceApi Programmer loading error: " + error);
+                            throw new SharpCubeProgrammerException("K-Society ProgrammerInstanceApi Programmer loading error: " + error);
                         }
                     }
                 }
@@ -299,9 +299,9 @@ namespace SharpCubeProgrammer.Native
                     return result;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Nothing to do
+                throw new SharpCubeProgrammerException("Error occurred while connecting to DFU bootloader.", ex);
             }
             finally
             {
@@ -448,9 +448,9 @@ namespace SharpCubeProgrammer.Native
                     
                     return result;
                 }
-            }catch
+            }catch (Exception ex)
             {
-                // Nothing to do
+                throw new SharpCubeProgrammerException("Error occurred while performing mass erase.", ex);
             }
             finally
             {
@@ -478,9 +478,9 @@ namespace SharpCubeProgrammer.Native
                     
                     return result;
                 }
-            }catch
+            }catch (Exception ex)
             {
-                // Nothing to do
+                throw new SharpCubeProgrammerException("Error occurred while performing sector erase.", ex);
             }
             finally
             {
@@ -651,9 +651,9 @@ namespace SharpCubeProgrammer.Native
                     
                     return result;
                 }
-            }catch
+            }catch (Exception ex)
             {
-                // Nothing to do
+                throw new SharpCubeProgrammerException("Error occurred while sending option bytes command.", ex);
             }
             finally
             {
