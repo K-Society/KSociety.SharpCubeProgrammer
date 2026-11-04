@@ -6,7 +6,9 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct CategoryC
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Name;

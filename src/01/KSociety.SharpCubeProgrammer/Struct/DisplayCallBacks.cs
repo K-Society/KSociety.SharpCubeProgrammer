@@ -17,7 +17,9 @@ namespace SharpCubeProgrammer.Struct
     /// Functions must be implemented to personalize the display of messages.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct DisplayCallBacks
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public InitProgressBar InitProgressBar;
         public LogMessageReceived LogMessage;

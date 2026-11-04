@@ -5,7 +5,7 @@ namespace ProgrammingLegacy.Bindings
     using Autofac;
     using Microsoft.Extensions.Logging;
     using SharpCubeProgrammer;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
 
     public class ProgrammerApi : Module
     {

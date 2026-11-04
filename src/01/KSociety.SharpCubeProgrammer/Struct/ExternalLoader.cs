@@ -9,7 +9,9 @@ namespace SharpCubeProgrammer.Struct
     /// Get external Loader parameters to launch the process of programming an external flash memory.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct ExternalLoader
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// FlashLoader file path.

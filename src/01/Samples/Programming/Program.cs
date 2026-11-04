@@ -10,8 +10,8 @@ namespace Programming
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal class Program
@@ -49,7 +49,7 @@ namespace Programming
             };
 
             CubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
-            CubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel3);
+            CubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.Level3);
 
             #endregion
 
@@ -61,7 +61,7 @@ namespace Programming
             {
                 var dfuConnect = CubeProgrammerApi.ConnectDfuBootloader(resultDfuList.First().UsbIndex);
 
-                if (dfuConnect.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                if (dfuConnect.Equals(CubeProgrammerError.NoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
 
@@ -102,7 +102,7 @@ namespace Programming
 
             var tryConnectionResult = CubeProgrammerApi.TryConnectStLink();
 
-            if (tryConnectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
+            if (tryConnectionResult.Equals(CubeProgrammerError.NoError))
             {
                 
             }
@@ -122,7 +122,7 @@ namespace Programming
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.NoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
                     CubeProgrammerApi.Halt();
@@ -154,7 +154,7 @@ namespace Programming
 
                     var storageStructure = CubeProgrammerApi.GetStorageStructure();
 
-                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.NoError))
                     {
                         Logger.LogInformation("Storage structure: \n" +
                                               "BanksNumber: {0} \n",
@@ -179,7 +179,7 @@ namespace Programming
 
                     var sendOptionBytesCmd = CubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
-                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.NoError))
                     {
 
                     }

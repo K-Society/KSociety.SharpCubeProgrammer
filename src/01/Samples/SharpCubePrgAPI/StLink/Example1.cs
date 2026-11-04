@@ -4,8 +4,8 @@ namespace SharpCubePrgAPI.StLink
 {
     using System.Linq;
     using SharpCubePrgAPI.User;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal static class Example1
@@ -18,7 +18,7 @@ namespace SharpCubePrgAPI.StLink
 
             if (!stLinkList.Any())
             {
-                DisplayManager.LogMessage(MessageType.Error, "No STLINK available\n");
+                DisplayManager.LogMessage(MessageType.Error, "No ST-LINK available\n");
                 return 0;
             }
             else

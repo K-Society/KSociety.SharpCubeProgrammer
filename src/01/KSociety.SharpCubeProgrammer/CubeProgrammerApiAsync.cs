@@ -6,9 +6,9 @@ namespace SharpCubeProgrammer
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using SharpCubeProgrammer.Abstraction;
     using SharpCubeProgrammer.DeviceDataStructure;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     /// <inheritdoc cref="ICubeProgrammerApiAsync"/>

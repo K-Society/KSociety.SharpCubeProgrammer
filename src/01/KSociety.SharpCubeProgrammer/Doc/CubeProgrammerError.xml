@@ -83,113 +83,113 @@
             </summary>
         </CubeProgrammerError>
 
-        <CubeProgrammerNoError>
+        <NoError>
             <summary>
                 Success (no error).
             </summary>
-        </CubeProgrammerNoError>
+        </NoError>
 
-        <CubeProgrammerErrorNotConnected>
+        <NotConnected>
             <summary>
                 Device not connected.
             </summary>
-        </CubeProgrammerErrorNotConnected>
+        </NotConnected>
 
-        <CubeProgrammerErrorNoDevice>
+        <NoDevice>
             <summary>
                 Device not found.
             </summary>
-        </CubeProgrammerErrorNoDevice>
+        </NoDevice>
 
-        <CubeProgrammerErrorConnection>
+        <Connection>
             <summary>
                 Device connection error.
             </summary>
-        </CubeProgrammerErrorConnection>
+        </Connection>
 
-        <CubeProgrammerErrorNoFile>
+        <NoFile>
             <summary>
                 No such file.
             </summary>
-        </CubeProgrammerErrorNoFile>
+        </NoFile>
 
-        <CubeProgrammerErrorNotSupported>
+        <NotSupported>
             <summary>
                 Operation not supported or unimplemented on this interface.
             </summary>
-        </CubeProgrammerErrorNotSupported>
+        </NotSupported>
 
-        <CubeProgrammerErrorInterfaceNotSupported>
+        <InterfaceNotSupported>
             <summary>
                 Interface not supported or unimplemented on this platform.
             </summary>
-        </CubeProgrammerErrorInterfaceNotSupported>
+        </InterfaceNotSupported>
 
-        <CubeProgrammerErrorNoMem>
+        <NoMem>
             <summary>
                 Insufficient memory.
             </summary>
-        </CubeProgrammerErrorNoMem>
+        </NoMem>
 
-        <CubeProgrammerErrorWrongParam>
+        <WrongParam>
             <summary>
                 Wrong parameters.
             </summary>
-        </CubeProgrammerErrorWrongParam>
+        </WrongParam>
 
-        <CubeProgrammerErrorReadMem>
+        <ReadMem>
             <summary>
                 Memory read failure.
             </summary>
-        </CubeProgrammerErrorReadMem>
+        </ReadMem>
 
-        <CubeProgrammerErrorWriteMem>
+        <WriteMem>
             <summary>
                 Memory write failure.
             </summary>
-        </CubeProgrammerErrorWriteMem>
+        </WriteMem>
 
-        <CubeProgrammerErrorEraseMem>
+        <EraseMem>
             <summary>
                 Memory erase failure.
             </summary>
-        </CubeProgrammerErrorEraseMem>
+        </EraseMem>
 
-        <CubeProgrammerErrorUnsupportedFileFormat>
+        <UnsupportedFileFormat>
             <summary>
                 File format not supported for this kind of device.
             </summary>
-        </CubeProgrammerErrorUnsupportedFileFormat>
+        </UnsupportedFileFormat>
 
-        <CubeProgrammerErrorRefreshRequired>
+        <RefreshRequired>
             <summary>
                 Refresh required.
             </summary>
-        </CubeProgrammerErrorRefreshRequired>
+        </RefreshRequired>
 
-        <CubeProgrammerErrorNoSecurity>
+        <NoSecurity>
             <summary>
                 Refresh required.
             </summary>
-        </CubeProgrammerErrorNoSecurity>
+        </NoSecurity>
 
-        <CubeProgrammerErrorChangeFreq>
+        <ChangeFreq>
             <summary>
                 Changing frequency problem.
             </summary>
-        </CubeProgrammerErrorChangeFreq>
+        </ChangeFreq>
 
-        <CubeProgrammerErrorRdpEnabled>
+        <RdpEnabled>
             <summary>
                 RDP Enabled error.
             </summary>
-        </CubeProgrammerErrorRdpEnabled>
+        </RdpEnabled>
 
-        <CubeProgrammerErrorOther>
+        <Other>
             <summary>
                 Other error.
             </summary>
-        </CubeProgrammerErrorOther>
+        </Other>
 
     </members>
 </docs>

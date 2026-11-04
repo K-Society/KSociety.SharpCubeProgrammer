@@ -6,7 +6,9 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct FileDataC
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public int Type;
         public int segmentsNbr;

@@ -3,10 +3,12 @@
 namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
-    using Enum;
+    using Enumeration;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct UsartConnectParameters
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// Interface identifier: COM1, COM2, /dev/ttyS0...

@@ -5,7 +5,7 @@ namespace QuickStart
     using System;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal static class Program
@@ -14,7 +14,7 @@ namespace QuickStart
         private static uint Progress = 0;
         private static int Left = 0;
         private static int Top = 0;
-        internal static VerbosityLevel VerbosityLevel { get; set; } = VerbosityLevel.VerbosityLevel1;
+        internal static VerbosityLevel VerbosityLevel { get; set; } = VerbosityLevel.Level1;
         private static void Main()
         {
             var cubeProgrammerApi = new SharpCubeProgrammer.CubeProgrammerApi();
@@ -33,7 +33,7 @@ namespace QuickStart
 
             cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-            cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.VerbosityLevel1);
+            cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.Level1);
 
             #endregion
 
@@ -46,7 +46,7 @@ namespace QuickStart
 
                 var connectionResult = cubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.NoError))
                 {
                     var generalInfo = cubeProgrammerApi.GetDeviceGeneralInf();
                     if (generalInfo != null)
@@ -76,7 +76,7 @@ namespace QuickStart
 
                     var sendOptionBytesCmd = cubeProgrammerApi.SendOptionBytesCmd("-ob RDP=170");
 
-                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    if (sendOptionBytesCmd.Equals(CubeProgrammerError.NoError))
                     {
 
                     }
@@ -89,7 +89,7 @@ namespace QuickStart
                     var downloadFileResult = cubeProgrammerApi.DownloadFile(
                         @"..\..\..\..\..\Test\NUCLEO-F401RE_Demo_V1.0.0.hex");
 
-                    if (downloadFileResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    if (downloadFileResult.Equals(CubeProgrammerError.NoError))
                     {
                         ;
                     }
@@ -171,9 +171,9 @@ namespace QuickStart
             }
 
             if ((MessageType)messageType != MessageType.Verbosity1 && (MessageType)messageType != MessageType.Verbosity2 && (MessageType)messageType != MessageType.Verbosity3 ||
-                (MessageType)messageType == MessageType.Verbosity1 && VerbosityLevel >= VerbosityLevel.VerbosityLevel1 ||
-                (MessageType)messageType == MessageType.Verbosity2 && VerbosityLevel >= VerbosityLevel.VerbosityLevel2 ||
-                (MessageType)messageType == MessageType.Verbosity3 && VerbosityLevel == VerbosityLevel.VerbosityLevel3)
+                (MessageType)messageType == MessageType.Verbosity1 && VerbosityLevel >= VerbosityLevel.Level1 ||
+                (MessageType)messageType == MessageType.Verbosity2 && VerbosityLevel >= VerbosityLevel.Level2 ||
+                (MessageType)messageType == MessageType.Verbosity3 && VerbosityLevel == VerbosityLevel.Level3)
             {
                 Console.WriteLine("{0}", message);
             }
@@ -183,7 +183,7 @@ namespace QuickStart
 
         private static void InitProgressBar()
         {
-            if (VerbosityLevel >= VerbosityLevel.VerbosityLevel1)
+            if (VerbosityLevel >= VerbosityLevel.Level1)
             {
                 for (var idx = 0; idx < WIDH; idx++)
                 {
@@ -215,7 +215,7 @@ namespace QuickStart
             var ratio = currentProgress / (float)total;
             var counter = (uint)ratio * WIDH;
 
-            if (counter > alreadyLoaded && VerbosityLevel == VerbosityLevel.VerbosityLevel1)
+            if (counter > alreadyLoaded && VerbosityLevel == VerbosityLevel.Level1)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 for (var Idx = Progress; Idx < counter - alreadyLoaded; Idx++)

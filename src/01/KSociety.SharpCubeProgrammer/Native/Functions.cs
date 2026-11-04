@@ -4,7 +4,7 @@ namespace SharpCubeProgrammer.Native
 {
     using System;
     using System.Runtime.InteropServices;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal static class Functions

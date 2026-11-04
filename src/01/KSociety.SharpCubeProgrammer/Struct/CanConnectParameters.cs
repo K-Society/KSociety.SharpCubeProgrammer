@@ -5,7 +5,9 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct CanConnectParameters
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// Baudrate and speed transmission 125KHz, 250KHz, 500KHz...

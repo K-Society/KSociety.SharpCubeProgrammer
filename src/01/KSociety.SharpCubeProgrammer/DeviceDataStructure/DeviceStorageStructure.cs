@@ -2,11 +2,49 @@
 
 namespace SharpCubeProgrammer.DeviceDataStructure
 {
+    using System;
     using System.Collections.Generic;
 
-    public struct DeviceStorageStructure
+    public struct DeviceStorageStructure : IEquatable<DeviceStorageStructure>
     {
-        public uint BanksNumber;
-        public List<DeviceDeviceBank> Banks;
+        public uint BanksNumber { get; set; }
+        public IList<DeviceDeviceBank> Banks { get; private set; }
+
+        public DeviceStorageStructure(uint banksNumber, IList<DeviceDeviceBank> banks)
+        {
+            this.BanksNumber = banksNumber;
+            this.Banks = banks;
+        }
+
+        public void SetBanks(IList<DeviceDeviceBank> banks)
+        {
+            this.Banks = banks;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DeviceStorageStructure other && this.Equals(other);
+        }
+
+        public bool Equals(DeviceStorageStructure other)
+        {
+            return this.BanksNumber == other.BanksNumber &&
+                   EqualityComparer<IList<DeviceDeviceBank>>.Default.Equals(this.Banks, other.Banks);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.BanksNumber, this.Banks);
+        }
+
+        public static bool operator ==(DeviceStorageStructure left, DeviceStorageStructure right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DeviceStorageStructure left, DeviceStorageStructure right)
+        {
+            return !(left == right);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace SharpCubeProgrammer.Native
     using System.Threading;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal sealed partial class ProgrammerInstanceApi : IDisposable
@@ -24,7 +24,7 @@ namespace SharpCubeProgrammer.Native
         internal volatile SafeLibraryHandle HandleSTLinkDriver;
         internal volatile SafeLibraryHandle HandleProgrammer;
 
-        internal DisplayCallBacks DisplayCallBacks = new DisplayCallBacks();
+        internal DisplayCallBacks DisplayCallBacks;// = new DisplayCallBacks();
 
         #region [Constructor]
 
@@ -57,9 +57,9 @@ namespace SharpCubeProgrammer.Native
 
         private void LoadDefaultLoaders()
         {
-            var currentDirectory = this.GetAssemblyDirectory();
+            var currentDirectory = GetAssemblyDirectory();
             var target = Path.Combine(currentDirectory, "st", "Programmer");
-            var targetAdapted = target.Replace(@"\", "/");
+            var targetAdapted = target.Replace('\\', '/');
             this.SetLoadersPath(targetAdapted);
         }
 
@@ -67,7 +67,7 @@ namespace SharpCubeProgrammer.Native
         {
             if (this.HandleSTLinkDriver == null || this.HandleProgrammer == null)
             {
-                var currentDirectory = this.GetAssemblyDirectory();
+                var currentDirectory = GetAssemblyDirectory();
                 var target = String.Empty;
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -181,7 +181,7 @@ namespace SharpCubeProgrammer.Native
             return this.HandleProgrammer;
         }
 
-        private string GetAssemblyDirectory()
+        private static string GetAssemblyDirectory()
         {
             var codeBase = Assembly.GetExecutingAssembly().Location;
             var uri = new UriBuilder()
@@ -934,7 +934,9 @@ namespace SharpCubeProgrammer.Native
             {
                 lock (this.SyncRoot)
                 {
+#pragma warning disable CA1508
                     if (function == null)
+#pragma warning restore CA1508
                     {
                         function = this.GetDelegate<T>(functionName);
                     }
@@ -1075,17 +1077,11 @@ namespace SharpCubeProgrammer.Native
                 if (disposing)
                 {
                     // Free any other managed objects here.
-                    if (this.HandleProgrammer != null)
-                    {
-                        this.HandleProgrammer?.Dispose();
-                        this.HandleProgrammer = null;
-                    }
+                    this.HandleProgrammer?.Dispose();
+                    this.HandleProgrammer = null;
 
-                    if (this.HandleSTLinkDriver != null)
-                    {
-                        this.HandleSTLinkDriver?.Dispose();
-                        this.HandleSTLinkDriver = null;
-                    }
+                    this.HandleSTLinkDriver?.Dispose();
+                    this.HandleSTLinkDriver = null;
                 }
 
                 // Free any unmanaged objects here.
