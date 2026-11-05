@@ -10,8 +10,8 @@ namespace SharpCubeProgrammer.Struct
     public struct SegmentDataC
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        public int address;
-        public int size;
-        public IntPtr data;
+        public int Address;
+        public int Size;
+        public IntPtr Data;
     }
 }

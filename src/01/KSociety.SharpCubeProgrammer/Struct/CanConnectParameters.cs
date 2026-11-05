@@ -12,47 +12,47 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Baudrate and speed transmission 125KHz, 250KHz, 500KHz...
         /// </summary>
-        public int br;
+        public int Baudrate;
 
         /// <summary>
         /// CAN mode: NORMAL, LOOPBACK...
         /// </summary>
-        public int mode;
+        public int CanMode;
 
         /// <summary>
         /// CAN type: STANDARD or EXTENDED.
         /// </summary>
-        public int ide;
+        public int CanType;
 
         /// <summary>
         /// Frame format: DATA or REMOTE.
         /// </summary>
-        public int rtr;
+        public int FrameFormat;
 
         /// <summary>
         /// Memory of received messages: FIFO0 or FIFO1.
         /// </summary>
-        public int fifo;
+        public int Fifo;
 
         /// <summary>
         /// Filter mode: MASK or LIST.
         /// </summary>
-        public int fm;
+        public int FilterMode;
 
         /// <summary>
         /// Filter scale: 16 or 32.
         /// </summary>
-        public int fs;
+        public int FilterScale;
 
         /// <summary>
         /// Filter activation: DISABLE or ENABLE.
         /// </summary>
-        public int fe;
+        public int FilterActivation;
 
         /// <summary>
         /// Filter bank number: 0 to 13.
         /// </summary>
-        public byte fbn;
+        public byte FilterBankNumber;
 
     }
 }

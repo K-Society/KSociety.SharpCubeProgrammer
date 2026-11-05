@@ -12,66 +12,66 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Speed transmission 187, 375, 750, 1500, 3000, 6000, 12000 KHz.
         /// </summary>
-        public uint baudrate;
+        public uint Baudrate;
 
         /// <summary>
         /// Crc polynomial value.
         /// </summary>
-        public ushort crcPol;
+        public ushort CrcPolynomial;
 
         /// <summary>
         /// 2LFullDuplex/2LRxOnly/1LRx/1LTx.
         /// </summary>
-        public int direction;
+        public int Direction;
 
         /// <summary>
         /// 1Edge or 2Edge.
         /// </summary>
-        public int cpha;
+        public int Cpha;
 
         /// <summary>
         /// LOW or HIGH.
         /// </summary>
-        public int cpol;
+        public int Cpol;
 
         /// <summary>
         /// DISABLE or ENABLE.
         /// </summary>
-        public int crc;
+        public int Crc;
 
         /// <summary>
         /// First bit: LSB or MSB.
         /// </summary>
-        public int firstBit;
+        public int FirstBit;
 
         /// <summary>
         /// Frame format: Motorola or TI.
         /// </summary>
-        public int frameFormat;
+        public int FrameFormat;
 
         /// <summary>
         /// Size of frame data: 16bit or 8bit.
         /// </summary>
-        public int dataSize;
+        public int DataSize;
 
         /// <summary>
         /// Operating mode: Slave or Master.
         /// </summary>
-        public int mode;
+        public int Mode;
 
         /// <summary>
         /// Selection: Soft or Hard.
         /// </summary>
-        public int nss;
+        public int Nss;
 
         /// <summary>
         /// NSS pulse: No Pulse or Pulse.
         /// </summary>
-        public int nssPulse;
+        public int NssPulse;
 
         /// <summary>
         /// Delay of few microseconds, No Delay or Delay, at least 4us delay is inserted.
         /// </summary>
-        public int delay;
+        public int Delay;
     }
 }

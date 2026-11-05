@@ -396,7 +396,7 @@ namespace SharpCubeProgrammer
 
                 try
                 {
-                    if ((dfuParameters.rdu == 0x00 || dfuParameters.rdu == 0x01) && (dfuParameters.tzenreg == 0x00 || dfuParameters.tzenreg == 0x01))
+                    if ((dfuParameters.RequestReadUnprotect == 0x00 || dfuParameters.RequestReadUnprotect == 0x01) && (dfuParameters.Tzenreg == 0x00 || dfuParameters.Tzenreg == 0x01))
                     {
                         var connectDfuBootloader2Result = this._programmerInstanceApi.ConnectDfuBootloader2(dfuParameters);
                         if (connectDfuBootloader2Result != 0)
@@ -420,14 +420,14 @@ namespace SharpCubeProgrammer
             }
         }
 
-        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000)
+        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000)
         {
             var dfuParameters = new DfuConnectParameters
             {
-                usb_index = usbIndex,
-                rdu = rdu,
-                tzenreg = tzenreg,
-                usbTimeout = usbTimeout
+                UsbIndex = usbIndex,
+                RequestReadUnprotect = requestReadUnprotect,
+                Tzenreg = tzenreg,
+                UsbTimeout = usbTimeout
             };
 
             return this.ConnectDfuBootloader2(dfuParameters);
@@ -989,26 +989,26 @@ namespace SharpCubeProgrammer
                         {
                             var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
                             deviceSegmentData.Type = fileData.Type;
-                            deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
+                            deviceSegmentData.SegmentsNumber = fileData.SegmentsNumber;
                             deviceSegmentData.SetSegments(new List<DeviceSegmentDataC>());
 
-                            if (fileData.segments != IntPtr.Zero)
+                            if (fileData.Segments != IntPtr.Zero)
                             {
-                                for (var i = 0; i < fileData.segmentsNbr; i++)
+                                for (var i = 0; i < fileData.SegmentsNumber; i++)
                                 {
                                     var deviceSegment = new DeviceSegmentDataC();
                                     var segment =
-                                        Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
-                                    deviceSegment.address = segment.address;
-                                    deviceSegment.size = segment.size;
-                                    if (segment.data != IntPtr.Zero)
+                                        Marshal.PtrToStructure<SegmentDataC>(fileData.Segments + (i * segmentSize));
+                                    deviceSegment.Address = segment.Address;
+                                    deviceSegment.Size = segment.Size;
+                                    if (segment.Data != IntPtr.Zero)
                                     {
-                                        var data = new byte[segment.size];
-                                        Marshal.Copy(segment.data, data, 0, segment.size);
+                                        var data = new byte[segment.Size];
+                                        Marshal.Copy(segment.Data, data, 0, segment.Size);
                                         deviceSegment.SetData(data);
                                     }
 
-                                    deviceSegmentData.segments.Add(deviceSegment);
+                                    deviceSegmentData.Segments.Add(deviceSegment);
                                 }
                             }
 
@@ -1171,9 +1171,9 @@ namespace SharpCubeProgrammer
 
                     var segmetData = new SegmentDataC
                     {
-                        address = intAddress,
-                        size = data.Length,
-                        data = gch.AddrOfPinnedObject()
+                        Address = intAddress,
+                        Size = data.Length,
+                        Data = gch.AddrOfPinnedObject()
                     };
 
                     var segmentDataGch = GCHandle.Alloc(segmetData, GCHandleType.Pinned);
@@ -1181,8 +1181,8 @@ namespace SharpCubeProgrammer
                     var fileData = new FileDataC
                     {
                         Type = 0,
-                        segmentsNbr = 1,
-                        segments = segmentDataGch.AddrOfPinnedObject()
+                        SegmentsNumber = 1,
+                        Segments = segmentDataGch.AddrOfPinnedObject()
                     };
 
                     var fileDataGch = GCHandle.Alloc(fileData, GCHandleType.Pinned);
@@ -1631,20 +1631,20 @@ namespace SharpCubeProgrammer
                     {
                         var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
 
-                        output.filePath = externalLoaderStructure.filePath;
-                        output.deviceName = externalLoaderStructure.deviceName;
-                        output.deviceType = externalLoaderStructure.deviceType;
-                        output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                        output.deviceSize = externalLoaderStructure.deviceSize;
-                        output.pageSize = externalLoaderStructure.pageSize;
-                        output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+                        output.FilePath = externalLoaderStructure.FilePath;
+                        output.DeviceName = externalLoaderStructure.DeviceName;
+                        output.DeviceType = externalLoaderStructure.DeviceType;
+                        output.DeviceStartAddress = externalLoaderStructure.DeviceStartAddress;
+                        output.DeviceSize = externalLoaderStructure.DeviceSize;
+                        output.PageSize = externalLoaderStructure.PageSize;
+                        output.SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber;
 
-                        if (externalLoaderStructure.sectors != IntPtr.Zero)
+                        if (externalLoaderStructure.Sectors != IntPtr.Zero)
                         {
                             var deviceSectorList = new List<DeviceSector>();
-                            for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                            for (var i = 0; i < externalLoaderStructure.SectorsTypeNumber; i++)
                             {
-                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (i * deviceSectorSize));
                                 deviceSectorList.Add(deviceSectorItem);
                             }
 
@@ -1685,20 +1685,20 @@ namespace SharpCubeProgrammer
                     {
                         var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
 
-                        output.filePath = externalLoaderStructure.filePath;
-                        output.deviceName = externalLoaderStructure.deviceName;
-                        output.deviceType = externalLoaderStructure.deviceType;
-                        output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                        output.deviceSize = externalLoaderStructure.deviceSize;
-                        output.pageSize = externalLoaderStructure.pageSize;
-                        output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+                        output.FilePath = externalLoaderStructure.FilePath;
+                        output.DeviceName = externalLoaderStructure.DeviceName;
+                        output.DeviceType = externalLoaderStructure.DeviceType;
+                        output.DeviceStartAddress = externalLoaderStructure.DeviceStartAddress;
+                        output.DeviceSize = externalLoaderStructure.DeviceSize;
+                        output.PageSize = externalLoaderStructure.PageSize;
+                        output.SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber;
 
-                        if (externalLoaderStructure.sectors != IntPtr.Zero)
+                        if (externalLoaderStructure.Sectors != IntPtr.Zero)
                         {
                             var deviceSectorList = new List<DeviceSector>();
-                            for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                            for (var i = 0; i < externalLoaderStructure.SectorsTypeNumber; i++)
                             {
-                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (i * deviceSectorSize));
                                 deviceSectorList.Add(deviceSectorItem);
                             }
 
@@ -1741,7 +1741,7 @@ namespace SharpCubeProgrammer
                         var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
                         var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
 
-                        output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
+                        output.ExternalLoaderNumber = externalStorageInfoStructure.ExternalLoaderNbr;
 
                         if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                         {
@@ -1751,21 +1751,21 @@ namespace SharpCubeProgrammer
 
                                 var deviceExternalLoader = new DeviceExternalLoader
                                 {
-                                    filePath = externalLoaderStructure.filePath,
-                                    deviceName = externalLoaderStructure.deviceName,
-                                    deviceType = externalLoaderStructure.deviceType,
-                                    deviceStartAddress = externalLoaderStructure.deviceStartAddress,
-                                    deviceSize = externalLoaderStructure.deviceSize,
-                                    pageSize = externalLoaderStructure.pageSize,
-                                    sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
+                                    FilePath = externalLoaderStructure.FilePath,
+                                    DeviceName = externalLoaderStructure.DeviceName,
+                                    DeviceType = externalLoaderStructure.DeviceType,
+                                    DeviceStartAddress = externalLoaderStructure.DeviceStartAddress,
+                                    DeviceSize = externalLoaderStructure.DeviceSize,
+                                    PageSize = externalLoaderStructure.PageSize,
+                                    SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber
                                 };
 
-                                if (externalLoaderStructure.sectors != IntPtr.Zero)
+                                if (externalLoaderStructure.Sectors != IntPtr.Zero)
                                 {
                                     var deviceSectorList = new List<DeviceSector>();
-                                    for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                    for (var ii = 0; ii < externalLoaderStructure.SectorsTypeNumber; ii++)
                                     {
-                                        var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
+                                        var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (ii * deviceSectorSize));
                                         deviceSectorList.Add(deviceSectorItem);
                                     }
 

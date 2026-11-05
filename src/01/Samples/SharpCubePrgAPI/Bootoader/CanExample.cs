@@ -17,15 +17,15 @@ namespace SharpCubePrgAPI.Bootoader
 
             var canParam = new CanConnectParameters
             {
-                br = 125000, // Baudrate 125KHz
-                mode = 0, // NORMAL MODE
-                ide = 0,  // STANDARD ID
-                rtr = 0,  // DATA FRAME
-                fifo = 0, // FIFO0
-                fm = 0,   // MASK MODE
-                fs = 1,   // 32 BIT
-                fe = 1,   // FILTER ENABLE
-                fbn = 0,  // FILTER BANK NUMBER 0
+                Baudrate = 125000, // Baudrate 125KHz
+                CanMode = 0, // NORMAL MODE
+                CanType = 0,  // STANDARD ID
+                FrameFormat = 0,  // DATA FRAME
+                Fifo = 0, // FIFO0
+                FilterMode = 0,   // MASK MODE
+                FilterScale = 1,   // 32 BIT
+                FilterActivation = 1,   // FILTER ENABLE
+                FilterBankNumber = 0,  // FILTER BANK NUMBER 0
             };
 
             /* Target connect */

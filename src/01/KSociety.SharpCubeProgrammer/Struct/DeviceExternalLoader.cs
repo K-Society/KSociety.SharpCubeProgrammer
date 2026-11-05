@@ -13,32 +13,32 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// FlashLoader file path.
         /// </summary>
-        public string filePath { get; set; }
+        public string FilePath { get; set; }
 
         /// <summary>
         /// Device Name and Description.
         /// </summary>
-        public string deviceName { get; set; }
+        public string DeviceName { get; set; }
 
         /// <summary>
         /// Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...
         /// </summary>
-        public int deviceType { get; set; }
+        public int DeviceType { get; set; }
 
         /// <summary>
         /// Default Device Start Address.
         /// </summary>
-        public uint deviceStartAddress { get; set; }
+        public uint DeviceStartAddress { get; set; }
 
         /// <summary>
         /// Total Size of Device.
         /// </summary>
-        public uint deviceSize { get; set; }
+        public uint DeviceSize { get; set; }
 
         /// <summary>
         /// Programming Page Size.
         /// </summary>
-        public uint pageSize { get; set; }
+        public uint PageSize { get; set; }
 
         /// <summary>
         /// Content of Erased Memory.
@@ -48,28 +48,28 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Type number.
         /// </summary>
-        public uint sectorsTypeNbr { get; set; }
+        public uint SectorsTypeNumber { get; set; }
 
         /// <summary>
         /// Device sectors.
         /// </summary>
-        public IList<DeviceSector> sectors { get; private set; }
+        public IList<DeviceSector> Sectors  { get; private set; }
 
-        public DeviceExternalLoader(string filePath, string deviceName, int deviceType, uint deviceStartAddress, uint deviceSize, uint pageSize, uint sectorsTypeNbr, IList<DeviceSector> sectors)
+        public DeviceExternalLoader(string filePath, string deviceName, int deviceType, uint deviceStartAddress, uint deviceSize, uint pageSize, uint sectorsTypeNumber, IList<DeviceSector> sectors)
         {
-            this.filePath = filePath;
-            this.deviceName = deviceName;
-            this.deviceType = deviceType;
-            this.deviceStartAddress = deviceStartAddress;
-            this.deviceSize = deviceSize;
-            this.pageSize = pageSize;
-            this.sectorsTypeNbr = sectorsTypeNbr;
-            this.sectors = sectors;
+            this.FilePath = filePath;
+            this.DeviceName = deviceName;
+            this.DeviceType = deviceType;
+            this.DeviceStartAddress = deviceStartAddress;
+            this.DeviceSize = deviceSize;
+            this.PageSize = pageSize;
+            this.SectorsTypeNumber = sectorsTypeNumber;
+            this.Sectors = sectors;
         }
 
         public void SetSectors(IList<DeviceSector> sectors)
         {
-            this.sectors = sectors;
+            this.Sectors = sectors;
         }
 
         public override bool Equals(object obj)
@@ -79,19 +79,19 @@ namespace SharpCubeProgrammer.Struct
 
         public bool Equals(DeviceExternalLoader other)
         {
-            return this.filePath == other.filePath &&
-                   this.deviceName == other.deviceName &&
-                   this.deviceType == other.deviceType &&
-                   this.deviceStartAddress == other.deviceStartAddress &&
-                   this.deviceSize == other.deviceSize &&
-                   this.pageSize == other.pageSize &&
-                   this.sectorsTypeNbr == other.sectorsTypeNbr &&
-                   EqualityComparer<IList<DeviceSector>>.Default.Equals(this.sectors, other.sectors);
+            return this.FilePath == other.FilePath &&
+                   this.DeviceName == other.DeviceName &&
+                   this.DeviceType == other.DeviceType &&
+                   this.DeviceStartAddress == other.DeviceStartAddress &&
+                   this.DeviceSize == other.DeviceSize &&
+                   this.PageSize == other.PageSize &&
+                   this.SectorsTypeNumber == other.SectorsTypeNumber &&
+                   EqualityComparer<IList<DeviceSector>>.Default.Equals(this.Sectors, other.Sectors);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.filePath, this.deviceName, this.deviceType, this.deviceStartAddress, this.deviceSize, this.pageSize, this.sectorsTypeNbr, this.sectors);
+            return HashCode.Combine(this.FilePath, this.DeviceName, this.DeviceType, this.DeviceStartAddress, this.DeviceSize, this.PageSize, this.SectorsTypeNumber, this.Sectors);
         }
 
         public static bool operator ==(DeviceExternalLoader left, DeviceExternalLoader right)

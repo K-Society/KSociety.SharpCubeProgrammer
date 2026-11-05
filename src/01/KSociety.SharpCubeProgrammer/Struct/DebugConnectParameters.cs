@@ -14,7 +14,7 @@ namespace SharpCubeProgrammer.Struct
         /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
         public DebugPort DebugPort;
 
-        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Index/*'/>
         public int Index;
 
         /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/SerialNumber/*'/>

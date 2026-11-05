@@ -17,33 +17,33 @@ namespace SharpCubeProgrammer.Struct
         /// FlashLoader file path.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 200)]
-        public string filePath;
+        public string FilePath;
 
         /// <summary>
         /// Device Name and Description.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
-        public string deviceName;
+        public string DeviceName;
 
         /// <summary>
         /// Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...
         /// </summary>
-        public int deviceType;
+        public int DeviceType;
 
         /// <summary>
         /// Default Device Start Address.
         /// </summary>
-        public uint deviceStartAddress;
+        public uint DeviceStartAddress;
 
         /// <summary>
         /// Total Size of Device.
         /// </summary>
-        public uint deviceSize;
+        public uint DeviceSize;
 
         /// <summary>
         /// Programming Page Size.
         /// </summary>
-        public uint pageSize;
+        public uint PageSize;
 
         /// <summary>
         /// Content of Erased Memory.
@@ -53,11 +53,11 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Type number.
         /// </summary>
-        public uint sectorsTypeNbr;
+        public uint SectorsTypeNumber;
 
         /// <summary>
         /// Device sectors.
         /// </summary>
-        public IntPtr sectors;
+        public IntPtr Sectors;
     }
 }

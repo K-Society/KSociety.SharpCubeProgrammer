@@ -12,47 +12,47 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Device address in hex format.
         /// </summary>
-        public int add;
+        public int Address;
 
         /// <summary>
         /// Baudrate and speed transmission : 100 or 400 KHz.
         /// </summary>
-        public int br;
+        public int Baudrate;
 
         /// <summary>
         /// Speed Mode: STANDARD or FAST.
         /// </summary>
-        public int sm;
+        public int SpeedMode;
 
         /// <summary>
         /// Address Mode: 7 or 10 bits.
         /// </summary>
-        public int am;
+        public int AddressMode;
 
         /// <summary>
         /// Analog filter: DISABLE or ENABLE.
         /// </summary>
-        public int af;
+        public int AnalogFilter;
 
         /// <summary>
         /// Digital filter: DISABLE or ENABLE.
         /// </summary>
-        public int df;
+        public int DigitalFilter;
 
         /// <summary>
         /// Digital noise filter: 0 to 15.
         /// </summary>
-        public byte dnf;
+        public byte DigitalNoiseFilter;
 
         /// <summary>
         /// Rise time: 0-1000 for STANDARD speed mode and  0-300 for FAST.
         /// </summary>
-        public int rt;
+        public int RiseTime;
 
         /// <summary>
         /// Fall time: 0-300 for STANDARD speed mode and  0-300 for FAST.
         /// </summary>
-        public int ft;
+        public int FallTime;
 
     }
 }

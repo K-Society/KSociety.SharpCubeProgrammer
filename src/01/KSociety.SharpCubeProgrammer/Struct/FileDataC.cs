@@ -11,7 +11,7 @@ namespace SharpCubeProgrammer.Struct
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public int Type;
-        public int segmentsNbr;
-        public IntPtr segments;
+        public int SegmentsNumber;
+        public IntPtr Segments;
     }
 }

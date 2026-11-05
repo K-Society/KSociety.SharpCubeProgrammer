@@ -16,19 +16,19 @@ namespace SharpCubePrgAPI.Bootoader
 
             var spiParam = new SpiConnectParameters
             {
-                baudrate = 375, // Baudrate 1 MHz
-                crcPol = 7,
-                direction = 0, // FULL DUPLEX
-                cpha = 0,
-                cpol = 0,
-                crc = 0, // CRC DISABLE
-                firstBit = 1, // MSB FIRST
-                frameFormat = 0, // MOTOROLA
-                dataSize = 1, // 1 BITS
-                mode = 1, // MASTER
-                nss = 1, // SOFTWARE
-                nssPulse = 1,
-                delay = 1
+                Baudrate = 375, // Baudrate 1 MHz
+                CrcPolynomial = 7,
+                Direction = 0, // FULL DUPLEX
+                Cpha = 0,
+                Cpol = 0,
+                Crc = 0, // CRC DISABLE
+                FirstBit = 1, // MSB FIRST
+                FrameFormat = 0, // MOTOROLA
+                DataSize = 1, // 1 BITS
+                Mode = 1, // MASTER
+                Nss = 1, // SOFTWARE
+                NssPulse = 1,
+                Delay = 1
             };
 
 

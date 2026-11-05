@@ -12,21 +12,21 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Indicates the index of DFU ports already connected.
         /// </summary>
-        public string usb_index;
+        public string UsbIndex;
 
         /// <summary>
         /// Request a read unprotect: value in {0,1}.
         /// </summary>
-        public byte rdu;
+        public byte RequestReadUnprotect;
 
         /// <summary>
         /// Request a TZEN regression: value in {0,1}.
         /// </summary>
-        public byte tzenreg;
+        public byte Tzenreg;
 
         /// <summary>
         /// USB Timeout control.
         /// </summary>
-        public int usbTimeout;
+        public int UsbTimeout;
     }
 }

@@ -12,11 +12,11 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         /// Number of Sectors.
         /// </summary>
-        public uint sectorNum;
+        public uint SectorNumber;
 
         /// <summary>
         /// Sector Size in BYTEs.
         /// </summary>
-        public uint sectorSize;
+        public uint SectorSize;
     }
 }
