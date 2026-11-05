@@ -4,8 +4,8 @@ namespace SharpCubePrgAPI.StLink
 {
     using System.Linq;
     using SharpCubePrgAPI.User;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal static class ExampleWB

@@ -5,8 +5,8 @@ namespace SharpCubePrgAPI.Bootoader
     using System.Linq;
     using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
 
     internal static class MpuSsp
     {

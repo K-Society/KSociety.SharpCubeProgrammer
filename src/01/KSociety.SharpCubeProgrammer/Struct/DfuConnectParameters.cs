@@ -5,7 +5,9 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct DfuConnectParameters
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// Indicates the index of DFU ports already connected.

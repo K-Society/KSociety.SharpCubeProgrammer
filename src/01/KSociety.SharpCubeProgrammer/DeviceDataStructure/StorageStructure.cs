@@ -6,7 +6,9 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct StorageStructure
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         public uint BanksNumber;
         public IntPtr Banks;

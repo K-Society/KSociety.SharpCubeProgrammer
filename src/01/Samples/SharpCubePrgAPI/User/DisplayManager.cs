@@ -4,7 +4,7 @@ namespace SharpCubePrgAPI.User
 {
     using System;
     using System.Runtime.InteropServices;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
 
     internal static class DisplayManager
     {
@@ -12,7 +12,7 @@ namespace SharpCubePrgAPI.User
         private static uint Progress = 0;
         private static int Left = 0;
         private static int Top = 0;
-        internal static VerbosityLevel VerbosityLevel { get; set; } = VerbosityLevel.VerbosityLevel0;
+        internal static VerbosityLevel VerbosityLevel { get; set; } = VerbosityLevel.Level0;
 
         internal static void LogMessage(MessageType messageType, string message)
         {
@@ -137,9 +137,9 @@ namespace SharpCubePrgAPI.User
             }
 
             if ((MessageType)messageType != MessageType.Verbosity1 && (MessageType)messageType != MessageType.Verbosity2 && (MessageType)messageType != MessageType.Verbosity3 ||
-                (MessageType)messageType == MessageType.Verbosity1 && VerbosityLevel >= VerbosityLevel.VerbosityLevel1 ||
-                (MessageType)messageType == MessageType.Verbosity2 && VerbosityLevel >= VerbosityLevel.VerbosityLevel2 ||
-                (MessageType)messageType == MessageType.Verbosity3 && VerbosityLevel == VerbosityLevel.VerbosityLevel3)
+                (MessageType)messageType == MessageType.Verbosity1 && VerbosityLevel >= VerbosityLevel.Level1 ||
+                (MessageType)messageType == MessageType.Verbosity2 && VerbosityLevel >= VerbosityLevel.Level2 ||
+                (MessageType)messageType == MessageType.Verbosity3 && VerbosityLevel == VerbosityLevel.Level3)
             {
                 Console.WriteLine("{0}", message);
             }
@@ -149,7 +149,7 @@ namespace SharpCubePrgAPI.User
 
         internal static void InitProgressBar()
         {
-            if (VerbosityLevel >= VerbosityLevel.VerbosityLevel1)
+            if (VerbosityLevel >= VerbosityLevel.Level1)
             {
                 for (var idx = 0; idx < WIDH; idx++)
                 {
@@ -181,7 +181,7 @@ namespace SharpCubePrgAPI.User
             var ratio = currentProgress / (float)total;
             var counter = (uint)ratio* WIDH;
 
-            if (counter > alreadyLoaded && VerbosityLevel == VerbosityLevel.VerbosityLevel1)
+            if (counter > alreadyLoaded && VerbosityLevel == VerbosityLevel.Level1)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 for (var Idx = Progress; Idx < counter - alreadyLoaded; Idx++)

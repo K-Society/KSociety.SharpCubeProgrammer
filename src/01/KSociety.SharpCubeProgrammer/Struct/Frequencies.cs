@@ -8,7 +8,9 @@ namespace SharpCubeProgrammer.Struct
     /// Get supported frequencies for JTAG and SWD interfaces 104.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct Frequencies
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
         public uint[] JtagFrequency;

@@ -5,7 +5,9 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct SpiConnectParameters
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// Speed transmission 187, 375, 750, 1500, 3000, 6000, 12000 KHz.

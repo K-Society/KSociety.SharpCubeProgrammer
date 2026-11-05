@@ -1,13 +1,13 @@
 // Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubeProgrammer.Interface
+namespace SharpCubeProgrammer.Abstraction
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Threading;
     using DeviceDataStructure;
-    using Enum;
+    using Enumeration;
     using Struct;
 
     /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/CubeProgrammerApiAsync/*'/>
@@ -19,13 +19,19 @@ namespace SharpCubeProgrammer.Interface
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/TryConnectStLinkAsync/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         ValueTask<CubeProgrammerError> TryConnectStLinkAsync(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode, CancellationToken cancellationToken = default);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetStLinkListAsync/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkListAsync(bool shared = false, CancellationToken cancellationToken = default);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetStLinkEnumerationListAsync/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         ValueTask<IEnumerable<DebugConnectParameters>> GetStLinkEnumerationListAsync(bool shared = false, CancellationToken cancellationToken = default);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectStLinkAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectStLinkAsync(DebugConnectParameters debugConnectParameters, CancellationToken cancellationToken = default);
@@ -46,7 +52,9 @@ namespace SharpCubeProgrammer.Interface
         ValueTask<CubeProgrammerError> ConnectUsartBootloaderAsync(UsartConnectParameters usartConnectParameters, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/SendByteUartAsync/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         ValueTask<CubeProgrammerError> SendByteUartAsync(int @byte, CancellationToken cancellationToken = default);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/GetDfuDeviceListAsync/*'/>
         ValueTask<IEnumerable<DfuDeviceInfo>> GetDfuDeviceListAsync(int iPID = 0xdf11, int iVID = 0x0483, CancellationToken cancellationToken = default);
@@ -139,7 +147,9 @@ namespace SharpCubeProgrammer.Interface
         ValueTask FreeFileDataAsync(IntPtr data, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/FreeLibraryMemoryAsync/*'/>
+#pragma warning disable CA1720 // Identifier contains type name
         ValueTask FreeLibraryMemoryAsync(IntPtr ptr, CancellationToken cancellationToken = default);
+#pragma warning restore CA1720 // Identifier contains type name
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/VerifyAsync/*'/>
         ValueTask<CubeProgrammerError> VerifyAsync(IntPtr fileData, string address, CancellationToken cancellationToken = default);

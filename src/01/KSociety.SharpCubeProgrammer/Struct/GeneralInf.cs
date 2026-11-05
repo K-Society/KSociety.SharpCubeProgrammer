@@ -8,7 +8,9 @@ namespace SharpCubeProgrammer.Struct
     /// Get device general informations.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct GeneralInf
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// Device ID.
