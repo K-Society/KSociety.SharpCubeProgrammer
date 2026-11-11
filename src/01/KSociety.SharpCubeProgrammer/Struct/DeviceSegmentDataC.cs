@@ -6,10 +6,16 @@ namespace SharpCubeProgrammer.Struct
     using System.Collections.ObjectModel;
     using System.Linq;
 
+    /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/DeviceSegmentDataC/*'/>
     public struct DeviceSegmentDataC : IEquatable<DeviceSegmentDataC>
     {
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Address/*'/>
         public int Address { get; set; }
+
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Size/*'/>
         public int Size { get; set; }
+
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Data/*'/>
         public ReadOnlyCollection<byte> Data { get; private set; }
 
         public DeviceSegmentDataC(int address, int size, byte[] data)

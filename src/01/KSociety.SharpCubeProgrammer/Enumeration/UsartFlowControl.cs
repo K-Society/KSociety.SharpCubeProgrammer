@@ -2,24 +2,16 @@
 
 namespace SharpCubeProgrammer.Enumeration
 {
-    /// <summary>
-    /// UART Flow Control is a method for devices to communicate with each other over UART without the risk of losing data.
-    /// </summary>
+    /// <include file='..\Doc\UsartFlowControl.xml' path='docs/members[@name="usartFlowControl"]/UsartFlowControl/*'/>
     public enum UsartFlowControl
     {
-        /// <summary>
-        /// No flow control.
-        /// </summary>
+        /// <include file='..\Doc\UsartFlowControl.xml' path='docs/members[@name="usartFlowControl"]/Off/*'/>
         Off = 0,
 
-        /// <summary>
-        /// Hardware flow control : RTS/CTS.
-        /// </summary>
+        /// <include file='..\Doc\UsartFlowControl.xml' path='docs/members[@name="usartFlowControl"]/Hardware/*'/>
         Hardware = 1,
 
-        /// <summary>
-        /// Software flow control : Transmission is started and stopped by sending special characters.
-        /// </summary>
+        /// <include file='..\Doc\UsartFlowControl.xml' path='docs/members[@name="usartFlowControl"]/Software/*'/>
         Software = 2
     }
 }

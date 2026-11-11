@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="segmentDataC">
+        <SegmentDataC>
+            <summary>
+                Represents the data for a device memory segment.    
+                <list type="table">
+                    <item>
+                        <term>Address</term>
+                        <description>Segment start address.</description>
+                    </item>
+                    <item>
+                        <term>Size</term>
+                        <description>Memory segment size.</description>
+                    </item>
+                    <item>
+                        <term>Data</term>
+                        <description>Memory segment data.</description>
+                    </item>
+                </list>
+            </summary>
+        </SegmentDataC>
+
+        <Address>
+            <summary>
+                Segment start address.
+            </summary>
+        </Address>
+
+        <Size>
+            <summary>
+                Memory segment size.
+            </summary>
+        </Size>
+
+        <Data>
+            <summary>
+                Memory segment data.
+            </summary>
+        </Data>
+    </members>
+</docs>

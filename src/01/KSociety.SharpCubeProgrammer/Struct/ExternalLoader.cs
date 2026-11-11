@@ -5,44 +5,30 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Get external Loader parameters to launch the process of programming an external flash memory.
-    /// </summary>
+    /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/ExternalLoader/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct ExternalLoader
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// FlashLoader file path.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/FilePath/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 200)]
         public string FilePath;
 
-        /// <summary>
-        /// Device Name and Description.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/DeviceName/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string DeviceName;
 
-        /// <summary>
-        /// Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/DeviceType/*'/>
         public int DeviceType;
 
-        /// <summary>
-        /// Default Device Start Address.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/DeviceStartAddress/*'/>
         public uint DeviceStartAddress;
 
-        /// <summary>
-        /// Total Size of Device.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/DeviceSize/*'/>
         public uint DeviceSize;
 
-        /// <summary>
-        /// Programming Page Size.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/PageSize/*'/>
         public uint PageSize;
 
         /// <summary>
@@ -50,14 +36,10 @@ namespace SharpCubeProgrammer.Struct
         /// <summary>
         //  unsigned char  	 EraseValue;
 
-        /// <summary>
-        /// Type number.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/SectorsTypeNumber/*'/>
         public uint SectorsTypeNumber;
 
-        /// <summary>
-        /// Device sectors.
-        /// </summary>
+        /// <include file='..\Doc\ExternalLoader.xml' path='docs/members[@name="externalLoader"]/Sectors/*'/>
         public IntPtr Sectors;
     }
 }

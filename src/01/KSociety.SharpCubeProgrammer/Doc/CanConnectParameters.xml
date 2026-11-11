@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="canConnectParameters">
+        <CanConnectParameters>
+            <summary>
+                Specify the CAN connect parameters.
+                <list type="table">
+                    <item>
+                        <term>Baudrate (125000)</term>
+                        <description>Baudrate and speed transmission 125KHz, 250KHz, 500KHz...</description>
+                    </item>
+                    <item>
+                        <term>CanMode (0)</term>
+                        <description>CAN mode: NORMAL, LOOPBACK...</description>
+                    </item>
+                    <item>
+                        <term>CanType (0)</term>
+                        <description>CAN type: STANDARD or EXTENDED.</description>
+                    </item>
+                    <item>
+                        <term>FrameFormat (0)</term>
+                        <description>Frame format: DATA or REMOTE.</description>
+                    </item>
+                    <item>
+                        <term>Fifo (0)</term>
+                        <description>Memory of received messages: FIFO0 or FIFO1.</description>
+                    </item>
+                    <item>
+                        <term>FilterMode (0)</term>
+                        <description>Filter mode: MASK or LIST.</description>
+                    </item>
+                    <item>
+                        <term>FilterScale (1)</term>
+                        <description>Filter scale: 16 or 32.</description>
+                    </item>
+                    <item>
+                        <term>FilterActivation (1)</term>
+                        <description>Filter activation: DISABLE or ENABLE.</description>
+                    </item>
+                    <item>
+                        <term>FilterBankNumber (0)</term>
+                        <description>Filter bank number: 0 to 13.</description>
+                    </item>
+                </list>
+            </summary>
+            <remarks>
+                <para>
+                    Not all configurations are supported by STM32 Bootloader, such as CAN type is STANDARD and the filter should be always activated.
+                </para>
+                <para>
+                    Recommended CAN parameters : Baudrate=125000, CanMode=0, CanType=0, FrameFormat=0, Fifo=0, FilterMode=0, FilterScale=1, FilterActivation=1, FilterBankNumber=0
+                </para>
+            </remarks>
+        </CanConnectParameters>
+
+        <Baudrate>
+            <summary>
+                Baudrate and speed transmission 125KHz, 250KHz, 500KHz...
+            </summary>
+        </Baudrate>
+
+        <CanMode>
+            <summary>
+                CAN mode: NORMAL, LOOPBACK...
+            </summary>
+        </CanMode>
+
+        <CanType>
+            <summary>
+                CAN type: STANDARD or EXTENDED.
+            </summary>
+        </CanType>
+
+        <FrameFormat>
+            <summary>
+                Frame format: DATA or REMOTE.
+            </summary>
+        </FrameFormat>
+
+        <Fifo>
+            <summary>
+                Memory of received messages: FIFO0 or FIFO1.
+            </summary>
+        </Fifo>
+
+        <FilterMode>
+            <summary>
+                Filter mode: MASK or LIST.
+            </summary>
+        </FilterMode>
+
+        <FilterScale>
+            <summary>
+                Filter scale: 16 or 32.
+            </summary>
+        </FilterScale>
+
+        <FilterActivation>
+            <summary>
+                Filter activation: DISABLE or ENABLE.
+            </summary>
+        </FilterActivation>
+
+        <FilterBankNumber>
+            <summary>
+                Filter bank number: 0 to 13.
+            </summary>
+        </FilterBankNumber>
+    </members>
+</docs>  

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="dfuDeviceInfo">
+        <DfuDeviceInfo>
+            <summary>
+                Specify the USB DFU connect parameters.
+                <list type="table">
+                    <item>
+                        <term>UsbIndex</term>
+                        <description>USB index.</description>
+                    </item>
+                    <item>
+                        <term>BusNumber</term>
+                        <description>Bus number.</description>
+                    </item>
+                    <item>
+                        <term>AddressNumber</term>
+                        <description>Address number.</description>
+                    </item>
+                    <item>
+                        <term>ProductId</term>
+                        <description>Product number.</description>
+                    </item>
+                    <item>
+                        <term>SerialNumber</term>
+                        <description>Serial number.</description>
+                    </item>
+                    <item>
+                        <term>DfuVersion</term>
+                        <description>DFU version.</description>
+                    </item>
+                </list>
+            </summary>
+        </DfuDeviceInfo>
+
+        <UsbIndex>
+            <summary>
+                USB index.
+            </summary>
+        </UsbIndex>
+
+        <BusNumber>
+            <summary>
+                Bus number.
+            </summary>
+        </BusNumber>
+
+        <AddressNumber>
+            <summary>
+                Address number.
+            </summary>
+        </AddressNumber>
+
+        <ProductId>
+            <summary>
+                Product number.
+            </summary>
+        </ProductId>
+
+        <SerialNumber>
+            <summary>
+                Serial number.
+            </summary>
+        </SerialNumber>
+
+        <DfuVersion>
+            <summary>
+                DFU version.
+            </summary>
+        </DfuVersion>
+    </members>
+</docs>

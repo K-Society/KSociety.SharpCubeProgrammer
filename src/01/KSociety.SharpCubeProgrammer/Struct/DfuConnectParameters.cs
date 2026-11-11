@@ -4,29 +4,22 @@ namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\DfuConnectParameters.xml' path='docs/members[@name="dfuConnectParameters"]/DfuConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct DfuConnectParameters
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Indicates the index of DFU ports already connected.
-        /// </summary>
+        /// <include file='..\Doc\DfuConnectParameters.xml' path='docs/members[@name="dfuConnectParameters"]/UsbIndex/*'/>
         public string UsbIndex;
 
-        /// <summary>
-        /// Request a read unprotect: value in {0,1}.
-        /// </summary>
+        /// <include file='..\Doc\DfuConnectParameters.xml' path='docs/members[@name="dfuConnectParameters"]/RequestReadUnprotect/*'/>
         public byte RequestReadUnprotect;
 
-        /// <summary>
-        /// Request a TZEN regression: value in {0,1}.
-        /// </summary>
+        /// <include file='..\Doc\DfuConnectParameters.xml' path='docs/members[@name="dfuConnectParameters"]/Tzenreg/*'/>
         public byte Tzenreg;
 
-        /// <summary>
-        /// USB Timeout control.
-        /// </summary>
+        /// <include file='..\Doc\DfuConnectParameters.xml' path='docs/members[@name="dfuConnectParameters"]/UsbTimeout/*'/>
         public int UsbTimeout;
     }
 }

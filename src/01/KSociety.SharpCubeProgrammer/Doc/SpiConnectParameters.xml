@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="spiConnectParameters">
+        <SpiConnectParameters>
+            <summary>
+                Specify the SPI connect parameters.
+                <list type="table">
+                    <item>
+                        <term>Baudrate</term>
+                        <description>Speed transmission 187, 375, 750, 1500, 3000, 6000, 12000 KHz.</description>
+                    </item>
+                    <item>
+                        <term>CrcPolynomial</term>
+                        <description>Crc polynomial value.</description>
+                    </item>
+                    <item>
+                        <term>Direction</term>
+                        <description>2LFullDuplex/2LRxOnly/1LRx/1LTx.</description>
+                    </item>
+                    <item>
+                        <term>Cpha</term>
+                        <description>1Edge or 2Edge.</description>
+                    </item>
+                    <item>
+                        <term>Cpol</term>
+                        <description>LOW or HIGH.</description>
+                    </item>
+                    <item>
+                        <term>Crc</term>
+                        <description>DISABLE or ENABLE.</description>
+                    </item>
+                    <item>
+                        <term>FirstBit</term>
+                        <description>First bit: LSB or MSB.</description>
+                    </item>
+                    <item>
+                        <term>FrameFormat</term>
+                        <description>Frame format: Motorola or TI.</description>
+                    </item>
+                    <item>
+                        <term>DataSize</term>
+                        <description>Size of frame data: 16bit or 8bit.</description>
+                    </item>
+                    <item>
+                        <term>Mode</term>
+                        <description>Operating mode: Slave or Master.</description>
+                    </item>
+                    <item>
+                        <term>Nss</term>
+                        <description>Selection: Soft or Hard.</description>
+                    </item>
+                    <item>
+                        <term>NssPulse</term>
+                        <description>NSS pulse: No Pulse or Pulse.</description>
+                    </item>
+                    <item>
+                        <term>Delay</term>
+                        <description>Delay of few microseconds, No Delay or Delay, at least 4us delay is inserted.</description>
+                    </item>
+                </list>
+            </summary>
+            <remarks>
+                <para>
+                    Recommended SPI parameters : baudrate=375, crcPol=7, direction=0, cpha=0, cpol=0, crc=0, firstBit=1, frameFormat=0, dataSize=1, mode=1, nss=1, nssPulse=1, delay=1
+                </para>
+            </remarks>
+        </SpiConnectParameters>
+
+        <Baudrate>
+            <summary>
+                Speed transmission 187, 375, 750, 1500, 3000, 6000, 12000 KHz.
+            </summary>
+        </Baudrate>
+
+        <CrcPolynomial>
+            <summary>
+                Crc polynomial value.
+            </summary>
+        </CrcPolynomial>
+
+        <Direction>
+            <summary>
+                2LFullDuplex/2LRxOnly/1LRx/1LTx.
+            </summary>
+        </Direction>
+
+        <Cpha>
+            <summary>
+                1Edge or 2Edge.
+            </summary>
+        </Cpha>
+
+        <Cpol>
+            <summary>
+                LOW or HIGH.
+            </summary>
+        </Cpol>
+
+        <Crc>
+            <summary>
+                DISABLE or ENABLE.
+            </summary>
+        </Crc>
+
+        <FirstBit>
+            <summary>
+                First bit: LSB or MSB.
+            </summary>
+        </FirstBit>
+
+        <FrameFormat>
+            <summary>
+                Frame format: Motorola or TI.
+            </summary>
+        </FrameFormat>
+
+        <DataSize>
+            <summary>
+                Size of frame data: 16bit or 8bit.
+            </summary>
+        </DataSize>
+
+        <Mode>
+            <summary>
+                Operating mode: Slave or Master.
+            </summary>
+        </Mode>
+
+        <Nss>
+            <summary>
+                Selection: Soft or Hard.
+            </summary>
+        </Nss>
+
+        <NssPulse>
+            <summary>
+                NSS pulse: No Pulse or Pulse.
+            </summary>
+        </NssPulse>
+
+        <Delay>
+            <summary>
+                Delay of few microseconds, No Delay or Delay, at least 4us delay is inserted.
+            </summary>
+        </Delay>
+    </members>
+</docs>

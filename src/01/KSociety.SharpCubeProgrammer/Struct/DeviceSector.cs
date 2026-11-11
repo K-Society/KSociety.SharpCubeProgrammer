@@ -4,19 +4,16 @@ namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\DeviceSector.xml' path='docs/members[@name="deviceSector"]/DeviceSector/*'/>
     [StructLayout(LayoutKind.Sequential)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct DeviceSector
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Number of Sectors.
-        /// </summary>
+        /// <include file='..\Doc\DeviceSector.xml' path='docs/members[@name="deviceSector"]/SectorNumber/*'/>
         public uint SectorNumber;
 
-        /// <summary>
-        /// Sector Size in BYTEs.
-        /// </summary>
+        /// <include file='..\Doc\DeviceSector.xml' path='docs/members[@name="deviceSector"]/SectorSize/*'/>
         public uint SectorSize;
     }
 }

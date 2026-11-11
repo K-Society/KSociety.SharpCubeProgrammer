@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceFileDataC">
+        <DeviceFileDataC>
+            <summary>
+                Get file required informations.
+                <list type="table">
+                    <item>
+                        <term>Type</term>
+                        <description>File extension type.</description>
+                    </item>
+                    <item>
+                        <term>SegmentsNumber</term>
+                        <description>Number of required segments.</description>
+                    </item>
+                    <item>
+                        <term>Segments</term>
+                        <description>List of segments.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceFileDataC>
+
+        <Type>
+            <summary>
+                File extension type.
+            </summary>
+        </Type>
+
+        <SegmentsNumber>
+            <summary>
+                Number of required segments.
+            </summary>
+        </SegmentsNumber>
+
+        <Segments>
+            <summary>
+                List of segments.
+            </summary>
+        </Segments>
+    </members>
+</docs>

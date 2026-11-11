@@ -5,10 +5,13 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/DeviceExternalStorageInfo/*'/>
     public struct DeviceExternalStorageInfo : IEquatable<DeviceExternalStorageInfo>
     {
+        /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/ExternalLoaderNumber/*'/>
         public uint ExternalLoaderNumber { get; set; }
 
+        /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/ExternalLoader/*'/>
         public IList<DeviceExternalLoader> ExternalLoader { get; private set; }
 
         public DeviceExternalStorageInfo(uint externalLoaderNumber, IList<DeviceExternalLoader> externalLoader)

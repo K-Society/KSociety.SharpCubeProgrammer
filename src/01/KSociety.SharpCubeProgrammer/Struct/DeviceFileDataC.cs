@@ -5,10 +5,16 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/DeviceFileDataC/*'/>
     public struct DeviceFileDataC : IEquatable<DeviceFileDataC>
     {
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Type/*'/>
         public int Type { get; set; }
+
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/SegmentsNumber/*'/>
         public int SegmentsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Segments/*'/>
         public IList<DeviceSegmentDataC> Segments { get; private set; }
 
         public DeviceFileDataC(int type, int segmentsNumber, IList<DeviceSegmentDataC> segments)

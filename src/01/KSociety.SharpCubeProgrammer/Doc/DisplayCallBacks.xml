@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="displayCallBacks">
+        <DisplayCallBacks>
+            <summary>
+                Functions must be implemented to personalize the display of messages.
+            </summary>
+        </DisplayCallBacks>
+
+        <InitProgressBar>
+            <summary>
+                Add a progress bar.
+            </summary>
+            <remarks>
+                <code>
+                public void InitProgressBar()
+                {
+                    if (VerbosityLevel >= VerbosityLevel.Level1)
+                    {
+                        for (var idx = 0; idx &lt; WIDH; idx++)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.OpenStandardOutput().WriteByte(177);
+                        }
+                        (Left, Top) = Console.GetCursorPosition();
+                        Console.Write($" {Progress}%");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.Write('\r');
+                        Progress = 0;
+                    }
+                }
+                </code>
+            </remarks>
+        </InitProgressBar>
+
+        <LogMessageReceived>
+            <summary>
+                Display internal messages according to verbosity level.
+            </summary>
+            <remarks>
+                <code>
+                internal void LogMessage(MessageType messageType, string message)
+                {
+                    switch (messageType)
+                    {
+                        case MessageType.Normal:
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+
+                        case MessageType.Info:
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            break;
+
+                        case MessageType.GreenInfo:
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            break;
+
+                        .
+                        .
+                        .
+
+                        default:
+                            break;
+                    }
+
+                    Console.Write("{0}", message);
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                </code>
+            </remarks>
+        </LogMessageReceived>
+
+        <ProgressBarUpdateReceived>
+            <summary>
+                Display the loading of read/write process.
+            </summary>
+            <remarks>
+                <code>
+                internal void ProgressBarUpdate(int currentProgress, int total)
+                {
+                    uint alreadyLoaded = 0;
+                    if (total == 0)
+                    {
+                        return;
+                    }
+
+                    if (currentProgress > total)
+                    {
+                        currentProgress = total;
+                    }
+
+                    /*Calculuate the ratio of complete-to-incomplete.*/
+                    var ratio = currentProgress / (float)total;
+                    var counter = (uint)ratio* WIDH;
+
+                    if (counter > alreadyLoaded &amp;&amp; VerbosityLevel == VerbosityLevel.Level1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        for (var Idx = Progress; Idx &lt; counter - alreadyLoaded; Idx++)
+                        {
+                            Console.OpenStandardOutput().WriteByte(219);
+                        }
+                    }
+                    Progress = counter;
+                    var (leftCur, topCur) = Console.GetCursorPosition();
+                    Console.SetCursorPosition(Left, Top);
+                    Console.Write($" {(int)(ratio * 100)}%");
+                    Console.SetCursorPosition(leftCur, topCur);
+                }
+                </code>
+            </remarks>
+        </ProgressBarUpdateReceived>
+    </members>
+</docs>

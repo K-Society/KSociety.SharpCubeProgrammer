@@ -4,68 +4,46 @@ namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Get device general informations.
-    /// </summary>
+    /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/GeneralInf/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct GeneralInf
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Device ID.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/DeviceId/*'/>
         public ushort DeviceId;
 
-        /// <summary>
-        /// Flash memory size.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/FlashSize/*'/>
         public int FlashSize;
 
-        /// <summary>
-        /// Bootloader version.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/BootloaderVersion/*'/>
         public int BootloaderVersion;
 
-        /// <summary>
-        /// Device MCU or MPU.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Type/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
         public string Type;
 
-        /// <summary>
-        /// Cortex CPU.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Cpu/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
         public string Cpu;
 
-        /// <summary>
-        /// Device name.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Name/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Name;
 
-        /// <summary>
-        /// Device serie.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Series/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Series;
 
-        /// <summary>
-        /// Take notice.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Description/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 150)]
         public string Description;
 
-        /// <summary>
-        /// Revision ID.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/RevisionId/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
         public string RevisionId;
 
-        /// <summary>
-        /// Board Rpn.
-        /// </summary>
+        /// <include file='..\Doc\GeneralInf.xml' path='docs/members[@name="generalInf"]/Board/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
         public string Board;
     }
