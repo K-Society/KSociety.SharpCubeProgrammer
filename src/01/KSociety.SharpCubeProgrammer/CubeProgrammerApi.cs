@@ -1448,7 +1448,7 @@ namespace SharpCubeProgrammer
 
                     var bankCList = new List<DeviceBankC>();
                     var bankCItemPointer = IntPtr.Zero;
-                    for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
+                    for (var i = 0; i < peripheralC.Value.BanksNumber; i++)
                     {
                         if (peripheralC.Value.Banks != IntPtr.Zero)
                         {
@@ -1461,7 +1461,7 @@ namespace SharpCubeProgrammer
                                 {
                                     var categoryCList = new List<DeviceCategoryC>();
                                     var categoryCItemPointer = IntPtr.Zero;
-                                    for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
+                                    for (var ii = 0; ii < bankCItem.CategoriesNumber; ii++)
                                     {
                                         categoryCItemPointer =
                                             Marshal.ReadIntPtr(bankCItem.Categories, ii * pointerSize);
@@ -1473,7 +1473,7 @@ namespace SharpCubeProgrammer
                                             {
                                                 var bitCList = new List<DeviceBitC>();
                                                 var bitCItemPointer = IntPtr.Zero;
-                                                for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
+                                                for (var iii = 0; iii < categoryCItem.BitsNumber; iii++)
                                                 {
                                                     bitCItemPointer =
                                                     Marshal.ReadIntPtr(categoryCItem.Bits, iii * pointerSize);
@@ -1484,7 +1484,7 @@ namespace SharpCubeProgrammer
 
                                                         var bitValueCList = new List<BitValueC>();
                                                         var bitValueCItemPointer = IntPtr.Zero;
-                                                        for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
+                                                        for (var iiii = 0; iiii < bitCItem.ValuesNumber; iiii++)
                                                         {
                                                             bitValueCItemPointer =
                                                                 Marshal.ReadIntPtr(bitCItem.Values, iiii * pointerSize);
@@ -1506,7 +1506,7 @@ namespace SharpCubeProgrammer
                                                             BitOffset = bitCItem.BitOffset,
                                                             BitWidth = bitCItem.BitWidth,
                                                             Access = bitCItem.Access,
-                                                            ValuesNbr = bitCItem.ValuesNbr,
+                                                            ValuesNumber = bitCItem.ValuesNumber,
                                                             Equation = bitCItem.Equation,
                                                             Reference = Marshal.PtrToStringAnsi(bitCItem.Reference),
                                                             BitValue = bitCItem.BitValue
@@ -1521,7 +1521,7 @@ namespace SharpCubeProgrammer
                                                 var deviceCategoryC = new DeviceCategoryC
                                                 {
                                                     Name = categoryCItem.Name,
-                                                    BitsNbr = categoryCItem.BitsNbr
+                                                    BitsNumber = categoryCItem.BitsNumber
                                                 };
                                                 deviceCategoryC.SetBits(bitCList);
 
@@ -1536,7 +1536,7 @@ namespace SharpCubeProgrammer
                                         Size = bankCItem.Size,
                                         Address = bankCItem.Address,
                                         Access = bankCItem.Access,
-                                        CategoriesNbr = bankCItem.CategoriesNbr
+                                        CategoriesNumber = bankCItem.CategoriesNumber
                                     };
                                     deviceBankC.SetCategories(categoryCList);
                                     bankCList.Add(deviceBankC);
@@ -1550,7 +1550,7 @@ namespace SharpCubeProgrammer
                     {
                         Name = peripheralC.Value.Name,
                         Description = peripheralC.Value.Description,
-                        BanksNbr = peripheralC.Value.BanksNbr
+                        BanksNumber = peripheralC.Value.BanksNumber
                     };
 
                     devicePeripheralC.SetBanks(bankCList);
@@ -1741,11 +1741,11 @@ namespace SharpCubeProgrammer
                         var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
                         var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
 
-                        output.ExternalLoaderNumber = externalStorageInfoStructure.ExternalLoaderNbr;
+                        output.ExternalLoaderNumber = externalStorageInfoStructure.ExternalLoaderNumber;
 
                         if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                         {
-                            for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                            for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNumber; i++)
                             {
                                 var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
 

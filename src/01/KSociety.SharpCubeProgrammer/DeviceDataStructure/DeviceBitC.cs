@@ -5,22 +5,46 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/DeviceBitC/*'/>
     public struct DeviceBitC : IEquatable<DeviceBitC>
     {
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Name/*'/>
         public string Name { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Description/*'/>
         public string Description { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/WordOffset/*'/>
         public uint WordOffset { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/BitOffset/*'/>
         public uint BitOffset { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/BitWidth/*'/>
         public uint BitWidth { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Access/*'/>
         public byte Access { get; set; }
-        public uint ValuesNbr { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/ValuesNumber/*'/>
+        public uint ValuesNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Values/*'/>
         public IList<BitValueC> Values { get; private set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Equation/*'/>
         public BitCoefficientC Equation { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/Reference/*'/>
         public string Reference { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/BitValue/*'/>
         public uint BitValue { get; set; }
+
+        /// <include file='..\Doc\DeviceBitC.xml' path='docs/members[@name="deviceBitC"]/ValLine/*'/>
         public uint ValLine { get; set; }
 
-        public DeviceBitC(string name, string description, uint wordOffset, uint bitOffset, uint bitWidth, byte access, uint valuesNbr, IList<BitValueC> values, BitCoefficientC equation, string reference, uint bitValue, uint valLine)
+        public DeviceBitC(string name, string description, uint wordOffset, uint bitOffset, uint bitWidth, byte access, uint valuesNumber, IList<BitValueC> values, BitCoefficientC equation, string reference, uint bitValue, uint valLine)
         {
             this.Name = name;
             this.Description = description;
@@ -28,7 +52,7 @@ namespace SharpCubeProgrammer.DeviceDataStructure
             this.BitOffset = bitOffset;
             this.BitWidth = bitWidth;
             this.Access = access;
-            this.ValuesNbr = valuesNbr;
+            this.ValuesNumber = valuesNumber;
             this.Values = values;
             this.Equation = equation;
             this.Reference = reference;
@@ -54,7 +78,7 @@ namespace SharpCubeProgrammer.DeviceDataStructure
                    this.BitOffset == other.BitOffset &&
                    this.BitWidth == other.BitWidth &&
                    this.Access == other.Access &&
-                   this.ValuesNbr == other.ValuesNbr &&
+                   this.ValuesNumber == other.ValuesNumber &&
                    EqualityComparer<IList<BitValueC>>.Default.Equals(this.Values, other.Values) &&
                    this.Equation.Equals(other.Equation) &&
                    this.Reference == other.Reference &&
@@ -71,7 +95,7 @@ namespace SharpCubeProgrammer.DeviceDataStructure
             hash.Add(this.BitOffset);
             hash.Add(this.BitWidth);
             hash.Add(this.Access);
-            hash.Add(this.ValuesNbr);
+            hash.Add(this.ValuesNumber);
             hash.Add(this.Values);
             hash.Add(this.Equation);
             hash.Add(this.Reference);

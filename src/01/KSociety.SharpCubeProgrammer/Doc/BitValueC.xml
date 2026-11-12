@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="bitValueC">
+        <BitValueC>
+            <summary>
+                This stucture describes the option Bit value.
+                <list type="table">
+                    <item>
+                        <term>Value</term>
+                        <description>Option bit value.</description>
+                    </item>
+                    <item>
+                        <term>Description</term>
+                        <description>Option bit description.</description>
+                    </item>
+                </list>
+            </summary>
+        </BitValueC>
+
+        <Value>
+            <summary>
+                Option bit value.
+            </summary>
+        </Value>
+
+        <Description>
+            <summary>
+                Option bit description.
+            </summary>
+        </Description>
+    </members>
+</docs>

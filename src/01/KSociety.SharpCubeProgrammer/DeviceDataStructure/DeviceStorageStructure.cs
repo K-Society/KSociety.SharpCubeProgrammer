@@ -5,9 +5,13 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceStorageStructure.xml' path='docs/members[@name="devieStorageStructure"]/DeviceStorageStructure/*'/>
     public struct DeviceStorageStructure : IEquatable<DeviceStorageStructure>
     {
+        /// <include file='..\Doc\DeviceStorageStructure.xml' path='docs/members[@name="devieStorageStructure"]/BanksNumber/*'/>
         public uint BanksNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceStorageStructure.xml' path='docs/members[@name="devieStorageStructure"]/Banks/*'/>
         public IList<DeviceDeviceBank> Banks { get; private set; }
 
         public DeviceStorageStructure(uint banksNumber, IList<DeviceDeviceBank> banks)

@@ -5,9 +5,13 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/DeviceDeviceBank/*'/>
     public struct DeviceDeviceBank : IEquatable<DeviceDeviceBank>
     {
+        /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/SectorsNumber/*'/>
         public uint SectorsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/Sectors/*'/>
         public IList<BankSector> Sectors { get; private set; }
 
         public DeviceDeviceBank(uint sectorsNumber, IList<BankSector> sectors)

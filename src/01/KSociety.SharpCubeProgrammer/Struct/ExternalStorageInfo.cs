@@ -11,8 +11,8 @@ namespace SharpCubeProgrammer.Struct
     public struct ExternalStorageInfo
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <include file='..\Doc\ExternalStorageInfo.xml' path='docs/members[@name="externalStorageInfo"]/ExternalLoaderNbr/*'/>
-        public uint ExternalLoaderNbr;
+        /// <include file='..\Doc\ExternalStorageInfo.xml' path='docs/members[@name="externalStorageInfo"]/ExternalLoaderNumber/*'/>
+        public uint ExternalLoaderNumber;
 
         /// <include file='..\Doc\ExternalStorageInfo.xml' path='docs/members[@name="externalStorageInfo"]/ExternalLoader/*'/>
         public IntPtr ExternalLoader;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="devieStorageStructure">
+        <DeviceStorageStructure>
+            <summary>
+                This stucture describes sotrage characterization.
+                <list type="table">
+                    <item>
+                        <term>BanksNumber</term>
+                        <description>Number of exsisted banks.</description>
+                    </item>
+                    <item>
+                        <term>Banks</term>
+                        <description>Banks sectors definition <see cref="DeviceDeviceBank"/>.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceStorageStructure>
+
+        <BanksNumber>
+            <summary>
+                Number of existing banks.
+            </summary>
+        </BanksNumber>
+
+        <Banks>
+            <summary>
+                Banks sectors definition <see cref="DeviceDeviceBank"/>.
+            </summary>
+        </Banks>
+    </members>
+</docs>
