@@ -1,11 +1,11 @@
 // Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information.
 
-namespace SharpCubeProgrammer.Interface
+namespace SharpCubeProgrammer.Abstraction
 {
     using System;
     using System.Collections.Generic;
     using DeviceDataStructure;
-    using Enum;
+    using Enumeration;
     using Struct;
 
     /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/CubeProgrammerApi/*'/>
@@ -17,13 +17,19 @@ namespace SharpCubeProgrammer.Interface
         //STLINK module groups debug ports JTAG/SWD functions together.
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/TryConnectStLink/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/GetStLinkList/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/GetStLinkEnumerationList/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ConnectStLink/*'/>
         CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters);
@@ -44,7 +50,9 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/SendByteUart/*'/>
+#pragma warning disable CA1716 // Identifiers should not match keywords
         CubeProgrammerError SendByteUart(int @byte);
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/GetDfuDeviceList/*'/>
         IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483);
@@ -56,7 +64,7 @@ namespace SharpCubeProgrammer.Interface
         CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ConnectDfuBootloader2Overload/*'/>
-        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000);
+        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ConnectSpiBootloader/*'/>
         CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);
@@ -136,8 +144,10 @@ namespace SharpCubeProgrammer.Interface
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/FreeFileData/*'/>
         void FreeFileData(IntPtr data);
 
-        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/FreeLibraryMemory/*'/>
+        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/FreeLibraryMemory/*'
+#pragma warning disable CA1720 // Identifiers should not match keywords
         void FreeLibraryMemory(IntPtr ptr);
+#pragma warning restore CA1720 // Identifiers should not match keywords
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/Verify/*'/>
         CubeProgrammerError Verify(IntPtr fileData, string address);
@@ -290,7 +300,9 @@ namespace SharpCubeProgrammer.Interface
 
         void Run();
 
+#pragma warning disable CA1716 // Identifiers should not match keywords
         void Step();
+#pragma warning restore CA1716 // Identifiers should not match keywords
 
         #endregion
 

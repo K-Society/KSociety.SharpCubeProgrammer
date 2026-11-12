@@ -4,8 +4,8 @@ namespace SharpCubePrgAPI.Bootoader
 {
     using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal static class I2cExample
@@ -21,15 +21,15 @@ namespace SharpCubePrgAPI.Bootoader
 
             var i2cParam = new I2cConnectParameters
             {
-                add = STM32L45xxx, // Device Address
-                br = 400, // Baudrate 400 KHz
-                sm = 1, // FAST MODE
-                am = 0, // 7 BITS ADDRESS
-                af = 1, // ANALOG FILTER ENABLE
-                df = 0, // DIGITAL FILTER DISABLE
-                dnf = 0x00, // DIGITAL NOISE FILTER 0
-                rt = 0, // RISE TIME
-                ft = 0 // FALL TIME
+                Address = STM32L45xxx, // Device Address
+                Baudrate = 400, // Baudrate 400 KHz
+                SpeedMode = 1, // FAST MODE
+                AddressMode = 0, // 7 BITS ADDRESS
+                AnalogFilter = 1, // ANALOG FILTER ENABLE
+                DigitalFilter = 0, // DIGITAL FILTER DISABLE
+                DigitalNoiseFilter = 0x00, // DIGITAL NOISE FILTER 0
+                RiseTime = 0, // RISE TIME
+                FallTime = 0 // FALL TIME
             };
 
             /* Target connect */

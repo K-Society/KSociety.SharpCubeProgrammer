@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceBankC">
+        <DeviceBankC>
+            <summary>
+                Get option bytes banks internal descriptions.
+                <list type="table">
+                    <item>
+                        <term>Size</term>
+                        <description>Bank size.</description>
+                    </item>
+                    <item>
+                        <term>Address</term>
+                        <description>Bank starting address.</description>
+                    </item>
+                    <item>
+                        <term>Access</term>
+                        <description>Bank access Read/Write.</description>
+                    </item>
+                    <item>
+                        <term>CategoriesNumber</term>
+                        <description>Number of option bytes categories.</description>
+                    </item>
+                    <item>
+                        <term>Categories</term>
+                        <description>Get bank categories descriptions <see cref="DeviceCategoryC"/>.</description>
+                    </item>
+                </list>
+            </summary>
+            <remarks>
+                <para>
+                    STLINK and Bootloader interfaces have different addresses to access to option bytes registres.
+                </para>
+            </remarks>
+        </DeviceBankC>
+
+        <Size>
+            <summary>
+                Bank size.
+            </summary>
+        </Size>
+
+        <Address>
+            <summary>
+                Bank starting address.
+            </summary>
+        </Address>
+
+        <Access>
+            <summary>
+                Bank access Read/Write.
+            </summary>
+        </Access>
+
+        <CategoriesNumber>
+            <summary>
+                Number of option bytes categories.
+            </summary>
+        </CategoriesNumber>
+
+        <Categories>
+            <summary>
+                Get bank categories descriptions <see cref="DeviceCategoryC"/>.
+            </summary>     
+        </Categories>
+    </members>
+</docs>

@@ -2,12 +2,56 @@
 
 namespace SharpCubeProgrammer.Struct
 {
+    using System;
     using System.Collections.Generic;
 
-    public struct DeviceFileDataC
+    /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/DeviceFileDataC/*'/>
+    public struct DeviceFileDataC : IEquatable<DeviceFileDataC>
     {
-        public int Type;
-        public int segmentsNbr;
-        public List<DeviceSegmentDataC> segments;
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Type/*'/>
+        public int Type { get; set; }
+
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/SegmentsNumber/*'/>
+        public int SegmentsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Segments/*'/>
+        public IList<DeviceSegmentDataC> Segments { get; private set; }
+
+        public DeviceFileDataC(int type, int segmentsNumber, IList<DeviceSegmentDataC> segments)
+        {
+            this.Type = type;
+            this.SegmentsNumber = segmentsNumber;
+            this.Segments = segments;
+        }
+
+        public void SetSegments(IList<DeviceSegmentDataC> segments)
+        {
+            this.Segments = segments;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DeviceFileDataC other && this.Equals(other);
+        }
+
+        public bool Equals(DeviceFileDataC other)
+        {
+            return this.Type == other.Type && this.SegmentsNumber == other.SegmentsNumber && EqualityComparer<IList<DeviceSegmentDataC>>.Default.Equals(this.Segments, other.Segments);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Type, this.SegmentsNumber, this.Segments);
+        }
+
+        public static bool operator ==(DeviceFileDataC left, DeviceFileDataC right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DeviceFileDataC left, DeviceFileDataC right)
+        {
+            return !(left == right);
+        }
     }
 }

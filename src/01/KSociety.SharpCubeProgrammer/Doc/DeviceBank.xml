@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceBank">
+        <DeviceBank>
+            <summary>
+                This stucture defines the memory sectors for each bank.
+                <list type="table">
+                    <item>
+                        <term>SectorsNumber</term>
+                        <description>Number of sectors of the considered bank.</description>
+                    </item>
+                    <item>
+                        <term>Sectors</term>
+                        <description>Sectors specifications <see cref="BankSector"/>.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceBank>
+
+        <SectorsNumber>
+            <summary>
+                Number of sectors of the considered bank.
+            </summary>
+        </SectorsNumber>
+
+        <Sectors>
+            <summary>
+                Sectors specifications <see cref="BankSector"/>.
+            </summary>
+        </Sectors>
+    </members>
+</docs>

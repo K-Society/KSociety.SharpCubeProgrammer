@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="usartConnectParameters">
+        <UsartConnectParameters>
+            <summary>
+                USART connect parameters.
+                <list type="table">
+                    <item>
+                        <term>PortName</term>
+                        <description>Interface identifier: COM1, COM2, /dev/ttyS0...</description>
+                    </item>
+                    <item>
+                        <term>Baudrate</term>
+                        <description>Speed transmission: 115200, 9600...</description>
+                    </item>
+                    <item>
+                        <term>Parity</term>
+                        <description>Parity bit: value in UsartParity.</description>
+                    </item>
+                    <item>
+                        <term>DataBits</term>
+                        <description>Data bit: value in {6, 7, 8}.</description>
+                    </item>
+                    <item>
+                        <term>StopBits</term>
+                        <description>Stop bit: value in {1, 1.5, 2}.</description>
+                    </item>
+                    <item>
+                        <term>FlowControl</term>
+                        <description>Flow control: value in UsartFlowControl.</description>
+                    </item>
+                    <item>
+                        <term>StatusRTS</term>
+                        <description>RTS status: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>StatusDTR</term>
+                        <description>DTR status: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>DelayRtsDtr</term>
+                        <description>Delay between RTS and DTR.</description>
+                    </item>
+                    <item>
+                        <term>NoInitBits</term>
+                        <description>Set No Init bits: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>RequestReadUnprotect</term>
+                        <description>Request a read unprotect: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>Tzenreg</term>
+                        <description>Request a TZEN regression: value in {0,1}.</description>
+                    </item>
+                </list>
+            </summary>
+        </UsartConnectParameters>
+
+        <PortName>
+            <summary>
+                Interface identifier: COM1, COM2, /dev/ttyS0...
+            </summary>
+        </PortName>
+
+        <Baudrate>
+            <summary>
+                Speed transmission: 115200, 9600...
+            </summary>
+        </Baudrate>
+
+        <Parity>
+            <summary>
+                Parity bit: value in UsartParity.
+            </summary>
+        </Parity>
+
+        <DataBits>
+            <summary>
+                Data bit: value in {6, 7, 8}.
+            </summary>
+        </DataBits>
+
+        <StopBits>
+            <summary>
+                Stop bit: value in {1, 1.5, 2}.
+            </summary>
+        </StopBits>
+
+        <FlowControl>
+            <summary>
+                Flow control: value in UsartFlowControl.
+            </summary>
+        </FlowControl>
+
+        <StatusRTS>
+            <summary>
+                RTS: Value in {0,1}.
+            </summary>
+        </StatusRTS>
+
+        <StatusDTR>
+            <summary>
+                DTR: Value in {0,1}.
+            </summary>
+        </StatusDTR>
+
+        <DelayRtsDtr>
+            <summary>
+                Manage the delay timing of the Pulse.
+            </summary>
+        </DelayRtsDtr>
+
+        <NoInitBits>
+            <summary>
+                Set No Init bits: value in {0,1}.
+            </summary>
+        </NoInitBits>
+
+        <RequestReadUnprotect>
+            <summary>
+                Request a read unprotect: value in {0,1}.
+            </summary>
+        </RequestReadUnprotect>
+
+        <Tzenreg>
+            <summary>
+                Request a TZEN regression: value in {0,1}.
+            </summary>
+        </Tzenreg>
+    </members>
+</docs>

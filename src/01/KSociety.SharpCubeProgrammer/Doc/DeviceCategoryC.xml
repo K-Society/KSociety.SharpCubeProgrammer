@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceCategoryC">
+        <DeviceCategoryC>
+            <summary>
+                Get option bytes banks categories descriptions.
+                <list type="table">
+                    <item>
+                        <term>Name</term>
+                        <description>Get category name such as Read Out Protection, BOR Level...</description>
+                    </item>
+                    <item>
+                        <term>BitsNumber</term>
+                        <description>Get bits number of the considered category.</description>
+                    </item>
+                    <item>
+                        <term>Bits</term>
+                        <description>Get internal bits descriptions <see cref="DeviceBitC"/>.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceCategoryC>
+
+        <Name>
+            <summary>
+                Get category name such as Read Out Protection, BOR Level...
+            </summary>
+        </Name>
+
+        <BitsNumber>
+            <summary>
+                Get bits number of the considered category.
+            </summary>
+        </BitsNumber>
+
+        <Bits>
+            <summary>
+                Get internal bits descriptions <see cref="DeviceBitC"/>.
+            </summary>
+        </Bits>
+    </members>
+</docs>

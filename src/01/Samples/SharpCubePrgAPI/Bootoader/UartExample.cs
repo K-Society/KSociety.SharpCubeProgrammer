@@ -5,8 +5,8 @@ namespace SharpCubePrgAPI.Bootoader
     using System.Linq;
     using SharpCubePrgAPI;
     using SharpCubePrgAPI.User;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
 
     internal static class UartExample
     {
@@ -28,7 +28,7 @@ namespace SharpCubePrgAPI.Bootoader
                 foreach (var port in getUsartList)
                 {
                     DisplayManager.LogMessage(MessageType.Normal, $"\nPort Name {portIndex} :");
-                    DisplayManager.LogMessage(MessageType.Info, $" {port.portName} ");
+                    DisplayManager.LogMessage(MessageType.Info, $" {port.PortName} ");
                     portIndex++;
                 }
                 DisplayManager.LogMessage(MessageType.Title, "\n-----------------------------------------\n\n");

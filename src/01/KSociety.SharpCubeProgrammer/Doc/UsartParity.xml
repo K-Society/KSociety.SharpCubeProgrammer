@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="usartParity">
+        <UsartParity>
+            <summary>
+                The parity bit in the data frame of the USART communication tells the receiving device if there is any error in the data bits.
+                <list type="table">
+                    <item>
+                        <term>Even (0)</term>
+                        <description>Even parity bit.</description>
+                    </item>
+                    <item>
+                        <term>Odd (1)</term>
+                        <description>Odd parity bit.</description>
+                    </item>
+                    <item>
+                        <term>None (2)</term>
+                        <description>No check parity.</description>
+                    </item>
+                </list>
+            </summary>
+        </UsartParity>
+
+        <Even>
+            <summary>
+                Even parity bit.
+            </summary>
+        </Even>
+
+        <Odd>
+            <summary>
+                Odd parity bit.
+            </summary>
+        </Odd>
+
+        <None>
+            <summary>
+                No check parity.
+            </summary>
+        </None>
+    </members>
+</docs>

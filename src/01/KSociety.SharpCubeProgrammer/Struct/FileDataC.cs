@@ -5,11 +5,19 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\FileDataC.xml' path='docs/members[@name="fileDataC"]/FileDataC/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct FileDataC
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
+        /// <include file='..\Doc\FileDataC.xml' path='docs/members[@name="fileDataC"]/Type/*'/>
         public int Type;
-        public int segmentsNbr;
-        public IntPtr segments;
+
+        /// <include file='..\Doc\FileDataC.xml' path='docs/members[@name="fileDataC"]/SegmentsNumber/*'/>
+        public int SegmentsNumber;
+
+        /// <include file='..\Doc\FileDataC.xml' path='docs/members[@name="fileDataC"]/Segments/*'/>
+        public IntPtr Segments;
     }
 }

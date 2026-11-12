@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="externalLoader">
+        <ExternalLoader>
+            <summary>
+                Get external Loader parameters to launch the process of programming an external flash memory.
+                <list type="table">
+                    <item>
+                        <term>FilePath</term>
+                        <description>FlashLoader file path.</description>
+                    </item>
+                    <item>
+                        <term>DeviceName</term>
+                        <description>Device Name and Description.</description>
+                    </item>
+                    <item>
+                        <term>DeviceType</term>
+                        <description>Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...</description>
+                    </item>
+                    <item>
+                        <term>DeviceStartAddress</term>
+                        <description>Default Device Start Address.</description>
+                    </item>
+                    <item>
+                        <term>DeviceSize</term>
+                        <description>Total Size of Device.</description>
+                    </item>
+                    <item>
+                        <term>PageSize</term>
+                        <description>Programming Page Size.</description>
+                    </item>
+                    <item>
+                        <term>SectorsTypeNumber</term>
+                        <description>Type number.</description>
+                    </item>
+                    <item>
+                        <term>Sectors</term>
+                        <description>Device sectors.</description>
+                    </item>
+                </list>
+            </summary>
+        </ExternalLoader>
+
+        <FilePath>
+            <summary>
+                FlashLoader file path.
+            </summary>
+        </FilePath>
+
+        <DeviceName>
+            <summary>
+                Device Name and Description.
+            </summary>
+        </DeviceName>
+
+        <DeviceType>
+            <summary>
+                Device Type: ONCHIP, EXT8BIT, EXT16BIT, ...
+            </summary>
+        </DeviceType>
+
+        <DeviceStartAddress>
+            <summary>
+                Default Device Start Address.
+            </summary>
+        </DeviceStartAddress>
+
+        <DeviceSize>
+            <summary>
+                Total Size of Device.
+            </summary>
+        </DeviceSize>
+
+        <PageSize>
+            <summary>
+                Programming Page Size.
+            </summary>
+        </PageSize>
+
+        <SectorsTypeNumber>
+            <summary>
+                Sectors type number.
+            </summary>
+        </SectorsTypeNumber>
+
+        <Sectors>
+            <summary>
+                Device sectors.
+            </summary>
+        </Sectors>
+    </members>
+</docs>

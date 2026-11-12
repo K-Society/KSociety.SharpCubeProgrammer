@@ -3,16 +3,18 @@
 namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
-    using Enum;
+    using Enumeration;
 
     /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct DebugConnectParameters
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
         public DebugPort DebugPort;
 
-        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/DebugPort/*'/>
+        /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/Index/*'/>
         public int Index;
 
         /// <include file='..\Doc\DebugConnectParameters.xml' path='docs/members[@name="debugConnectParameters"]/SerialNumber/*'/>

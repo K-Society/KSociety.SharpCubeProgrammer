@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="dfuConnectParameters">
+        <DfuConnectParameters>
+            <summary>
+                Specify the USB DFU connect parameters.
+                <list type="table">
+                    <item>
+                        <term>UsbIndex</term>
+                        <description>Indicates the index of DFU ports already connected.</description>
+                    </item>
+                    <item>
+                        <term>RequestReadUnprotect</term>
+                        <description>Request a read unprotect: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>Tzenreg</term>
+                        <description>Request a TZEN regression: value in {0,1}.</description>
+                    </item>
+                    <item>
+                        <term>UsbTimeout</term>
+                        <description>USB Timeout control. (Default: 30000 ms)</description>
+                    </item>
+                </list>
+            </summary>
+        </DfuConnectParameters>
+
+        <UsbIndex>
+            <summary>
+                Indicates the index of DFU ports already connected.
+            </summary>
+        </UsbIndex>
+
+        <RequestReadUnprotect>
+            <summary>
+                Request a read unprotect: value in {0,1}.
+            </summary>
+        </RequestReadUnprotect>
+
+        <Tzenreg>
+            <summary>
+                Request a TZEN regression: value in {0,1}.
+            </summary>
+        </Tzenreg>
+
+        <UsbTimeout>
+            <summary>
+                USB Timeout control. (Default: 30000 ms)
+            </summary>
+        </UsbTimeout>
+    </members>
+</docs>

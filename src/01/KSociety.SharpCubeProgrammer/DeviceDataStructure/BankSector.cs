@@ -4,11 +4,19 @@ namespace SharpCubeProgrammer.DeviceDataStructure
 {
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\BankSector.xml' path='docs/members[@name="bankSector"]/BankSector/*'/>
     [StructLayout(LayoutKind.Sequential)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct BankSector
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
+        /// <include file='..\Doc\BankSector.xml' path='docs/members[@name="bankSector"]/Index/*'/>
         public uint Index;
+
+        /// <include file='..\Doc\BankSector.xml' path='docs/members[@name="bankSector"]/Size/*'/>
         public uint Size;
+
+        /// <include file='..\Doc\BankSector.xml' path='docs/members[@name="bankSector"]/Address/*'/>
         public uint Address;
     }
 }

@@ -6,7 +6,7 @@ namespace SharpCubePrgAPI.User
     using SharpCubePrgAPI.Bootoader;
     using SharpCubePrgAPI.HSM;
     using SharpCubePrgAPI.StLink;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
     using SharpCubeProgrammer.Struct;
 
     internal class Program
@@ -25,11 +25,11 @@ namespace SharpCubePrgAPI.User
                 LogMessage = DisplayManager.DisplayMessage,
                 LoadBar = DisplayManager.ProgressBarUpdate
             };
-
+            
             cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
             /* Set DLL verbosity level */
-            DisplayManager.VerbosityLevel = VerbosityLevel.VerbosityLevel1;
+            DisplayManager.VerbosityLevel = VerbosityLevel.Level1;
             cubeProgrammerApi.SetVerbosityLevel(DisplayManager.VerbosityLevel);
 
             #endregion

@@ -6,8 +6,8 @@ namespace SharpCubePrgAPI
     using System.Linq;
     using SharpCubePrgAPI.User;
     using SharpCubeProgrammer;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Abstraction;
+    using SharpCubeProgrammer.Enumeration;
 
     internal static class Shared
     {

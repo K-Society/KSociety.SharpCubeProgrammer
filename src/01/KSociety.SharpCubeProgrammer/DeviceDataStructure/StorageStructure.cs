@@ -5,10 +5,16 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\StorageStructure.xml' path='docs/members[@name="storageStructure"]/StorageStructure/*'/>
     [StructLayout(LayoutKind.Sequential)]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct StorageStructure
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
+        /// <include file='..\Doc\StorageStructure.xml' path='docs/members[@name="storageStructure"]/BanksNumber/*'/>
         public uint BanksNumber;
+
+        /// <include file='..\Doc\StorageStructure.xml' path='docs/members[@name="storageStructure"]/Banks/*'/>
         public IntPtr Banks;
     }
 }

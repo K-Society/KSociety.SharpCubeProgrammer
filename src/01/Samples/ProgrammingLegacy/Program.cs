@@ -8,8 +8,8 @@ namespace ProgrammingLegacy
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Serilog;
-    using SharpCubeProgrammer.Enum;
-    using SharpCubeProgrammer.Interface;
+    using SharpCubeProgrammer.Enumeration;
+    using SharpCubeProgrammer.Abstraction;
 
     internal class Program
     {
@@ -42,7 +42,7 @@ namespace ProgrammingLegacy
                 Logger.LogInformation("Speed: {0}", stLink.Speed);
                 var connectionResult = CubeProgrammerApi.ConnectStLink(stLink);
 
-                if (connectionResult.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                if (connectionResult.Equals(CubeProgrammerError.NoError))
                 {
                     var generalInfo = CubeProgrammerApi.GetDeviceGeneralInf();
                     if (generalInfo != null)
@@ -72,7 +72,7 @@ namespace ProgrammingLegacy
 
                     var storageStructure = CubeProgrammerApi.GetStorageStructure();
 
-                    if (storageStructure.Item1.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    if (storageStructure.Item1.Equals(CubeProgrammerError.NoError))
                     {
                         //Logger.LogInformation("Storage structure: \n" +
                         //                      "Address: {0} \n" +
@@ -94,11 +94,11 @@ namespace ProgrammingLegacy
                         Logger.LogInformation("PeripheralC: \n" +
                                               "Name: {0} \n" +
                                               "Description: {1} \n" +
-                                              "Banks Nbr: {2} \n" +
+                                              "Banks Number: {2} \n" +
                                               "Banks: {3} \n",
                             peripheral.Value.Name,
                             peripheral.Value.Description,
-                            peripheral.Value.BanksNbr,
+                            peripheral.Value.BanksNumber,
                             peripheral.Value.Banks);
                     }
 

@@ -2,16 +2,63 @@
 
 namespace SharpCubeProgrammer.DeviceDataStructure
 {
+    using System;
     using System.Collections.Generic;
 
-    public struct DevicePeripheralC
+    /// <include file='..\Doc\DevicePeripheralC.xml' path='docs/members[@name="devicePeripheralC"]/DevicePeripheralC/*'/>
+    public struct DevicePeripheralC : IEquatable<DevicePeripheralC>
     {
-        public string Name;
+        /// <include file='..\Doc\DevicePeripheralC.xml' path='docs/members[@name="devicePeripheralC"]/Name/*'/>
+        public string Name { get; set; }
 
-        public string Description;
+        /// <include file='..\Doc\DevicePeripheralC.xml' path='docs/members[@name="devicePeripheralC"]/Description/*'/>
+        public string Description { get; set; }
 
-        public uint BanksNbr;
+        /// <include file='..\Doc\DevicePeripheralC.xml' path='docs/members[@name="devicePeripheralC"]/BanksNumber/*'/>
+        public uint BanksNumber { get; set; }
 
-        public List<DeviceBankC> Banks;
+        /// <include file='..\Doc\DevicePeripheralC.xml' path='docs/members[@name="devicePeripheralC"]/Banks/*'/>
+        public IList<DeviceBankC> Banks { get; private set; }
+
+        public DevicePeripheralC(string name, string description, uint banksNumber, IList<DeviceBankC> banks)
+        {
+            this.Name = name;
+            this.Description = description;
+            this.BanksNumber = banksNumber;
+            this.Banks = banks;
+        }
+
+        public void SetBanks(IList<DeviceBankC> banks)
+        {
+            this.Banks = banks;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DevicePeripheralC other && this.Equals(other);
+        }
+
+        public bool Equals(DevicePeripheralC other)
+        {
+            return this.Name == other.Name &&
+                   this.Description == other.Description &&
+                   this.BanksNumber == other.BanksNumber &&
+                   EqualityComparer<IList<DeviceBankC>>.Default.Equals(this.Banks, other.Banks);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Name, this.Description, this.BanksNumber, this.Banks);    
+        }
+
+        public static bool operator ==(DevicePeripheralC left, DevicePeripheralC right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DevicePeripheralC left, DevicePeripheralC right)
+        {
+            return !(left == right);
+        }
     }
 }

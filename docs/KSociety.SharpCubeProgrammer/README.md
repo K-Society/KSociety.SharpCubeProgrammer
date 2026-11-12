@@ -100,7 +100,6 @@ All functions also exist in an asynchronous version.
 - MassErase
 - SectorErase
 - ReadUnprotect
-- TzenRegression (does not exist)
 - GetTargetInterfaceType
 - GetCancelPointer
 - FileOpen
@@ -183,7 +182,7 @@ var displayCallBacks = new DisplayCallBacks
 
 cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
-cubeProgrammerApi.SetVerbosityLevel(CubeProgrammerVerbosityLevel.CubeProgrammerVerLevelDebug);
+cubeProgrammerApi.SetVerbosityLevel(VerbosityLevel.Level1);
 ```
 
 - Retrieves all ST-LINK connected probes:
@@ -221,7 +220,7 @@ else
 - Retrieve general info:
 
 ```csharp
-if (connectionResult.Equals(CubeProgrammerError.CubeprogrammerNoError))
+if (connectionResult.Equals(CubeProgrammerError.NoError))
 {
     var generalInfo = cubeProgrammerApi.GetDeviceGeneralInf();
     if (generalInfo != null)

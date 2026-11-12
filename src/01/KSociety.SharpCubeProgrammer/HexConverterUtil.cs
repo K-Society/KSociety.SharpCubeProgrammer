@@ -4,7 +4,7 @@ namespace SharpCubeProgrammer
 {
     using System;
     using System.Globalization;
-    using SharpCubeProgrammer.Enum;
+    using SharpCubeProgrammer.Enumeration;
 
     /// <include file='.\Doc\HexConverterUtil.xml' path='docs/members[@name="hexConverterUtil"]/HexConverterUtil/*'/>
     public static class HexConverterUtil
@@ -30,14 +30,14 @@ namespace SharpCubeProgrammer
         /// <include file='.\Doc\HexConverterUtil.xml' path='docs/members[@name="hexConverterUtil"]/HexConverterToString/*'/>
         public static string HexConverterToString(uint hex)
         {
-            var output = "0x" + hex.ToString("X");
+            var output = "0x" + hex.ToString("X", FormatProvider);
             return output;
         }
 
         /// <include file='.\Doc\HexConverterUtil.xml' path='docs/members[@name="hexConverterUtil"]/HexConverterToString/*'/>
         public static string HexConverterToString(int hex)
         {
-            var output = "0x" + hex.ToString("X");
+            var output = "0x" + hex.ToString("X", FormatProvider);
             return output;
         }
 
@@ -48,9 +48,13 @@ namespace SharpCubeProgrammer
                 return String.Empty;
             }
 
-            if (hex.StartsWith("0x") || hex.StartsWith("0X"))
+            if (hex.StartsWith("0x", StringComparison.InvariantCulture) || hex.StartsWith("0X", StringComparison.InvariantCulture))
             {
-                return hex.Split('x', 'X')[1];
+                var output = hex.Split('x', 'X');
+                if (output.Length > 1)
+                {
+                    return output[1];
+                }
             }
 
             return hex;
@@ -58,9 +62,9 @@ namespace SharpCubeProgrammer
 
         internal static CubeProgrammerError CheckResult(int result)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
+            var output = CubeProgrammerError.Other;
 
-            if (result >= (int)CubeProgrammerError.CubeProgrammerErrorOther && result <= (int)CubeProgrammerError.CubeProgrammerNoError)
+            if (result >= (int)CubeProgrammerError.Other && result <= (int)CubeProgrammerError.NoError)
             {
                 if (System.Enum.IsDefined(typeof(CubeProgrammerError), result))
                 {

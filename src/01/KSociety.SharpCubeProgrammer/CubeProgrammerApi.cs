@@ -8,10 +8,10 @@ namespace SharpCubeProgrammer
     using System.Runtime.InteropServices;
     using System.Threading;
     using DeviceDataStructure;
-    using Enum;
-    using Interface;
+    using Enumeration;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
+    using SharpCubeProgrammer.Abstraction;
     using SharpCubeProgrammer.Native;
     using Struct;
 
@@ -80,145 +80,165 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError TryConnectStLink(int stLinkProbeIndex = 0, int shared = 0, DebugConnectionMode debugConnectMode = DebugConnectionMode.UnderResetMode)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            var listPtr = new IntPtr();
-            var parametersList = new List<DebugConnectParameters>();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(TryConnectStLink)))
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
-                var numberOfItems = this._programmerInstanceApi.GetStLinkEnumerationList(ref listPtr, shared);
-                if (listPtr != IntPtr.Zero)
+                var output = CubeProgrammerError.Other;
+                var listPtr = new IntPtr();
+                var parametersList = new List<DebugConnectParameters>();
+
+                try
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DebugConnectParameters>();
+                    var numberOfItems = this._programmerInstanceApi.GetStLinkEnumerationList(ref listPtr, shared);
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
-                    }
-
-                    if (numberOfItems > 0 && stLinkProbeIndex < numberOfItems)
-                    {
-                        var dbg = parametersList[stLinkProbeIndex];
-                        dbg.ConnectionMode = debugConnectMode;
-                        dbg.Shared = shared;
-
-                        var connectStLinkResult = this._programmerInstanceApi.ConnectStLink(dbg);
-                        if (connectStLinkResult != 0)
+                        for (var i = 0; i < numberOfItems; i++)
                         {
-                            this.Disconnect();
-                                
+                            var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
                         }
-                        output = HexConverterUtil.CheckResult(connectStLinkResult);
+
+                        if (numberOfItems > 0 && stLinkProbeIndex < numberOfItems)
+                        {
+                            var dbg = parametersList[stLinkProbeIndex];
+                            dbg.ConnectionMode = debugConnectMode;
+                            dbg.Shared = shared;
+
+                            var connectStLinkResult = this._programmerInstanceApi.ConnectStLink(dbg);
+                            if (connectStLinkResult != 0)
+                            {
+                                this.Disconnect();
+
+                            }
+                            output = HexConverterUtil.CheckResult(connectStLinkResult);
+                        }
+                    }
+                    else
+                    {
+                        this._logger?.WarningMessage("TryConnectStLink IntPtr: Zero!");
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    this._logger?.LogWarning("TryConnectStLink IntPtr: {0}!", "Zero");
+                    this._logger?.ErrorMessage("TryConnectStLink: ", ex);
+                    throw;
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "TryConnectStLink: ");
-            }
 
-            return output;
+                return output;
+            }
         }
        
         public IEnumerable<DebugConnectParameters> GetStLinkList(bool shared = false)
         {
-            var listPtr = new IntPtr();
-            var parametersList = new List<DebugConnectParameters>();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetStLinkList)))
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
-                var numberOfItems = this._programmerInstanceApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
-                if (listPtr != IntPtr.Zero)
+                var listPtr = new IntPtr();
+                var parametersList = new List<DebugConnectParameters>();
+
+                try
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DebugConnectParameters>();
+                    var numberOfItems = this._programmerInstanceApi.GetStLinkList(ref listPtr, shared ? 1 : 0);
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        }
+                    }
+                    else
+                    {
+                        this._logger?.WarningMessage("GetStLinkList IntPtr: Zero!");
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    this._logger?.LogWarning("GetStLinkList IntPtr: {0}!", "Zero");
+                    this._logger?.ErrorMessage("GetStLinkList: ", ex);
+                    throw;
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetStLinkList: ");
-            }
 
-            return parametersList;
+                return parametersList;
+            }
         }
       
         public IEnumerable<DebugConnectParameters> GetStLinkEnumerationList(bool shared = false)
         {
-            var listPtr = new IntPtr();
-            var parametersList = new List<DebugConnectParameters>();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetStLinkEnumerationList)))
             {
-                var size = Marshal.SizeOf<DebugConnectParameters>();
-                var numberOfItems = this._programmerInstanceApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
-                if (listPtr != IntPtr.Zero)
+                var listPtr = new IntPtr();
+                var parametersList = new List<DebugConnectParameters>();
+
+                try
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DebugConnectParameters>();
+                    var numberOfItems = this._programmerInstanceApi.GetStLinkEnumerationList(ref listPtr, shared ? 1 : 0);
+                    if (listPtr != IntPtr.Zero)
                     {
-                        var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
-                        parametersList.Add(currentItem);
-                        Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        for (var i = 0; i < numberOfItems; i++)
+                        {
+                            var currentItem = Marshal.PtrToStructure<DebugConnectParameters>(listPtr + (i * size));
+                            parametersList.Add(currentItem);
+                            Marshal.DestroyStructure<DebugConnectParameters>(listPtr + (i * size));
+                        }
+                    }
+                    else
+                    {
+                        this._logger?.WarningMessage("GetStLinkEnumerationList IntPtr: Zero!");
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    this._logger?.LogWarning("GetStLinkEnumerationList IntPtr: {0}!", "Zero");
+                    this._logger?.ErrorMessage("GetStLinkEnumerationList: ", ex);
+                    throw;
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetStLinkEnumerationList: ");
-            }
 
-            return parametersList;
+                return parametersList;
+            }
         }
 
         public CubeProgrammerError ConnectStLink(DebugConnectParameters debugConnectParameters)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectStLink)))
             {
-                var connectStLinkResult = this._programmerInstanceApi.ConnectStLink(debugConnectParameters);
+                var output = CubeProgrammerError.Other;
 
-                output = HexConverterUtil.CheckResult(connectStLinkResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectStLink: ");
-            }
+                try
+                {
+                    var connectStLinkResult = this._programmerInstanceApi.ConnectStLink(debugConnectParameters);
 
-            return output;
+                    output = HexConverterUtil.CheckResult(connectStLinkResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectStLink: ", ex);
+                    throw;
+                }
+
+                return output;
+            }
         }
 
         public CubeProgrammerError Reset(DebugResetMode rstMode)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
+            using (this._logger?.AppendMethodScope(nameof(Reset)))
+            {
+                var output = CubeProgrammerError.Other;
 
-            try
-            {
-                var resetResult = this._programmerInstanceApi.Reset(rstMode);
-                output = HexConverterUtil.CheckResult(resetResult);
+                try
+                {
+                    var resetResult = this._programmerInstanceApi.Reset(rstMode);
+                    output = HexConverterUtil.CheckResult(resetResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("Reset: ", ex);
+                    throw;
+                }
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "Reset: ");
-            }
-            return output;
         }
 
         #endregion
@@ -229,158 +249,185 @@ namespace SharpCubeProgrammer
 
         public IEnumerable<UsartConnectParameters> GetUsartList()
         {
-            var listPtr = new IntPtr();
-            var parametersList = new List<UsartConnectParameters>();
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetUsartList)))
             {
-                var numberOfItems = this._programmerInstanceApi.GetUsartList(ref listPtr);
-                if (numberOfItems > 0)
+                var listPtr = new IntPtr();
+                var parametersList = new List<UsartConnectParameters>();
+                try
                 {
-                    if (listPtr != IntPtr.Zero)
+                    var numberOfItems = this._programmerInstanceApi.GetUsartList(ref listPtr);
+                    if (numberOfItems > 0)
                     {
-                        var size = Marshal.SizeOf<UsartConnectParameters>();
-                        for (var i = 0; i < numberOfItems; i++)
+                        if (listPtr != IntPtr.Zero)
                         {
-                            var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
-                            parametersList.Add(currentItem);
-                            Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                            var size = Marshal.SizeOf<UsartConnectParameters>();
+                            for (var i = 0; i < numberOfItems; i++)
+                            {
+                                var currentItem = Marshal.PtrToStructure<UsartConnectParameters>(listPtr + (i * size));
+                                parametersList.Add(currentItem);
+                                Marshal.DestroyStructure<UsartConnectParameters>(listPtr + (i * size));
+                            }
                         }
                     }
                     else
                     {
-                        this._logger?.LogWarning("GetUsartList IntPtr: {0}!", "Zero");
+                        this._logger?.WarningMessage("GetUsartList numberOfItems: Zero!");
                     }
                 }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("GetUsartList: ", ex);
+                    throw;
+                }
+                return parametersList;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetUsartList: ");
-            }
-            return parametersList;
         }
 
         public CubeProgrammerError ConnectUsartBootloader(UsartConnectParameters usartConnectParameters)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectUsartBootloader)))
             {
-                var connectUsartResult = this._programmerInstanceApi.ConnectUsartBootloader(usartConnectParameters);
+                var output = CubeProgrammerError.Other;
 
-                output = HexConverterUtil.CheckResult(connectUsartResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectUsartBootloader: ");
-            }
+                try
+                {
+                    var connectUsartResult = this._programmerInstanceApi.ConnectUsartBootloader(usartConnectParameters);
 
-            return output;
+                    output = HexConverterUtil.CheckResult(connectUsartResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectUsartBootloader: ", ex);
+                    throw;
+                }
+
+                return output;
+            }
         }
 
         public CubeProgrammerError SendByteUart(int @byte)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(SendByteUart)))
             {
-                var connectUsartResult = this._programmerInstanceApi.SendByteUart(@byte);
+                var output = CubeProgrammerError.Other;
+                try
+                {
+                    var connectUsartResult = this._programmerInstanceApi.SendByteUart(@byte);
 
-                output = HexConverterUtil.CheckResult(connectUsartResult);
+                    output = HexConverterUtil.CheckResult(connectUsartResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("SendByteUart: ", ex);
+                    throw;
+                }
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "SendByteUart: ");
-            }
-            return output;
         }
 
         public IEnumerable<DfuDeviceInfo> GetDfuDeviceList(int iPID = 0xdf11, int iVID = 0x0483)
         {
-            var listPtr = new IntPtr();
-            var dfuDeviceList = new List<DfuDeviceInfo>();
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetDfuDeviceList)))
             {
-                var size = Marshal.SizeOf<DfuDeviceInfo>();
-                var numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
-
-                if (listPtr != IntPtr.Zero)
+                var listPtr = new IntPtr();
+                var dfuDeviceList = new List<DfuDeviceInfo>();
+                try
                 {
-                    for (var i = 0; i < numberOfItems; i++)
+                    var size = Marshal.SizeOf<DfuDeviceInfo>();
+                    var numberOfItems = this._programmerInstanceApi.GetDfuDeviceList(ref listPtr, iPID, iVID);
+
+                    if (numberOfItems > 0)
                     {
-                        var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
-                        dfuDeviceList.Add(currentItem);
-                        Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
+                        if (listPtr != IntPtr.Zero)
+                        {
+                            for (var i = 0; i < numberOfItems; i++)
+                            {
+                                var currentItem = Marshal.PtrToStructure<DfuDeviceInfo>(listPtr + (i * size));
+                                dfuDeviceList.Add(currentItem);
+                                Marshal.DestroyStructure<DfuDeviceInfo>(listPtr + (i * size));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this._logger?.WarningMessage("GetDfuDeviceList numberOfItems: Zero!");
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    this._logger?.LogWarning("GetDfuDeviceList IntPtr: {0}!", "Zero");
+                    this._logger?.ErrorMessage("GetDfuDeviceList: ", ex);
+                    throw;
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetDfuDeviceList:");
-            }
 
-            return dfuDeviceList;
+                return dfuDeviceList;
+            }
         }
 
         public CubeProgrammerError ConnectDfuBootloader(string usbIndex)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectDfuBootloader)))
             {
-                var connectDfuBootloaderResult = this._programmerInstanceApi.ConnectDfuBootloader(usbIndex);
-                if (connectDfuBootloaderResult != 0)
+                var output = CubeProgrammerError.Other;
+                try
                 {
-                    this.Disconnect();
-                }
-
-                output = HexConverterUtil.CheckResult(connectDfuBootloaderResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectDfuBootloader: ");
-            }
-
-            return output;
-        }
-
-        public CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
-        {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            try
-            {
-                if ((dfuParameters.rdu == 0x00 || dfuParameters.rdu == 0x01) && (dfuParameters.tzenreg == 0x00 || dfuParameters.tzenreg == 0x01))
-                {
-                    var connectDfuBootloader2Result = this._programmerInstanceApi.ConnectDfuBootloader2(dfuParameters);
-                    if (connectDfuBootloader2Result != 0)
+                    var connectDfuBootloaderResult = this._programmerInstanceApi.ConnectDfuBootloader(usbIndex);
+                    if (connectDfuBootloaderResult != 0)
                     {
                         this.Disconnect();
                     }
 
-                    output = HexConverterUtil.CheckResult(connectDfuBootloader2Result);
+                    output = HexConverterUtil.CheckResult(connectDfuBootloaderResult);
                 }
-                else
+                catch (Exception ex)
                 {
-                    this._logger?.LogWarning("ConnectDfuBootloader2 parameters rdu or tzenreg not valid!");
+                    this._logger?.ErrorMessage("ConnectDfuBootloader: ", ex);
+                    throw;
                 }
+
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectDfuBootloader2: ");
-            }
-            return output;
         }
 
-        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000)
+        public CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters)
+        {
+            using (this._logger?.AppendMethodScope(nameof(ConnectDfuBootloader2)))
+            {
+                var output = CubeProgrammerError.Other;
+
+                try
+                {
+                    if ((dfuParameters.RequestReadUnprotect == 0x00 || dfuParameters.RequestReadUnprotect == 0x01) && (dfuParameters.Tzenreg == 0x00 || dfuParameters.Tzenreg == 0x01))
+                    {
+                        var connectDfuBootloader2Result = this._programmerInstanceApi.ConnectDfuBootloader2(dfuParameters);
+                        if (connectDfuBootloader2Result != 0)
+                        {
+                            this.Disconnect();
+                        }
+
+                        output = HexConverterUtil.CheckResult(connectDfuBootloader2Result);
+                    }
+                    else
+                    {
+                        this._logger?.WarningMessage("ConnectDfuBootloader2 parameters rdu or tzenreg not valid!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectDfuBootloader2: ", ex);
+                    throw;
+                }
+                return output;
+            }
+        }
+
+        public CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000)
         {
             var dfuParameters = new DfuConnectParameters
             {
-                usb_index = usbIndex,
-                rdu = rdu,
-                tzenreg = tzenreg,
-                usbTimeout = usbTimeout
+                UsbIndex = usbIndex,
+                RequestReadUnprotect = requestReadUnprotect,
+                Tzenreg = tzenreg,
+                UsbTimeout = usbTimeout
             };
 
             return this.ConnectDfuBootloader2(dfuParameters);
@@ -388,62 +435,74 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectSpiBootloader)))
             {
-                var connectSpiBootloaderResult = this._programmerInstanceApi.ConnectSpiBootloader(spiParameters);
-                if (connectSpiBootloaderResult != 0)
+                var output = CubeProgrammerError.Other;
+                try
                 {
-                    this.Disconnect();
-                }
+                    var connectSpiBootloaderResult = this._programmerInstanceApi.ConnectSpiBootloader(spiParameters);
+                    if (connectSpiBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = HexConverterUtil.CheckResult(connectSpiBootloaderResult);
+                    output = HexConverterUtil.CheckResult(connectSpiBootloaderResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectSpiBootloader: ", ex);
+                    throw;
+                }
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectSpiBootloader: ");
-            }
-            return output;
         }
 
         public CubeProgrammerError ConnectCanBootloader(CanConnectParameters canParameters)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectCanBootloader)))
             {
-                var connectCanBootloaderResult = this._programmerInstanceApi.ConnectCanBootloader(canParameters);
-                if (connectCanBootloaderResult != 0)
+                var output = CubeProgrammerError.Other;
+                try
                 {
-                    this.Disconnect();
-                }
+                    var connectCanBootloaderResult = this._programmerInstanceApi.ConnectCanBootloader(canParameters);
+                    if (connectCanBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = HexConverterUtil.CheckResult(connectCanBootloaderResult);
+                    output = HexConverterUtil.CheckResult(connectCanBootloaderResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectCanBootloader: ", ex);
+                    throw;
+                }
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectCanBootloader: ");
-            }
-            return output;
         }
 
         public CubeProgrammerError ConnectI2CBootloader(I2cConnectParameters i2CParameters)
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(ConnectI2CBootloader)))
             {
-                var connectI2CBootloaderResult = this._programmerInstanceApi.ConnectI2cBootloader(i2CParameters);
-                if (connectI2CBootloaderResult != 0)
+                var output = CubeProgrammerError.Other;
+                try
                 {
-                    this.Disconnect();
-                }
+                    var connectI2CBootloaderResult = this._programmerInstanceApi.ConnectI2cBootloader(i2CParameters);
+                    if (connectI2CBootloaderResult != 0)
+                    {
+                        this.Disconnect();
+                    }
 
-                output = HexConverterUtil.CheckResult(connectI2CBootloaderResult);
+                    output = HexConverterUtil.CheckResult(connectI2CBootloaderResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ConnectI2CBootloader: ", ex);
+                    throw;
+                }
+                return output;
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ConnectI2CBootloader: ");
-            }
-            return output;
         }
 
         #endregion
@@ -489,651 +548,852 @@ namespace SharpCubeProgrammer
 
         public GeneralInf? GetDeviceGeneralInf()
         {
-            GeneralInf? generalInf = null;
-            
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetDeviceGeneralInf)))
             {
-                var ptr = IntPtr.Zero;
-                ptr = this._programmerInstanceApi.GetDeviceGeneralInf();
+                GeneralInf? generalInf = null;
 
-                if (ptr != IntPtr.Zero)
+                try
                 {
-                    generalInf = Marshal.PtrToStructure<GeneralInf>(ptr);
-                    Marshal.DestroyStructure<GeneralInf>(ptr);
-                }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetDeviceGeneralInf: ");
-            }
+                    var ptr = IntPtr.Zero;
+                    ptr = this._programmerInstanceApi.GetDeviceGeneralInf();
 
-            return generalInf;
+                    if (ptr != IntPtr.Zero)
+                    {
+                        generalInf = Marshal.PtrToStructure<GeneralInf>(ptr);
+                        Marshal.DestroyStructure<GeneralInf>(ptr);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("GetDeviceGeneralInf: ", ex);
+                    throw;
+                }
+
+                return generalInf;
+            }
         }
 
         public (CubeProgrammerError, byte[]) ReadMemory(string address, int byteSize)
         {
-            var uintAddress = HexConverterUtil.HexConverterToUint(address);
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-            var buffer = new byte[byteSize];
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(ReadMemory)))
             {
-                var bufferPtr = IntPtr.Zero;
-                var readMemoryResult =
-                    this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
-                result = HexConverterUtil.CheckResult(readMemoryResult);
-                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                var result = CubeProgrammerError.Other;
+                var buffer = new byte[byteSize];
+
+                try
                 {
-                    Marshal.Copy(bufferPtr, buffer, 0, byteSize);
-                    this.FreeLibraryMemory(bufferPtr);
+                    var bufferPtr = IntPtr.Zero;
+                    var readMemoryResult =
+                        this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, Convert.ToUInt32(byteSize));
+                    result = HexConverterUtil.CheckResult(readMemoryResult);
+                    if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.NoError))
+                    {
+                        Marshal.Copy(bufferPtr, buffer, 0, byteSize);
+                        this.FreeLibraryMemory(bufferPtr);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ReadMemory: ");
-            }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ReadMemory: ", ex);
+                    throw;
+                }
 
-            return (result, buffer);
+                return (result, buffer);
+            }
         }
 
         public CubeProgrammerError WriteMemory(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(WriteMemory)))
             {
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var length = data.Length;
-                if (size != 0 && size <= data.Length)
+                var result = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(address))
                 {
-                    length = size;
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
                 }
 
-                try
+                if (data is null)
                 {
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
-                    gch.Free();
-                    result = HexConverterUtil.CheckResult(writeMemoryResult);
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
 
-                    return result;
-                }
-                catch (Exception ex)
+                if (data.Length > 0)
                 {
-                    this._logger?.LogError(ex, "WriteMemory: ");
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var length = data.Length;
+                    if (size != 0 && size <= data.Length)
+                    {
+                        length = size;
+                    }
+
+                    try
+                    {
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
+                        gch.Free();
+                        result = HexConverterUtil.CheckResult(writeMemoryResult);
+
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        this._logger?.ErrorMessage("WriteMemory: ", ex);
+                        throw;
+                    }
                 }
+                else
+                {
+                    this._logger?.WarningMessage("WriteMemory: Data length is Zero!");
+                }
+
+                return result;
             }
-
-            return result;
         }
 
         public CubeProgrammerError WriteMemoryAutoFill(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(WriteMemory)))
             {
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var length = data.Length;
-                if (size != 0 && size <= data.Length)
+                var result = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(address))
                 {
-                    length = size;
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
                 }
 
-                try
+                if (data is null)
                 {
-                    var remainder = length % 8;
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
 
-                    if (remainder > 0)
+                if (data.Length > 0)
+                {
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var length = data.Length;
+                    if (size != 0 && size <= data.Length)
                     {
-                        var filling = 8 - remainder;
-                        var newSize = length + filling;
-                        Array.Resize(ref data, newSize);
-
-                        for (var i = length - filling; i < length; i++)
-                        {
-                            data[i] = 0xFF;
-                        }
+                        length = size;
                     }
 
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                    gch.Free();
-                    result = HexConverterUtil.CheckResult(writeMemoryResult);
+                    try
+                    {
+                        var remainder = length % 8;
 
-                    return result;
+                        if (remainder > 0)
+                        {
+                            var filling = 8 - remainder;
+                            var newSize = length + filling;
+                            Array.Resize(ref data, newSize);
+
+                            for (var i = length - filling; i < length; i++)
+                            {
+                                data[i] = 0xFF;
+                            }
+                        }
+
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                        gch.Free();
+                        result = HexConverterUtil.CheckResult(writeMemoryResult);
+
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        this._logger?.ErrorMessage("WriteMemoryAutoFill: ", ex);
+                        throw;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    this._logger?.LogError(ex, "WriteMemoryAutoFill: ");
+                    this._logger?.WarningMessage("WriteMemoryAutoFill: Data length is Zero!");
                 }
-            }
 
-            return result;
+                return result;
+            }
         }
 
         public CubeProgrammerError WriteMemoryAndVerify(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(WriteMemoryAndVerify)))
             {
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var length = data.Length;
-                if (size != 0 && size <= data.Length)
+                var result = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(address))
                 {
-                    length = size;
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
                 }
 
-                try
+                if (data is null)
                 {
-                    var remainder = length % 8;
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
 
-                    if (remainder > 0)
+                if (data.Length > 0)
+                {
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var length = data.Length;
+                    if (size != 0 && size <= data.Length)
                     {
-                        var filling = 8 - remainder;
-                        var newSize = length + filling;
-                        Array.Resize(ref data, newSize);
-
-                        for (var i = length - filling; i < length; i++)
-                        {
-                            data[i] = 0xFF;
-                        }
+                        length = size;
                     }
 
-                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
-                    gch.Free();
-                    result = HexConverterUtil.CheckResult(writeMemoryResult);
-
-                    if (result.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                    try
                     {
-                        var bufferPtr = IntPtr.Zero;
-                        var buffer = new byte[data.Length];
-                        var readMemoryResult =
-                            this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
-                        result = HexConverterUtil.CheckResult(readMemoryResult);
+                        var remainder = length % 8;
 
-                        if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                        if (remainder > 0)
                         {
-                            Marshal.Copy(bufferPtr, buffer, 0, data.Length);
-                            this.FreeLibraryMemory(bufferPtr);
+                            var filling = 8 - remainder;
+                            var newSize = length + filling;
+                            Array.Resize(ref data, newSize);
 
-                            if (data.SequenceEqual(buffer))
+                            for (var i = length - filling; i < length; i++)
                             {
-                                
-                                result = CubeProgrammerError.CubeProgrammerNoError;
+                                data[i] = 0xFF;
                             }
-                            else
+                        }
+
+                        var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var writeMemoryResult = this._programmerInstanceApi.WriteMemory(uintAddress, gch.AddrOfPinnedObject(), (uint)data.Length);
+                        gch.Free();
+                        result = HexConverterUtil.CheckResult(writeMemoryResult);
+
+                        if (result.Equals(CubeProgrammerError.NoError))
+                        {
+                            var bufferPtr = IntPtr.Zero;
+                            var buffer = new byte[data.Length];
+                            var readMemoryResult =
+                                this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
+                            result = HexConverterUtil.CheckResult(readMemoryResult);
+
+                            if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.NoError))
                             {
-                                result = CubeProgrammerError.CubeProgrammerErrorWriteMem;
+                                Marshal.Copy(bufferPtr, buffer, 0, data.Length);
+                                this.FreeLibraryMemory(bufferPtr);
+
+                                if (data.SequenceEqual(buffer))
+                                {
+
+                                    result = CubeProgrammerError.NoError;
+                                }
+                                else
+                                {
+                                    result = CubeProgrammerError.WriteMem;
+                                }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        this._logger?.ErrorMessage("WriteMemoryAndVerify: ", ex);
+                        throw;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    this._logger?.LogError(ex, "WriteMemoryAndVerify: ");
-                }
+
+                return result;
             }
-
-            return result;
         }
 
         public CubeProgrammerError EditSector(string address, byte[] data, int size = 0)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(EditSector)))
             {
-                var length = data.Length;
-                if (size != 0 && size <= data.Length)
+                var result = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(address))
                 {
-                    length = size;
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
                 }
 
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                var editSectorResult = this._programmerInstanceApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
-                gch.Free();
-                result = HexConverterUtil.CheckResult(editSectorResult);
+                if (data is null)
+                {
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
+
+                if (data.Length > 0)
+                {
+                    var length = data.Length;
+                    if (size != 0 && size <= data.Length)
+                    {
+                        length = size;
+                    }
+
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var editSectorResult = this._programmerInstanceApi.EditSector(uintAddress, gch.AddrOfPinnedObject(), Convert.ToUInt32(length));
+                    gch.Free();
+                    result = HexConverterUtil.CheckResult(editSectorResult);
+
+                    return result;
+                }
+                else
+                {
+                    this._logger?.WarningMessage("EditSector: Data length is Zero!");
+                }
 
                 return result;
             }
-
-            return result;
         }
 
         public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            var uintAddress = HexConverterUtil.HexConverterToUint(address);
-            var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace(@"\", "/");
-            var binPathAdapted = String.IsNullOrEmpty(binFilePath) ? "" : binFilePath.Replace(@"\", "/");
-
-            if (!String.IsNullOrEmpty(filePathAdapted))
+            using (this._logger?.AppendMethodScope(nameof(DownloadFile)))
             {
-                try
-                {
-                    var downloadFileResult = this._programmerInstanceApi.DownloadFile(
-                    filePathAdapted,
-                    uintAddress,
-                    skipErase,
-                    verify,
-                    binPathAdapted
-                    );
-                    output = HexConverterUtil.CheckResult(downloadFileResult);
-                }
-                catch (Exception ex)
-                {
-                    this._logger?.LogError(ex, "DownloadFile: ");
-                }
-            }
+                var output = CubeProgrammerError.Other;
 
-            return output;
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                var filePathAdapted = String.IsNullOrEmpty(inputFilePath) ? "" : inputFilePath.Replace('\\', '/');
+                var binPathAdapted = String.IsNullOrEmpty(binFilePath) ? "" : binFilePath.Replace('\\', '/');
+
+                if (!String.IsNullOrEmpty(filePathAdapted))
+                {
+                    try
+                    {
+                        var downloadFileResult = this._programmerInstanceApi.DownloadFile(
+                        filePathAdapted,
+                        uintAddress,
+                        skipErase,
+                        verify,
+                        binPathAdapted
+                        );
+                        output = HexConverterUtil.CheckResult(downloadFileResult);
+                    }
+                    catch (Exception ex)
+                    {
+                        this._logger?.ErrorMessage("DownloadFile: ", ex);
+                        throw;
+                    }
+                }
+
+                return output;
+            }
         }
 
         public CubeProgrammerError Execute(string address = "0x08000000")
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(Execute)))
             {
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var executeResult = this._programmerInstanceApi.Execute(uintAddress);
+                var output = CubeProgrammerError.Other;
 
-                output = HexConverterUtil.CheckResult(executeResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "Execute: ");
-            }
+                if (String.IsNullOrEmpty(address))
+                {
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
+                }
 
-            return output;
+                try
+                {
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var executeResult = this._programmerInstanceApi.Execute(uintAddress);
+
+                    output = HexConverterUtil.CheckResult(executeResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("Execute: ", ex);
+                    throw;
+                }
+
+                return output;
+            }
         }
 
         public CubeProgrammerError MassErase(string sFlashMemName = "")
         {
-            var massEraseResult = this._programmerInstanceApi.MassErase(sFlashMemName);
-            var output = HexConverterUtil.CheckResult(massEraseResult);
-            
-            return output;
+            using (this._logger?.AppendMethodScope(nameof(MassErase)))
+            {
+                var massEraseResult = this._programmerInstanceApi.MassErase(sFlashMemName);
+                var output = HexConverterUtil.CheckResult(massEraseResult);
+
+                return output;
+            }
         }
 
         public CubeProgrammerError SectorErase(uint[] sectors, uint sectorNbr, string sFlashMemName = "")
         {
-            var sectorEraseResult = this._programmerInstanceApi.SectorErase(sectors, sectorNbr, sFlashMemName);
-            var output = HexConverterUtil.CheckResult(sectorEraseResult);
+            using (this._logger?.AppendMethodScope(nameof(SectorErase)))
+            {
+                var sectorEraseResult = this._programmerInstanceApi.SectorErase(sectors, sectorNbr, sFlashMemName);
+                var output = HexConverterUtil.CheckResult(sectorEraseResult);
 
-            return output;
+                return output;
+            }
         }
 
         public CubeProgrammerError ReadUnprotect()
         {
-            var result = this._programmerInstanceApi.ReadUnprotect();
-            var output = HexConverterUtil.CheckResult(result);
+            using (this._logger?.AppendMethodScope(nameof(ReadUnprotect)))
+            {
+                var result = this._programmerInstanceApi.ReadUnprotect();
+                var output = HexConverterUtil.CheckResult(result);
 
-            return output;
+                return output;
+            }
         }
 
         public CubeProgrammerError TzenRegression()
         {
-            var result = this._programmerInstanceApi.TzenRegression();
-            var output = HexConverterUtil.CheckResult(result);
+            using (this._logger?.AppendMethodScope(nameof(TzenRegression)))
+            {
+                var result = this._programmerInstanceApi.TzenRegression();
+                var output = HexConverterUtil.CheckResult(result);
 
-            return output;
+                return output;
+            }
         }
 
         public TargetInterfaceType? GetTargetInterfaceType()
         {
-            var result = this._programmerInstanceApi.GetTargetInterfaceType();
-
-            if (result == -1)
+            using (this._logger?.AppendMethodScope(nameof(GetTargetInterfaceType)))
             {
-                return null;
-            }
+                var result = this._programmerInstanceApi.GetTargetInterfaceType();
 
-            return (TargetInterfaceType)result;
+                if (result == -1)
+                {
+                    return null;
+                }
+
+                return (TargetInterfaceType)result;
+            }
         }
 
         public int GetCancelPointer()
         {
-            return this._programmerInstanceApi.GetCancelPointer();
+            using (this._logger?.AppendMethodScope(nameof(GetCancelPointer)))
+            {
+                return this._programmerInstanceApi.GetCancelPointer();
+            }
         }
 
         public DeviceFileDataC? FileOpen(string filePath)
         {
-            var segmentSize = Marshal.SizeOf<SegmentDataC>();
-            var deviceSegmentData = new DeviceFileDataC();
-            if (!String.IsNullOrEmpty(filePath))
+            using (this._logger?.AppendMethodScope(nameof(FileOpen)))
             {
-                var filePathAdapted = filePath.Replace(@"\", "/");
-                var filePointer = IntPtr.Zero;
-                try
+                if (String.IsNullOrEmpty(filePath))
                 {
-                    filePointer = this._programmerInstanceApi.FileOpen(filePathAdapted);
-                    if (!filePointer.Equals(IntPtr.Zero))
-                    {
-                        var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
-                        deviceSegmentData.Type = fileData.Type;
-                        deviceSegmentData.segmentsNbr = fileData.segmentsNbr;
-                        deviceSegmentData.segments = new List<DeviceSegmentDataC>();
+                    throw new ArgumentNullException(nameof(filePath), "File path cannot be null or empty.");
+                }
 
-                        if (fileData.segments != IntPtr.Zero)
+                var segmentSize = Marshal.SizeOf<SegmentDataC>();
+                var deviceSegmentData = new DeviceFileDataC();
+                if (!String.IsNullOrEmpty(filePath))
+                {
+                    var filePathAdapted = filePath.Replace('\\', '/');
+                    var filePointer = IntPtr.Zero;
+                    try
+                    {
+                        filePointer = this._programmerInstanceApi.FileOpen(filePathAdapted);
+                        if (!filePointer.Equals(IntPtr.Zero))
                         {
-                            for (var i = 0; i < fileData.segmentsNbr; i++)
+                            var fileData = Marshal.PtrToStructure<FileDataC>(filePointer);
+                            deviceSegmentData.Type = fileData.Type;
+                            deviceSegmentData.SegmentsNumber = fileData.SegmentsNumber;
+                            deviceSegmentData.SetSegments(new List<DeviceSegmentDataC>());
+
+                            if (fileData.Segments != IntPtr.Zero)
                             {
-                                var deviceSegment = new DeviceSegmentDataC();
-                                var segment =
-                                    Marshal.PtrToStructure<SegmentDataC>(fileData.segments + (i * segmentSize));
-                                deviceSegment.address = segment.address;
-                                deviceSegment.size = segment.size;
-                                if (segment.data != IntPtr.Zero)
+                                for (var i = 0; i < fileData.SegmentsNumber; i++)
                                 {
-                                    deviceSegment.data = new byte[segment.size];
-                                    Marshal.Copy(segment.data, deviceSegment.data, 0, segment.size);
+                                    var deviceSegment = new DeviceSegmentDataC();
+                                    var segment =
+                                        Marshal.PtrToStructure<SegmentDataC>(fileData.Segments + (i * segmentSize));
+                                    deviceSegment.Address = segment.Address;
+                                    deviceSegment.Size = segment.Size;
+                                    if (segment.Data != IntPtr.Zero)
+                                    {
+                                        var data = new byte[segment.Size];
+                                        Marshal.Copy(segment.Data, data, 0, segment.Size);
+                                        deviceSegment.SetData(data);
+                                    }
+
+                                    deviceSegmentData.Segments.Add(deviceSegment);
                                 }
-
-                                deviceSegmentData.segments.Add(deviceSegment);
                             }
-                        }
 
-                        return deviceSegmentData;
+                            return deviceSegmentData;
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    this._logger?.LogError(ex, "FileOpen: ");
-                }
-                finally
-                {
-                    if (!filePointer.Equals(IntPtr.Zero))
+                    catch (Exception ex)
                     {
-                        this.FreeFileData(filePointer);
+                        this._logger?.ErrorMessage("FileOpen: ", ex);
+                        throw;
+                    }
+                    finally
+                    {
+                        if (!filePointer.Equals(IntPtr.Zero))
+                        {
+                            this.FreeFileData(filePointer);
+                        }
                     }
                 }
+                return null;
             }
-            return null;
         }
 
         public IntPtr FileOpenAsPointer(string filePath)
         {
-            if (!String.IsNullOrEmpty(filePath))
+            using (this._logger?.AppendMethodScope(nameof(FileOpenAsPointer)))
             {
+                if (String.IsNullOrEmpty(filePath))
+                {
+                    throw new ArgumentNullException(nameof(filePath), "File path cannot be null or empty.");
+                }
+
                 try
                 {
-                    var filePathAdapted = filePath.Replace(@"\", "/");
+                    var filePathAdapted = filePath.Replace('\\', '/');
 
                     return this._programmerInstanceApi.FileOpen(filePathAdapted);
                 }
                 catch (Exception ex)
                 {
-                    this._logger?.LogError(ex, "FileOpen: ");
+                    this._logger?.ErrorMessage("FileOpen: ", ex);
+                    throw;
                 }
             }
-            return IntPtr.Zero;
         }
 
         public void FreeFileData(IntPtr data)
         {
-            if (data != IntPtr.Zero)
+            using (this._logger?.AppendMethodScope(nameof(FreeFileData)))
             {
-                this._programmerInstanceApi.FreeFileData(data);
+                if (data != IntPtr.Zero)
+                {
+                    this._programmerInstanceApi.FreeFileData(data);
+                }
             }
         }
 
         public void FreeLibraryMemory(IntPtr ptr)
         {
-            if (ptr != IntPtr.Zero)
+            using (this._logger?.AppendMethodScope(nameof(FreeLibraryMemory)))
             {
-                this._programmerInstanceApi.FreeLibraryMemory(ptr);
+                if (ptr != IntPtr.Zero)
+                {
+                    this._programmerInstanceApi.FreeLibraryMemory(ptr);
+                }
             }
         }
 
         public CubeProgrammerError Verify(IntPtr fileData, string address)
         {
-            var uintAddress = HexConverterUtil.HexConverterToUint(address);
+            using (this._logger?.AppendMethodScope(nameof(FreeLibraryMemory)))
+            {
+                var output = CubeProgrammerError.Other;
 
-            var verifyResult = this._programmerInstanceApi.Verify(fileData, uintAddress);
-            var output = HexConverterUtil.CheckResult(verifyResult);
-            
-            return output;
+                if (String.IsNullOrEmpty(address))
+                {
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
+                }
+
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
+
+                if (fileData != IntPtr.Zero)
+                {
+                    var verifyResult = this._programmerInstanceApi.Verify(fileData, uintAddress);
+                    output = HexConverterUtil.CheckResult(verifyResult);
+                }
+
+                return output;
+            }
         }
 
         public CubeProgrammerError VerifyMemory(string address, byte[] data)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-            var buffer = new byte[data.Length];
-            var bufferPtr = IntPtr.Zero;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(VerifyMemory)))
             {
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var readMemoryResult =
-                    this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
-                result = HexConverterUtil.CheckResult(readMemoryResult);
-                if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.CubeProgrammerNoError))
-                {
-                    Marshal.Copy(bufferPtr, buffer, 0, data.Length);
-                    this.FreeLibraryMemory(bufferPtr);
+                var result = CubeProgrammerError.Other;
 
-                    if (data.SequenceEqual(buffer))
+                if (String.IsNullOrEmpty(address))
+                {
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
+                }
+
+                if (data is null)
+                {
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
+
+                var buffer = new byte[data.Length];
+                var bufferPtr = IntPtr.Zero;
+
+                if (data.Length > 0)
+                {
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var readMemoryResult =
+                        this._programmerInstanceApi.ReadMemory(uintAddress, ref bufferPtr, (uint)data.Length);
+                    result = HexConverterUtil.CheckResult(readMemoryResult);
+                    if (bufferPtr != IntPtr.Zero && result.Equals(CubeProgrammerError.NoError))
                     {
-                        result = CubeProgrammerError.CubeProgrammerNoError;
+                        Marshal.Copy(bufferPtr, buffer, 0, data.Length);
+                        this.FreeLibraryMemory(bufferPtr);
+
+                        if (data.SequenceEqual(buffer))
+                        {
+                            result = CubeProgrammerError.NoError;
+                        }
+                        else
+                        {
+                            result = CubeProgrammerError.Other;
+                        }
                     }
-                    else
-                    {
-                        result = CubeProgrammerError.CubeProgrammerErrorOther;
-                    }
+
+                    return result;
                 }
 
                 return result;
             }
-
-            return result;
         }
 
         public CubeProgrammerError VerifyMemoryBySegment(string address, byte[] data)
         {
-            var result = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (!String.IsNullOrEmpty(address) && data.Length > 0)
+            using (this._logger?.AppendMethodScope(nameof(VerifyMemoryBySegment)))
             {
-                var intAddress = HexConverterUtil.HexConverterToInt(address);
-                var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
-                
-                var segmetData = new SegmentDataC
+                var result = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(address))
                 {
-                    address = intAddress,
-                    size = data.Length,
-                    data = gch.AddrOfPinnedObject()
-                };
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
+                }
 
-                var segmentDataGch = GCHandle.Alloc(segmetData, GCHandleType.Pinned);
-
-                var fileData = new FileDataC
+                if (data is null)
                 {
-                    Type = 0,
-                    segmentsNbr = 1,
-                    segments = segmentDataGch.AddrOfPinnedObject()
-                };
+                    throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+                }
 
-                var fileDataGch = GCHandle.Alloc(fileData, GCHandleType.Pinned);
+                if (data.Length > 0)
+                {
+                    var intAddress = HexConverterUtil.HexConverterToInt(address);
+                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var gch = GCHandle.Alloc(data, GCHandleType.Pinned);
 
-                var verifyMemoryResult =
-                    this._programmerInstanceApi.Verify(fileDataGch.AddrOfPinnedObject(), uintAddress);
-                gch.Free();
-                segmentDataGch.Free();
-                fileDataGch.Free();
+                    var segmetData = new SegmentDataC
+                    {
+                        Address = intAddress,
+                        Size = data.Length,
+                        Data = gch.AddrOfPinnedObject()
+                    };
 
-                result = HexConverterUtil.CheckResult(verifyMemoryResult);
+                    var segmentDataGch = GCHandle.Alloc(segmetData, GCHandleType.Pinned);
+
+                    var fileData = new FileDataC
+                    {
+                        Type = 0,
+                        SegmentsNumber = 1,
+                        Segments = segmentDataGch.AddrOfPinnedObject()
+                    };
+
+                    var fileDataGch = GCHandle.Alloc(fileData, GCHandleType.Pinned);
+
+                    var verifyMemoryResult =
+                        this._programmerInstanceApi.Verify(fileDataGch.AddrOfPinnedObject(), uintAddress);
+                    gch.Free();
+                    segmentDataGch.Free();
+                    fileDataGch.Free();
+
+                    result = HexConverterUtil.CheckResult(verifyMemoryResult);
+
+                    return result;
+                }
 
                 return result;
             }
-
-            return result;
         }
 
         public CubeProgrammerError SaveFileToFile(IntPtr fileData, string sFileName)
         {
-            var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace(@"\", "/");
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (String.IsNullOrEmpty(sFileNameAdapted))
+            using (this._logger?.AppendMethodScope(nameof(VerifyMemoryBySegment)))
             {
+                var sFileNameAdapted = String.IsNullOrEmpty(sFileName) ? "" : sFileName.Replace('\\', '/');
+                var output = CubeProgrammerError.Other;
+
+                if (String.IsNullOrEmpty(sFileNameAdapted))
+                {
+                    return output;
+                }
+
+                try
+                {
+                    var saveFileToFileResult = this._programmerInstanceApi.SaveFileToFile(fileData, sFileNameAdapted);
+                    output = HexConverterUtil.CheckResult(saveFileToFileResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("SaveFileToFile: ", ex);
+                    throw;
+                }
+
                 return output;
             }
-
-            try
-            {
-                var saveFileToFileResult = this._programmerInstanceApi.SaveFileToFile(fileData, sFileNameAdapted);
-                output = HexConverterUtil.CheckResult(saveFileToFileResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "SaveFileToFile: ");
-            }
-
-            return output;
         }
 
         public CubeProgrammerError SaveMemoryToFile(string address, string size, string fileName)
         {
-            var intAddress = HexConverterUtil.HexConverterToInt(address);
-            var intSize = HexConverterUtil.HexConverterToInt(size);
-            var fileNameAdapted = String.IsNullOrEmpty(fileName) ? "" : fileName.Replace(@"\", "/");
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-
-            if (String.IsNullOrEmpty(fileNameAdapted))
+            using (this._logger?.AppendMethodScope(nameof(SaveMemoryToFile)))
             {
+                if (String.IsNullOrEmpty(address))
+                {
+                    throw new ArgumentNullException(nameof(address), "Address cannot be null or empty.");
+                }
+
+                if (String.IsNullOrEmpty(size))
+                {
+                    throw new ArgumentNullException(nameof(size), "Size cannot be null or empty.");
+                }
+
+                if (String.IsNullOrEmpty(fileName))
+                {
+                    throw new ArgumentNullException(nameof(fileName), "File name cannot be null or empty.");
+                }
+
+                var intAddress = HexConverterUtil.HexConverterToInt(address);
+                var intSize = HexConverterUtil.HexConverterToInt(size);
+                var fileNameAdapted = fileName.Replace('\\', '/');
+                var output = CubeProgrammerError.Other;
+
+                try
+                {
+                    var saveMemoryToFileResult =
+                    this._programmerInstanceApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
+
+                    output = HexConverterUtil.CheckResult(saveMemoryToFileResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("SaveMemoryToFile: ", ex);
+                    throw;
+                }
+
                 return output;
             }
-
-            try
-            {
-                var saveMemoryToFileResult =
-                this._programmerInstanceApi.SaveMemoryToFile(intAddress, intSize, fileNameAdapted);
-
-                output = HexConverterUtil.CheckResult(saveMemoryToFileResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "SaveMemoryToFile: ");
-            }
-
-            return output;
         }
 
         public void Disconnect()
         {
-            this._programmerInstanceApi.Disconnect();
+            using (this._logger?.AppendMethodScope(nameof(Disconnect)))
+            {
+                this._programmerInstanceApi.Disconnect();
+            }
         }
 
         public void DeleteInterfaceList()
         {
-            this._programmerInstanceApi.DeleteInterfaceList();
+            using (this._logger?.AppendMethodScope(nameof(DeleteInterfaceList)))
+            {
+                this._programmerInstanceApi.DeleteInterfaceList();
+            }
         }
 
         public void AutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1)
         {
-            if (!String.IsNullOrEmpty(filePath))
+            using (this._logger?.AppendMethodScope(nameof(AutomaticMode)))
             {
-                var filePathAdapted = filePath.Replace(@"\", "/");
-                if (!String.IsNullOrEmpty(address))
+                if (!String.IsNullOrEmpty(filePath))
                 {
-                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                    var filePathAdapted = filePath.Replace('\\', '/');
+                    if (!String.IsNullOrEmpty(address))
+                    {
+                        var uintAddress = HexConverterUtil.HexConverterToUint(address);
 
-                    var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
-                    this._programmerInstanceApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run);
-                    Marshal.FreeHGlobal(obCommandPtr);
+                        var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
+                        this._programmerInstanceApi.AutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run);
+                        Marshal.FreeHGlobal(obCommandPtr);
+                    }
                 }
             }
         }
 
         public void SerialNumberingAutomaticMode(string filePath, string address, uint skipErase = 1U, uint verify = 1U, int isMassErase = 0, string obCommand = "", int run = 1, int enableSerialNumbering = 0, int serialAddress = 0, int serialSize = 0, string serialInitialData = "")
         {
-            if (!String.IsNullOrEmpty(filePath))
+            using (this._logger?.AppendMethodScope(nameof(SerialNumberingAutomaticMode)))
             {
-                var filePathAdapted = filePath.Replace(@"\", "/");
-                if (!String.IsNullOrEmpty(address))
+                if (!String.IsNullOrEmpty(filePath))
                 {
-                    var uintAddress = HexConverterUtil.HexConverterToUint(address);
-                    var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
-                    this._programmerInstanceApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
-                    Marshal.FreeHGlobal(obCommandPtr);
+                    var filePathAdapted = filePath.Replace('\\', '/');
+                    if (!String.IsNullOrEmpty(address))
+                    {
+                        var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                        var obCommandPtr = Marshal.StringToHGlobalAnsi(obCommand);
+                        this._programmerInstanceApi.SerialNumberingAutomaticMode(filePathAdapted, uintAddress, skipErase, verify, isMassErase, obCommandPtr, run, enableSerialNumbering, serialAddress, serialSize, serialInitialData);
+                        Marshal.FreeHGlobal(obCommandPtr);
+                    }
                 }
             }
         }
 
         public (CubeProgrammerError, DeviceStorageStructure) GetStorageStructure()
         {
-            var deviceStorageStructure = new DeviceStorageStructure();
-            var deviceBankSize = Marshal.SizeOf<DeviceBank>();
-            var bankSectorSize = Marshal.SizeOf<BankSector>();
-            var storageStructurePtr = new IntPtr();
-
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetStorageStructure)))
             {
-                var result = this._programmerInstanceApi.GetStorageStructure(ref storageStructurePtr);
+                var deviceStorageStructure = new DeviceStorageStructure();
+                var deviceBankSize = Marshal.SizeOf<DeviceBank>();
+                var bankSectorSize = Marshal.SizeOf<BankSector>();
+                var storageStructurePtr = new IntPtr();
 
-                output = HexConverterUtil.CheckResult(result);
-
-                if (output.Equals(CubeProgrammerError.CubeProgrammerNoError))
+                var output = CubeProgrammerError.Other;
+                try
                 {
-                    if (storageStructurePtr != IntPtr.Zero)
+                    var result = this._programmerInstanceApi.GetStorageStructure(ref storageStructurePtr);
+
+                    output = HexConverterUtil.CheckResult(result);
+
+                    if (output.Equals(CubeProgrammerError.NoError))
                     {
-                        var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
-
-                        deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
-                        var deviceBankList = new List<DeviceDeviceBank>();
-                        for (var i = 0; i < storageStructure.BanksNumber; i++)
+                        if (storageStructurePtr != IntPtr.Zero)
                         {
+                            var storageStructure = Marshal.PtrToStructure<StorageStructure>(storageStructurePtr);
 
-                            if (storageStructure.Banks != IntPtr.Zero)
+                            deviceStorageStructure.BanksNumber = storageStructure.BanksNumber;
+                            var deviceBankList = new List<DeviceDeviceBank>();
+                            for (var i = 0; i < storageStructure.BanksNumber; i++)
                             {
-                                var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
-                                var bankSectorList = new List<BankSector>();
-                                if (deviceBank.Sectors != IntPtr.Zero)
+
+                                if (storageStructure.Banks != IntPtr.Zero)
                                 {
-                                    for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
+                                    var deviceBank = Marshal.PtrToStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
+                                    var bankSectorList = new List<BankSector>();
+                                    if (deviceBank.Sectors != IntPtr.Zero)
                                     {
-                                        var bankSector =
-                                            Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
-                                                                                (ii * bankSectorSize));
+                                        for (var ii = 0; ii < deviceBank.SectorsNumber; ii++)
+                                        {
+                                            var bankSector =
+                                                Marshal.PtrToStructure<BankSector>(deviceBank.Sectors +
+                                                                                    (ii * bankSectorSize));
 
-                                        bankSectorList.Add(bankSector);
+                                            bankSectorList.Add(bankSector);
 
-                                        Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
-                                                                                (ii * bankSectorSize));
+                                            Marshal.DestroyStructure<BankSector>(deviceBank.Sectors +
+                                                                                    (ii * bankSectorSize));
+                                        }
                                     }
+
+                                    var deviceDeviceBank = new DeviceDeviceBank
+                                    {
+                                        SectorsNumber = deviceBank.SectorsNumber
+                                    };
+                                    deviceDeviceBank.SetSectors(bankSectorList);
+
+                                    deviceBankList.Add(deviceDeviceBank);
+
+                                    Marshal.DestroyStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
                                 }
-
-                                var deviceDeviceBank = new DeviceDeviceBank
-                                {
-                                    SectorsNumber = deviceBank.SectorsNumber,
-                                    Sectors = bankSectorList
-                                };
-
-                                deviceBankList.Add(deviceDeviceBank);
-
-                                Marshal.DestroyStructure<DeviceBank>(storageStructure.Banks + (i * deviceBankSize));
                             }
-                        }
 
-                        deviceStorageStructure.Banks = deviceBankList;
-                        Marshal.DestroyStructure<StorageStructure>(storageStructurePtr);
+                            deviceStorageStructure.SetBanks(deviceBankList);
+                            Marshal.DestroyStructure<StorageStructure>(storageStructurePtr);
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetStorageStructure:");
-            }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("GetStorageStructure: ", ex);
+                    throw;
+                }
 
-            return (output, deviceStorageStructure);
+                return (output, deviceStorageStructure);
+            }
         }
 
         #endregion
@@ -1144,168 +1404,190 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError SendOptionBytesCmd(string command)
         {
-            var result = this._programmerInstanceApi.SendOptionBytesCmd(command);
-            var output = HexConverterUtil.CheckResult(result);
-            
-            return output;
+            using (this._logger?.AppendMethodScope(nameof(SendOptionBytesCmd)))
+            {
+                if (String.IsNullOrEmpty(command))
+                {
+                    throw new ArgumentNullException(nameof(command), "Command cannot be null or empty.");
+                }
+
+                var result = this._programmerInstanceApi.SendOptionBytesCmd(command);
+                var output = HexConverterUtil.CheckResult(result);
+
+                return output;
+            }
         }
 
         public DevicePeripheralC? InitOptionBytesInterface()
         {
-            var pointer = this._programmerInstanceApi.InitOptionBytesInterface();
-            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            using (this._logger?.AppendMethodScope(nameof(InitOptionBytesInterface)))
+            {
+                var pointer = this._programmerInstanceApi.InitOptionBytesInterface();
+                return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            }
         }
 
         public DevicePeripheralC? FastRomInitOptionBytesInterface(ushort deviceId)
         {
-            var pointer = this._programmerInstanceApi.FastRomInitOptionBytesInterface(deviceId);
-            return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            using (this._logger?.AppendMethodScope(nameof(FastRomInitOptionBytesInterface)))
+            {
+                var pointer = this._programmerInstanceApi.FastRomInitOptionBytesInterface(deviceId);
+                return pointer != IntPtr.Zero ? this.DevicePeripheralCHandler(pointer) : null;
+            }
         }
 
         private DevicePeripheralC? DevicePeripheralCHandler(IntPtr pointer)
         {
-            var pointerSize = Marshal.SizeOf<IntPtr>();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(DevicePeripheralCHandler)))
             {
-                PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
+                var pointerSize = Marshal.SizeOf<IntPtr>();
 
-                var bankCList = new List<DeviceBankC>();
-                var bankCItemPointer = IntPtr.Zero;
-                for (var i = 0; i < peripheralC.Value.BanksNbr; i++)
+                try
                 {
-                    if (peripheralC.Value.Banks != IntPtr.Zero)
+                    PeripheralC? peripheralC = Marshal.PtrToStructure<PeripheralC>(pointer);
+
+                    var bankCList = new List<DeviceBankC>();
+                    var bankCItemPointer = IntPtr.Zero;
+                    for (var i = 0; i < peripheralC.Value.BanksNumber; i++)
                     {
-                        bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks, i * pointerSize);
-                        if (bankCItemPointer != IntPtr.Zero)
+                        if (peripheralC.Value.Banks != IntPtr.Zero)
                         {
-                            var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
-
-                            if (bankCItem.Categories != IntPtr.Zero)
+                            bankCItemPointer = Marshal.ReadIntPtr(peripheralC.Value.Banks, i * pointerSize);
+                            if (bankCItemPointer != IntPtr.Zero)
                             {
-                                var categoryCList = new List<DeviceCategoryC>();
-                                var categoryCItemPointer = IntPtr.Zero;
-                                for (var ii = 0; ii < bankCItem.CategoriesNbr; ii++)
+                                var bankCItem = Marshal.PtrToStructure<BankC>(bankCItemPointer);
+
+                                if (bankCItem.Categories != IntPtr.Zero)
                                 {
-                                    categoryCItemPointer =
-                                        Marshal.ReadIntPtr(bankCItem.Categories, ii * pointerSize);
-                                    if (categoryCItemPointer != IntPtr.Zero)
+                                    var categoryCList = new List<DeviceCategoryC>();
+                                    var categoryCItemPointer = IntPtr.Zero;
+                                    for (var ii = 0; ii < bankCItem.CategoriesNumber; ii++)
                                     {
-                                        var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
-
-                                        if (categoryCItem.Bits != IntPtr.Zero)
+                                        categoryCItemPointer =
+                                            Marshal.ReadIntPtr(bankCItem.Categories, ii * pointerSize);
+                                        if (categoryCItemPointer != IntPtr.Zero)
                                         {
-                                            var bitCList = new List<DeviceBitC>();
-                                            var bitCItemPointer = IntPtr.Zero;
-                                            for (var iii = 0; iii < categoryCItem.BitsNbr; iii++)
-                                            {
-                                                bitCItemPointer =
-                                                Marshal.ReadIntPtr(categoryCItem.Bits, iii * pointerSize);
+                                            var categoryCItem = Marshal.PtrToStructure<CategoryC>(categoryCItemPointer);
 
-                                                if (bitCItemPointer != IntPtr.Zero)
+                                            if (categoryCItem.Bits != IntPtr.Zero)
+                                            {
+                                                var bitCList = new List<DeviceBitC>();
+                                                var bitCItemPointer = IntPtr.Zero;
+                                                for (var iii = 0; iii < categoryCItem.BitsNumber; iii++)
                                                 {
-                                                    var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+                                                    bitCItemPointer =
+                                                    Marshal.ReadIntPtr(categoryCItem.Bits, iii * pointerSize);
 
-                                                    var bitValueCList = new List<BitValueC>();
-                                                    var bitValueCItemPointer = IntPtr.Zero;
-                                                    for (var iiii = 0; iiii < bitCItem.ValuesNbr; iiii++)
+                                                    if (bitCItemPointer != IntPtr.Zero)
                                                     {
-                                                        bitValueCItemPointer =
-                                                            Marshal.ReadIntPtr(bitCItem.Values, iiii * pointerSize);
-                                                        if (bitValueCItemPointer != IntPtr.Zero)
+                                                        var bitCItem = Marshal.PtrToStructure<BitC>(bitCItemPointer);
+
+                                                        var bitValueCList = new List<BitValueC>();
+                                                        var bitValueCItemPointer = IntPtr.Zero;
+                                                        for (var iiii = 0; iiii < bitCItem.ValuesNumber; iiii++)
                                                         {
-                                                            var bitValueCItem =
-                                                            Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
-                                                            bitValueCList.Add(bitValueCItem);
+                                                            bitValueCItemPointer =
+                                                                Marshal.ReadIntPtr(bitCItem.Values, iiii * pointerSize);
+                                                            if (bitValueCItemPointer != IntPtr.Zero)
+                                                            {
+                                                                var bitValueCItem =
+                                                                Marshal.PtrToStructure<BitValueC>(bitValueCItemPointer);
+                                                                bitValueCList.Add(bitValueCItem);
 
-                                                            Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                                                Marshal.DestroyStructure<BitValueC>(bitValueCItemPointer);
+                                                            }
                                                         }
+
+                                                        var deviceBitC = new DeviceBitC
+                                                        {
+                                                            Name = bitCItem.Name,
+                                                            Description = bitCItem.Description,
+                                                            WordOffset = bitCItem.WordOffset,
+                                                            BitOffset = bitCItem.BitOffset,
+                                                            BitWidth = bitCItem.BitWidth,
+                                                            Access = bitCItem.Access,
+                                                            ValuesNumber = bitCItem.ValuesNumber,
+                                                            Equation = bitCItem.Equation,
+                                                            Reference = Marshal.PtrToStringAnsi(bitCItem.Reference),
+                                                            BitValue = bitCItem.BitValue
+                                                        };
+                                                        deviceBitC.SetValues(bitValueCList);
+                                                        bitCList.Add(deviceBitC);
+
+                                                        Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                                     }
-
-                                                    var deviceBitC = new DeviceBitC
-                                                    {
-                                                        Name = bitCItem.Name,
-                                                        Description = bitCItem.Description,
-                                                        WordOffset = bitCItem.WordOffset,
-                                                        BitOffset = bitCItem.BitOffset,
-                                                        BitWidth = bitCItem.BitWidth,
-                                                        Access = bitCItem.Access,
-                                                        ValuesNbr = bitCItem.ValuesNbr,
-                                                        Values = bitValueCList,
-                                                        Equation = bitCItem.Equation,
-                                                        Reference = Marshal.PtrToStringAnsi(bitCItem.Reference),
-                                                        BitValue = bitCItem.BitValue
-                                                    };
-                                                    bitCList.Add(deviceBitC);
-
-                                                    Marshal.DestroyStructure<BitC>(bitCItemPointer);
                                                 }
-                                            }
 
-                                            var deviceCategoryC = new DeviceCategoryC
-                                            {
-                                                Name = categoryCItem.Name,
-                                                BitsNbr = categoryCItem.BitsNbr,
-                                                Bits = bitCList
-                                            };
-                                            categoryCList.Add(deviceCategoryC);
-                                            Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
+                                                var deviceCategoryC = new DeviceCategoryC
+                                                {
+                                                    Name = categoryCItem.Name,
+                                                    BitsNumber = categoryCItem.BitsNumber
+                                                };
+                                                deviceCategoryC.SetBits(bitCList);
+
+                                                categoryCList.Add(deviceCategoryC);
+                                                Marshal.DestroyStructure<CategoryC>(categoryCItemPointer);
+                                            }
                                         }
                                     }
-                                }
 
-                                var deviceBankC = new DeviceBankC
-                                {
-                                    Size = bankCItem.Size,
-                                    Address = bankCItem.Address,
-                                    Access = bankCItem.Access,
-                                    CategoriesNbr = bankCItem.CategoriesNbr,
-                                    Categories = categoryCList
-                                };
-                                bankCList.Add(deviceBankC);
-                                Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                                    var deviceBankC = new DeviceBankC
+                                    {
+                                        Size = bankCItem.Size,
+                                        Address = bankCItem.Address,
+                                        Access = bankCItem.Access,
+                                        CategoriesNumber = bankCItem.CategoriesNumber
+                                    };
+                                    deviceBankC.SetCategories(categoryCList);
+                                    bankCList.Add(deviceBankC);
+                                    Marshal.DestroyStructure<BankC>(bankCItemPointer);
+                                }
                             }
                         }
                     }
+
+                    var devicePeripheralC = new DevicePeripheralC
+                    {
+                        Name = peripheralC.Value.Name,
+                        Description = peripheralC.Value.Description,
+                        BanksNumber = peripheralC.Value.BanksNumber
+                    };
+
+                    devicePeripheralC.SetBanks(bankCList);
+
+                    return devicePeripheralC;
                 }
-
-                var devicePeripheralC = new DevicePeripheralC
+                catch (Exception ex)
                 {
-                    Name = peripheralC.Value.Name,
-                    Description = peripheralC.Value.Description,
-                    BanksNbr = peripheralC.Value.BanksNbr,
-                    Banks = bankCList
-                };
-
-                return devicePeripheralC;
+                    this._logger?.ErrorMessage("DevicePeripheralCHandler: ", ex);
+                    throw;
+                }
+                finally
+                {
+                    Marshal.DestroyStructure<PeripheralC>(pointer);
+                }
             }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "DevicePeripheralCHandler: ");
-            }
-            finally
-            {
-                Marshal.DestroyStructure<PeripheralC>(pointer);
-            }
-
-            return null;
         }
 
         public CubeProgrammerError ObDisplay()
         {
-            var output = CubeProgrammerError.CubeProgrammerErrorOther;
-            try
+            using (this._logger?.AppendMethodScope(nameof(ObDisplay)))
             {
-                var obDisplayResult = this._programmerInstanceApi.ObDisplay();
+                var output = CubeProgrammerError.Other;
+                try
+                {
+                    var obDisplayResult = this._programmerInstanceApi.ObDisplay();
 
-                output = HexConverterUtil.CheckResult(obDisplayResult);
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "ObDisplay: ");
-            }
+                    output = HexConverterUtil.CheckResult(obDisplayResult);
+                }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("ObDisplay: ", ex);
+                    throw;
+                }
 
-            return output;
+                return output;
+            }
         }
 
         #endregion
@@ -1316,173 +1598,219 @@ namespace SharpCubeProgrammer
 
         public void SetLoadersPath(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            this._programmerInstanceApi.SetLoadersPath(pathAdapted);
+            using (this._logger?.AppendMethodScope(nameof(SetLoadersPath)))
+            {
+                if (String.IsNullOrEmpty(path))
+                {
+                    throw new ArgumentNullException(nameof(path), "Path cannot be null or empty.");
+                }
+
+                var pathAdapted = path.Replace('\\', '/');
+                this._programmerInstanceApi.SetLoadersPath(pathAdapted);
+            }
         }
 
         public DeviceExternalLoader? SetExternalLoaderPath(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderPtr = new IntPtr();
-            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
-            var output = new DeviceExternalLoader();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(SetExternalLoaderPath)))
             {
-                this._programmerInstanceApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
-                if (externalLoaderPtr != IntPtr.Zero)
+                if (String.IsNullOrEmpty(path))
                 {
-                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+                    throw new ArgumentNullException(nameof(path), "Path cannot be null or empty.");
+                }
 
-                    output.filePath = externalLoaderStructure.filePath;
-                    output.deviceName = externalLoaderStructure.deviceName;
-                    output.deviceType = externalLoaderStructure.deviceType;
-                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                    output.deviceSize = externalLoaderStructure.deviceSize;
-                    output.pageSize = externalLoaderStructure.pageSize;
-                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+                var pathAdapted = path.Replace('\\', '/');
+                var externalLoaderPtr = new IntPtr();
+                var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+                var output = new DeviceExternalLoader();
 
-                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                try
+                {
+                    this._programmerInstanceApi.SetExternalLoaderPath(pathAdapted, ref externalLoaderPtr);
+                    if (externalLoaderPtr != IntPtr.Zero)
                     {
-                        var deviceSectorList = new List<DeviceSector>();
-                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                        output.FilePath = externalLoaderStructure.FilePath;
+                        output.DeviceName = externalLoaderStructure.DeviceName;
+                        output.DeviceType = externalLoaderStructure.DeviceType;
+                        output.DeviceStartAddress = externalLoaderStructure.DeviceStartAddress;
+                        output.DeviceSize = externalLoaderStructure.DeviceSize;
+                        output.PageSize = externalLoaderStructure.PageSize;
+                        output.SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber;
+
+                        if (externalLoaderStructure.Sectors != IntPtr.Zero)
                         {
-                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
-                            deviceSectorList.Add(deviceSectorItem);
+                            var deviceSectorList = new List<DeviceSector>();
+                            for (var i = 0; i < externalLoaderStructure.SectorsTypeNumber; i++)
+                            {
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (i * deviceSectorSize));
+                                deviceSectorList.Add(deviceSectorItem);
+                            }
+
+                            output.SetSectors(deviceSectorList);
+
+                            return output;
                         }
-
-                        output.sectors = deviceSectorList;
-
-                        return output;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "SetExternalLoaderPath: ");
-            }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("SetExternalLoaderPath: ", ex);
+                    throw;
+                }
 
-            return null;
+                return null;
+            }
         }
 
         public DeviceExternalLoader? SetExternalLoaderOBL(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderPtr = new IntPtr();
-            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
-            var output = new DeviceExternalLoader();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(SetExternalLoaderOBL)))
             {
-                this._programmerInstanceApi.SetExternalLoaderOBL(pathAdapted, ref externalLoaderPtr);
-                if (externalLoaderPtr != IntPtr.Zero)
+                if (String.IsNullOrEmpty(path))
                 {
-                    var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+                    throw new ArgumentNullException(nameof(path), "Path cannot be null or empty.");
+                }
 
-                    output.filePath = externalLoaderStructure.filePath;
-                    output.deviceName = externalLoaderStructure.deviceName;
-                    output.deviceType = externalLoaderStructure.deviceType;
-                    output.deviceStartAddress = externalLoaderStructure.deviceStartAddress;
-                    output.deviceSize = externalLoaderStructure.deviceSize;
-                    output.pageSize = externalLoaderStructure.pageSize;
-                    output.sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr;
+                var pathAdapted = path.Replace('\\', '/');
+                var externalLoaderPtr = new IntPtr();
+                var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+                var output = new DeviceExternalLoader();
 
-                    if (externalLoaderStructure.sectors != IntPtr.Zero)
+                try
+                {
+                    this._programmerInstanceApi.SetExternalLoaderOBL(pathAdapted, ref externalLoaderPtr);
+                    if (externalLoaderPtr != IntPtr.Zero)
                     {
-                        var deviceSectorList = new List<DeviceSector>();
-                        for (var i = 0; i < externalLoaderStructure.sectorsTypeNbr; i++)
+                        var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalLoaderPtr);
+
+                        output.FilePath = externalLoaderStructure.FilePath;
+                        output.DeviceName = externalLoaderStructure.DeviceName;
+                        output.DeviceType = externalLoaderStructure.DeviceType;
+                        output.DeviceStartAddress = externalLoaderStructure.DeviceStartAddress;
+                        output.DeviceSize = externalLoaderStructure.DeviceSize;
+                        output.PageSize = externalLoaderStructure.PageSize;
+                        output.SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber;
+
+                        if (externalLoaderStructure.Sectors != IntPtr.Zero)
                         {
-                            var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (i * deviceSectorSize));
-                            deviceSectorList.Add(deviceSectorItem);
+                            var deviceSectorList = new List<DeviceSector>();
+                            for (var i = 0; i < externalLoaderStructure.SectorsTypeNumber; i++)
+                            {
+                                var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (i * deviceSectorSize));
+                                deviceSectorList.Add(deviceSectorItem);
+                            }
+
+                            output.SetSectors(deviceSectorList);
+
+                            return output;
                         }
-
-                        output.sectors = deviceSectorList;
-
-                        return output;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "SetExternalLoaderOBL: ");
-            }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("SetExternalLoaderOBL: ", ex);
+                    throw;
+                }
 
-            return null;
+                return null;
+            }
         }
 
         public DeviceExternalStorageInfo? GetExternalLoaders(string path = @".\st\Programmer")
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            var externalLoaderList = new List<DeviceExternalLoader>();
-            var externalStorageInfoPtr = new IntPtr();
-            var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
-            var output = new DeviceExternalStorageInfo();
-
-            try
+            using (this._logger?.AppendMethodScope(nameof(GetExternalLoaders)))
             {
-                var result = this._programmerInstanceApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
-                if (result.Equals(0))
+                if (String.IsNullOrEmpty(path))
                 {
-                    var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
-                    var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+                    throw new ArgumentNullException(nameof(path), "Path cannot be null or empty.");
+                }
 
-                    output.ExternalLoaderNbr = externalStorageInfoStructure.ExternalLoaderNbr;
+                var pathAdapted = path.Replace('\\', '/');
+                var externalLoaderList = new List<DeviceExternalLoader>();
+                var externalStorageInfoPtr = new IntPtr();
+                var deviceSectorSize = Marshal.SizeOf<DeviceSector>();
+                var output = new DeviceExternalStorageInfo();
 
-                    if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
+                try
+                {
+                    var result = this._programmerInstanceApi.GetExternalLoaders(pathAdapted, ref externalStorageInfoPtr);
+                    if (result.Equals(0))
                     {
-                        for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNbr; i++)
+                        var externalLoaderSize = Marshal.SizeOf<ExternalLoader>();
+                        var externalStorageInfoStructure = Marshal.PtrToStructure<ExternalStorageInfo>(externalStorageInfoPtr);
+
+                        output.ExternalLoaderNumber = externalStorageInfoStructure.ExternalLoaderNumber;
+
+                        if (externalStorageInfoStructure.ExternalLoader != IntPtr.Zero)
                         {
-                            var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
-
-                            var deviceExternalLoader = new DeviceExternalLoader
+                            for (var i = 0; i < externalStorageInfoStructure.ExternalLoaderNumber; i++)
                             {
-                                filePath = externalLoaderStructure.filePath,
-                                deviceName = externalLoaderStructure.deviceName,
-                                deviceType = externalLoaderStructure.deviceType,
-                                deviceStartAddress = externalLoaderStructure.deviceStartAddress,
-                                deviceSize = externalLoaderStructure.deviceSize,
-                                pageSize = externalLoaderStructure.pageSize,
-                                sectorsTypeNbr = externalLoaderStructure.sectorsTypeNbr
-                            };
+                                var externalLoaderStructure = Marshal.PtrToStructure<ExternalLoader>(externalStorageInfoStructure.ExternalLoader + (i * externalLoaderSize));
 
-                            if (externalLoaderStructure.sectors != IntPtr.Zero)
-                            {
-                                var deviceSectorList = new List<DeviceSector>();
-                                for (var ii = 0; ii < externalLoaderStructure.sectorsTypeNbr; ii++)
+                                var deviceExternalLoader = new DeviceExternalLoader
                                 {
-                                    var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.sectors + (ii * deviceSectorSize));
-                                    deviceSectorList.Add(deviceSectorItem);
+                                    FilePath = externalLoaderStructure.FilePath,
+                                    DeviceName = externalLoaderStructure.DeviceName,
+                                    DeviceType = externalLoaderStructure.DeviceType,
+                                    DeviceStartAddress = externalLoaderStructure.DeviceStartAddress,
+                                    DeviceSize = externalLoaderStructure.DeviceSize,
+                                    PageSize = externalLoaderStructure.PageSize,
+                                    SectorsTypeNumber = externalLoaderStructure.SectorsTypeNumber
+                                };
+
+                                if (externalLoaderStructure.Sectors != IntPtr.Zero)
+                                {
+                                    var deviceSectorList = new List<DeviceSector>();
+                                    for (var ii = 0; ii < externalLoaderStructure.SectorsTypeNumber; ii++)
+                                    {
+                                        var deviceSectorItem = Marshal.PtrToStructure<DeviceSector>(externalLoaderStructure.Sectors + (ii * deviceSectorSize));
+                                        deviceSectorList.Add(deviceSectorItem);
+                                    }
+
+                                    deviceExternalLoader.SetSectors(deviceSectorList);
                                 }
 
-                                deviceExternalLoader.sectors = deviceSectorList;
+                                externalLoaderList.Add(deviceExternalLoader);
                             }
 
-                            externalLoaderList.Add(deviceExternalLoader);
+                            output.SetExternalLoader(externalLoaderList);
+
+                            return output;
                         }
-
-                        output.ExternalLoader = externalLoaderList;
-
-                        return output;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                this._logger?.LogError(ex, "GetExternalLoaders: ");
-            }
+                catch (Exception ex)
+                {
+                    this._logger?.ErrorMessage("GetExternalLoaders: ", ex);
+                    throw;
+                }
 
-            return null;
+                return null;
+            }
         }
 
         public void RemoveExternalLoader(string path)
         {
-            var pathAdapted = path.Replace(@"\", "/");
-            this._programmerInstanceApi.RemoveExternalLoader(pathAdapted);
+            using (this._logger?.AppendMethodScope(nameof(RemoveExternalLoader)))
+            {
+                if (String.IsNullOrEmpty(path))
+                {
+                    throw new ArgumentNullException(nameof(path), "Path cannot be null or empty.");
+                }
+
+                var pathAdapted = path.Replace('\\', '/');
+                this._programmerInstanceApi.RemoveExternalLoader(pathAdapted);
+            }
         }
 
         public void DeleteLoaders()
         {
-            this._programmerInstanceApi.DeleteLoaders();
+            using (this._logger?.AppendMethodScope(nameof(DeleteLoaders)))
+            {
+                this._programmerInstanceApi.DeleteLoaders();
+            }
         }
 
         #endregion
@@ -1495,75 +1823,105 @@ namespace SharpCubeProgrammer
 
         public (CubeProgrammerError, byte[]) GetUID64()
         {
-            var buffer = new byte[8];
-            var bufferPtr = new IntPtr();
-            var getUID64Result = this._programmerInstanceApi.GetUID64(ref bufferPtr);
-
-            var result = HexConverterUtil.CheckResult(getUID64Result);
-            if (result.Equals(CubeProgrammerError.CubeProgrammerNoError) && bufferPtr != IntPtr.Zero)
+            using (this._logger?.AppendMethodScope(nameof(GetUID64)))
             {
-                Marshal.Copy(bufferPtr, buffer, 0, 8);
-            }
+                var buffer = new byte[8];
+                var bufferPtr = new IntPtr();
+                var getUID64Result = this._programmerInstanceApi.GetUID64(ref bufferPtr);
 
-            return (result, buffer);
+                var result = HexConverterUtil.CheckResult(getUID64Result);
+                if (result.Equals(CubeProgrammerError.NoError) && bufferPtr != IntPtr.Zero)
+                {
+                    Marshal.Copy(bufferPtr, buffer, 0, 8);
+                }
+
+                return (result, buffer);
+            }
         }
 
         public bool FirmwareDelete()
         {
-            return this._programmerInstanceApi.FirmwareDelete();
+            using (this._logger?.AppendMethodScope(nameof(FirmwareDelete)))
+            {
+                return this._programmerInstanceApi.FirmwareDelete();
+            }
         }
 
         public bool FirmwareUpgrade(string filePath, string address, WbFunctionArguments firstInstall, WbFunctionArguments startStack, WbFunctionArguments verify)
         {
-            var uintAddress = HexConverterUtil.HexConverterToUint(address);
-            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
+            using (this._logger?.AppendMethodScope(nameof(FirmwareUpgrade)))
+            {
+                var uintAddress = HexConverterUtil.HexConverterToUint(address);
+                var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace('\\', '/');
 
-            return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
+                return this._programmerInstanceApi.FirmwareUpgrade(filePathAdapted, uintAddress, (uint)firstInstall, (uint)startStack, (uint)verify);
+            }
         }
 
         public bool StartWirelessStack()
         {
-            return this._programmerInstanceApi.StartWirelessStack();
+            using (this._logger?.AppendMethodScope(nameof(StartWirelessStack)))
+            {
+                return this._programmerInstanceApi.StartWirelessStack();
+            }
         }
 
         public bool UpdateAuthKey(string filePath)
         {
-            return this._programmerInstanceApi.UpdateAuthKey(filePath);
+            using (this._logger?.AppendMethodScope(nameof(UpdateAuthKey)))
+            {
+                return this._programmerInstanceApi.UpdateAuthKey(filePath);
+            }
         }
 
         public CubeProgrammerError AuthKeyLock()
         {
-            var authKeyLockResult = this._programmerInstanceApi.AuthKeyLock();
-            var result = HexConverterUtil.CheckResult(authKeyLockResult);
+            using (this._logger?.AppendMethodScope(nameof(AuthKeyLock)))
+            {
+                var authKeyLockResult = this._programmerInstanceApi.AuthKeyLock();
+                var result = HexConverterUtil.CheckResult(authKeyLockResult);
 
-            return result;
+                return result;
+            }
         }
 
         public CubeProgrammerError WriteUserKey(string filePath, byte keyType)
         {
-            var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace(@"\", "/");
-            var writeUserKeyResult = this._programmerInstanceApi.WriteUserKey(filePathAdapted, keyType);
-            var result = HexConverterUtil.CheckResult(writeUserKeyResult);
+            using (this._logger?.AppendMethodScope(nameof(WriteUserKey)))
+            {
+                var filePathAdapted = String.IsNullOrEmpty(filePath) ? "" : filePath.Replace('\\', '/');
+                var writeUserKeyResult = this._programmerInstanceApi.WriteUserKey(filePathAdapted, keyType);
+                var result = HexConverterUtil.CheckResult(writeUserKeyResult);
 
-            return result;
+                return result;
+            }
         }
 
         public bool AntiRollBack()
         {
-            return this._programmerInstanceApi.AntiRollBack();
+            using (this._logger?.AppendMethodScope(nameof(AntiRollBack)))
+            {
+                return this._programmerInstanceApi.AntiRollBack();
+            }
         }
 
         public bool StartFus()
         {
-            return this._programmerInstanceApi.StartFus();
+            using (this._logger?.AppendMethodScope(nameof(StartFus)))
+            {
+                return this._programmerInstanceApi.StartFus();
+            }
         }
 
         public CubeProgrammerError UnlockChip()
         {
-            var unlockChipResult = this._programmerInstanceApi.UnlockChip();
-            var result = HexConverterUtil.CheckResult(unlockChipResult);
+            using (this._logger?.AppendMethodScope(nameof(UnlockChip)))
+            {
+                var unlockChipResult = this._programmerInstanceApi.UnlockChip();
+                var result = HexConverterUtil.CheckResult(unlockChipResult);
 
-            return result;
+                return result;
+            }
         }
 
         #endregion
@@ -1572,14 +1930,17 @@ namespace SharpCubeProgrammer
 
         public CubeProgrammerError ProgramSsp(string sspFile, string licenseFile, string tfaFile, int hsmSlotId)
         {
-            var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace(@"\", "/");
-            var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace(@"\", "/");
-            var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace(@"\", "/");
-            var programSspResult = this._programmerInstanceApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(ProgramSsp)))
+            {
+                var sspFileAdapted = String.IsNullOrEmpty(sspFile) ? "" : sspFile.Replace('\\', '/');
+                var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace('\\', '/');
+                var tfaFileAdapted = String.IsNullOrEmpty(tfaFile) ? "" : tfaFile.Replace('\\', '/');
+                var programSspResult = this._programmerInstanceApi.ProgramSsp(sspFileAdapted, licenseFileAdapted, tfaFileAdapted, hsmSlotId);
 
-            var result = HexConverterUtil.CheckResult(programSspResult);
+                var result = HexConverterUtil.CheckResult(programSspResult);
 
-            return result;
+                return result;
+            }
         }
 
         #endregion
@@ -1588,37 +1949,55 @@ namespace SharpCubeProgrammer
 
         public string GetHsmFirmwareID(int hsmSlotId)
         {
-            return this._programmerInstanceApi.GetHsmFirmwareID(hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmFirmwareID)))
+            {
+                return this._programmerInstanceApi.GetHsmFirmwareID(hsmSlotId);
+            }
         }
 
         public ulong GetHsmCounter(int hsmSlotId)
         {
-            return this._programmerInstanceApi.GetHsmCounter(hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmCounter)))
+            {
+                return this._programmerInstanceApi.GetHsmCounter(hsmSlotId);
+            }
         }
 
         public string GetHsmState(int hsmSlotId)
         {
-            return this._programmerInstanceApi.GetHsmState(hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmState)))
+            {
+                return this._programmerInstanceApi.GetHsmState(hsmSlotId);
+            }
         }
 
         public string GetHsmVersion(int hsmSlotId)
         {
-            return this._programmerInstanceApi.GetHsmVersion(hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmVersion)))
+            {
+                return this._programmerInstanceApi.GetHsmVersion(hsmSlotId);
+            }
         }
 
         public string GetHsmType(int hsmSlotId)
         {
-            return this._programmerInstanceApi.GetHsmType(hsmSlotId);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmType)))
+            {
+                return this._programmerInstanceApi.GetHsmType(hsmSlotId);
+            }
         }
 
         public CubeProgrammerError GetHsmLicense(int hsmSlotId, string outLicensePath)
         {
-            var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace(@"\", "/");
-            var getHsmLicenseResult = this._programmerInstanceApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
+            using (this._logger?.AppendMethodScope(nameof(GetHsmLicense)))
+            {
+                var outLicensePathAdapted = String.IsNullOrEmpty(outLicensePath) ? "" : outLicensePath.Replace('\\', '/');
+                var getHsmLicenseResult = this._programmerInstanceApi.GetHsmLicense(hsmSlotId, outLicensePathAdapted);
 
-            var result = HexConverterUtil.CheckResult(getHsmLicenseResult);
+                var result = HexConverterUtil.CheckResult(getHsmLicenseResult);
 
-            return result;
+                return result;
+            }
         }
 
         #endregion
@@ -1627,17 +2006,26 @@ namespace SharpCubeProgrammer
 
         public void Halt()
         {
-            this._programmerInstanceApi.CpuHalt();
+            using (this._logger?.AppendMethodScope(nameof(Halt)))
+            {
+                this._programmerInstanceApi.CpuHalt();
+            }
         }
 
         public void Run()
         {
-            this._programmerInstanceApi.CpuRun();
+            using (this._logger?.AppendMethodScope(nameof(Run)))
+            {
+                this._programmerInstanceApi.CpuRun();
+            }
         }
 
         public void Step()
         {
-            this._programmerInstanceApi.CpuStep();
+            using (this._logger?.AppendMethodScope(nameof(Step)))
+            {
+                this._programmerInstanceApi.CpuStep();
+            }
         }
 
         #endregion
@@ -1657,7 +2045,7 @@ namespace SharpCubeProgrammer
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (Interlocked.CompareExchange(ref this._isDisposed, DisposedFlag, 0) == 0)
             {

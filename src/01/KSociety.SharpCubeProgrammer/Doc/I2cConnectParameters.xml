@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="i2cConnectParameters">
+        <I2cConnectParameters>
+            <summary>
+                Specify the I2C connect parameters.
+                <list type="table">
+                    <item>
+                        <term>Address</term>
+                        <description>Device address in hex format.</description>
+                    </item>
+                    <item>
+                        <term>Baudrate</term>
+                        <description>Baudrate and speed transmission : 100 or 400 KHz.</description>
+                    </item>
+                    <item>
+                        <term>SpeedMode</term>
+                        <description>Speed Mode: STANDARD or FAST.</description>
+                    </item>
+                    <item>
+                        <term>AddressMode</term>
+                        <description>Address Mode: 7 or 10 bits.</description>
+                    </item>
+                    <item>
+                        <term>AnalogFilter</term>
+                        <description>Analog filter: DISABLE or ENABLE.</description>
+                    </item>
+                    <item>
+                        <term>DigitalFilter</term>
+                        <description>Digital filter: DISABLE or ENABLE.</description>
+                    </item>
+                    <item>
+                        <term>DigitalNoiseFilter</term>
+                        <description>Digital noise filter: 0 to 15.</description>
+                    </item>
+                    <item>
+                        <term>RiseTime</term>
+                        <description>Rise time: 0-1000 for STANDARD speed mode and  0-300 for FAST.</description>
+                    </item>
+                    <item>
+                        <term>FallTime</term>
+                        <description>Fall time: 0-300 for STANDARD speed mode and  0-300 for FAST.</description>
+                    </item>
+                </list>
+            </summary>
+            <remarks>
+                <para>
+                    The Bootloader Slave address varies depending on the device (see AN2606).
+                </para>
+                <para>
+                    Not all configurations are supported by STM32 Bootloader, such as address in 7 bits form, analog filter: ENABLE, digital filter: DISABLE.
+                </para>
+                <para>
+                    Recommended I2C parameters : Address=0x??, Baudrate=400, SpeedMode=1, AddressMode=0, AnalogFilter=1, DigitalFilter=0, DigitalNoiseFilter=0, RiseTime=0, FallTime=0
+                </para>
+            </remarks>
+        </I2cConnectParameters>
+
+        <Address>
+            <summary>
+                Device address in hex format.
+            </summary>
+        </Address>
+        
+        <Baudrate>
+            <summary>
+                Baudrate and speed transmission : 100 or 400 KHz.
+            </summary>
+        </Baudrate>
+
+        <SpeedMode>
+            <summary>
+                Speed mode: STANDARD or FAST.
+            </summary>
+        </SpeedMode>
+
+        <AddressMode>
+            <summary>
+                Address mode: 7 or 10 bits.
+            </summary>
+        </AddressMode>
+
+        <AnalogFilter>
+            <summary>
+                Analog filter: DISABLE or ENABLE.
+            </summary>
+        </AnalogFilter>
+
+        <DigitalFilter>
+            <summary>
+                Digital filter: DISABLE or ENABLE.
+            </summary>
+        </DigitalFilter>
+
+        <DigitalNoiseFilter>
+            <summary>
+                Digital noise filter: 0 to 15.
+            </summary>
+        </DigitalNoiseFilter>
+
+        <RiseTime>
+            <summary>
+                Rise time: 0-1000 for STANDARD speed mode and  0-300 for FAST.
+            </summary>
+        </RiseTime>
+
+        <FallTime>
+            <summary>
+                Fall time: 0-300 for STANDARD speed mode and  0-300 for FAST.
+            </summary>
+        </FallTime>
+</members>
+</docs>

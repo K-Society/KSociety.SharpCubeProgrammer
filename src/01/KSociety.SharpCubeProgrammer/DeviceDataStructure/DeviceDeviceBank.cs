@@ -2,11 +2,53 @@
 
 namespace SharpCubeProgrammer.DeviceDataStructure
 {
+    using System;
     using System.Collections.Generic;
 
-    public struct DeviceDeviceBank
+    /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/DeviceDeviceBank/*'/>
+    public struct DeviceDeviceBank : IEquatable<DeviceDeviceBank>
     {
-        public uint SectorsNumber;
-        public List<BankSector> Sectors;
+        /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/SectorsNumber/*'/>
+        public uint SectorsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceDeviceBank.xml' path='docs/members[@name="deviceDeviceBank"]/Sectors/*'/>
+        public IList<BankSector> Sectors { get; private set; }
+
+        public DeviceDeviceBank(uint sectorsNumber, IList<BankSector> sectors)
+        {
+            this.SectorsNumber = sectorsNumber;
+            this.Sectors = sectors;
+        }
+
+        public void SetSectors(IList<BankSector> sectors)
+        {
+            this.Sectors = sectors;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DeviceDeviceBank other && this.Equals(other);
+        }
+
+        public bool Equals(DeviceDeviceBank other)
+        {
+            return this.SectorsNumber == other.SectorsNumber &&
+                   EqualityComparer<IList<BankSector>>.Default.Equals(this.Sectors, other.Sectors);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.SectorsNumber, this.Sectors);
+        }
+
+        public static bool operator ==(DeviceDeviceBank left, DeviceDeviceBank right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DeviceDeviceBank left, DeviceDeviceBank right)
+        {
+            return !(left == right);
+        }
     }
 }
