@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceExternalStorageInfo">
+        <DeviceExternalStorageInfo>
+            <summary>
+                Get external storage informations useful for external Loader.
+                <list type="table">
+                    <item>
+                        <term>ExternalLoaderNumber</term>
+                        <description>Number of the external loader.</description>
+                    </item>
+                    <item>
+                        <term>ExternalLoader</term>
+                        <description>List of external loaders.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceExternalStorageInfo>
+
+        <ExternalLoaderNumber>
+            <summary>
+                Number of the external loader.
+            </summary>
+        </ExternalLoaderNumber>
+
+        <ExternalLoader>
+            <summary>
+                List of external loaders.
+            </summary>
+        </ExternalLoader>
+    </members>
+</docs>

@@ -79,9 +79,9 @@ namespace SharpCubeProgrammer
             return await Task.Run(() => this.ConnectDfuBootloader2(dfuParameters), cancellationToken).ConfigureAwait(false);
         }
 
-        public async ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.ConnectDfuBootloader2(usbIndex, rdu, tzenreg, usbTimeout), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.ConnectDfuBootloader2(usbIndex, requestReadUnprotect, tzenreg, usbTimeout), cancellationToken).ConfigureAwait(false);
         }
 
         public async ValueTask<CubeProgrammerError> ConnectSpiBootloaderAsync(SpiConnectParameters spiParameters, CancellationToken cancellationToken = default)

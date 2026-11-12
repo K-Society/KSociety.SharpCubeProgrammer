@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="bankSector">
+        <BankSector>
+            <summary>
+                This stucture indicates the sectors parameters.
+                <list type="table">
+                    <item>
+                        <term>Index</term>
+                        <description>Index of the sector.</description>
+                    </item>
+                    <item>
+                        <term>Size</term>
+                        <description>Sector size.</description>
+                    </item>
+                    <item>
+                        <term>Address</term>
+                        <description>Sector starting address.</description>
+                    </item>
+                </list>
+            </summary>
+        </BankSector>
+
+        <Index>
+            <summary>
+                Index of the sector.
+            </summary>
+        </Index>
+
+        <Size>
+            <summary>
+                Sector size.
+            </summary>
+        </Size>
+
+        <Address>
+            <summary>
+                Sector starting address.
+            </summary>
+        </Address>  
+    </members>
+</docs>

@@ -28,7 +28,7 @@ namespace SharpCubePrgAPI.Bootoader
                 foreach (var port in getUsartList)
                 {
                     DisplayManager.LogMessage(MessageType.Normal, $"\nPort Name {portIndex} :");
-                    DisplayManager.LogMessage(MessageType.Info, $" {port.portName} ");
+                    DisplayManager.LogMessage(MessageType.Info, $" {port.PortName} ");
                     portIndex++;
                 }
                 DisplayManager.LogMessage(MessageType.Title, "\n-----------------------------------------\n\n");

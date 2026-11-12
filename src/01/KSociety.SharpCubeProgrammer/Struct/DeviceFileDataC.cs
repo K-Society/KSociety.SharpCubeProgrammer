@@ -5,22 +5,28 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/DeviceFileDataC/*'/>
     public struct DeviceFileDataC : IEquatable<DeviceFileDataC>
     {
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Type/*'/>
         public int Type { get; set; }
-        public int segmentsNbr { get; set; }
-        public IList<DeviceSegmentDataC> segments { get; private set; }
 
-        public DeviceFileDataC(int type, int segmentsNbr, IList<DeviceSegmentDataC> segments)
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/SegmentsNumber/*'/>
+        public int SegmentsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceFileDataC.xml' path='docs/members[@name="deviceFileDataC"]/Segments/*'/>
+        public IList<DeviceSegmentDataC> Segments { get; private set; }
+
+        public DeviceFileDataC(int type, int segmentsNumber, IList<DeviceSegmentDataC> segments)
         {
             this.Type = type;
-            this.segmentsNbr = segmentsNbr;
-            this.segments = segments;
+            this.SegmentsNumber = segmentsNumber;
+            this.Segments = segments;
         }
 
         public void SetSegments(IList<DeviceSegmentDataC> segments)
         {
-            this.segments = segments;
+            this.Segments = segments;
         }
 
         public override bool Equals(object obj)
@@ -30,12 +36,12 @@ namespace SharpCubeProgrammer.Struct
 
         public bool Equals(DeviceFileDataC other)
         {
-            return this.Type == other.Type && this.segmentsNbr == other.segmentsNbr && EqualityComparer<IList<DeviceSegmentDataC>>.Default.Equals(this.segments, other.segments);
+            return this.Type == other.Type && this.SegmentsNumber == other.SegmentsNumber && EqualityComparer<IList<DeviceSegmentDataC>>.Default.Equals(this.Segments, other.Segments);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.Type, this.segmentsNbr, this.segments);
+            return HashCode.Combine(this.Type, this.SegmentsNumber, this.Segments);
         }
 
         public static bool operator ==(DeviceFileDataC left, DeviceFileDataC right)

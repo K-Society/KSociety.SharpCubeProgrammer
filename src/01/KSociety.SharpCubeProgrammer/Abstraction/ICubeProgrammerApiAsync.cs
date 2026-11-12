@@ -66,7 +66,7 @@ namespace SharpCubeProgrammer.Abstraction
         ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(DfuConnectParameters dfuParameters, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectDfuBootloader2OverloadAsync/*'/>
-        ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> ConnectDfuBootloader2Async(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ConnectSpiBootloaderAsync/*'/>
         ValueTask<CubeProgrammerError> ConnectSpiBootloaderAsync(SpiConnectParameters spiParameters, CancellationToken cancellationToken = default);

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="generalInf">
+        <GeneralInf>
+            <summary>
+                Get device general informations.
+                <list type="table">
+                    <item>
+                        <term>DeviceId</term>
+                        <description>Device ID.</description>
+                    </item>
+                    <item>
+                        <term>FlashSize</term>
+                        <description>Flash memory size.</description>
+                    </item>
+                    <item>
+                        <term>BootloaderVersion</term>
+                        <description>Bootloader version.</description>
+                    </item>
+                    <item>
+                        <term>Type</term>
+                        <description>Device MCU or MPU.</description>
+                    </item>
+                    <item>
+                        <term>Cpu</term>
+                        <description>Cortex CPU.</description>
+                    </item>
+                    <item>
+                        <term>Name</term>
+                        <description>Device name.</description>
+                    </item>
+                    <item>
+                        <term>Series</term>
+                        <description>Device serie.</description>
+                    </item>
+                    <item>
+                        <term>Description</term>
+                        <description>Take notice.</description>
+                    </item>
+                    <item>
+                        <term>RevisionId</term>
+                        <description>Revision ID.</description>
+                    </item>
+                    <item>
+                        <term>Board</term>
+                        <description>Board Rpn.</description>
+                    </item>
+                </list>
+            </summary>
+        </GeneralInf>
+
+        <DeviceId>
+            <summary>
+                Device ID.
+            </summary>
+        </DeviceId>
+
+        <FlashSize>
+            <summary>
+                Flash memory size.
+            </summary>
+        </FlashSize>
+
+        <BootloaderVersion>
+            <summary>
+                Bootloader version.
+            </summary>
+        </BootloaderVersion>
+
+        <Type>
+            <summary>
+                Device MCU or MPU.
+            </summary>
+        </Type>
+
+        <Cpu>
+            <summary>
+                Cortex CPU.
+            </summary>
+        </Cpu>
+
+        <Name>
+            <summary>
+                Device name.
+            </summary>
+        </Name>
+
+        <Series>
+            <summary>
+                Device series.
+            </summary>
+        </Series>
+
+        <Description>
+            <summary>
+                Take notice.
+            </summary>
+        </Description>
+
+        <RevisionId>
+            <summary>
+                Revision ID.
+            </summary>
+        </RevisionId>
+
+        <Board>
+            <summary>
+                Board Rpn.
+            </summary>
+        </Board>
+    </members>
+</docs>

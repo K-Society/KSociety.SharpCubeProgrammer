@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="frequencies">
+        <Frequencies>
+            <summary>
+                Get supported frequencies for JTAG and SWD ineterfaces.
+                <list type="table">
+                    <item>
+                        <term>JTagFrequency</term>
+                        <description>JTAG frequency.</description>
+                    </item>
+                    <item>
+                        <term>JTagFrequencyNumber</term>
+                        <description>Get JTAG supported frequencies.</description>
+                    </item>
+                    <item>
+                        <term>SwdFrequency</term>
+                        <description>SWD frequency.</description>
+                    </item>
+                    <item>
+                        <term>SwdFrequencyNumber</term>
+                        <description>Get SWD supported frequencies.</description>
+                    </item>
+                </list>
+            </summary>
+        </Frequencies>
+
+        <JTagFrequency>
+            <summary>
+                JTAG frequency.
+            </summary>
+        </JTagFrequency>
+
+        <JTagFrequencyNumber>
+            <summary>
+                Get JTAG supported frequencies.
+            </summary>
+        </JTagFrequencyNumber>
+
+        <SwdFrequency>
+            <summary>
+                SWD frequency.
+            </summary>
+        </SwdFrequency>
+
+        <SwdFrequencyNumber>
+            <summary>
+                Get SWD supported frequencies.
+            </summary>
+        </SwdFrequencyNumber>
+    </members>
+</docs>

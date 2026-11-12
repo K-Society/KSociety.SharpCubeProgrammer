@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceSector">
+        <DeviceSector>
+            <summary>
+                Get device sectors basic informations.
+                <list type="table">
+                    <item>
+                        <term>SectorNumber</term>
+                        <description>Number of Sectors.</description>
+                    </item>
+                    <item>
+                        <term>SectorSize</term>
+                        <description>Sector Size in BYTEs.</description>
+                    </item>
+                </list>
+            </summary>
+        </DeviceSector>
+
+        <SectorNumber>
+            <summary>
+                Number of Sectors.
+            </summary>
+        </SectorNumber>
+
+        <SectorSize>
+            <summary>
+                Sector Size in BYTEs.
+            </summary>
+        </SectorSize>
+    </members>
+</docs>

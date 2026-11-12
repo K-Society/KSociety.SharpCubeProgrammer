@@ -5,15 +5,18 @@ namespace SharpCubeProgrammer.Struct
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/DeviceExternalStorageInfo/*'/>
     public struct DeviceExternalStorageInfo : IEquatable<DeviceExternalStorageInfo>
     {
-        public uint ExternalLoaderNbr { get; set; }
+        /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/ExternalLoaderNumber/*'/>
+        public uint ExternalLoaderNumber { get; set; }
 
+        /// <include file='..\Doc\DeviceExternalStorageInfo.xml' path='docs/members[@name="deviceExternalStorageInfo"]/ExternalLoader/*'/>
         public IList<DeviceExternalLoader> ExternalLoader { get; private set; }
 
-        public DeviceExternalStorageInfo(uint externalLoaderNbr, IList<DeviceExternalLoader> externalLoader)
+        public DeviceExternalStorageInfo(uint externalLoaderNumber, IList<DeviceExternalLoader> externalLoader)
         {
-            this.ExternalLoaderNbr = externalLoaderNbr;
+            this.ExternalLoaderNumber = externalLoaderNumber;
             this.ExternalLoader = externalLoader;
         }
 
@@ -29,13 +32,13 @@ namespace SharpCubeProgrammer.Struct
 
         public bool Equals(DeviceExternalStorageInfo other)
         {
-            return this.ExternalLoaderNbr == other.ExternalLoaderNbr &&
+            return this.ExternalLoaderNumber == other.ExternalLoaderNumber &&
                    EqualityComparer<IList<DeviceExternalLoader>>.Default.Equals(this.ExternalLoader, other.ExternalLoader);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.ExternalLoaderNbr, this.ExternalLoader);
+            return HashCode.Combine(this.ExternalLoaderNumber, this.ExternalLoader);
         }
 
         public static bool operator ==(DeviceExternalStorageInfo left, DeviceExternalStorageInfo right)

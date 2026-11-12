@@ -5,16 +5,22 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceCategoryC.xml' path='docs/members[@name="deviceCategoryC"]/DeviceCategoryC/*'/>
     public struct DeviceCategoryC : IEquatable<DeviceCategoryC>
     {
+        /// <include file='..\Doc\DeviceCategoryC.xml' path='docs/members[@name="deviceCategoryC"]/Name/*'/>
         public string Name { get; set; }
-        public uint BitsNbr { get; set; }
+
+        /// <include file='..\Doc\DeviceCategoryC.xml' path='docs/members[@name="deviceCategoryC"]/BitsNumber/*'/>
+        public uint BitsNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceCategoryC.xml' path='docs/members[@name="deviceCategoryC"]/Bits/*'/>
         public IList<DeviceBitC> Bits { get; private set; }
 
-        public DeviceCategoryC(string name, uint bitsNbr, IList<DeviceBitC> bits)
+        public DeviceCategoryC(string name, uint bitsNumber, IList<DeviceBitC> bits)
         {
             this.Name = name;
-            this.BitsNbr = bitsNbr;
+            this.BitsNumber = bitsNumber;
             this.Bits = bits;
         }
 
@@ -31,13 +37,13 @@ namespace SharpCubeProgrammer.DeviceDataStructure
         public bool Equals(DeviceCategoryC other)
         {
             return this.Name == other.Name &&
-                   this.BitsNbr == other.BitsNbr &&
+                   this.BitsNumber == other.BitsNumber &&
                    EqualityComparer<IList<DeviceBitC>>.Default.Equals(this.Bits, other.Bits);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.Name, this.BitsNbr, this.Bits);
+            return HashCode.Combine(this.Name, this.BitsNumber, this.Bits);
         }
 
         public static bool operator ==(DeviceCategoryC left, DeviceCategoryC right)

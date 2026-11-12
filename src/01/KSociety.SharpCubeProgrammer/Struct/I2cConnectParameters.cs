@@ -4,55 +4,38 @@ namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/I2cConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct I2cConnectParameters
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Device address in hex format.
-        /// </summary>
-        public int add;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/Address/*'/>
+        public int Address;
 
-        /// <summary>
-        /// Baudrate and speed transmission : 100 or 400 KHz.
-        /// </summary>
-        public int br;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/Baudrate/*'/>
+        public int Baudrate;
 
-        /// <summary>
-        /// Speed Mode: STANDARD or FAST.
-        /// </summary>
-        public int sm;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/SpeedMode/*'/>
+        public int SpeedMode;
 
-        /// <summary>
-        /// Address Mode: 7 or 10 bits.
-        /// </summary>
-        public int am;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/AddressMode/*'/>
+        public int AddressMode;
 
-        /// <summary>
-        /// Analog filter: DISABLE or ENABLE.
-        /// </summary>
-        public int af;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/AnalogFilter/*'/>
+        public int AnalogFilter;
 
-        /// <summary>
-        /// Digital filter: DISABLE or ENABLE.
-        /// </summary>
-        public int df;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/DigitalFilter/*'/>
+        public int DigitalFilter;
 
-        /// <summary>
-        /// Digital noise filter: 0 to 15.
-        /// </summary>
-        public byte dnf;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/DigitalNoiseFilter/*'/>
+        public byte DigitalNoiseFilter;
 
-        /// <summary>
-        /// Rise time: 0-1000 for STANDARD speed mode and  0-300 for FAST.
-        /// </summary>
-        public int rt;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/RiseTime/*'/>
+        public int RiseTime;
 
-        /// <summary>
-        /// Fall time: 0-300 for STANDARD speed mode and  0-300 for FAST.
-        /// </summary>
-        public int ft;
+        /// <include file='..\Doc\I2cConnectParameters.xml' path='docs/members[@name="i2cConnectParameters"]/FallTime/*'/>
+        public int FallTime;
 
     }
 }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="deviceBitC">
+        <DeviceBitC>
+            <summary>
+                This stucture will be filled by values which characterize the device's option bytes.
+                <list type="table">
+                    <item>
+                        <term>Name</term>
+                        <description>Bit name such as RDP, BOR_LEV, nBOOT0... </description>
+                    </item>
+                    <item>
+                        <term>Description</term>
+                        <description>Configuration description.</description>
+                    </item>
+                    <item>
+                        <term>WordOffset</term>
+                        <description>Word offset.</description>
+                    </item>
+                    <item>
+                        <term>BitOffset</term>
+                        <description>Bit offset.</description>
+                    </item>
+                    <item>
+                        <term>BitWidth</term>
+                        <description>Number of bits build the option.</description>
+                    </item>
+                    <item>
+                        <term>Access</term>
+                        <description>Access Read/Write.</description>
+                    </item>
+                    <item>
+                        <term>ValuesNumber</term>
+                        <description>Number of possible values.</description>
+                    </item>
+                    <item>
+                        <term>Values</term>
+                        <description>Bits value, <see cref="BitValueC"/>.</description>
+                    </item>
+                    <item>
+                        <term>Equation</term>
+                        <description>
+                            Bits equation, <see cref="BitCoefficientC"/>.
+                        </description>
+                    </item>
+                    <item>
+                        <term>Reference</term>
+                        <description>
+                            
+                        </description>
+                    </item>
+                    <item>
+                        <term>BitValue</term>
+                        <description>
+
+                        </description>
+                    </item>
+                    <item>
+                        <term>ValLine</term>
+                        <description>
+
+                        </description>
+                    </item>
+                </list>
+            </summary>
+            <remarks>
+                <para>
+                    See product reference manual for more details.
+                </para>
+            </remarks>
+        </DeviceBitC>
+
+        <Name>
+            <summary>
+                Bit name such as RDP, BOR_LEV, nBOOT0...
+            </summary>
+        </Name>
+
+        <Description>
+            <summary>
+                Configuration description.
+            </summary>
+        </Description>
+
+        <WordOffset>
+            <summary>
+                Word offset.
+            </summary>
+        </WordOffset>
+
+        <BitOffset>
+            <summary>
+                Bit offset.
+            </summary>
+        </BitOffset>
+
+        <BitWidth>
+            <summary>
+                Number of bits build the option.
+            </summary>     
+        </BitWidth>
+
+        <Access>
+            <summary>
+                Access Read/Write.
+            </summary>
+        </Access>
+
+        <ValuesNumber>
+            <summary>
+                Number of possible values.
+            </summary>
+        </ValuesNumber>
+
+        <Values>
+            <summary>
+                Bits value, <see cref="BitValueC"/>.
+            </summary>
+        </Values>
+
+        <Equation>
+            <summary>
+                Bits equation, <see cref="BitCoefficientC"/>.
+            </summary>
+        </Equation>
+
+        <Reference>
+            <summary>
+                
+            </summary>
+        </Reference>
+
+        <BitValue>
+            <summary>
+
+            </summary>
+        </BitValue>
+
+        <ValLine>
+            <summary>
+
+            </summary>
+        </ValLine>
+    </members>
+</docs>

@@ -64,7 +64,7 @@ namespace SharpCubeProgrammer.Abstraction
         CubeProgrammerError ConnectDfuBootloader2(DfuConnectParameters dfuParameters);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ConnectDfuBootloader2Overload/*'/>
-        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte rdu, byte tzenreg, int usbTimeout = 30000);
+        CubeProgrammerError ConnectDfuBootloader2(string usbIndex, byte requestReadUnprotect, byte tzenreg, int usbTimeout = 30000);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ConnectSpiBootloader/*'/>
         CubeProgrammerError ConnectSpiBootloader(SpiConnectParameters spiParameters);

@@ -5,20 +5,30 @@ namespace SharpCubeProgrammer.DeviceDataStructure
     using System;
     using System.Collections.Generic;
 
+    /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/DeviceBankC/*'/>
     public struct DeviceBankC : IEquatable<DeviceBankC>
     {
+        /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/Size/*'/>
         public uint Size { get; set; }
+
+        /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/Address/*'/>
         public uint Address { get; set; }
+
+        /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/Access/*'/>
         public byte Access { get; set; }
-        public uint CategoriesNbr { get; set; }
+
+        /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/CategoriesNumber/*'/>
+        public uint CategoriesNumber { get; set; }
+
+        /// <include file='..\Doc\DeviceBankC.xml' path='docs/members[@name="deviceBankC"]/Categories/*'/>
         public IList<DeviceCategoryC> Categories { get; private set; }
 
-        public DeviceBankC(uint size, uint address, byte access, uint categoriesNbr, IList<DeviceCategoryC> categories)
+        public DeviceBankC(uint size, uint address, byte access, uint categoriesNumber, IList<DeviceCategoryC> categories)
         {
             this.Size = size;
             this.Address = address;
             this.Access = access;
-            this.CategoriesNbr = categoriesNbr;
+            this.CategoriesNumber = categoriesNumber;
             this.Categories = categories;
         }
 
@@ -37,13 +47,13 @@ namespace SharpCubeProgrammer.DeviceDataStructure
             return this.Size == other.Size &&
                    this.Address == other.Address &&
                    this.Access == other.Access &&
-                   this.CategoriesNbr == other.CategoriesNbr &&
+                   this.CategoriesNumber == other.CategoriesNumber &&
                    EqualityComparer<IList<DeviceCategoryC>>.Default.Equals(this.Categories, other.Categories);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.Size, this.Address, this.Access, this.CategoriesNbr, this.Categories);
+            return HashCode.Combine(this.Size, this.Address, this.Access, this.CategoriesNumber, this.Categories);
         }
 
         public static bool operator ==(DeviceBankC left, DeviceBankC right)

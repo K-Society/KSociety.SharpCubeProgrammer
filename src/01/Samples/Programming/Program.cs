@@ -191,10 +191,10 @@ namespace Programming
                         Logger.LogInformation("PeripheralC: \n" +
                                               "Name: {0} \n" +
                                               "Description: {1} \n" +
-                                              "Banks Nbr: {2} \n",
+                                              "Banks Number: {2} \n",
                             peripheral.Value.Name,
                             peripheral.Value.Description,
-                            peripheral.Value.BanksNbr);
+                            peripheral.Value.BanksNumber);
                     }
 
                     var targetInterfaceType = CubeProgrammerApi.GetTargetInterfaceType();

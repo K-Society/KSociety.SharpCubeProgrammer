@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="devicePeripheralC">
+        <DevicePeripheralC>
+            <summary>
+                Get peripheral option bytes general informations.
+                <list type="table">
+                    <item>
+                        <term>Name</term>
+                        <description>Peripheral name.</description>
+                    </item>
+                    <item>
+                        <term>Description</term>
+                        <description>Peripheral description.</description>
+                    </item>
+                    <item>
+                        <term>BanksNumber</term>
+                        <description>Number of existed banks.</description>
+                    </item>
+                    <item>
+                        <term>Banks</term>
+                        <description>Get banks descriptions <see cref="DeviceBankC"/>.</description>
+                    </item>
+                </list>
+            </summary>
+        </DevicePeripheralC>
+
+        <Name>
+            <summary>
+                Peripheral name.
+            </summary>
+        </Name>
+
+        <Description>
+            <summary>
+                Peripheral description.
+            </summary>
+        </Description>
+
+        <BanksNumber>
+            <summary>
+                Number of existed banks.
+            </summary>
+        </BanksNumber>
+
+        <Banks>
+            <summary>
+                Get banks descriptions <see cref="DeviceBankC"/>.
+            </summary>
+        </Banks>
+    </members>
+</docs>

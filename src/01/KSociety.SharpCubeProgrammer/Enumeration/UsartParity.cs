@@ -2,24 +2,16 @@
 
 namespace SharpCubeProgrammer.Enumeration
 {
-    /// <summary>
-    /// The parity bit in the data frame of the USART communication tells the receiving device if there is any error in the data bits.
-    /// </summary>
+    /// <include file='..\Doc\UsartParity.xml' path='docs/members[@name="usartParity"]/UsartParity/*'/>
     public enum UsartParity
     {
-        /// <summary>
-        /// Even parity bit.
-        /// </summary>
+        /// <include file='..\Doc\UsartParity.xml' path='docs/members[@name="usartParity"]/Even/*'/>
         Even = 0,
 
-        /// <summary>
-        /// Odd parity bit.
-        /// </summary>
+        /// <include file='..\Doc\UsartParity.xml' path='docs/members[@name="usartParity"]/Odd/*'/>
         Odd = 1,
 
-        /// <summary>
-        /// No check parity.
-        /// </summary>
+        /// <include file='..\Doc\UsartParity.xml' path='docs/members[@name="usartParity"]/None/*'/>
         None = 2
     }
 }

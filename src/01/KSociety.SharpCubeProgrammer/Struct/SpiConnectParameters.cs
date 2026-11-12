@@ -4,74 +4,49 @@ namespace SharpCubeProgrammer.Struct
 {
     using System.Runtime.InteropServices;
 
+    /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/SpiConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 #pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct SpiConnectParameters
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Speed transmission 187, 375, 750, 1500, 3000, 6000, 12000 KHz.
-        /// </summary>
-        public uint baudrate;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Baudrate/*'/>
+        public uint Baudrate;
 
-        /// <summary>
-        /// Crc polynomial value.
-        /// </summary>
-        public ushort crcPol;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/CrcPolynomial/*'/>
+        public ushort CrcPolynomial;
 
-        /// <summary>
-        /// 2LFullDuplex/2LRxOnly/1LRx/1LTx.
-        /// </summary>
-        public int direction;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Direction/*'/>
+        public int Direction;
 
-        /// <summary>
-        /// 1Edge or 2Edge.
-        /// </summary>
-        public int cpha;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Cpha/*'/>
+        public int Cpha;
 
-        /// <summary>
-        /// LOW or HIGH.
-        /// </summary>
-        public int cpol;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Cpol/*'/>
+        public int Cpol;
 
-        /// <summary>
-        /// DISABLE or ENABLE.
-        /// </summary>
-        public int crc;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Crc/*'/>
+        public int Crc;
 
-        /// <summary>
-        /// First bit: LSB or MSB.
-        /// </summary>
-        public int firstBit;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/FirstBit/*'/>
+        public int FirstBit;
 
-        /// <summary>
-        /// Frame format: Motorola or TI.
-        /// </summary>
-        public int frameFormat;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/FrameFormat/*'/>
+        public int FrameFormat;
 
-        /// <summary>
-        /// Size of frame data: 16bit or 8bit.
-        /// </summary>
-        public int dataSize;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/DataSize/*'/>
+        public int DataSize;
 
-        /// <summary>
-        /// Operating mode: Slave or Master.
-        /// </summary>
-        public int mode;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Mode/*'/>
+        public int Mode;
 
-        /// <summary>
-        /// Selection: Soft or Hard.
-        /// </summary>
-        public int nss;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Nss/*'/>
+        public int Nss;
 
-        /// <summary>
-        /// NSS pulse: No Pulse or Pulse.
-        /// </summary>
-        public int nssPulse;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/NssPulse/*'/>
+        public int NssPulse;
 
-        /// <summary>
-        /// Delay of few microseconds, No Delay or Delay, at least 4us delay is inserted.
-        /// </summary>
-        public int delay;
+        /// <include file='..\Doc\SpiConnectParameters.xml' path='docs/members[@name="spiConnectParameters"]/Delay/*'/>
+        public int Delay;
     }
 }

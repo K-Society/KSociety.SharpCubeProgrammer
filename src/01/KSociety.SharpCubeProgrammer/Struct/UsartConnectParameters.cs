@@ -5,70 +5,47 @@ namespace SharpCubeProgrammer.Struct
     using System.Runtime.InteropServices;
     using Enumeration;
 
+    /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/UsartConnectParameters/*'/>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-#pragma warning disable CA1815 // Override equals and operator equals on value types
+#pragma warning disable CA1815 // Override equals and operator equals on value types 
     public struct UsartConnectParameters
 #pragma warning restore CA1815 // Override equals and operator equals on value types
     {
-        /// <summary>
-        /// Interface identifier: COM1, COM2, /dev/ttyS0...
-        /// </summary>
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/PortName/*'/>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 100)]
-        public string portName;
+        public string PortName;
 
-        /// <summary>
-        /// Speed transmission: 115200, 9600...
-        /// </summary>
-        public uint baudrate;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/Baudrate/*'/>
+        public uint Baudrate;
 
-        /// <summary>
-        /// Parity bit: value in usartParity.
-        /// </summary>
-        public UsartParity parity;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/Parity/*'/>
+        public UsartParity Parity;
 
-        /// <summary>
-        /// Data bit: value in {6, 7, 8}.
-        /// </summary>
-        public byte dataBits;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/DataBits/*'/>
+        public byte DataBits;
 
-        /// <summary>
-        /// Stop bit: value in {1, 1.5, 2}.
-        /// </summary>
-        public float stopBits;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/StopBits/*'/>
+        public float StopBits;
 
-        /// <summary>
-        /// Flow control: value in usartFlowControl.
-        /// </summary>
-        public UsartFlowControl flowControl;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/FlowControl/*'/>
+        public UsartFlowControl FlowControl;
 
-        /// <summary>
-        /// RTS: Value in {0,1}.
-        /// </summary>
-        public int statusRTS;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/StatusRTS/*'/>
+        public int StatusRTS;
 
-        /// <summary>
-        /// DTR: Value in {0,1}.
-        /// </summary>
-        public int statusDTR;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/StatusDTR/*'/>
+        public int StatusDTR;
 
-        /// <summary>
-        /// Manage the delay timing of the Pulse.
-        /// </summary>
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/DelayRtsDtr/*'/>
         public int DelayRtsDtr;
 
-        /// <summary>
-        /// Set No Init bits: value in {0,1}.
-        /// </summary>
-        public byte noinitBits;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/NoInitBits/*'/>
+        public byte NoInitBits;
 
-        /// <summary>
-        /// Request a read unprotect: value in {0,1}.
-        /// </summary>
-        public byte rdu;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/RequestReadUnprotect/*'/>
+        public byte RequestReadUnprotect;
 
-        /// <summary>
-        /// Request a TZEN regression: value in {0,1}.
-        /// </summary>
-        public byte tzenreg;
+        /// <include file='..\Doc\UsartConnectParameters.xml' path='docs/members[@name="usartConnectParameters"]/Tzenreg/*'/>
+        public byte Tzenreg;
     }
 }

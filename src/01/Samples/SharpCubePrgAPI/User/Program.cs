@@ -25,7 +25,7 @@ namespace SharpCubePrgAPI.User
                 LogMessage = DisplayManager.DisplayMessage,
                 LoadBar = DisplayManager.ProgressBarUpdate
             };
-
+            
             cubeProgrammerApi.SetDisplayCallbacks(displayCallBacks);
 
             /* Set DLL verbosity level */

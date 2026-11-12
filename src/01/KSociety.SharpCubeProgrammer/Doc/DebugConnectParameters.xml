@@ -6,6 +6,76 @@
         <DebugConnectParameters>
             <summary>
                 Get device characterization and specify connection parameters through ST-LINK interface.
+                <list type="table">
+                    <item>
+                        <term>DebugPort</term>
+                        <description>Select the type of debug interface.</description>
+                    </item>
+                    <item>
+                        <term>Index</term>
+                        <description>Select one of the debug ports connected.</description>
+                    </item>
+                    <item>
+                        <term>SerialNumber</term>
+                        <description>ST-LINK serial number.</description>
+                    </item>
+                    <item>
+                        <term>FirmwareVersion</term>
+                        <description>ST-LINK firmware version.</description>
+                    </item>
+                    <item>
+                        <term>TargetVoltage</term>
+                        <description>Operate voltage.</description>
+                    </item>
+                    <item>
+                        <term>AccessPortNumber</term>
+                        <description>Number of available access port.</description>
+                    </item>
+                    <item>
+                        <term>AccessPort</term>
+                        <description>Select access port controller.</description>
+                    </item>
+                    <item>
+                        <term>ConnectionMode</term>
+                        <description>Select the debug CONNECT mode.</description>
+                    </item>
+                    <item>
+                        <term>ResetMode</term>
+                        <description>Select the debug RESET mode.</description>
+                    </item>
+                    <item>
+                        <term>IsOldFirmware</term>
+                        <description>Check Old ST-LINK firmware version.</description>
+                    </item>
+                    <item>
+                        <term>Frequencies</term>
+                        <description>Supported frequencies.</description>
+                    </item>
+                    <item>
+                        <term>Frequency</term>
+                        <description>Selected frequency.</description>
+                    </item>
+                    <item>
+                        <term>IsBridge</term>
+                        <description>Indicates if it's Bridge device or not.</description>
+                    </item>
+                    <item>
+                        <term>Shared</term>
+                        <description>Select connection type, if it's shared, use ST-LINK Server.</description>
+                    </item>
+                    <item>
+                        <term>Board</term>
+                        <description>Board name.</description>
+                    </item>
+                    <item>
+                        <term>DBG_Sleep</term>
+                        <description>Keep the debug connection active even when the microcontroller enters sleep mode.</description>
+                    </item>
+                    <item>
+                        <term>Speed</term>
+                        <description>Select speed flashing of Cortex M33 series.</description>
+                    </item>
+                </list>
             </summary>
         </DebugConnectParameters>
 
@@ -101,7 +171,7 @@
 
         <DBG_Sleep>
             <summary>
-                
+                Keep the debug connection active even when the microcontroller enters sleep mode.
             </summary>
         </DBG_Sleep>
 

@@ -6,22 +6,28 @@ namespace SharpCubeProgrammer.Struct
     using System.Collections.ObjectModel;
     using System.Linq;
 
+    /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/DeviceSegmentDataC/*'/>
     public struct DeviceSegmentDataC : IEquatable<DeviceSegmentDataC>
     {
-        public int address { get; set; }
-        public int size { get; set; }
-        public ReadOnlyCollection<byte> data { get; private set; }
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Address/*'/>
+        public int Address { get; set; }
+
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Size/*'/>
+        public int Size { get; set; }
+
+        /// <include file='..\Doc\DeviceSegmentDataC.xml' path='docs/members[@name="deviceSegmentDataC"]/Data/*'/>
+        public ReadOnlyCollection<byte> Data { get; private set; }
 
         public DeviceSegmentDataC(int address, int size, byte[] data)
         {
-            this.address = address;
-            this.size = size;
-            this.data = new ReadOnlyCollection<byte>(data);
+            this.Address = address;
+            this.Size = size;
+            this.Data = new ReadOnlyCollection<byte>(data);
         }
 
         public void SetData(byte[] data)
         {
-            this.data = new ReadOnlyCollection<byte>(data);
+            this.Data = new ReadOnlyCollection<byte>(data);
         }
 
         public override bool Equals(object obj)
@@ -31,12 +37,12 @@ namespace SharpCubeProgrammer.Struct
 
         public bool Equals(DeviceSegmentDataC other)
         {
-            return this.address == other.address && this.size == other.size && Enumerable.SequenceEqual(this.data, other.data);
+            return this.Address == other.Address && this.Size == other.Size && Enumerable.SequenceEqual(this.Data, other.Data);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.address, this.size, this.data);
+            return HashCode.Combine(this.Address, this.Size, this.Data);
         }
 
         public static bool operator ==(DeviceSegmentDataC left, DeviceSegmentDataC right)

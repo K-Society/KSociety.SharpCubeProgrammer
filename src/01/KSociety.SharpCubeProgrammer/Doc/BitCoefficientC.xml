@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="bitCoefficientC">
+        <BitCoefficientC>
+            <summary>
+                This stucture indicates the coefficients to access to the adequate option bit.
+                <list type="table">
+                    <item>
+                        <term>Multiplier</term>
+                        <description>Bit multiplier.</description>
+                    </item>
+                    <item>
+                        <term>Offset</term>
+                        <description>Bit offset.</description>
+                    </item>
+                </list>
+            </summary>
+        </BitCoefficientC>
+
+        <Multiplier>
+            <summary>
+                Bit multiplier.
+            </summary>
+        </Multiplier>
+
+        <Offset>
+            <summary>
+                Bit offset.
+            </summary>
+        </Offset>
+    </members>
+</docs>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) K-Society and contributors. All rights reserved. Licensed under the K-Society License. See LICENSE.TXT file in the project root for full license information. -->
+
+<docs>
+    <members name="usartFlowControl">
+        <UsartFlowControl>
+            <summary>
+                UART Flow Control is a method for devices to communicate with each other over UART without the risk of losing data.
+                <list type="table">
+                    <item>
+                        <term>Off (0)</term>
+                        <description>No flow control.</description>
+                    </item>
+                    <item>
+                        <term>Hardware (1)</term>
+                        <description>Hardware flow control : RTS/CTS.</description>
+                    </item>
+                    <item>
+                        <term>Software (2)</term>
+                        <description>Software flow control : Transmission is started and stopped by sending special characters.</description>
+                    </item>
+                </list>
+            </summary>
+        </UsartFlowControl>
+
+        <Off>
+            <summary>
+                No flow control.
+            </summary>
+        </Off>
+
+        <Hardware>
+            <summary>
+                Hardware flow control : RTS/CTS.
+            </summary>
+        </Hardware>
+
+        <Software>
+            <summary>
+                Software flow control : Transmission is started and stopped by sending special characters.
+            </summary>
+        </Software>
+    </members>
+</docs>
