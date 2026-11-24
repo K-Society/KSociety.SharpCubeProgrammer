@@ -220,7 +220,7 @@
 					</Bank>
 					<Bank name="Bank 2">
 						<Field>
-							<Parameters address="0x08040000" name="sector32" occurrence="0x20" size="0x800"/>
+							<Parameters address="0x08010000" name="sector32" occurrence="0x20" size="0x800"/>
 						</Field>
 					</Bank>
 				</Configuration>

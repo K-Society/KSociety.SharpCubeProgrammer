@@ -84,12 +84,12 @@
 					</Bank>
 				</Configuration>				
 				<Configuration config="55">
-					<Parameters address="0x20002000" name="SRAM" size="0x4000"/>
+					<Parameters address="0x20000000" name="SRAM" size="0x4000"/>
 					<Description/>
 					<Organization>Single</Organization>
 					<Bank name="Bank 1">
 						<Field>
-							<Parameters address="0x20002000" name="SRAM" occurrence="0x1" size="0x4000"/>
+							<Parameters address="0x20000000" name="SRAM" occurrence="0x1" size="0x4000"/>
 						</Field>
 					</Bank>
 				</Configuration>				
@@ -183,7 +183,7 @@
 				<Access>RW</Access>
 				<Configuration config="0,3,6,55">
 				<Bank interface="JTAG_SWD">
-						<Parameters address="0x48100040" name="Bank 1" size="0xA0"/>
+						<Parameters address="0x48100040" name="Bank 1" size="0x20"/>
 					<Category>
 						<Name>Read Out Protection</Name>
 						<Field>
@@ -916,11 +916,11 @@
 					</Category>
 				</Bank>
 				<Bank interface="JTAG_SWD" name="SetOEM1">
-					<Parameters address="0x58100110" name="Bank 2" size="0x10"/>
+					<Parameters address="0x48100110" name="Bank 2" size="0x10"/>
 					<Category>
 						<Name>RDP Level 1 OEM Key</Name>
 						<Field>
-							<Parameters address="0x58100110" name="OEM1KEYR1" size="0x4"/>
+							<Parameters address="0x48100110" name="OEM1KEYR1" size="0x4"/>
 							<AssignedBits>
 							<Bit>
 								<Name>OEM1KEYR1</Name>
@@ -933,7 +933,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x58100114" name="OEM1KEYR2" size="0x4"/>
+							<Parameters address="0x48100114" name="OEM1KEYR2" size="0x4"/>
 							<AssignedBits>
 							<Bit>
 								<Name>OEM1KEYR2</Name>
@@ -946,7 +946,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x58100118" name="OEM1KEYR3" size="0x4"/>
+							<Parameters address="0x48100118" name="OEM1KEYR3" size="0x4"/>
 							<AssignedBits>
 							<Bit>
 								<Name>OEM1KEYR3</Name>
@@ -959,7 +959,7 @@
 							</AssignedBits>
 						</Field>
 						<Field>
-							<Parameters address="0x5810011C" name="OEM1KEYR4" size="0x4"/>
+							<Parameters address="0x4810011C" name="OEM1KEYR4" size="0x4"/>
 							<AssignedBits>
 							<Bit>
 								<Name>OEM1KEYR4</Name>
@@ -974,11 +974,11 @@
 					</Category>
 				</Bank>
 			<Bank interface="JTAG_SWD" name="SetOEM2">
-				<Parameters address="0x58100120" name="Bank 3" size="0x10"/>
+				<Parameters address="0x48100120" name="Bank 3" size="0x10"/>
 				<Category>
 					<Name>RDP Level 2 OEM Key </Name>
 					<Field>
-						<Parameters address="0x58100120" name="OEM2KEYR1" size="0x4"/>
+						<Parameters address="0x48100120" name="OEM2KEYR1" size="0x4"/>
 						<AssignedBits>
 						<Bit>
 							<Name>OEM2KEYR1</Name>
@@ -991,7 +991,7 @@
 						</AssignedBits>
 					</Field>
 					<Field>
-						<Parameters address="0x58100124" name="OEM2KEYR2" size="0x4"/>
+						<Parameters address="0x48100124" name="OEM2KEYR2" size="0x4"/>
 						<AssignedBits>
 						<Bit>
 							<Name>OEM2KEYR2</Name>
@@ -1004,7 +1004,7 @@
 						</AssignedBits>
 					</Field>
 					<Field>
-						<Parameters address="0x58100128" name="OEM2KEYR3" size="0x4"/>
+						<Parameters address="0x48100128" name="OEM2KEYR3" size="0x4"/>
 						<AssignedBits>
 						<Bit>
 							<Name>OEM2KEYR3</Name>
@@ -1017,7 +1017,7 @@
 						</AssignedBits>
 					</Field>
 					<Field>
-						<Parameters address="0x5810012C" name="OEM2KEYR4" size="0x4"/>
+						<Parameters address="0x4810012C" name="OEM2KEYR4" size="0x4"/>
 						<AssignedBits>
 						<Bit>
 							<Name>OEM2KEYR4</Name>

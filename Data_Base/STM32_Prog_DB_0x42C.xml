@@ -438,7 +438,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>TZEN</Name>
-										<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneouslyDescription</Description>
+										<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneously</Description>
 										<BitOffset>0x1F</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
@@ -454,8 +454,8 @@
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
 										<Values>
-											<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBATsupply source is different from VDD</Val>
-											<Val value="0x1">The backup domain is reset after a The domain brownout reset (BOR). This configuration must be used when the VBAT andVDD are connected together. It is forbidden when VBAT supply source is different from VDD</Val>
+											<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBAT supply source is different from VDD</Val>
+											<Val value="0x1">The backup domain is reset after a VDD domain brownout reset (BOR). This configuration must be used when the VBAT and VDD are connected together. It is forbidden when VBAT supply source is different from VDD.</Val>
 										</Values>
 									</Bit>
 									<Bit>
@@ -999,8 +999,8 @@
 									    <BitWidth>0x1</BitWidth>
 										<Access>RW</Access>
 										<Values>
-											<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBATsupply source is different from VDD</Val>
-											<Val value="0x1">The backup domain is reset after a The domain brownout reset (BOR). This configuration must be used when the VBAT andVDD are connected together. It is forbidden when VBAT supply source is different from VDD</Val>
+											<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBAT supply source is different from VDD</Val>
+											<Val value="0x1">The backup domain is reset after a VDD domain brownout reset (BOR). This configuration must be used when the VBAT and VDD are connected together. It is forbidden when VBAT supply source is different from VDD.</Val>
 										</Values>
 									</Bit>							
 									<Bit>
@@ -1527,7 +1527,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>TZEN</Name>
-									<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneouslyDescription</Description>
+									<Description>Global TrustZone security enable. disable this OB by Unchecking TZEN + RDP regression from level 1 to 0 simultaneously</Description>
 									<BitOffset>0x1F</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
@@ -1543,8 +1543,8 @@
 									<BitWidth>0x1</BitWidth>
 									<Access>RW</Access>
 									<Values>
-										<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBATsupply source is different from VDD</Val>
-										<Val value="0x1">The backup domain is reset after a The domain brownout reset (BOR). This configuration must be used when the VBAT andVDD are connected together. It is forbidden when VBAT supply source is different from VDD</Val>
+										<Val value="0x0">The backup domain is not reset after a VDD domain brownout reset (BOR). This configuration must be used when VBAT supply source is different from VDD</Val>
+										<Val value="0x1">The backup domain is reset after a VDD domain brownout reset (BOR). This configuration must be used when the VBAT and VDD are connected together. It is forbidden when VBAT supply source is different from VDD.</Val>
 									</Values>
 								</Bit>
 								<Bit>
