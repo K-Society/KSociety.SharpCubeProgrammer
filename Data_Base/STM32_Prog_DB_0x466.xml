@@ -1090,8 +1090,8 @@
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
-									<Values>
 									<Condition>NVM-G031</Condition>
+									<Values>
 										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>
@@ -1135,8 +1135,8 @@
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
-									<Values>
 									<Condition>NVM-G041</Condition>
+									<Values>
 										<Val value="0x0">Configurable brown out reset disabled, power-on reset defined by POR/PDR levels</Val>
 										<Val value="0x1">Configurable brown out reset enabled, values of BORR_LEV and BORF_LEV taken into account</Val>
 									</Values>

@@ -756,7 +756,7 @@
 									</Bit>
 									<Bit>
 										<Name>disable_traces</Name>
-										<Description>0 (no): boot ROM traces disabled. 1 (yes): boot ROM traces enabled.</Description>
+										<Description>0 (no): boot ROM traces enabled. 1 (yes): boot ROM traces disabled.</Description>
 										<BitOffset>0x0</BitOffset>
 										<BitWidth>0x1</BitWidth>
 										<Access>RW</Access>

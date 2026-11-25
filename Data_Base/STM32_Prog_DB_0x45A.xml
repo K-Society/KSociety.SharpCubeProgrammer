@@ -14,12 +14,12 @@
 			
 				<Configuration number="0x0">	<!-- 512K + Double Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x200"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x0"/> </DBANK>
 				</Configuration>
 				
 				<Configuration number="0x1">	<!-- 512K + Single Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x200"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x1"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x40000000"/> </DBANK>
 				</Configuration>
 
 				<Configuration number="0x4">	<!-- 1M  + Double Bank -->
@@ -30,12 +30,12 @@
 			<Interface name="Bootloader">
 				<Configuration number="0x2">	<!-- 512K + Double Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x200"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x0"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x0"/> </DBANK>
 				</Configuration>
 				
 				<Configuration number="0x3">	<!-- 512K + Single Bank -->
 					<FLASHSIZE reference="0x0"> <ReadRegister address="0x08FFF80C" mask="0x00000FFF" value="0x200"/> </FLASHSIZE>
-					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x00800000" value="0x1"/> </DBANK>
+					<DBANK reference="0x0"> <ReadRegister address="0x40022050" mask="0x40000000" value="0x40000000"/> </DBANK>
 				</Configuration>
 
 				<Configuration number="0x5">	<!-- 1M  + Double Bank -->
@@ -173,7 +173,7 @@
 				<Access>RW</Access>
 
 					<Bank interface="JTAG_SWD">
-						<Parameters address="0x40022050" name="Bank 1" size="0x70"/>
+						<Parameters address="0x40022050" name="Bank 1" size="0x8"/>
 						<Category>
 							<Name>Product state</Name>
 							<Field>
@@ -275,7 +275,7 @@
 								<Bit config="0,1,2,3">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -289,7 +289,7 @@
 								<Bit config="0,1,2,3">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -888,7 +888,7 @@
 					</Bank>
 
 				<Bank interface="Bootloader">
-					<Parameters address="0x40022050" name="Bank 1" size="0x74"/>
+					<Parameters address="0x40022050" name="Bank 1" size="0x50"/>
 					<Category>
 						<Name>Product state</Name>
 						<Field>
@@ -962,7 +962,7 @@
 								<Bit config="0,1,2,3">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>R</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -976,7 +976,7 @@
 								<Bit config="0,1,2,3">
 									<Name>SINGLE_BANK</Name>
 									<Description>Dual bank selection option status bit.</Description>
-									<BitOffset>0x17</BitOffset>
+									<BitOffset>0x1E</BitOffset>
 									<BitWidth>0x1</BitWidth>
 									<Access>W</Access>
 									<Val value="0x0">User flash is split between bank 1 and bank 2</Val>
@@ -1583,5 +1583,20 @@
 				</Bank>
 			</Peripheral>
 		</Peripherals>
+		<Software>
+			<RDPRegPWD>
+				<DBGMCU>
+					<DBGMCU_DBG_AUTH_HOST address=" 0xE00E4100"/>
+					<DBGMCU_DBG_AUTH_DEVICE address=" 0xE00E4104"/>
+					<DBGMCU_DBG_BSKEY_PWD address=" 0xE00E410C"/>
+					<DBGMCU_DBG_VALR address=" 0xE00E4110"/> 
+					<DBGMCU_SR address=" 0xE00E40FC"/> 
+				</DBGMCU>
+				<GenericInfo>
+					<RDPReg_Type name="Type_C5"/>
+					<AP value="0"/>
+				</GenericInfo>
+			</RDPRegPWD>
+		</Software>
 	</Device>
 </Root>
