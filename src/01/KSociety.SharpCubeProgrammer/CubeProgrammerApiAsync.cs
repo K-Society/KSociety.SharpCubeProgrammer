@@ -155,9 +155,9 @@ namespace SharpCubeProgrammer
             return await Task.Run(() => this.EditSector(address, data, size), cancellationToken).ConfigureAwait(false);
         }
 
-        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default)
+        public async ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", bool isIncremental = false, CancellationToken cancellationToken = default)
         {
-            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify, binFilePath), cancellationToken).ConfigureAwait(false);
+            return await Task.Run(() => this.DownloadFile(inputFilePath, address, skipErase, verify, binFilePath, isIncremental), cancellationToken).ConfigureAwait(false);
         }
 
         public async ValueTask<CubeProgrammerError> ExecuteAsync(string address = "0x08000000", CancellationToken cancellationToken = default)
@@ -383,6 +383,15 @@ namespace SharpCubeProgrammer
         public async ValueTask<CubeProgrammerError> UnlockChipAsync(CancellationToken cancellationToken = default)
         {
             return await Task.Run(() => this.UnlockChip(), cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        public async ValueTask<CubeProgrammerError> ProgramSfiAsync(string sfiFile, string licenseFile, string RSSePath, int hsmSlotId, int protocol, string mcsvFile, string ecsvFile, CancellationToken cancellationToken = default)
+        {
+            return await Task.Run(() => this.ProgramSfi(sfiFile, licenseFile, RSSePath, hsmSlotId, protocol, mcsvFile, ecsvFile), cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

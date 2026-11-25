@@ -922,7 +922,7 @@
 							</Category>
 					</Bank>
 				    <Bank interface="Bootloader">
-					<Parameters address="0x40022050" name="Bank 1" size="0x78"/>
+					<Parameters address="0x40022050" name="Bank 1" size="0x50"/>
 					<Category>
 						<Name>Product state</Name>
 						<Field>
@@ -1617,5 +1617,20 @@
 				</Bank>
 			</Peripheral>
 		</Peripherals>
+		<Software>
+			<RDPRegPWD>
+				<DBGMCU>
+					<DBGMCU_DBG_AUTH_HOST address=" 0xE00E4100"/>
+					<DBGMCU_DBG_AUTH_DEVICE address=" 0xE00E4104"/>
+					<DBGMCU_DBG_BSKEY_PWD address=" 0xE00E410C"/>
+					<DBGMCU_DBG_VALR address=" 0xE00E4110"/> 
+					<DBGMCU_SR address=" 0xE00E40FC"/> 
+				</DBGMCU>
+				<GenericInfo>
+					<RDPReg_Type name="Type_C5"/>
+					<AP value="0"/>
+				</GenericInfo>
+			</RDPRegPWD>
+		</Software>
 	</Device>
 </Root>

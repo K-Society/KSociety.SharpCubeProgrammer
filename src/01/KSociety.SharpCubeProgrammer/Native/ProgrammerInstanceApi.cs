@@ -416,12 +416,12 @@ namespace SharpCubeProgrammer.Native
             return -99;
         }
 
-        internal int DownloadFile(string filePath, uint address, uint skipErase, uint verify, string binPath)
+        internal int DownloadFile(string filePath, uint address, uint skipErase, uint verify, string binPath, bool isIncremental)
         {
             return this.EnsureFunctionAndInvoke(
                 "downloadFile",
                 ref this._downloadFile,
-                (function) => function(filePath, address, skipErase, verify, binPath));
+                (function) => function(filePath, address, skipErase, verify, binPath, isIncremental));
         }
 
         internal int Execute(uint address)
@@ -827,6 +827,18 @@ namespace SharpCubeProgrammer.Native
                 "unlockchip",
                 ref this._unlockChip,
                 (function) => function());
+        }
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        internal int ProgramSfi(string sfiFile, string licenseFile, string RSSePath, int hsmSlotId, int protocol, string mcsvFile, string ecsvFile)
+        {
+            return this.EnsureFunctionAndInvoke(
+                "programSfi",
+                ref this._programSfi,
+                (function) => function(sfiFile, licenseFile, RSSePath, hsmSlotId, protocol, mcsvFile, ecsvFile));
         }
 
         #endregion

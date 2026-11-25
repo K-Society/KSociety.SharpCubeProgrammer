@@ -198,7 +198,7 @@
 									<Description>Read protection option byte. The read protection is used to protect the software code stored in Flash memory.</Description>
 									<BitOffset>0x1</BitOffset>
 									<BitWidth>0x1</BitWidth>
-									<Access>R</Access>
+									<Access>RW</Access>
 									<Values>
 										<Val value="0">Flash memory is not read-protected.</Val>
 										<Val value="1">Flash memory is read-protected.</Val>

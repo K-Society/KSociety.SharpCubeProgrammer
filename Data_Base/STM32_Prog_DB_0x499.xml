@@ -901,7 +901,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>NVM256</Name>
-										<Description>NVM word size option configuration bit</Description>
+										<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 										<BitOffset>0x8</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
@@ -917,7 +917,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>NVM256</Name>
-										<Description>NVM word size option configuration bit</Description>
+										<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 										<BitOffset>0x8</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
@@ -2546,7 +2546,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>NVM256</Name>
-										<Description>NVM word size option configuration bit</Description>
+										<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 										<BitOffset>0x8</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>R</Access>
@@ -2562,7 +2562,7 @@
 								<AssignedBits>
 									<Bit>
 										<Name>NVM256</Name>
-										<Description>NVM word size option configuration bit</Description>
+										<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 										<BitOffset>0x8</BitOffset>
 										<BitWidth>0x8</BitWidth>
 										<Access>W</Access>
@@ -4161,7 +4161,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>NVM256</Name>
-									<Description>NVM word size option configuration bit</Description>
+									<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>R</Access>
@@ -4177,7 +4177,7 @@
 							<AssignedBits>
 								<Bit>
 									<Name>NVM256</Name>
-									<Description>NVM word size option configuration bit</Description>
+									<Description>NVM word size option byte, this setting impacts memory mapping. The selected mode must remain consistent during use (128-bit or 256-bit). If the option byte is changed on the fly after data has been written, the previously written data will no longer be readable correctly and must be written again.</Description>
 									<BitOffset>0x8</BitOffset>
 									<BitWidth>0x8</BitWidth>
 									<Access>W</Access>
@@ -5186,7 +5186,7 @@
 		</Peripherals>
 		<Software>
 				<Sfi initializationMethod="HandleProductState">
-					<Certificate address="0x0C028504" size="0x88" address_uart="0x0C028504" size_uart="0"/>
+					<Certificate address="0x0C028504" size="0xCC" address_uart="0x0C028504" size_uart="0"/>
 					<!--
 					Documentation: How Condition Evaluation Works
 

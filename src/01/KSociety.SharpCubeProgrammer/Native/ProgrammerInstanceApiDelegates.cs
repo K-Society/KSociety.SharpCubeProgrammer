@@ -148,6 +148,12 @@ namespace SharpCubeProgrammer.Native
 
         #endregion
 
+        #region [Secure Firmware Install functions]
+
+        private Functions.ProgramSfi _programSfi;
+
+        #endregion
+
         #region [STM32MP specific functions]
 
         private Functions.ProgramSsp _programSsp;

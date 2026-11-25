@@ -838,7 +838,7 @@ namespace SharpCubeProgrammer
             }
         }
 
-        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "")
+        public CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", bool isIncremental = false)
         {
             using (this._logger?.AppendMethodScope(nameof(DownloadFile)))
             {
@@ -857,7 +857,8 @@ namespace SharpCubeProgrammer
                         uintAddress,
                         skipErase,
                         verify,
-                        binPathAdapted
+                        binPathAdapted,
+                        isIncremental
                         );
                         output = HexConverterUtil.CheckResult(downloadFileResult);
                     }
@@ -1919,6 +1920,26 @@ namespace SharpCubeProgrammer
             {
                 var unlockChipResult = this._programmerInstanceApi.UnlockChip();
                 var result = HexConverterUtil.CheckResult(unlockChipResult);
+
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        public CubeProgrammerError ProgramSfi(string sfiFile, string licenseFile, string RSSePath, int hsmSlotId, int protocol, string mcsvFile, string ecsvFile)
+        {
+            using (this._logger?.AppendMethodScope(nameof(ProgramSfi)))
+            {
+                var sfiFileAdapted = String.IsNullOrEmpty(sfiFile) ? "" : sfiFile.Replace('\\', '/');
+                var licenseFileAdapted = String.IsNullOrEmpty(licenseFile) ? "" : licenseFile.Replace('\\', '/');
+                var RSSePathAdapted = String.IsNullOrEmpty(RSSePath) ? "" : RSSePath.Replace('\\', '/');
+                var mcsvFileAdapted = String.IsNullOrEmpty(mcsvFile) ? "" : mcsvFile.Replace('\\', '/');
+                var ecsvFileAdapted = String.IsNullOrEmpty(ecsvFile) ? "" : ecsvFile.Replace('\\', '/');
+                var programSfiResult = this._programmerInstanceApi.ProgramSfi(sfiFileAdapted, licenseFileAdapted, RSSePathAdapted, hsmSlotId, protocol, mcsvFileAdapted, ecsvFileAdapted);
+                var result = HexConverterUtil.CheckResult(programSfiResult);
 
                 return result;
             }

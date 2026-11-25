@@ -114,7 +114,7 @@ namespace SharpCubeProgrammer.Abstraction
         ValueTask<CubeProgrammerError> EditSectorAsync(string address, byte[] data, int size = 0, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/DownloadFileAsync/*'/>
-        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", CancellationToken cancellationToken = default);
+        ValueTask<CubeProgrammerError> DownloadFileAsync(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", bool isIncremental = false, CancellationToken cancellationToken = default);
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ExecuteAsync/*'/>
         ValueTask<CubeProgrammerError> ExecuteAsync(string address = "0x08000000", CancellationToken cancellationToken = default);
@@ -260,6 +260,13 @@ namespace SharpCubeProgrammer.Abstraction
 
         /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/UnlockChipAsync/*'/>
         ValueTask<CubeProgrammerError> UnlockChipAsync(CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        /// <include file='..\Doc\CubeProgrammerApiAsync.xml' path='docs/members[@name="cubeProgrammerApiAsync"]/ProgramSfiAsync/*'/>
+        ValueTask<CubeProgrammerError> ProgramSfiAsync(string sfiFile, string licenseFile, string RSSePath, int hsmSlotId, int protocol, string mcsvFile, string ecsvFile, CancellationToken cancellationToken = default);
 
         #endregion
 
