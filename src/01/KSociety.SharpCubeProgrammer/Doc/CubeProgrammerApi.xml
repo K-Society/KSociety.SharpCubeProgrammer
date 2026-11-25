@@ -473,6 +473,7 @@
             <param name="skipErase">In case to win in term time and if we have a blank device, we can skip erasing memory before programming [skipErase=0].</param>
             <param name="verify">To add verification step after downloading.</param>
             <param name="binFilePath">Path of the binary file.</param>
+            <param name="isIncremental">To add incremental download feature, it allows to download only the modified data in the file.</param>
             <returns>
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
@@ -972,6 +973,29 @@
                 This method returns <see cref="CubeProgrammerError" />.
             </returns>
         </UnlockChip>
+
+        <!-- Secure Firmware Install functions -->
+
+        <ProgramSfi>
+            <summary>
+                Programs an SFI or SFIx image on the connected target.
+            </summary>
+            <param name="sfiFile">Full path to the SFI or SFIx image.</param>
+            <param name="licenseFile">Full path to the license file. Set to nullptr to use the HSM.</param>
+            <param name="RSSePath">Full path to the RSSe binary, when required by the target.</param>
+            <param name="hsmSlotId">HSM slot identifier.</param>
+            <param name="protocol">Reserved protocol identifier.</param>
+            <param name="mcsvFile">Full path to the MCU configuration CSV file, when required.</param>
+            <param name="ecsvFile">Full path to the external configuration CSV file, when required.</param>
+            <returns>
+                This method returns <see cref="CubeProgrammerError" />.
+            </returns>
+            <remarks>
+                <para>
+                    A target connection must be established before calling this routine.
+                </para>
+            </remarks>
+        </ProgramSfi>
 
         <!-- STM32MP specific functions -->
 

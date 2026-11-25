@@ -80,7 +80,7 @@ namespace SharpCubeProgrammer.Native
         internal delegate int EditSector(uint address, IntPtr data, uint size);
         
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
-        internal delegate int DownloadFile([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath);
+        internal delegate int DownloadFile([MarshalAs(UnmanagedType.LPWStr)] string filePath, uint address, uint skipErase, uint verify, [MarshalAs(UnmanagedType.LPWStr)] string binPath, bool isIncremental);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate int Execute(uint address);
@@ -207,6 +207,13 @@ namespace SharpCubeProgrammer.Native
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
         internal delegate int UnlockChip();
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, BestFitMapping = false, CharSet = CharSet.Ansi, SetLastError = true, ThrowOnUnmappableChar = false)]
+        internal delegate int ProgramSfi([MarshalAs(UnmanagedType.LPWStr)] string sfiFile, [MarshalAs(UnmanagedType.LPWStr)] string licenseFile, [MarshalAs(UnmanagedType.LPWStr)] string RSSePath, int hsmSlotId, int protocol, [MarshalAs(UnmanagedType.LPWStr)] string mcsvFile, [MarshalAs(UnmanagedType.LPWStr)] string ecsvFile);
 
         #endregion
 

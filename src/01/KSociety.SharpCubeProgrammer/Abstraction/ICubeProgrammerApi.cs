@@ -112,7 +112,7 @@ namespace SharpCubeProgrammer.Abstraction
         CubeProgrammerError EditSector(string address, byte[] data, int size = 0);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/DownloadFile/*'/>
-        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "");
+        CubeProgrammerError DownloadFile(string inputFilePath, string address = "0x08000000", uint skipErase = 0U, uint verify = 1U, string binFilePath = "", bool isIncremental = false);
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/Execute/*'/>
         CubeProgrammerError Execute(string address = "0x08000000");
@@ -258,6 +258,13 @@ namespace SharpCubeProgrammer.Abstraction
 
         /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/UnlockChip/*'/>
         CubeProgrammerError UnlockChip();
+
+        #endregion
+
+        #region [Secure Firmware Install functions]
+
+        /// <include file='..\Doc\CubeProgrammerApi.xml' path='docs/members[@name="cubeProgrammerApi"]/ProgramSfi/*'/>
+        CubeProgrammerError ProgramSfi(string sfiFile, string licenseFile, string RSSePath, int hsmSlotId, int protocol, string mcsvFile, string ecsvFile);
 
         #endregion
 
