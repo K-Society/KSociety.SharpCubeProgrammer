@@ -43,6 +43,14 @@ jobs:
         shell: cmd
         run: ./build.cmd
         
+      - name: Bump version and push tag
+        if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master') || (github.ref == 'refs/heads/develop')
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v7       
+        with:
+          custom_tag: ${{ steps.nbgv.outputs.SimpleVersion }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: NuGet login (OIDC → temp API key)
         if: github.event_name == 'push' && github.repository_owner == 'K-Society' && (github.ref == 'refs/heads/master')
         uses: NuGet/login@v1
